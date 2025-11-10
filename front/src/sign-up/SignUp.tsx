@@ -1,0 +1,195 @@
+import * as React from 'react';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import AppTheme, { AppThemeProps } from '../shared-theme/AppTheme';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import Divider from '@mui/material/Divider';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import Link from '@mui/material/Link';
+import MuiCard from '@mui/material/Card';
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import { CopyrightAligned as Copyright } from '../Copyright';
+import { sendRequest, storeCredentials } from '../stdfunc';
+import { styled } from '@mui/material/styles';
+import { useForm, Controller } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+
+const Card = styled(MuiCard)(({ theme }) => ({
+    alignSelf: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: theme.spacing(2),
+    margin: 'auto',
+    padding: theme.spacing(4),
+    width: '100%',
+    boxShadow:
+        'hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px',
+    [theme.breakpoints.up('sm')]: {
+        width: '450px',
+    },
+    ...theme.applyStyles('dark', {
+        boxShadow:
+            'hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px',
+    }),
+}));
+
+const SignUpContainer = styled(Stack)(({ theme }) => ({
+    position: 'relative',
+    height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
+    minHeight: '100%',
+    padding: theme.spacing(2),
+    [theme.breakpoints.up('sm')]: {
+        padding: theme.spacing(4),
+    },
+    '&::before': {
+        content: '""',
+        display: 'block',
+        inset: 0,
+        position: 'absolute',
+        zIndex: -1,
+        backgroundImage:
+            'radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))',
+        backgroundRepeat: 'no-repeat',
+        ...theme.applyStyles('dark', {
+            backgroundImage:
+                'radial-gradient(at 50% 50%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))',
+        }),
+    },
+}));
+
+type FormValues = {
+    username: string;
+    password: string;
+};
+
+export default function SignUp(props: AppThemeProps) {
+    const navigate = useNavigate();
+    const { control, handleSubmit } = useForm<FormValues>();
+    const [loading, setLoading] = React.useState(false);
+
+    const onSubmit = async (data: FormValues) => {
+        setLoading(true);
+
+        const formData = new FormData();
+        formData.append('username', data.username);
+        formData.append('password', data.password);
+
+        try {
+            const res = await sendRequest(
+                `/auth/register`,
+                formData,
+            );
+
+            const json = await res.json();
+
+            console.log(json);
+
+            storeCredentials(json);
+
+            navigate('/posts');
+        } catch {
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <AppTheme {...props}>
+            <CssBaseline enableColorScheme />
+            <SignUpContainer direction="column" justifyContent="space-between">
+                <Card variant="outlined">
+                    <Box
+                        component="form"
+                        noValidate
+                        onSubmit={handleSubmit(onSubmit)}
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 2,
+                            width: '100%',
+                        }}
+                    >
+                        <Controller
+                            name="username"
+                            control={control}
+                            rules={{ required: 'Username is required', minLength: { value: 6, message: 'Min 6 characters' } }}
+                            render={({ field, fieldState }) => (
+                                <FormControl>
+                                    <FormLabel htmlFor="username">Username</FormLabel>
+                                    <TextField
+                                        {...field}
+                                        autoComplete="username"
+                                        autoFocus
+                                        color={Boolean(fieldState.error) ? 'error' : 'primary'}
+                                        error={Boolean(fieldState.error)}
+                                        fullWidth
+                                        helperText={fieldState.error?.message}
+                                        id="username"
+                                        name="username"
+                                        placeholder="tralalero"
+                                        required
+                                        type="text"
+                                        variant="outlined"
+                                    />
+                                </FormControl>
+                            )}
+                        />
+                        <Controller
+                            name="password"
+                            control={control}
+                            rules={{ required: 'Password is required', minLength: { value: 8, message: 'Min 8 characters' } }}
+                            render={({ field, fieldState }) => (
+                                <FormControl>
+                                    <FormLabel htmlFor="password">Password</FormLabel>
+                                    <TextField
+                                        {...field}
+                                        autoComplete="new-password"
+                                        color={Boolean(fieldState.error) ? 'error' : 'primary'}
+                                        error={Boolean(fieldState.error)}
+                                        fullWidth
+                                        helperText={fieldState.error?.message}
+                                        id="password"
+                                        name="password"
+                                        placeholder="••••••"
+                                        required
+                                        type="password"
+                                        variant="outlined"
+                                    />
+                                </FormControl>
+                            )}
+                        />
+                        <Button
+                            endIcon={<AccountCircle />}
+                            fullWidth
+                            loading={loading}
+                            type="submit"
+                            variant="outlined"
+                        >
+                            Sign up
+                        </Button>
+                    </Box>
+                    <Divider>
+                        <Typography sx={{ color: 'text.secondary' }}>or</Typography>
+                    </Divider>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                        <Typography sx={{ textAlign: 'center' }}>
+                            Already have an account?{' '}
+                            <Link
+                                href="/auth/login"
+                                sx={{ alignSelf: 'center' }}
+                                variant="body2"
+                            >
+                                Sign in
+                            </Link>
+                        </Typography>
+                        <Copyright />
+                    </Box>
+                </Card>
+            </SignUpContainer>
+        </AppTheme>
+    );
+}

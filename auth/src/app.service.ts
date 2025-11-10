@@ -1,0 +1,45 @@
+import * as argon2 from 'argon2';
+import { ClientProxy } from '@nestjs/microservices';
+import { Inject, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { UnauthorizedException } from '@nestjs/common';
+import { UsersService } from './users/users.service';
+
+@Injectable()
+export class AppService {
+    constructor(
+        private readonly users: UsersService,
+        private readonly jwt: JwtService,
+        @Inject('USER_SERVICE') private readonly client: ClientProxy
+    ) { }
+
+    private jwtPayload(user: { id: number; username: string }) {
+        return { sub: String(user.id), username: user.username };
+    }
+
+    async register(username: string, password: string) {
+        try {
+            const user = await this.users.createUser({ username: username, password });
+
+            this.client.emit('user.created', { id: user.id });
+
+            const token = await this.jwt.signAsync(this.jwtPayload({ id: user.id, username: user.username }));
+            return { user: this.users.sanitize(user), accessToken: token };
+        } catch (err) {
+            // users.createUser already throws ConflictException for duplicates
+            if (err.name === 'ConflictException') throw err;
+            throw new InternalServerErrorException('Failed to create user');
+        }
+    }
+
+    async login(username: string, password: string) {
+        const user = await this.users.findByUsername(username);
+        if (!user) throw new UnauthorizedException('Invalid credentials');
+
+        const ok = await argon2.verify(user.passwordHash, password);
+        if (!ok) throw new UnauthorizedException('Invalid credentials');
+
+        const token = await this.jwt.signAsync(this.jwtPayload({ id: user.id, username: user.username }));
+        return { user: this.users.sanitize(user), accessToken: token };
+    }
+}
