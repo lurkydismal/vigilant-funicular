@@ -1,0 +1,295 @@
+import * as ReactRouter from 'react-router-dom';
+import Avatar from "@mui/material/Avatar";
+import AvatarGroup from "@mui/material/AvatarGroup";
+import Box from "@mui/material/Box";
+import FollowButton from '../shared/FollowButton';
+import Typography from "@mui/material/Typography";
+import { TypographyVariant } from "@mui/material/styles";
+import Link from '@mui/material/Link';
+
+export interface Author {
+    id: number;
+    name: string;
+    avatar?: string;
+};
+
+// TODO: Accept Element to simplify other Author functions
+export function Author({ author, variant, avatarWidth, avatarHeight }: { author: Author, variant?: TypographyVariant, avatarWidth?: number, avatarHeight?: number }) {
+    const width = avatarWidth ?? 24;
+    const height = avatarHeight ?? 24;
+
+    return (
+        <Box
+            sx={{
+                alignItems: 'center',
+                display: 'flex',
+                flexDirection: 'row',
+                gap: 2,
+                justifyContent: 'space-between',
+                padding: '16px',
+            }}
+        >
+            <Box
+                sx={{ display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center' }}
+            >
+                <Avatar
+                    alt={author.name}
+                    src={author.avatar}
+                    sx={{ width, height }}
+                />
+                <Typography variant={variant ?? "caption"}>
+                    {author.name}
+                </Typography>
+            </Box>
+        </Box>
+    );
+}
+
+export function Authors({ authors, variant, avatarWidth, avatarHeight }: { authors: Author[], variant?: TypographyVariant, avatarWidth?: number, avatarHeight?: number }) {
+    const width = avatarWidth ?? 24;
+    const height = avatarHeight ?? 24;
+
+    return (
+        <Box
+            sx={{
+                alignItems: 'center',
+                display: 'flex',
+                flexDirection: 'row',
+                gap: 2,
+                justifyContent: 'space-between',
+                padding: '16px',
+            }}
+        >
+            <Box
+                sx={{ display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center' }}
+            >
+                <AvatarGroup max={3}>
+                    {authors.map((author, index) => (
+                        <Avatar
+                            alt={author.name}
+                            key={index}
+                            src={author.avatar}
+                            sx={{ width, height }}
+                        />
+                    ))}
+                </AvatarGroup>
+                <Typography variant={variant ?? "caption"}>
+                    {authors.map((author) => author.name).join(', ')}
+                </Typography>
+            </Box>
+        </Box>
+    );
+}
+
+// TODO: Real date
+export function AuthorWithDate({ author, variant, avatarWidth, avatarHeight }: { author: Author, variant?: TypographyVariant, avatarWidth?: number, avatarHeight?: number }) {
+    const width = avatarWidth ?? 24;
+    const height = avatarHeight ?? 24;
+
+    return (
+        <Box
+            sx={{
+                alignItems: 'center',
+                display: 'flex',
+                flexDirection: 'row',
+                gap: 2,
+                justifyContent: 'space-between',
+                padding: '16px',
+            }}
+        >
+            <Box
+                sx={{ display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center' }}
+            >
+                <Avatar
+                    alt={author.name}
+                    src={author.avatar}
+                    sx={{ width, height }}
+                />
+                <Typography variant={variant ?? "caption"}>
+                    {author.name}
+                </Typography>
+            </Box>
+            <Typography variant={variant ?? "caption"}>
+                {
+                    new Date().toLocaleDateString("en-US", {
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric",
+                    })
+                }
+            </Typography>
+        </Box>
+    );
+}
+
+// TODO: Author id
+export function AuthorWithDateAndLink({ author, variant, avatarWidth, avatarHeight }: { author: Author, variant?: TypographyVariant, avatarWidth?: number, avatarHeight?: number }) {
+    const navigate = ReactRouter.useNavigate();
+
+    const width = avatarWidth ?? 24;
+    const height = avatarHeight ?? 24;
+
+    return (
+        <Box
+            sx={{
+                alignItems: 'center',
+                display: 'flex',
+                flexDirection: 'row',
+                gap: 2,
+                justifyContent: 'space-between',
+                padding: '16px',
+            }}
+        >
+            <Link
+                onClick={() => { navigate(`/profile/${1}`) }}
+                underline='none'
+                href="#"
+            >
+                <Box
+                    sx={{ display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center' }}
+                >
+                    <Avatar
+                        alt={author.name}
+                        src={author.avatar}
+                        sx={{ width, height }}
+                    />
+                    <Typography variant={variant ?? "caption"}>
+                        {author.name}
+                    </Typography>
+                </Box>
+            </Link>
+            <Typography variant={variant ?? "caption"}>
+                {
+                    new Date().toLocaleDateString("en-US", {
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric",
+                    })
+                }
+            </Typography>
+        </Box>
+    );
+}
+
+export function AuthorsWithDate({ authors, variant, avatarWidth, avatarHeight }: { authors: Author[], variant?: TypographyVariant, avatarWidth?: number, avatarHeight?: number }) {
+    const width = avatarWidth ?? 24;
+    const height = avatarHeight ?? 24;
+
+    return (
+        <Box
+            sx={{
+                alignItems: 'center',
+                display: 'flex',
+                flexDirection: 'row',
+                gap: 2,
+                justifyContent: 'space-between',
+                padding: '16px',
+            }}
+        >
+            <Box
+                sx={{ display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center' }}
+            >
+                <AvatarGroup max={3}>
+                    {authors.map((author, index) => (
+                        <Avatar
+                            alt={author.name}
+                            key={index}
+                            src={author.avatar}
+                            sx={{ width, height }}
+                        />
+                    ))}
+                </AvatarGroup>
+                <Typography variant={variant ?? "caption"}>
+                    {authors.map((author) => author.name).join(', ')}
+                </Typography>
+            </Box>
+            <Typography variant={variant ?? "caption"}>
+                {
+                    new Date().toLocaleDateString("en-US", {
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric",
+                    })
+                }
+            </Typography>
+        </Box>
+    );
+}
+
+export function AuthorWithFollow({ author, variant, avatarWidth, avatarHeight, doesFollow }: { author: Author, variant?: TypographyVariant, avatarWidth?: number, avatarHeight?: number, doesFollow: boolean }) {
+    const width = avatarWidth ?? 24;
+    const height = avatarHeight ?? 24;
+
+
+    // TODO: Implement author id
+    return (
+        <Box
+            sx={{
+                alignItems: 'center',
+                display: 'flex',
+                flexDirection: 'row',
+                gap: 2,
+                justifyContent: 'space-between',
+                padding: '16px',
+            }}
+        >
+            <Box
+                sx={{ display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center' }}
+            >
+                <Avatar
+                    alt={author.name}
+                    src={author.avatar}
+                    sx={{ width, height }}
+                />
+                <Typography variant={variant ?? "caption"}>
+                    {author.name}
+                </Typography>
+            </Box>
+            <FollowButton id={Math.floor(Math.random() * 1000)} doesFollow={doesFollow} size='large'></FollowButton>
+        </Box>
+    );
+}
+
+// TODO: Author id
+export function AuthorWithFollowAndLink({ author, variant, avatarWidth, avatarHeight, doesFollow }: { author: Author, variant?: TypographyVariant, avatarWidth?: number, avatarHeight?: number, doesFollow: boolean }) {
+    const navigate = ReactRouter.useNavigate();
+    // href={`/profile/${id}`}
+
+    const width = avatarWidth ?? 24;
+    const height = avatarHeight ?? 24;
+
+
+    // TODO: Implement author id
+    return (
+        <Box
+            sx={{
+                alignItems: 'center',
+                display: 'flex',
+                flexDirection: 'row',
+                gap: 2,
+                justifyContent: 'space-between',
+                padding: '16px',
+            }}
+        >
+            <Link
+                onClick={() => { navigate(`/profile/${1}`) }}
+                underline='none'
+                href="#"
+            >
+                <Box
+                    sx={{ display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center' }}
+                >
+                    <Avatar
+                        alt={author.name}
+                        src={author.avatar}
+                        sx={{ width, height }}
+                    />
+                    <Typography variant={variant ?? "caption"}>
+                        {author.name}
+                    </Typography>
+                </Box>
+            </Link>
+            <FollowButton id={Math.floor(Math.random() * 1000)} doesFollow={doesFollow}></FollowButton>
+        </Box>
+    );
+}

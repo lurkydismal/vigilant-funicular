@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as ReactRouter from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -29,6 +30,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 }));
 
 export default function NavBar() {
+    const navigate = ReactRouter.useNavigate();
     const [open, setOpen] = React.useState(false);
 
     const toggleDrawer = (newOpen: boolean) => () => {
@@ -50,10 +52,22 @@ export default function NavBar() {
                 <StyledToolbar variant="dense" disableGutters>
                     <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0 }}>
                         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                            <Button variant="text" color="info" size="small" href='/epistles'>
+                            <Button
+                                variant="text"
+                                color="info"
+                                size="small"
+                                onClick={() => { navigate('/epistles') }}
+                                href='#'
+                            >
                                 Epistles
                             </Button>
-                            <Button variant="text" color="info" size="small" href='/follows'>
+                            <Button
+                                variant="text"
+                                color="info"
+                                size="small"
+                                onClick={() => { navigate('/follows') }}
+                                href='#'
+                            >
                                 Follows
                             </Button>
                         </Box>
@@ -66,13 +80,31 @@ export default function NavBar() {
                             gap: 1,
                         }}
                     >
-                        <Button color="primary" variant="contained" size="small" href='/new-post'>
+                        <Button
+                            color="primary"
+                            variant="contained"
+                            size="small"
+                            onClick={() => { navigate('/new-post') }}
+                            href='#'
+                        >
                             New post
                         </Button>
-                        <Button color="primary" variant="contained" size="small" href='/posts'>
+                        <Button
+                            color="primary"
+                            variant="contained"
+                            size="small"
+                            onClick={() => { navigate('/posts') }}
+                            href='#'
+                        >
                             Posts
                         </Button>
-                        <Button color="primary" variant="contained" size="small" href='/profile'>
+                        <Button
+                            color="primary"
+                            variant="contained"
+                            size="small"
+                            onClick={() => { navigate('/profile') }}
+                            href='#'
+                        >
                             My profile
                         </Button>
                     </Box>
@@ -103,17 +135,45 @@ export default function NavBar() {
                                         <CloseRoundedIcon />
                                     </IconButton>
                                 </Box>
-                                <MenuItem href='/epistles'>Epistles</MenuItem>
-                                <MenuItem href='/follows'>Follows</MenuItem>
+                                <MenuItem
+                                    onClick={() => { navigate('/epistles') }}
+                                    href='#'
+                                >
+                                    Epistles
+                                </MenuItem>
+                                <MenuItem
+                                    onClick={() => { navigate('/follows') }}
+                                    href='#'
+                                >
+                                    Follows
+                                </MenuItem>
                                 <Divider sx={{ my: 3 }} />
                                 <MenuItem>
-                                    <Button color="primary" variant="contained" href='/new-posts' fullWidth>
+                                    <Button
+                                        color="primary"
+                                        variant="contained"
+                                        onClick={() => { navigate('/new-posts') }}
+                                        href='#'
+                                        fullWidth
+                                    >
                                         New posts
                                     </Button>
-                                    <Button color="primary" variant="contained" href='/posts' fullWidth>
+                                    <Button
+                                        color="primary"
+                                        variant="contained"
+                                        onClick={() => { navigate('/posts') }}
+                                        href='#'
+                                        fullWidth
+                                    >
                                         Posts
                                     </Button>
-                                    <Button color="primary" variant="contained" href='/profile' fullWidth>
+                                    <Button
+                                        color="primary"
+                                        variant="contained"
+                                        onClick={() => { navigate('/profile') }}
+                                        href='#'
+                                        fullWidth
+                                    >
                                         My profile
                                     </Button>
                                 </MenuItem>

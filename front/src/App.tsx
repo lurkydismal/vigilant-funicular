@@ -30,7 +30,7 @@ export default function App() {
                 <Route path="/auth/register" element={<SignUp />} />
                 <Route path="/auth/login" element={<SignIn />} />
                 <Route element={<ProtectedRoute />}>
-                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/profile/:id?" element={<Profile />} />
                     <Route path="/posts" element={<Posts />} />
                     <Route path="/new-post" element={<New_Post />} />
                     <Route path="/follows" element={<Follows />} />

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as ReactRouter from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
@@ -7,9 +8,11 @@ import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { Copyright } from './Copyright';
+import { Copyright, githubUrl } from './Copyright';
 
 export default function Footer() {
+    const navigate = ReactRouter.useNavigate();
+
     return (
         <React.Fragment>
             <Divider />
@@ -30,13 +33,23 @@ export default function Footer() {
                     }}
                 >
                     <div>
-                        <Link color="text.secondary" variant="body2" href="#">
+                        <Link
+                            color="text.secondary"
+                            variant="body2"
+                            onClick={() => { navigate(`/privacy`) }}
+                            href="#"
+                        >
                             Privacy Policy
                         </Link>
                         <Typography sx={{ display: 'inline', mx: 0.5, opacity: 0.5 }}>
                             &nbsp;•&nbsp;
                         </Typography>
-                        <Link color="text.secondary" variant="body2" href="#">
+                        <Link
+                            color="text.secondary"
+                            variant="body2"
+                            onClick={() => { navigate(`/terms`) }}
+                            href="#"
+                        >
                             Terms of Service
                         </Link>
                         <Copyright />
@@ -50,7 +63,7 @@ export default function Footer() {
                         <IconButton
                             aria-label="GitHub"
                             color="inherit"
-                            href={import.meta.env.VITE_GITHUB_LINK}
+                            href={githubUrl}
                             size="small"
                             sx={{ alignSelf: 'center' }}
                         >

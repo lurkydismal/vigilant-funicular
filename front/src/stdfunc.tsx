@@ -1,3 +1,5 @@
+import { user } from './shared/TestData';
+
 type Method = 'POST' | 'GET' | 'PUT' | 'DELETE';
 
 export const isDev = (import.meta.env.MODE != 'production');
@@ -81,10 +83,7 @@ export function storeCredentials(credentials: UserCredentials) {
 
 export function getCredentials(): UserCredentials {
     if (isDev) {
-        const id = 1;
-        const username = "TestUser";
-
-        return { id, username };
+        return user;
 
     } else {
         const id = localStorage.getItem('id');

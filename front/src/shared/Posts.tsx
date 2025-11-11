@@ -6,34 +6,19 @@ import CardMedia from '@mui/material/CardMedia';
 import Grid from "@mui/material/Grid";
 import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
 import Typography from "@mui/material/Typography";
-import { Author, AuthorWithDate } from "./Author";
+import { Author, AuthorsWithDate } from "./Author";
 import { styled } from '@mui/material/styles';
-import { isDev } from './stdfunc';
 
 export interface Post {
     authors: Author[];
     content: string;
     createdAt: string;
     description: string;
-    id?: number; //< Optional for dev
+    id: number;
     tag: string;
     imageUrl?: string;
     title: string;
 };
-
-export function validatePosts(posts: Post[]) {
-    if (!isDev) {
-        const invalid = posts.find(post => !('id' in post));
-
-        if (invalid) {
-            throw new Error(`Invalid post: ${JSON.stringify(invalid)}`);
-        }
-
-        // if (!posts.every(post => 'id' in post)) {
-        //     throw new Error("Invalid posts");
-        // }
-    }
-}
 
 const StyledCard = styled(Card)(({ theme }) => ({
     backgroundColor: (theme.vars || theme).palette.background.paper,
@@ -72,8 +57,6 @@ const StyledTypography = styled(Typography)({
 });
 
 export function Posts({ posts }: { posts: Post[] }) {
-    validatePosts(posts);
-
     const [focusedCardIndex, setFocusedCardIndex] = React.useState<number | null>(
         null,
     );
@@ -121,7 +104,7 @@ export function Posts({ posts }: { posts: Post[] }) {
                                 {post.description}
                             </StyledTypography>
                         </StyledCardContent>
-                        <AuthorWithDate authors={post.authors} />
+                        <AuthorsWithDate authors={post.authors} />
                     </StyledCard>
                 </Grid>
             ))}
@@ -213,7 +196,7 @@ export function PostsWithoutImage({ posts }: { posts: Post[] }) {
                             {post.description}
                         </StyledTypography>
 
-                        <AuthorWithDate authors={post.authors} />
+                        <AuthorsWithDate authors={post.authors} />
                     </Box>
                 </Grid>
             ))}

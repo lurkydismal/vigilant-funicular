@@ -1,17 +1,22 @@
-export const postsData = [
+export const user = {
+    id: 1,
+    username: "TestUser",
+};
+
+const postsDataTemp = [
     {
         description: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Engineering',
         title: 'Revolutionizing software development with cutting-edge tools',
         authors: [
-            { name: 'Remy Sharp', avatar: '/static/images/avatar/1.jpg' },
-            { name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' },
+            { id: 1, name: 'Remy Sharp', avatar: '/static/images/avatar/1.jpg' },
+            { id: 1, name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' },
         ],
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Erica Johns', avatar: '/static/images/avatar/6.jpg' }],
+        authors: [{ id: 1, name: 'Erica Johns', avatar: '/static/images/avatar/6.jpg' }],
         description: 'Explore the key features of our latest product release that are helping businesses achieve their goals. From user-friendly interfaces to robust functionality, learn why our product stands out.',
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Product',
@@ -19,7 +24,7 @@ export const postsData = [
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Kate Morrison', avatar: '/static/images/avatar/7.jpg' }],
+        authors: [{ id: 1, name: 'Kate Morrison', avatar: '/static/images/avatar/7.jpg' }],
         description: 'Stay ahead of the curve with the latest design trends and insights. Our design team shares their expertise on creating intuitive and visually stunning user experiences.',
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Design',
@@ -27,7 +32,7 @@ export const postsData = [
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Cindy Baker', avatar: '/static/images/avatar/3.jpg' }],
+        authors: [{ id: 1, name: 'Cindy Baker', avatar: '/static/images/avatar/3.jpg' }],
         description: "Take a look at our company's journey and the milestones we've achieved along the way. From humble beginnings to industry leader, discover our story of growth and success.",
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Company',
@@ -40,13 +45,13 @@ export const postsData = [
         tag: 'Engineering',
         title: 'Pioneering sustainable engineering solutions',
         authors: [
-            { name: 'Agnes Walker', avatar: '/static/images/avatar/4.jpg' },
-            { name: 'Trevor Henderson', avatar: '/static/images/avatar/5.jpg' },
+            { id: 1, name: 'Agnes Walker', avatar: '/static/images/avatar/4.jpg' },
+            { id: 1, name: 'Trevor Henderson', avatar: '/static/images/avatar/5.jpg' },
         ],
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' }],
+        authors: [{ id: 1, name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' }],
         description: 'Our recent product updates are designed to help you maximize efficiency and achieve more. Get a detailed overview of the new features and improvements that can elevate your workflow.',
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Product',
@@ -54,7 +59,7 @@ export const postsData = [
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Erica Johns', avatar: '/static/images/avatar/6.jpg' }],
+        authors: [{ id: 1, name: 'Erica Johns', avatar: '/static/images/avatar/6.jpg' }],
         description: 'Explore the key features of our latest product release that are helping businesses achieve their goals. From user-friendly interfaces to robust functionality, learn why our product stands out.',
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Product',
@@ -62,7 +67,7 @@ export const postsData = [
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Kate Morrison', avatar: '/static/images/avatar/7.jpg' }],
+        authors: [{ id: 1, name: 'Kate Morrison', avatar: '/static/images/avatar/7.jpg' }],
         description: 'Stay ahead of the curve with the latest design trends and insights. Our design team shares their expertise on creating intuitive and visually stunning user experiences.',
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Design',
@@ -70,7 +75,7 @@ export const postsData = [
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Cindy Baker', avatar: '/static/images/avatar/3.jpg' }],
+        authors: [{ id: 1, name: 'Cindy Baker', avatar: '/static/images/avatar/3.jpg' }],
         description: "Take a look at our company's journey and the milestones we've achieved along the way. From humble beginnings to industry leader, discover our story of growth and success.",
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Company',
@@ -83,67 +88,13 @@ export const postsData = [
         tag: 'Engineering',
         title: 'Pioneering sustainable engineering solutions',
         authors: [
-            { name: 'Agnes Walker', avatar: '/static/images/avatar/4.jpg' },
-            { name: 'Trevor Henderson', avatar: '/static/images/avatar/5.jpg' },
+            { id: 1, name: 'Agnes Walker', avatar: '/static/images/avatar/4.jpg' },
+            { id: 1, name: 'Trevor Henderson', avatar: '/static/images/avatar/5.jpg' },
         ],
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' }],
-        description: 'Our recent product updates are designed to help you maximize efficiency and achieve more. Get a detailed overview of the new features and improvements that can elevate your workflow.',
-        content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
-        tag: 'Product',
-        title: 'Maximizing efficiency with our latest product updates',
-        createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
-    },
-    {
-        description: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
-        content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
-        tag: 'Engineering',
-        title: 'Revolutionizing software development with cutting-edge tools',
-        authors: [
-            { name: 'Remy Sharp', avatar: '/static/images/avatar/1.jpg' },
-            { name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' },
-        ],
-        createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
-    },
-    {
-        authors: [{ name: 'Erica Johns', avatar: '/static/images/avatar/6.jpg' }],
-        description: 'Explore the key features of our latest product release that are helping businesses achieve their goals. From user-friendly interfaces to robust functionality, learn why our product stands out.',
-        content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
-        tag: 'Product',
-        title: 'Innovative product features that drive success',
-        createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
-    },
-    {
-        authors: [{ name: 'Kate Morrison', avatar: '/static/images/avatar/7.jpg' }],
-        description: 'Stay ahead of the curve with the latest design trends and insights. Our design team shares their expertise on creating intuitive and visually stunning user experiences.',
-        content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
-        tag: 'Design',
-        title: 'Designing for the future: trends and insights',
-        createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
-    },
-    {
-        authors: [{ name: 'Cindy Baker', avatar: '/static/images/avatar/3.jpg' }],
-        description: "Take a look at our company's journey and the milestones we've achieved along the way. From humble beginnings to industry leader, discover our story of growth and success.",
-        content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
-        tag: 'Company',
-        title: "Our company's journey: milestones and achievements",
-        createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
-    },
-    {
-        description: "Learn about our commitment to sustainability and the innovative engineering solutions we're implementing to create a greener future. Discover the impact of our eco-friendly initiatives.",
-        content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
-        tag: 'Engineering',
-        title: 'Pioneering sustainable engineering solutions',
-        authors: [
-            { name: 'Agnes Walker', avatar: '/static/images/avatar/4.jpg' },
-            { name: 'Trevor Henderson', avatar: '/static/images/avatar/5.jpg' },
-        ],
-        createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
-    },
-    {
-        authors: [{ name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' }],
+        authors: [{ id: 1, name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' }],
         description: 'Our recent product updates are designed to help you maximize efficiency and achieve more. Get a detailed overview of the new features and improvements that can elevate your workflow.',
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Product',
@@ -156,13 +107,13 @@ export const postsData = [
         tag: 'Engineering',
         title: 'Revolutionizing software development with cutting-edge tools',
         authors: [
-            { name: 'Remy Sharp', avatar: '/static/images/avatar/1.jpg' },
-            { name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' },
+            { id: 1, name: 'Remy Sharp', avatar: '/static/images/avatar/1.jpg' },
+            { id: 1, name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' },
         ],
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Erica Johns', avatar: '/static/images/avatar/6.jpg' }],
+        authors: [{ id: 1, name: 'Erica Johns', avatar: '/static/images/avatar/6.jpg' }],
         description: 'Explore the key features of our latest product release that are helping businesses achieve their goals. From user-friendly interfaces to robust functionality, learn why our product stands out.',
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Product',
@@ -170,7 +121,7 @@ export const postsData = [
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Kate Morrison', avatar: '/static/images/avatar/7.jpg' }],
+        authors: [{ id: 1, name: 'Kate Morrison', avatar: '/static/images/avatar/7.jpg' }],
         description: 'Stay ahead of the curve with the latest design trends and insights. Our design team shares their expertise on creating intuitive and visually stunning user experiences.',
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Design',
@@ -178,7 +129,7 @@ export const postsData = [
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Cindy Baker', avatar: '/static/images/avatar/3.jpg' }],
+        authors: [{ id: 1, name: 'Cindy Baker', avatar: '/static/images/avatar/3.jpg' }],
         description: "Take a look at our company's journey and the milestones we've achieved along the way. From humble beginnings to industry leader, discover our story of growth and success.",
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Company',
@@ -191,13 +142,13 @@ export const postsData = [
         tag: 'Engineering',
         title: 'Pioneering sustainable engineering solutions',
         authors: [
-            { name: 'Agnes Walker', avatar: '/static/images/avatar/4.jpg' },
-            { name: 'Trevor Henderson', avatar: '/static/images/avatar/5.jpg' },
+            { id: 1, name: 'Agnes Walker', avatar: '/static/images/avatar/4.jpg' },
+            { id: 1, name: 'Trevor Henderson', avatar: '/static/images/avatar/5.jpg' },
         ],
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' }],
+        authors: [{ id: 1, name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' }],
         description: 'Our recent product updates are designed to help you maximize efficiency and achieve more. Get a detailed overview of the new features and improvements that can elevate your workflow.',
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Product',
@@ -210,13 +161,13 @@ export const postsData = [
         tag: 'Engineering',
         title: 'Revolutionizing software development with cutting-edge tools',
         authors: [
-            { name: 'Remy Sharp', avatar: '/static/images/avatar/1.jpg' },
-            { name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' },
+            { id: 1, name: 'Remy Sharp', avatar: '/static/images/avatar/1.jpg' },
+            { id: 1, name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' },
         ],
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Erica Johns', avatar: '/static/images/avatar/6.jpg' }],
+        authors: [{ id: 1, name: 'Erica Johns', avatar: '/static/images/avatar/6.jpg' }],
         description: 'Explore the key features of our latest product release that are helping businesses achieve their goals. From user-friendly interfaces to robust functionality, learn why our product stands out.',
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Product',
@@ -224,7 +175,7 @@ export const postsData = [
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Kate Morrison', avatar: '/static/images/avatar/7.jpg' }],
+        authors: [{ id: 1, name: 'Kate Morrison', avatar: '/static/images/avatar/7.jpg' }],
         description: 'Stay ahead of the curve with the latest design trends and insights. Our design team shares their expertise on creating intuitive and visually stunning user experiences.',
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Design',
@@ -232,7 +183,7 @@ export const postsData = [
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Cindy Baker', avatar: '/static/images/avatar/3.jpg' }],
+        authors: [{ id: 1, name: 'Cindy Baker', avatar: '/static/images/avatar/3.jpg' }],
         description: "Take a look at our company's journey and the milestones we've achieved along the way. From humble beginnings to industry leader, discover our story of growth and success.",
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Company',
@@ -245,13 +196,13 @@ export const postsData = [
         tag: 'Engineering',
         title: 'Pioneering sustainable engineering solutions',
         authors: [
-            { name: 'Agnes Walker', avatar: '/static/images/avatar/4.jpg' },
-            { name: 'Trevor Henderson', avatar: '/static/images/avatar/5.jpg' },
+            { id: 1, name: 'Agnes Walker', avatar: '/static/images/avatar/4.jpg' },
+            { id: 1, name: 'Trevor Henderson', avatar: '/static/images/avatar/5.jpg' },
         ],
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' }],
+        authors: [{ id: 1, name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' }],
         description: 'Our recent product updates are designed to help you maximize efficiency and achieve more. Get a detailed overview of the new features and improvements that can elevate your workflow.',
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Product',
@@ -264,13 +215,13 @@ export const postsData = [
         tag: 'Engineering',
         title: 'Revolutionizing software development with cutting-edge tools',
         authors: [
-            { name: 'Remy Sharp', avatar: '/static/images/avatar/1.jpg' },
-            { name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' },
+            { id: 1, name: 'Remy Sharp', avatar: '/static/images/avatar/1.jpg' },
+            { id: 1, name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' },
         ],
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Erica Johns', avatar: '/static/images/avatar/6.jpg' }],
+        authors: [{ id: 1, name: 'Erica Johns', avatar: '/static/images/avatar/6.jpg' }],
         description: 'Explore the key features of our latest product release that are helping businesses achieve their goals. From user-friendly interfaces to robust functionality, learn why our product stands out.',
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Product',
@@ -278,7 +229,7 @@ export const postsData = [
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Kate Morrison', avatar: '/static/images/avatar/7.jpg' }],
+        authors: [{ id: 1, name: 'Kate Morrison', avatar: '/static/images/avatar/7.jpg' }],
         description: 'Stay ahead of the curve with the latest design trends and insights. Our design team shares their expertise on creating intuitive and visually stunning user experiences.',
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Design',
@@ -286,7 +237,7 @@ export const postsData = [
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Cindy Baker', avatar: '/static/images/avatar/3.jpg' }],
+        authors: [{ id: 1, name: 'Cindy Baker', avatar: '/static/images/avatar/3.jpg' }],
         description: "Take a look at our company's journey and the milestones we've achieved along the way. From humble beginnings to industry leader, discover our story of growth and success.",
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Company',
@@ -299,13 +250,13 @@ export const postsData = [
         tag: 'Engineering',
         title: 'Pioneering sustainable engineering solutions',
         authors: [
-            { name: 'Agnes Walker', avatar: '/static/images/avatar/4.jpg' },
-            { name: 'Trevor Henderson', avatar: '/static/images/avatar/5.jpg' },
+            { id: 1, name: 'Agnes Walker', avatar: '/static/images/avatar/4.jpg' },
+            { id: 1, name: 'Trevor Henderson', avatar: '/static/images/avatar/5.jpg' },
         ],
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' }],
+        authors: [{ id: 1, name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' }],
         description: 'Our recent product updates are designed to help you maximize efficiency and achieve more. Get a detailed overview of the new features and improvements that can elevate your workflow.',
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Product',
@@ -318,13 +269,13 @@ export const postsData = [
         tag: 'Engineering',
         title: 'Revolutionizing software development with cutting-edge tools',
         authors: [
-            { name: 'Remy Sharp', avatar: '/static/images/avatar/1.jpg' },
-            { name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' },
+            { id: 1, name: 'Remy Sharp', avatar: '/static/images/avatar/1.jpg' },
+            { id: 1, name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' },
         ],
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Erica Johns', avatar: '/static/images/avatar/6.jpg' }],
+        authors: [{ id: 1, name: 'Erica Johns', avatar: '/static/images/avatar/6.jpg' }],
         description: 'Explore the key features of our latest product release that are helping businesses achieve their goals. From user-friendly interfaces to robust functionality, learn why our product stands out.',
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Product',
@@ -332,7 +283,7 @@ export const postsData = [
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Kate Morrison', avatar: '/static/images/avatar/7.jpg' }],
+        authors: [{ id: 1, name: 'Kate Morrison', avatar: '/static/images/avatar/7.jpg' }],
         description: 'Stay ahead of the curve with the latest design trends and insights. Our design team shares their expertise on creating intuitive and visually stunning user experiences.',
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Design',
@@ -340,7 +291,7 @@ export const postsData = [
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Cindy Baker', avatar: '/static/images/avatar/3.jpg' }],
+        authors: [{ id: 1, name: 'Cindy Baker', avatar: '/static/images/avatar/3.jpg' }],
         description: "Take a look at our company's journey and the milestones we've achieved along the way. From humble beginnings to industry leader, discover our story of growth and success.",
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Company',
@@ -353,13 +304,13 @@ export const postsData = [
         tag: 'Engineering',
         title: 'Pioneering sustainable engineering solutions',
         authors: [
-            { name: 'Agnes Walker', avatar: '/static/images/avatar/4.jpg' },
-            { name: 'Trevor Henderson', avatar: '/static/images/avatar/5.jpg' },
+            { id: 1, name: 'Agnes Walker', avatar: '/static/images/avatar/4.jpg' },
+            { id: 1, name: 'Trevor Henderson', avatar: '/static/images/avatar/5.jpg' },
         ],
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' }],
+        authors: [{ id: 1, name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' }],
         description: 'Our recent product updates are designed to help you maximize efficiency and achieve more. Get a detailed overview of the new features and improvements that can elevate your workflow.',
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Product',
@@ -372,13 +323,13 @@ export const postsData = [
         tag: 'Engineering',
         title: 'Revolutionizing software development with cutting-edge tools',
         authors: [
-            { name: 'Remy Sharp', avatar: '/static/images/avatar/1.jpg' },
-            { name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' },
+            { id: 1, name: 'Remy Sharp', avatar: '/static/images/avatar/1.jpg' },
+            { id: 1, name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' },
         ],
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Erica Johns', avatar: '/static/images/avatar/6.jpg' }],
+        authors: [{ id: 1, name: 'Erica Johns', avatar: '/static/images/avatar/6.jpg' }],
         description: 'Explore the key features of our latest product release that are helping businesses achieve their goals. From user-friendly interfaces to robust functionality, learn why our product stands out.',
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Product',
@@ -386,7 +337,7 @@ export const postsData = [
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Kate Morrison', avatar: '/static/images/avatar/7.jpg' }],
+        authors: [{ id: 1, name: 'Kate Morrison', avatar: '/static/images/avatar/7.jpg' }],
         description: 'Stay ahead of the curve with the latest design trends and insights. Our design team shares their expertise on creating intuitive and visually stunning user experiences.',
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Design',
@@ -394,7 +345,7 @@ export const postsData = [
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Cindy Baker', avatar: '/static/images/avatar/3.jpg' }],
+        authors: [{ id: 1, name: 'Cindy Baker', avatar: '/static/images/avatar/3.jpg' }],
         description: "Take a look at our company's journey and the milestones we've achieved along the way. From humble beginnings to industry leader, discover our story of growth and success.",
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Company',
@@ -407,13 +358,67 @@ export const postsData = [
         tag: 'Engineering',
         title: 'Pioneering sustainable engineering solutions',
         authors: [
-            { name: 'Agnes Walker', avatar: '/static/images/avatar/4.jpg' },
-            { name: 'Trevor Henderson', avatar: '/static/images/avatar/5.jpg' },
+            { id: 1, name: 'Agnes Walker', avatar: '/static/images/avatar/4.jpg' },
+            { id: 1, name: 'Trevor Henderson', avatar: '/static/images/avatar/5.jpg' },
         ],
         createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
     },
     {
-        authors: [{ name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' }],
+        authors: [{ id: 1, name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' }],
+        description: 'Our recent product updates are designed to help you maximize efficiency and achieve more. Get a detailed overview of the new features and improvements that can elevate your workflow.',
+        content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
+        tag: 'Product',
+        title: 'Maximizing efficiency with our latest product updates',
+        createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
+    },
+    {
+        description: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
+        content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
+        tag: 'Engineering',
+        title: 'Revolutionizing software development with cutting-edge tools',
+        authors: [
+            { id: 1, name: 'Remy Sharp', avatar: '/static/images/avatar/1.jpg' },
+            { id: 1, name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' },
+        ],
+        createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
+    },
+    {
+        authors: [{ id: 1, name: 'Erica Johns', avatar: '/static/images/avatar/6.jpg' }],
+        description: 'Explore the key features of our latest product release that are helping businesses achieve their goals. From user-friendly interfaces to robust functionality, learn why our product stands out.',
+        content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
+        tag: 'Product',
+        title: 'Innovative product features that drive success',
+        createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
+    },
+    {
+        authors: [{ id: 1, name: 'Kate Morrison', avatar: '/static/images/avatar/7.jpg' }],
+        description: 'Stay ahead of the curve with the latest design trends and insights. Our design team shares their expertise on creating intuitive and visually stunning user experiences.',
+        content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
+        tag: 'Design',
+        title: 'Designing for the future: trends and insights',
+        createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
+    },
+    {
+        authors: [{ id: 1, name: 'Cindy Baker', avatar: '/static/images/avatar/3.jpg' }],
+        description: "Take a look at our company's journey and the milestones we've achieved along the way. From humble beginnings to industry leader, discover our story of growth and success.",
+        content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
+        tag: 'Company',
+        title: "Our company's journey: milestones and achievements",
+        createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
+    },
+    {
+        description: "Learn about our commitment to sustainability and the innovative engineering solutions we're implementing to create a greener future. Discover the impact of our eco-friendly initiatives.",
+        content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
+        tag: 'Engineering',
+        title: 'Pioneering sustainable engineering solutions',
+        authors: [
+            { id: 1, name: 'Agnes Walker', avatar: '/static/images/avatar/4.jpg' },
+            { id: 1, name: 'Trevor Henderson', avatar: '/static/images/avatar/5.jpg' },
+        ],
+        createdAt: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
+    },
+    {
+        authors: [{ id: 1, name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' }],
         description: 'Our recent product updates are designed to help you maximize efficiency and achieve more. Get a detailed overview of the new features and improvements that can elevate your workflow.',
         content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
         tag: 'Product',
@@ -422,7 +427,7 @@ export const postsData = [
     },
 ];
 
-export const postsDataWithIds = postsData.map((post, index) => ({
+export const postsData = postsDataTemp.map((post, index) => ({
     ...post,
     id: index,
 }));
@@ -447,13 +452,6 @@ export const tags = [
 ];
 
 export const follows = postsData.map((post) => (
-    {
-        author: post.authors[0],
-        post,
-    }
-));
-
-export const followsWithIds = postsDataWithIds.map((post) => (
     {
         author: post.authors[0],
         post,

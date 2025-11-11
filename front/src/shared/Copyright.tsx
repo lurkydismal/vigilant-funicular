@@ -1,6 +1,8 @@
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 
+export const githubUrl = import.meta.env.VITE_GITHUB_LINK;
+
 export function CopyrightAligned() {
     return (
         <Typography
@@ -11,11 +13,10 @@ export function CopyrightAligned() {
             }}
         >
             {'Copyright © '}
-            <Link color="inherit" href={import.meta.env.VITE_GITHUB_LINK}>
+            <Link color="inherit" href={githubUrl}>
                 LurkyDismal
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
+            </Link>
+            {` ${new Date().getFullYear()}.`}
         </Typography>
     );
 }
@@ -30,11 +31,13 @@ export function Copyright() {
             }}
         >
             {'Copyright © '}
-            <Link color="inherit" href={import.meta.env.VITE_GITHUB_LINK}>
+            <Link
+                color="inherit"
+                href={githubUrl}
+            >
                 LurkyDismal
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
+            </Link>
+            {` ${new Date().getFullYear()}.`}
         </Typography>
     );
 }
