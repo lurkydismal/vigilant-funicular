@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import { Follows as FollowsElement } from './Follows';
 import { SearchButton } from '../../SearchButton';
 import { TagsAndSearchMobile } from '../../Tags';
-import { follows, tags } from '../../TestData';
+import { followsWithIds, tags } from '../../TestData';
 import { paginate } from '../../stdfunc';
 
 export default function Follows() {
@@ -28,8 +28,8 @@ export default function Follows() {
             </div>
             <SearchButton></SearchButton>
             <TagsAndSearchMobile tags={tags}></TagsAndSearchMobile>
-            <FollowsElement follows={paginate(follows, currentPage, perPage)}></FollowsElement>
-            <PostsPagination total={follows.length} perPage={perPage} onChange={onChange}></PostsPagination>
+            <FollowsElement follows={paginate(followsWithIds, currentPage, perPage)}></FollowsElement>
+            <PostsPagination total={followsWithIds.length} perPage={perPage} onChange={onChange}></PostsPagination>
         </Box>
     );
 }

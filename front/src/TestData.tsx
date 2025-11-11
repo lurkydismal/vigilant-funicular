@@ -449,6 +449,13 @@ export const tags = [
 export const follows = postsData.map((post) => (
     {
         author: post.authors[0],
-        post: post,
+        post,
+    }
+));
+
+export const followsWithIds = postsDataWithIds.map((post) => (
+    {
+        author: post.authors[0],
+        post,
     }
 ));

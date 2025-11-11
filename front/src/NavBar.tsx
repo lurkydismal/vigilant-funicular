@@ -56,9 +56,6 @@ export default function NavBar() {
                             <Button variant="text" color="info" size="small" href='/follows'>
                                 Follows
                             </Button>
-                            <Button variant="text" color="info" size="small" href='/new-post' sx={{ minWidth: 0 }}>
-                                New post
-                            </Button>
                         </Box>
                     </Box>
                     <Box
@@ -69,6 +66,9 @@ export default function NavBar() {
                             gap: 1,
                         }}
                     >
+                        <Button color="primary" variant="contained" size="small" href='/new-post'>
+                            New post
+                        </Button>
                         <Button color="primary" variant="contained" size="small" href='/posts'>
                             Posts
                         </Button>
@@ -105,9 +105,11 @@ export default function NavBar() {
                                 </Box>
                                 <MenuItem href='/epistles'>Epistles</MenuItem>
                                 <MenuItem href='/follows'>Follows</MenuItem>
-                                <MenuItem href='/new-post'>New post</MenuItem>
                                 <Divider sx={{ my: 3 }} />
                                 <MenuItem>
+                                    <Button color="primary" variant="contained" href='/new-posts' fullWidth>
+                                        New posts
+                                    </Button>
                                     <Button color="primary" variant="contained" href='/posts' fullWidth>
                                         Posts
                                     </Button>

@@ -63,12 +63,8 @@ export class MediaService {
         });
     }
 
+    // TODO: Improve localhost for external use
     private presignedGetObject(bucket: string, objectName: string, expirySeconds: number) {
-        return new Promise<string>((res, rej) => {
-            (this.minio as any).presignedGetObject(bucket, objectName, expirySeconds, (err: Error | null, url?: string) => {
-                if (err) return rej(err);
-                res(url || '');
-            });
-        });
+        return this.minio.presignedGetObject(bucket, objectName, expirySeconds, { requestHost: 'localhost:9000' });
     }
 }

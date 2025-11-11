@@ -23,9 +23,15 @@ export interface Post {
 
 export function validatePosts(posts: Post[]) {
     if (!isDev) {
-        if (!posts.every(post => 'id' in post)) {
-            throw new Error("Invalid posts");
+        const invalid = posts.find(post => !('id' in post));
+
+        if (invalid) {
+            throw new Error(`Invalid post: ${JSON.stringify(invalid)}`);
         }
+
+        // if (!posts.every(post => 'id' in post)) {
+        //     throw new Error("Invalid posts");
+        // }
     }
 }
 
