@@ -1,19 +1,41 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
+import * as ReactRouter from 'react-router-dom';
 import Box from '@mui/material/Box';
-import PostsPagination from '../../Pagination';
-import Typography from '@mui/material/Typography';
-import { Posts } from '../../Posts';
-import { SearchButton } from '../../SearchButton';
-import { TagsAndSearchMobile } from '../../Tags';
+import PostsPagination from '../../shared/Pagination';
+import { Posts } from '../../shared/Posts';
+import { SearchButton } from '../../shared/SearchButton';
+import { TagsAndSearchMobile } from '../../shared/Tags';
 import { getCredentials, paginate } from '../../stdfunc';
-import { postsDataWithIds, tags } from '../../TestData';
+import { user, postsData, tags } from '../../shared/TestData';
+import { Author, AuthorWithFollow } from '../../shared/Author';
 
 // TODO: Fix avatar src
 export default function MainContent() {
     const [currentPage, setCurrentPage] = React.useState(1);
     const perPage = 6;
-    const { id, username } = getCredentials();
+
+    let id: number | null = null;
+    let username: string;
+
+    // Router parameter
+    {
+        const { id: temp } = ReactRouter.useParams();
+
+        id = Number(temp) ?? null;
+
+        // TODO: Implement
+        username = user.username;
+    }
+
+    const isMeProfile = !id;
+
+    // Router parameter
+    if (!id) {
+        const { id: temp1, username: temp2 } = getCredentials();
+
+        id = temp1;
+        username = temp2;
+    }
 
     // TODO: Implement
     const onChange = (_: React.ChangeEvent<unknown>, page: number) => {
@@ -22,35 +44,23 @@ export default function MainContent() {
         setCurrentPage(page);
     };
 
+    const properties = {
+        author: { id, name: username, avatar: username },
+        variant: 'h2',
+        avatarWidth: 48,
+        avatarHeight: 48,
+    } satisfies React.ComponentProps<typeof Author>;
+
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Box
-                sx={{
-                    alignItems: 'center',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    gap: 2,
-                    justifyContent: 'space-between',
-                    padding: '16px',
-                }}
-            >
-                <Box
-                    sx={{ display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center' }}
-                >
-                    <Avatar
-                        alt={username}
-                        key={id}
-                        src={username}
-                    />
-                    <Typography variant="h2" gutterBottom>
-                        {username}
-                    </Typography>
-                </Box>
-            </Box>
+            {isMeProfile
+                ? <Author {...properties}></Author>
+                : <AuthorWithFollow {...properties} doesFollow={false}></AuthorWithFollow>
+            }
             <SearchButton></SearchButton>
             <TagsAndSearchMobile tags={tags}></TagsAndSearchMobile>
-            <Posts posts={paginate(postsDataWithIds, currentPage, perPage)}></Posts>
-            <PostsPagination total={postsDataWithIds.length} perPage={perPage} onChange={onChange}></PostsPagination>
+            <Posts posts={paginate(postsData, currentPage, perPage)}></Posts>
+            <PostsPagination total={postsData.length} perPage={perPage} onChange={onChange}></PostsPagination>
         </Box >
     );
 }

@@ -1,10 +1,10 @@
 import AppTheme, { AppThemeProps } from '../shared-theme/AppTheme';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
-import Footer from '../Footer';
+import Footer from '../shared/Footer';
 import Latest from './components/Latest';
 import MainContent from './components/MainContent';
-import NavBar from '../NavBar';
+import NavBar from '../shared/NavBar';
 
 export default function Posts(props: AppThemeProps) {
     return (

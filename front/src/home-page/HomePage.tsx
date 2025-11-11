@@ -3,7 +3,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import FAQ from './components/FAQ';
 import Features from './components/Features';
-import Footer from '../Footer';
+import Footer from '../shared/Footer';
 import Hero from './components/Hero';
 
 export default function HomePage(props: AppThemeProps) {

@@ -1,9 +1,9 @@
 import * as React from 'react';
-import PostsPagination from '../../Pagination';
+import PostsPagination from '../../shared/Pagination';
 import Typography from '@mui/material/Typography';
-import { PostsWithoutImage } from '../../Posts';
+import { PostsWithoutImage } from '../../shared/Posts';
 import { paginate } from '../../stdfunc';
-import { postsData } from '../../TestData';
+import { postsData } from '../../shared/TestData';
 
 export default function Latest() {
     const [currentPage, setCurrentPage] = React.useState(1);

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as ReactRouter from 'react-router-dom';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import AppTheme, { AppThemeProps } from '../shared-theme/AppTheme';
 import Box from '@mui/material/Box';
@@ -12,11 +13,10 @@ import MuiCard from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { CopyrightAligned as Copyright } from '../Copyright';
+import { CopyrightAligned as Copyright } from '../shared/Copyright';
 import { sendRequest, storeCredentials } from '../stdfunc';
 import { styled } from '@mui/material/styles';
-import { useForm, Controller } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import * as ReactHook from 'react-hook-form';
 
 const Card = styled(MuiCard)(({ theme }) => ({
     alignSelf: 'center',
@@ -67,8 +67,8 @@ type FormValues = {
 };
 
 export default function SignUp(props: AppThemeProps) {
-    const navigate = useNavigate();
-    const { control, handleSubmit } = useForm<FormValues>();
+    const navigate = ReactRouter.useNavigate();
+    const { control, handleSubmit } = ReactHook.useForm<FormValues>();
     const [loading, setLoading] = React.useState(false);
 
     const onSubmit = async (data: FormValues) => {
@@ -113,7 +113,7 @@ export default function SignUp(props: AppThemeProps) {
                             width: '100%',
                         }}
                     >
-                        <Controller
+                        <ReactHook.Controller
                             name="username"
                             control={control}
                             rules={{ required: 'Username is required', minLength: { value: 6, message: 'Min 6 characters' } }}
@@ -138,7 +138,7 @@ export default function SignUp(props: AppThemeProps) {
                                 </FormControl>
                             )}
                         />
-                        <Controller
+                        <ReactHook.Controller
                             name="password"
                             control={control}
                             rules={{ required: 'Password is required', minLength: { value: 8, message: 'Min 8 characters' } }}
@@ -179,7 +179,8 @@ export default function SignUp(props: AppThemeProps) {
                         <Typography sx={{ textAlign: 'center' }}>
                             Already have an account?{' '}
                             <Link
-                                href="/auth/login"
+                                onClick={() => { navigate(`/auth/login`) }}
+                                href="#"
                                 sx={{ alignSelf: 'center' }}
                                 variant="body2"
                             >

@@ -1,4 +1,6 @@
 import * as React from 'react';
+import * as ReactHook from 'react-hook-form';
+import * as ReactRouter from 'react-router-dom';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import AppTheme, { AppThemeProps } from '../shared-theme/AppTheme';
 import Box from '@mui/material/Box';
@@ -14,11 +16,9 @@ import MuiCard from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { CopyrightAligned as Copyright } from '../Copyright';
-import { sendRequest, storeCredentials } from '../stdfunc';
+import { CopyrightAligned as Copyright } from '../shared/Copyright';
+import { sendRequest, storeCredentials, isDev } from '../stdfunc';
 import { styled } from '@mui/material/styles';
-import { useForm, Controller } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: 'flex',
@@ -69,28 +69,30 @@ type FormValues = {
 };
 
 export default function SignIn(props: AppThemeProps) {
-    const navigate = useNavigate();
-    const { control, handleSubmit } = useForm<FormValues>();
+    const navigate = ReactRouter.useNavigate();
+    const { control, handleSubmit } = ReactHook.useForm<FormValues>();
     const [loading, setLoading] = React.useState(false);
 
     const onSubmit = async (data: FormValues) => {
         setLoading(true);
 
         try {
-            const res = await sendRequest(
-                `/auth/login`,
-                {
-                    username: data.username,
-                    password: data.password,
-                    rememberMe: (data.rememberMe ?? false),
-                },
-            );
+            if (!isDev) {
+                const res = await sendRequest(
+                    `/auth/login`,
+                    {
+                        username: data.username,
+                        password: data.password,
+                        rememberMe: (data.rememberMe ?? false),
+                    },
+                );
 
-            const json = await res.json();
+                const json = await res.json();
 
-            console.log(json);
+                console.log(json);
 
-            storeCredentials(json);
+                storeCredentials(json);
+            }
 
             navigate('/posts');
         } catch {
@@ -115,7 +117,7 @@ export default function SignIn(props: AppThemeProps) {
                             width: '100%',
                         }}
                     >
-                        <Controller
+                        <ReactHook.Controller
                             name="username"
                             control={control}
                             rules={{ required: 'Username is required' }}
@@ -140,7 +142,7 @@ export default function SignIn(props: AppThemeProps) {
                                 </FormControl>
                             )}
                         />
-                        <Controller
+                        <ReactHook.Controller
                             name="password"
                             control={control}
                             rules={{ required: 'Password is required' }}
@@ -164,7 +166,7 @@ export default function SignIn(props: AppThemeProps) {
                                 </FormControl>
                             )}
                         />
-                        <Controller
+                        <ReactHook.Controller
                             name="rememberMe"
                             defaultValue={false}
                             control={control}
@@ -191,7 +193,8 @@ export default function SignIn(props: AppThemeProps) {
                         <Typography sx={{ textAlign: 'center' }}>
                             Don&apos;t have an account?{' '}
                             <Link
-                                href="/auth/register"
+                                onClick={() => { navigate(`/auth/register`) }}
+                                href="#"
                                 sx={{ alignSelf: 'center' }}
                                 variant="body2"
                             >

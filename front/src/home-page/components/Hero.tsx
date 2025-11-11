@@ -1,3 +1,4 @@
+import * as ReactRouter from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -32,6 +33,8 @@ const StyledBox = styled('div')(({ theme }) => ({
 }));
 
 export default function Hero() {
+    const navigate = ReactRouter.useNavigate();
+
     return (
         <Box
             id="hero"
@@ -99,7 +102,8 @@ export default function Hero() {
                         size="small"
                         sx={{ minWidth: 'fit-content' }}
                         variant="contained"
-                        href="/auth/register"
+                        onClick={() => { navigate(`/auth/register`) }}
+                        href="#"
                     >
                         Sign up
                     </Button>
@@ -109,7 +113,11 @@ export default function Hero() {
                         variant="caption"
                     >
                         By clicking &quot;Sign up&quot; you agree to our&nbsp;
-                        <Link href="#" color="primary">
+                        <Link
+                            onClick={() => { navigate(`/terms`) }}
+                            href="#"
+                            color="primary"
+                        >
                             Terms & Conditions
                         </Link>
                         .
