@@ -1,6 +1,6 @@
 import axios from 'axios';
 import FormData from 'form-data';
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Profile } from './profile.entity';

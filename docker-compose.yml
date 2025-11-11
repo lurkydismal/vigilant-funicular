@@ -202,7 +202,7 @@ services:
       - --api.dashboard=true
       - --api.insecure=true
     ports:
-      - "80:80" # public HTTP
+      - ${PUBLIC_PORT} # public HTTP
       - "8080:8080" # optional Traefik dashboard
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
