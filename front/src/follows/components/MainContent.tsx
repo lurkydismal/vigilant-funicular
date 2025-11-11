@@ -1,11 +1,11 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import PostsPagination from '../../Pagination';
+import PostsPagination from '../../shared/Pagination';
 import Typography from '@mui/material/Typography';
 import { Follows as FollowsElement } from './Follows';
-import { SearchButton } from '../../SearchButton';
-import { TagsAndSearchMobile } from '../../Tags';
-import { followsWithIds, tags } from '../../TestData';
+import { SearchButton } from '../../shared/SearchButton';
+import { TagsAndSearchMobile } from '../../shared/Tags';
+import { follows, tags } from '../../shared/TestData';
 import { paginate } from '../../stdfunc';
 
 export default function Follows() {
@@ -20,7 +20,7 @@ export default function Follows() {
     };
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
             <div>
                 <Typography variant="h2" gutterBottom>
                     Follows
@@ -28,8 +28,8 @@ export default function Follows() {
             </div>
             <SearchButton></SearchButton>
             <TagsAndSearchMobile tags={tags}></TagsAndSearchMobile>
-            <FollowsElement follows={paginate(followsWithIds, currentPage, perPage)}></FollowsElement>
-            <PostsPagination total={followsWithIds.length} perPage={perPage} onChange={onChange}></PostsPagination>
+            <FollowsElement follows={paginate(follows, currentPage, perPage)}></FollowsElement>
+            <PostsPagination total={follows.length} perPage={perPage} onChange={onChange}></PostsPagination>
         </Box>
     );
 }

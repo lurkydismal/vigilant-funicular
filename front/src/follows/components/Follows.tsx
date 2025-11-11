@@ -1,10 +1,11 @@
 import * as React from 'react';
+// import * as ReactRouter from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
 import Typography from '@mui/material/Typography';
-import { Author } from '../../Author';
-import { Post, validatePosts } from '../../Posts';
+import { Author, AuthorWithFollowAndLink } from '../../shared/Author';
+import { Post } from '../../shared/Posts';
 import { styled } from '@mui/material/styles';
 
 export interface Follow {
@@ -58,7 +59,7 @@ const TitleTypography = styled(Typography)(({ theme }) => ({
 }));
 
 export function Follows({ follows }: { follows: Follow[] }) {
-    validatePosts(follows.map(follow => follow.post));
+    // const navigate = ReactRouter.useNavigate();
 
     const [focusedCardIndex, setFocusedCardIndex] = React.useState<number | null>(
         null,
@@ -72,48 +73,55 @@ export function Follows({ follows }: { follows: Follow[] }) {
         setFocusedCardIndex(null);
     };
 
+    // NOTE: Maybe tab index is needed in title
     return (
         <Grid container spacing={8} columns={12} sx={{ my: 4 }}>
-            {follows.map((follow, index) => (
-                <Grid key={follow.post.id ?? index} size={{ xs: 12, sm: 6 }}>
-                    <Box
-                        sx={{
-                            // TODO: Decide
-                            borderRadius: 1,
-                            boxShadow: '0 0 24px 12px hsla(210, 100%, 25%, 0.2)',
-                            outline: '6px solid',
-                            outlineColor: 'hsla(220, 20%, 42%, 0.1)',
-                            paddingLeft: 2,
-                            paddingRight: 2,
+            {follows.map((follow, index) => {
+                // TODO: Implement post navigation
+                const post = follow.post;
+                // TODO: Implement user id
+                const userId = index;
 
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: 1,
-                            height: '100%',
-                            justifyContent: 'space-between',
-                        }}
-                    >
-                        <Author authors={[follow.author]} variant='h6' />
-                        <TitleTypography
-                            className={focusedCardIndex === index ? 'Mui-focused' : ''}
-                            gutterBottom
-                            onBlur={handleBlur}
-                            onFocus={() => handleFocus(index)}
-                            tabIndex={0}
-                            variant="h6"
+                return (
+                    <Grid key={userId} size={{ xs: 12, sm: 6 }}>
+                        <Box
+                            sx={{
+                                // FIX: Box shadow not working on some setups
+                                borderRadius: 1,
+                                boxShadow: '0 0 24px 12px hsla(210, 100%, 25%, 0.2)',
+                                paddingLeft: 2,
+                                paddingRight: 2,
+                                paddingBottom: 1,
+
+                                display: 'flex',
+                                flexDirection: 'column',
+                                height: '100%',
+                                justifyContent: 'space-between',
+                            }}
                         >
-                            {follow.post.title}
-                            <NavigateNextRoundedIcon
-                                className="arrow"
-                                sx={{ fontSize: '1rem' }}
-                            />
-                        </TitleTypography>
-                        <StyledTypography variant="body2" color="text.secondary" gutterBottom>
-                            {follow.post.description}
-                        </StyledTypography>
-                    </Box>
-                </Grid>
-            ))}
-        </Grid>
+                            <AuthorWithFollowAndLink author={follow.author} variant='h6' doesFollow={true} />
+                            <TitleTypography
+                                // onClick={() => { navigate(`/profile/${userId}`) }}
+                                className={focusedCardIndex === index ? 'Mui-focused' : ''}
+                                gutterBottom
+                                onBlur={handleBlur}
+                                onFocus={() => handleFocus(index)}
+                                variant="h6"
+                            >
+                                {post.title}
+                                <NavigateNextRoundedIcon
+                                    className="arrow"
+                                    sx={{ fontSize: '1rem' }}
+                                />
+                            </TitleTypography>
+                            <StyledTypography variant="body2" color="text.secondary" gutterBottom>
+                                {post.description}
+                            </StyledTypography>
+                        </Box>
+                    </Grid>
+                );
+            })
+            }
+        </Grid >
     );
 }
