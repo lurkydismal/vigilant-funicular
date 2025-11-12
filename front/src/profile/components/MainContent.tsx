@@ -2,12 +2,12 @@ import * as React from 'react';
 import * as ReactRouter from 'react-router-dom';
 import Box from '@mui/material/Box';
 import PostsPagination from '../../shared/Pagination';
+import { Author, AuthorWithFollow } from '../../shared/Author';
 import { Posts } from '../../shared/Posts';
 import { SearchButton } from '../../shared/SearchButton';
 import { TagsAndSearchMobile } from '../../shared/Tags';
 import { getCredentials, paginate } from '../../stdfunc';
 import { user, postsData, tags } from '../../shared/TestData';
-import { Author, AuthorWithFollow } from '../../shared/Author';
 
 // TODO: Fix avatar src
 export default function MainContent() {

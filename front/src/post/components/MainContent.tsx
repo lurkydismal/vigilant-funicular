@@ -21,7 +21,7 @@ import mermaid from 'mermaid';
 import rehypeKatex from 'rehype-katex';
 import remarkGFM from 'remark-gfm';
 import remarkMath from 'remark-math';
-import { AuthorsWithDate } from '../../shared/Author';
+import { AuthorsWithDateAndLink } from '../../shared/Author';
 import { Post } from '../../shared/Posts';
 import { PrismAsync as SyntaxHighlighter } from 'react-syntax-highlighter'; // TODO: Maybe import Light version instead
 import { oneDark as darkTheme, oneLight as lightTheme } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -232,11 +232,11 @@ export default function MainContent() {
         variant: 'h4',
         avatarWidth: 36,
         avatarHeight: 36,
-    } satisfies React.ComponentProps<typeof AuthorsWithDate>;
+    } satisfies React.ComponentProps<typeof AuthorsWithDateAndLink>;
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <AuthorsWithDate {...properties} />
+            <AuthorsWithDateAndLink {...properties} />
             <Typography variant="subtitle1" component="div">
                 {post.tag}
             </Typography>

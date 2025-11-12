@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as ReactHook from 'react-hook-form';
 import * as ReactRouter from 'react-router-dom';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import AppTheme, { AppThemeProps } from '../shared-theme/AppTheme';
@@ -14,9 +15,8 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { CopyrightAligned as Copyright } from '../shared/Copyright';
-import { sendRequest, storeCredentials } from '../stdfunc';
+import { isDev, sendRequest, storeCredentials } from '../stdfunc';
 import { styled } from '@mui/material/styles';
-import * as ReactHook from 'react-hook-form';
 
 const Card = styled(MuiCard)(({ theme }) => ({
     alignSelf: 'center',
@@ -79,16 +79,18 @@ export default function SignUp(props: AppThemeProps) {
         formData.append('password', data.password);
 
         try {
-            const res = await sendRequest(
-                `/auth/register`,
-                formData,
-            );
+            if (!isDev) {
+                const res = await sendRequest(
+                    `/auth/register`,
+                    formData,
+                );
 
-            const json = await res.json();
+                const json = await res.json();
 
-            console.log(json);
+                console.log(json);
 
-            storeCredentials(json);
+                storeCredentials(json);
+            }
 
             navigate('/posts');
         } catch {

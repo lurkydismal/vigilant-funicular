@@ -5,6 +5,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from "@mui/material/Grid";
+import MainFallback from './MainFallback';
 import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
 import Typography from "@mui/material/Typography";
 import { Author, AuthorsWithDate } from "./Author";
@@ -73,46 +74,48 @@ export function Posts({ posts }: { posts: Post[] }) {
     };
 
     return (
-        <Grid container spacing={2} columns={12}>
-            {posts.map((post, index) => (
-                <Grid
-                    key={post.id ?? index}
-                    size={{ xs: 12, md: 4 }}
-                >
-                    <StyledCard
-                        onClick={() => { navigate(`/post/${post.id}`) }}
-                        className={focusedCardIndex === 0 ? 'Mui-focused' : ''}
-                        onBlur={handleBlur}
-                        onFocus={() => handleFocus(0)}
-                        tabIndex={0}
-                        variant="outlined"
+        <MainFallback itemsLength={posts.length}>
+            <Grid container spacing={2} columns={12}>
+                {posts.map((post, index) => (
+                    <Grid
+                        key={post.id ?? index}
+                        size={{ xs: 12, md: 4 }}
                     >
-                        <CardMedia
-                            alt="green iguana"
-                            component="img"
-                            image={post.imageUrl ?? `https://picsum.photos/800/450?random=${post.id ?? index}`}
-                            sx={{
-                                aspectRatio: '16 / 9',
-                                borderBottom: '1px solid',
-                                borderColor: 'divider',
-                            }}
-                        />
-                        <StyledCardContent>
-                            <Typography gutterBottom variant="caption" component="div">
-                                {post.tag}
-                            </Typography>
-                            <Typography gutterBottom variant="h6" component="div">
-                                {post.title}
-                            </Typography>
-                            <StyledTypography variant="body2" color="text.secondary" gutterBottom>
-                                {post.description}
-                            </StyledTypography>
-                        </StyledCardContent>
-                        <AuthorsWithDate authors={post.authors} />
-                    </StyledCard>
-                </Grid>
-            ))}
-        </Grid>
+                        <StyledCard
+                            onClick={() => { navigate(`/post/${post.id}`) }}
+                            className={focusedCardIndex === 0 ? 'Mui-focused' : ''}
+                            onBlur={handleBlur}
+                            onFocus={() => handleFocus(0)}
+                            tabIndex={0}
+                            variant="outlined"
+                        >
+                            <CardMedia
+                                alt="green iguana"
+                                component="img"
+                                image={post.imageUrl ?? `https://picsum.photos/800/450?random=${post.id ?? index}`}
+                                sx={{
+                                    aspectRatio: '16 / 9',
+                                    borderBottom: '1px solid',
+                                    borderColor: 'divider',
+                                }}
+                            />
+                            <StyledCardContent>
+                                <Typography gutterBottom variant="caption" component="div">
+                                    {post.tag}
+                                </Typography>
+                                <Typography gutterBottom variant="h6" component="div">
+                                    {post.title}
+                                </Typography>
+                                <StyledTypography variant="body2" color="text.secondary" gutterBottom>
+                                    {post.description}
+                                </StyledTypography>
+                            </StyledCardContent>
+                            <AuthorsWithDate authors={post.authors} />
+                        </StyledCard>
+                    </Grid>
+                ))}
+            </Grid>
+        </MainFallback>
     );
 }
 
@@ -154,6 +157,8 @@ const TitleTypography = styled(Typography)(({ theme }) => ({
 }));
 
 export function PostsWithoutImage({ posts }: { posts: Post[] }) {
+    const navigate = ReactRouter.useNavigate();
+
     const [focusedCardIndex, setFocusedCardIndex] = React.useState<number | null>(
         null,
     );
@@ -167,43 +172,46 @@ export function PostsWithoutImage({ posts }: { posts: Post[] }) {
     };
 
     return (
-        <Grid container spacing={8} columns={12} sx={{ my: 4 }}>
-            {posts.map((post, index) => (
-                <Grid key={index} size={{ xs: 12, sm: 6 }}>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: 1,
-                            height: '100%',
-                            justifyContent: 'space-between',
-                        }}
-                    >
-                        <Typography gutterBottom variant="caption" component="div">
-                            {post.tag}
-                        </Typography>
-                        <TitleTypography
-                            className={focusedCardIndex === index ? 'Mui-focused' : ''}
-                            gutterBottom
-                            onBlur={handleBlur}
-                            onFocus={() => handleFocus(index)}
-                            tabIndex={0}
-                            variant="h6"
+        <MainFallback itemsLength={posts.length}>
+            <Grid container spacing={8} columns={12} sx={{ my: 4 }}>
+                {posts.map((post, index) => (
+                    <Grid key={index} size={{ xs: 12, sm: 6 }}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: 1,
+                                height: '100%',
+                                justifyContent: 'space-between',
+                            }}
                         >
-                            {post.title}
-                            <NavigateNextRoundedIcon
-                                className="arrow"
-                                sx={{ fontSize: '1rem' }}
-                            />
-                        </TitleTypography>
-                        <StyledTypography variant="body2" color="text.secondary" gutterBottom>
-                            {post.description}
-                        </StyledTypography>
+                            <Typography gutterBottom variant="caption" component="div">
+                                {post.tag}
+                            </Typography>
+                            <TitleTypography
+                                onClick={() => { navigate(`/post/${post.id}`) }}
+                                className={focusedCardIndex === index ? 'Mui-focused' : ''}
+                                gutterBottom
+                                onBlur={handleBlur}
+                                onFocus={() => handleFocus(index)}
+                                tabIndex={0}
+                                variant="h6"
+                            >
+                                {post.title}
+                                <NavigateNextRoundedIcon
+                                    className="arrow"
+                                    sx={{ fontSize: '1rem' }}
+                                />
+                            </TitleTypography>
+                            <StyledTypography variant="body2" color="text.secondary" gutterBottom>
+                                {post.description}
+                            </StyledTypography>
 
-                        <AuthorsWithDate authors={post.authors} />
-                    </Box>
-                </Grid>
-            ))}
-        </Grid>
+                            <AuthorsWithDate authors={post.authors} />
+                        </Box>
+                    </Grid>
+                ))}
+            </Grid>
+        </MainFallback>
     );
 }
