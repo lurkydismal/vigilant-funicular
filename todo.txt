@@ -1,6 +1,6 @@
+P6
 Auth service:
-PostgreSQL + NestJS.
+Handle refresh tokens.
 
-Handle registration, login, JWT issuance, refresh tokens.
-
-Expose gRPC or RabbitMQ endpoints for other services to verify users.
+P5
+Fix minio

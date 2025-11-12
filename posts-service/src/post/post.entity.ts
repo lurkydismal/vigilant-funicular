@@ -14,7 +14,6 @@ export class Post {
     @PrimaryGeneratedColumn('increment')
     id!: number;
 
-    // TODO: Maybe use FK.
     @Column({ type: 'int' })
     @Index()
     user_id!: number;
