@@ -86,7 +86,6 @@ export function Follows({ follows }: { follows: Follow[] }) {
                     <Grid key={userId} size={{ xs: 12, sm: 6 }}>
                         <Box
                             sx={{
-                                // FIX: Box shadow not working on some setups
                                 borderRadius: 1,
                                 boxShadow: '0 0 24px 12px hsla(210, 100%, 25%, 0.2)',
                                 paddingLeft: 2,

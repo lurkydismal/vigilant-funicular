@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import { TypographyVariant } from "@mui/material/styles";
 import Link from '@mui/material/Link';
 
-interface Author {
+export interface Author {
     id: number;
     name: string;
     avatar?: string;

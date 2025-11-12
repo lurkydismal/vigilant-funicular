@@ -17,9 +17,8 @@ const StyledBox = styled('div')(({ theme }) => ({
     boxShadow: '0 0 12px 8px hsla(220, 25%, 80%, 0.2)',
     height: 400,
     marginTop: theme.spacing(8),
-    outline: '6px solid',
-    // outlineColor: 'hsla(220, 25%, 80%, 0.2)',
-    outlineColor: 'hsla(220, 20%, 42%, 0.1)',
+    outline: '3px solid',
+    outlineColor: 'hsla(220, 25%, 80%, 0.2)',
     width: '100%',
     [theme.breakpoints.up('sm')]: {
         height: 700,
@@ -29,6 +28,7 @@ const StyledBox = styled('div')(({ theme }) => ({
         backgroundImage: `url(/static/screenshots/dashboard-dark.png)`,
         borderColor: (theme.vars || theme).palette.grey[700],
         boxShadow: '0 0 24px 12px hsla(210, 100%, 25%, 0.2)',
+        outlineColor: 'hsla(220, 20%, 42%, 0.1)',
     }),
 }));
 

@@ -6,7 +6,140 @@ export const user = {
 const postsDataTemp = [
     {
         description: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
-        content: 'Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.',
+        content: `
+\`\`\`mermaid
+graph TD
+    A[Start] --> B{Is it working?}
+    B -->|Yes| C[Great!]
+    B -->|No| D[Fix it]
+\`\`\`
+
+This is inline math: $E = mc^2$
+
+And a block formula:
+$$
+\\int_0^\\infty x^2 e^{-x} \\, dx = 2
+$$
+
+Absolutely! Here's a **comprehensive Markdown text** designed to test **all common ReactMarkdown components**, including headings, paragraphs, links, inline code, code blocks, lists, blockquotes, tables, horizontal rules, images, and more. You can paste this directly into your renderer:
+
+# Heading 1
+
+## Heading 2
+
+### Heading 3
+
+#### Heading 4
+
+##### Heading 5
+
+###### Heading 6
+
+---
+
+This is a paragraph of text in Markdown. You can also include **bold** text, *italic* text, and ~~strikethrough~~.
+
+Here is an [external link](https://example.com) and here is an inline code snippet: \`const x = 42;\`.
+
+> This is a blockquote. It should stand out from regular text.
+
+---
+
+### Lists
+
+**Unordered list:**
+
+- Item 1
+- Item 2
+  - Nested item 2a
+  - Nested item 2b
+- Item 3
+
+**Ordered list:**
+
+1. First
+2. Second
+3. Third
+   1. Subitem a
+   2. Subitem b
+
+---
+
+### Code Blocks
+
+**JavaScript example:**
+
+\`\`\`javascript
+function add(a, b) {
+  return a + b;
+}
+console.log(add(2, 3));
+\`\`\`
+
+**Python example:**
+
+\`\`\`python
+def greet(name):
+    return f"Hello, {name}!"
+
+print(greet("World"))
+\`\`\`
+
+**No language specified:**
+
+\`\`\`
+This is a code block without language
+\`\`\`
+
+Inline code example: \`console.log("Hello World")\`
+
+---
+
+### Tables
+
+| Name    | Age | City          |
+| ------- | --- | ------------- |
+| Alice   | 25  | New York      |
+| Bob     | 30  | San Francisco |
+| Charlie | 35  | London        |
+
+---
+
+### Images
+
+![React Logo](https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg)
+
+---
+
+### Horizontal Rule
+
+---
+
+### Miscellaneous
+
+Some \`inline code\` inside a paragraph.
+
+A fenced code block:
+
+\`\`\`bash
+echo "Hello, world!"
+\`\`\`
+
+Emoji test: 😄 🎉 🚀
+
+Links with title: [Google](https://google.com "Go to Google")
+
+---
+
+# Welcome
+Here is a \`code\` block:
+
+\`\`\`js
+console.log("Hello!");
+\`\`\`
+
+**Our** latest *engineering* tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.
+`,
         tag: 'Engineering',
         title: 'Revolutionizing software development with cutting-edge tools',
         authors: [

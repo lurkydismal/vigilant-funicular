@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as ReactRouter from 'react-router-dom';
 import Box from "@mui/material/Box";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -57,6 +58,8 @@ const StyledTypography = styled(Typography)({
 });
 
 export function Posts({ posts }: { posts: Post[] }) {
+    const navigate = ReactRouter.useNavigate();
+
     const [focusedCardIndex, setFocusedCardIndex] = React.useState<number | null>(
         null,
     );
@@ -77,6 +80,7 @@ export function Posts({ posts }: { posts: Post[] }) {
                     size={{ xs: 12, md: 4 }}
                 >
                     <StyledCard
+                        onClick={() => { navigate(`/post/${post.id}`) }}
                         className={focusedCardIndex === 0 ? 'Mui-focused' : ''}
                         onBlur={handleBlur}
                         onFocus={() => handleFocus(0)}
