@@ -9,10 +9,7 @@ export default function Latest() {
     const [currentPage, setCurrentPage] = React.useState(1);
     const perPage = 12;
 
-    // TODO: Implement
     const onChange = (_: React.ChangeEvent<unknown>, page: number) => {
-        console.info('You clicked the pagination. ', page);
-
         setCurrentPage(page);
     };
 

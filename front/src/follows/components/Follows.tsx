@@ -80,19 +80,17 @@ export function Follows({ follows }: { follows: Follow[] }) {
         <MainFallback itemsLength={follows.length}>
             <Grid container spacing={8} columns={12} sx={{ my: 4 }}>
                 {follows.map((follow, index) => {
-                    // TODO: Implement post navigation
                     const post = follow.post;
-                    // TODO: Implement user id
-                    const userId = index;
+                    const user = follow.author;
 
                     return (
-                        <Grid key={userId} size={{ xs: 12, sm: 6 }}>
+                        <Grid key={user.id} size={{ xs: 12, sm: 6 }}>
                             <Box
                                 sx={{
                                     borderRadius: 1,
                                     boxShadow: '0 0 24px 12px hsla(210, 100%, 25%, 0.2)',
-                                    paddingLeft: 2,
-                                    paddingRight: 2,
+                                    paddingLeft: 1,
+                                    paddingRight: 1,
                                     paddingBottom: 1,
 
                                     display: 'flex',

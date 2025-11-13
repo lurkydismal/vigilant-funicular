@@ -16,6 +16,7 @@
     "@mui/icons-material": "latest",
     "@mui/material": "latest",
     "@tailwindcss/vite": "latest",
+    "axios": "^1.13.2",
     "mermaid": "^11.12.1",
     "react": "latest",
     "react-dom": "latest",

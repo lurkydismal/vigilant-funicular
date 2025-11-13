@@ -117,7 +117,6 @@ const LoadingText = styled('text')<{ filled: boolean }>(({ filled }) => ({
     },
 }));
 
-// TODO: IMplement Loading page
 export function ProtectedRoute() {
     const [authorized, setAuthorized] = useState<boolean | null>(null);
 

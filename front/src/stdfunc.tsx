@@ -1,12 +1,21 @@
 import { user } from './shared/TestData';
+import axios from 'axios';
 
 type Method = 'POST' | 'GET' | 'PUT' | 'DELETE';
 
 export const isDev = (import.meta.env.MODE != 'production');
 export const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
 
-export async function sendRequest(endpoint: string, data?: (Record<string, any> | FormData | null), method: Method = 'POST', toJSON: boolean = true) {
-    let body: BodyInit | undefined;
+export async function sendRequest(
+    endpoint: string,
+    data?: (Record<string, any> | FormData),
+    method: Method = 'POST',
+    toJSON: boolean = true,
+    devResponse?: string
+) {
+    if (isDev && devResponse)
+
+        let body: BodyInit | undefined;
     let headers: Record<string, string> | undefined;
 
     if (!data) {
@@ -58,12 +67,13 @@ export async function checkAuth(): Promise<boolean> {
         // } catch {
         //     return false;
         // }
-        try {
-            const res = await fetch(`${apiEndpoint}/auth/verify`, { method: 'POST' }); // credentials: 'include'
-            return res.ok;
-        } catch {
+        if (!getCredentials()) {
             return false;
         }
+
+        const res = await axios.post(`${apiEndpoint}/auth/verify`, null, {});
+
+        return (res.status >= 200) && (res.status < 300);
     }
 }
 
