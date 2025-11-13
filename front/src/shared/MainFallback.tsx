@@ -24,7 +24,7 @@ const Root = styled(Box)(({ theme }) => ({
 }));
 
 const Fancy = styled(Typography)(({ theme }) => ({
-    fontWeight: 800,
+    fontWeight: theme.typography.fontWeightMedium,
     fontSize: 'clamp(20px, 6vw, 64px)',
     lineHeight: 1,
     textTransform: 'uppercase',

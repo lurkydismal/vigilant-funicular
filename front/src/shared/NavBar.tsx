@@ -124,7 +124,7 @@ export default function NavBar() {
                                 }
                             }}
                         >
-                            <Box sx={{ p: 2, backgroundColor: 'background.default' }}>
+                            <Box sx={{ p: 1, backgroundColor: 'background.default' }}>
                                 <Box
                                     sx={{
                                         display: 'flex',
@@ -148,7 +148,7 @@ export default function NavBar() {
                                     Follows
                                 </MenuItem>
                                 <Divider sx={{ my: 3 }} />
-                                <MenuItem>
+                                <MenuItem sx={{ gap: 1 }}>
                                     <Button
                                         color="primary"
                                         variant="contained"
