@@ -1,15 +1,15 @@
-import AppTheme from './shared-theme/AppTheme';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import Typography from '@mui/material/Typography';
+import { ProtectedRoute } from './ProtectedRoute';
 import Follows from './follows/Follows';
 import Home from './home-page/HomePage';
 import New_Post from './new-post/New-post';
 import Post from './post/Post';
 import Posts from './posts/Posts';
 import Profile from './profile/Profile';
+import AppTheme from './shared-theme/AppTheme';
 import SignIn from './sign-in/SignIn';
 import SignUp from './sign-up/SignUp';
-import Typography from '@mui/material/Typography';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ProtectedRoute } from './ProtectedRoute';
 
 function NotFound() {
     return (

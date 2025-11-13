@@ -3,8 +3,8 @@ import Typography from '@mui/material/Typography';
 import { Posts } from '../../shared/Posts';
 import { SearchButton } from '../../shared/SearchButton';
 import { TagsAndSearchMobile } from '../../shared/Tags';
-import { paginate } from '../../stdfunc';
 import { postsData, tags } from '../../shared/TestData';
+import { paginate } from '../../stdfunc';
 
 export default function MainContent() {
     const perPage = 6;

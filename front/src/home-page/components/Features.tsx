@@ -1,12 +1,12 @@
 import * as React from 'react';
+import AccountCircleRounded from '@mui/icons-material/AccountCircleRounded';
+import DevicesRoundedIcon from '@mui/icons-material/DevicesRounded';
+import LocalOfferRounded from '@mui/icons-material/LocalOfferRounded';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
-import Container from '@mui/material/Container';
-import DevicesRoundedIcon from '@mui/icons-material/DevicesRounded';
-import LocalOfferRounded from '@mui/icons-material/LocalOfferRounded';
-import AccountCircleRounded from '@mui/icons-material/AccountCircleRounded';
 import MuiChip from '@mui/material/Chip';
+import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 

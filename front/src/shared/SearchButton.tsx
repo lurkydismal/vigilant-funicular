@@ -1,10 +1,10 @@
-import Box from '@mui/material/Box';
-import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import IconButton from '@mui/material/IconButton';
 import RssFeedRoundedIcon from '@mui/icons-material/RssFeedRounded';
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
-import OutlinedInput from '@mui/material/OutlinedInput';
+import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
+import OutlinedInput from '@mui/material/OutlinedInput';
 
 function Search() {
     return (

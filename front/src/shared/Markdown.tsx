@@ -1,6 +1,9 @@
+import ReactMarkdown from 'react-markdown';
+import rehypeKatex from 'rehype-katex';
+import remarkGFM from 'remark-gfm';
+import remarkMath from 'remark-math';
 import Box from '@mui/material/Box';
 import CardMedia from '@mui/material/CardMedia';
-import CodeBlock from './CodeBlock';
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import Link from '@mui/material/Link';
@@ -8,7 +11,6 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
-import ReactMarkdown from 'react-markdown';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -16,9 +18,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
-import rehypeKatex from 'rehype-katex';
-import remarkGFM from 'remark-gfm';
-import remarkMath from 'remark-math';
+import CodeBlock from './CodeBlock';
 
 const MarkdownComponents = {
     // Code

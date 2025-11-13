@@ -1,5 +1,5 @@
-import { user } from './shared/TestData';
 import axios from 'axios';
+import { user } from './shared/TestData';
 
 type Method = 'POST' | 'GET' | 'PUT' | 'DELETE';
 

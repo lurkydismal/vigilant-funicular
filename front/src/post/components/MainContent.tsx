@@ -2,9 +2,9 @@ import * as React from 'react';
 import * as ReactRouter from 'react-router-dom';
 import Box from '@mui/material/Box';
 import CardMedia from '@mui/material/CardMedia';
-import Markdown from '../../shared/Markdown';
 import Typography from '@mui/material/Typography';
 import { AuthorsWithDateAndLink } from '../../shared/Author';
+import Markdown from '../../shared/Markdown';
 import { Post } from '../../shared/Posts';
 import { postsData } from '../../shared/TestData';
 

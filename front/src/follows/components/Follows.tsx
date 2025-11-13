@@ -1,13 +1,13 @@
 import * as React from 'react';
 import * as ReactRouter from 'react-router-dom';
+import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
 import Typography from '@mui/material/Typography';
-import { Author, AuthorWithFollowAndLink } from '../../shared/Author';
-import { Post } from '../../shared/Posts';
 import { styled } from '@mui/material/styles';
+import { Author, AuthorWithFollowAndLink } from '../../shared/Author';
 import MainFallback from '../../shared/MainFallback';
+import { Post } from '../../shared/Posts';
 
 export interface Follow {
     author: Author;

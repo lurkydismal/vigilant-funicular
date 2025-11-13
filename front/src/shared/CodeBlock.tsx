@@ -1,18 +1,19 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import CheckIcon from '@mui/icons-material/Check';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import IconButton from '@mui/material/IconButton';
-import Mermaid from './Mermaid';
-import Snackbar from '@mui/material/Snackbar';
-import Tooltip from '@mui/material/Tooltip';
-import Typography from '@mui/material/Typography';
-import { PrismAsync as SyntaxHighlighter } from 'react-syntax-highlighter'; // TODO: Maybe import Light version instead
+import { PrismAsync as SyntaxHighlighter } from 'react-syntax-highlighter';
+// TODO: Maybe import Light version instead
 import {
     oneDark as darkTheme,
     oneLight as lightTheme,
 } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import CheckIcon from '@mui/icons-material/Check';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import Snackbar from '@mui/material/Snackbar';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
+import Mermaid from './Mermaid';
 
 export default function CodeBlock({
     inline,

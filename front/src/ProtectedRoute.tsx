@@ -1,9 +1,8 @@
-import { Navigate, Outlet } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { checkAuth } from './stdfunc';
-
 import React from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
+import { checkAuth } from './stdfunc';
 
 type Props = {
     drawDurationMs?: number;

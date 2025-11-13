@@ -1,13 +1,13 @@
 import * as React from 'react';
 import * as ReactRouter from 'react-router-dom';
 import Box from '@mui/material/Box';
-import PostsPagination from '../../shared/Pagination';
 import { Author, AuthorWithFollow } from '../../shared/Author';
+import PostsPagination from '../../shared/Pagination';
 import { Posts } from '../../shared/Posts';
 import { SearchButton } from '../../shared/SearchButton';
 import { TagsAndSearchMobile } from '../../shared/Tags';
+import { postsData, tags, user } from '../../shared/TestData';
 import { getCredentials, paginate } from '../../stdfunc';
-import { user, postsData, tags } from '../../shared/TestData';
 
 // TODO: Fix avatar src
 export default function MainContent() {

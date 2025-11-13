@@ -32,6 +32,7 @@
         "tailwindcss": "latest"
     },
     "devDependencies": {
+        "@trivago/prettier-plugin-sort-imports": "^6.0.0",
         "@types/react": "latest",
         "@types/react-dom": "latest",
         "@types/react-syntax-highlighter": "^15.5.13",

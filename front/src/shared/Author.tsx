@@ -3,10 +3,10 @@ import * as ReactRouter from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Box from '@mui/material/Box';
-import FollowButton from '../shared/FollowButton';
+import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import { TypographyVariant } from '@mui/material/styles';
-import Link from '@mui/material/Link';
+import FollowButton from '../shared/FollowButton';
 
 export interface Author {
     id: number;

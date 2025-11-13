@@ -1,6 +1,6 @@
-import AppTheme, { AppThemeProps } from '../shared-theme/AppTheme';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
+import AppTheme, { AppThemeProps } from '../shared-theme/AppTheme';
 import NavBar from '../shared/NavBar';
 import MainContent from './components/MainContent';
 

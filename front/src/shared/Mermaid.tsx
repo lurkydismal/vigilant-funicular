@@ -1,6 +1,6 @@
+import mermaid from 'mermaid';
 import * as React from 'react';
 import Container from '@mui/material/Container';
-import mermaid from 'mermaid';
 import { useTheme } from '@mui/material/styles';
 
 export default function Mermaid({ chart }: { chart: string }) {

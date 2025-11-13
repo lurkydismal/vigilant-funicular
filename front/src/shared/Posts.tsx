@@ -1,15 +1,15 @@
 import * as React from 'react';
 import * as ReactRouter from 'react-router-dom';
+import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
-import MainFallback from './MainFallback';
-import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
 import Typography from '@mui/material/Typography';
-import { Author, AuthorsWithDate } from './Author';
 import { styled } from '@mui/material/styles';
+import { Author, AuthorsWithDate } from './Author';
+import MainFallback from './MainFallback';
 
 export interface Post {
     authors: Author[];

@@ -1,13 +1,13 @@
 import * as React from 'react';
 import UnfoldMoreRoundedIcon from '@mui/icons-material/UnfoldMoreRounded';
-import { SvgIconProps } from '@mui/material/SvgIcon';
-import { Theme, alpha, Components } from '@mui/material/styles';
 import { buttonBaseClasses } from '@mui/material/ButtonBase';
 import { dividerClasses } from '@mui/material/Divider';
-import { gray, brand } from '../themePrimitives';
 import { menuItemClasses } from '@mui/material/MenuItem';
 import { selectClasses } from '@mui/material/Select';
+import { SvgIconProps } from '@mui/material/SvgIcon';
 import { tabClasses } from '@mui/material/Tab';
+import { Components, Theme, alpha } from '@mui/material/styles';
+import { brand, gray } from '../themePrimitives';
 
 /* eslint-disable import/prefer-default-export */
 export const navigationCustomizations: Components<Theme> = {
