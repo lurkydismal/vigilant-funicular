@@ -12,7 +12,7 @@ import MainFallback from '../../shared/MainFallback';
 export interface Follow {
     author: Author;
     post: Post;
-};
+}
 
 const StyledTypography = styled(Typography)({
     WebkitBoxOrient: 'vertical',
@@ -62,10 +62,9 @@ const TitleTypography = styled(Typography)(({ theme }) => ({
 export function Follows({ follows }: { follows: Follow[] }) {
     const navigate = ReactRouter.useNavigate();
 
-
-    const [focusedCardIndex, setFocusedCardIndex] = React.useState<number | null>(
-        null,
-    );
+    const [focusedCardIndex, setFocusedCardIndex] = React.useState<
+        number | null
+    >(null);
 
     const handleFocus = (index: number) => {
         setFocusedCardIndex(index);
@@ -88,7 +87,8 @@ export function Follows({ follows }: { follows: Follow[] }) {
                             <Box
                                 sx={{
                                     borderRadius: 1,
-                                    boxShadow: '0 0 24px 12px hsla(210, 100%, 25%, 0.2)',
+                                    boxShadow:
+                                        '0 0 24px 12px hsla(210, 100%, 25%, 0.2)',
                                     paddingLeft: 1,
                                     paddingRight: 1,
                                     paddingBottom: 1,
@@ -99,10 +99,20 @@ export function Follows({ follows }: { follows: Follow[] }) {
                                     justifyContent: 'space-between',
                                 }}
                             >
-                                <AuthorWithFollowAndLink author={follow.author} variant='h6' doesFollow={true} />
+                                <AuthorWithFollowAndLink
+                                    author={follow.author}
+                                    variant="h6"
+                                    doesFollow={true}
+                                />
                                 <TitleTypography
-                                    onClick={() => { navigate(`/post/${post.id}`) }}
-                                    className={focusedCardIndex === index ? 'Mui-focused' : ''}
+                                    onClick={() => {
+                                        navigate(`/post/${post.id}`);
+                                    }}
+                                    className={
+                                        focusedCardIndex === index
+                                            ? 'Mui-focused'
+                                            : ''
+                                    }
                                     gutterBottom
                                     onBlur={handleBlur}
                                     onFocus={() => handleFocus(index)}
@@ -114,14 +124,18 @@ export function Follows({ follows }: { follows: Follow[] }) {
                                         sx={{ fontSize: '1rem' }}
                                     />
                                 </TitleTypography>
-                                <StyledTypography variant="body2" color="text.secondary" gutterBottom>
+                                <StyledTypography
+                                    variant="body2"
+                                    color="text.secondary"
+                                    gutterBottom
+                                >
                                     {post.description}
                                 </StyledTypography>
                             </Box>
                         </Grid>
                     );
                 })}
-            </Grid >
+            </Grid>
         </MainFallback>
     );
 }

@@ -25,8 +25,14 @@ export default function MainContent() {
             </div>
             <SearchButton></SearchButton>
             <TagsAndSearchMobile tags={tags}></TagsAndSearchMobile>
-            <Follows follows={paginate(follows, currentPage, perPage)}></Follows>
-            <PostsPagination total={follows.length} perPage={perPage} onChange={onChange}></PostsPagination>
+            <Follows
+                follows={paginate(follows, currentPage, perPage)}
+            ></Follows>
+            <PostsPagination
+                total={follows.length}
+                perPage={perPage}
+                onChange={onChange}
+            ></PostsPagination>
         </Box>
     );
 }
