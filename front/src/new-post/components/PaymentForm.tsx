@@ -23,11 +23,13 @@ const Card = styled(MuiCard)<{ selected?: boolean }>(({ theme }) => ({
     borderColor: (theme.vars || theme).palette.divider,
     width: '100%',
     '&:hover': {
-        background: 'linear-gradient(to bottom right, hsla(210, 100%, 97%, 0.5) 25%, hsla(210, 100%, 90%, 0.3) 100%)',
+        background:
+            'linear-gradient(to bottom right, hsla(210, 100%, 97%, 0.5) 25%, hsla(210, 100%, 90%, 0.3) 100%)',
         borderColor: 'primary.light',
         boxShadow: '0px 2px 8px hsla(0, 0%, 0%, 0.1)',
         ...theme.applyStyles('dark', {
-            background: 'linear-gradient(to right bottom, hsla(210, 100%, 12%, 0.2) 25%, hsla(210, 100%, 16%, 0.2) 100%)',
+            background:
+                'linear-gradient(to right bottom, hsla(210, 100%, 12%, 0.2) 25%, hsla(210, 100%, 16%, 0.2) 100%)',
             borderColor: 'primary.dark',
             boxShadow: '0px 1px 8px hsla(210, 100%, 25%, 0.5) ',
         }),
@@ -50,7 +52,8 @@ const Card = styled(MuiCard)<{ selected?: boolean }>(({ theme }) => ({
 }));
 
 const PaymentContainer = styled('div')(({ theme }) => ({
-    background: 'linear-gradient(to bottom right, hsla(220, 35%, 97%, 0.3) 25%, hsla(220, 20%, 88%, 0.3) 100%)',
+    background:
+        'linear-gradient(to bottom right, hsla(220, 35%, 97%, 0.3) 25%, hsla(220, 20%, 88%, 0.3) 100%)',
     border: '1px solid ',
     borderColor: (theme.vars || theme).palette.divider,
     borderRadius: `calc(${theme.shape.borderRadius}px + 4px)`,
@@ -68,7 +71,8 @@ const PaymentContainer = styled('div')(({ theme }) => ({
         height: 350,
     },
     ...theme.applyStyles('dark', {
-        background: 'linear-gradient(to right bottom, hsla(220, 30%, 6%, 0.2) 25%, hsla(220, 20%, 25%, 0.2) 100%)',
+        background:
+            'linear-gradient(to right bottom, hsla(220, 30%, 6%, 0.2) 25%, hsla(220, 20%, 25%, 0.2) 100%)',
         boxShadow: '0px 4px 8px hsl(220, 35%, 0%)',
     }),
 }));
@@ -105,7 +109,9 @@ export default function PaymentForm() {
         }
     };
 
-    const handleExpirationDateChange = (event: { target: { value: string } }) => {
+    const handleExpirationDateChange = (event: {
+        target: { value: string };
+    }) => {
         const value = event.target.value.replace(/\D/g, '');
         const formattedValue = value.replace(/(\d{2})(?=\d{2})/, '$1/');
         if (value.length <= 4) {
@@ -139,7 +145,13 @@ export default function PaymentForm() {
                                 },
                             }}
                         >
-                            <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <CardContent
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: 1,
+                                }}
+                            >
                                 <CreditCardRoundedIcon
                                     fontSize="small"
                                     sx={[
@@ -154,7 +166,9 @@ export default function PaymentForm() {
                                         },
                                     ]}
                                 />
-                                <Typography sx={{ fontWeight: 'medium' }}>Card</Typography>
+                                <Typography sx={{ fontWeight: 'medium' }}>
+                                    Card
+                                </Typography>
                             </CardContent>
                         </CardActionArea>
                     </Card>
@@ -170,7 +184,13 @@ export default function PaymentForm() {
                                 },
                             }}
                         >
-                            <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <CardContent
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: 1,
+                                }}
+                            >
                                 <AccountBalanceRoundedIcon
                                     fontSize="small"
                                     sx={[
@@ -185,7 +205,9 @@ export default function PaymentForm() {
                                         },
                                     ]}
                                 />
-                                <Typography sx={{ fontWeight: 'medium' }}>Bank account</Typography>
+                                <Typography sx={{ fontWeight: 'medium' }}>
+                                    Bank account
+                                </Typography>
                             </CardContent>
                         </CardActionArea>
                     </Card>
@@ -194,9 +216,18 @@ export default function PaymentForm() {
             {paymentType === 'creditCard' && (
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                     <PaymentContainer>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <Typography variant="subtitle2">Credit card</Typography>
-                            <CreditCardRoundedIcon sx={{ color: 'text.secondary' }} />
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                            }}
+                        >
+                            <Typography variant="subtitle2">
+                                Credit card
+                            </Typography>
+                            <CreditCardRoundedIcon
+                                sx={{ color: 'text.secondary' }}
+                            />
                         </Box>
                         <SimCardRoundedIcon
                             sx={{
@@ -282,33 +313,55 @@ export default function PaymentForm() {
                     <Alert severity="warning" icon={<WarningRoundedIcon />}>
                         Your order will be processed once we receive the funds.
                     </Alert>
-                    <Typography variant="subtitle1" sx={{ fontWeight: 'medium' }}>
+                    <Typography
+                        variant="subtitle1"
+                        sx={{ fontWeight: 'medium' }}
+                    >
                         Bank account
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                        Please transfer the payment to the bank account details shown below.
+                        Please transfer the payment to the bank account details
+                        shown below.
                     </Typography>
                     <Box sx={{ display: 'flex', gap: 1 }}>
-                        <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+                        <Typography
+                            variant="body1"
+                            sx={{ color: 'text.secondary' }}
+                        >
                             Bank:
                         </Typography>
-                        <Typography variant="body1" sx={{ fontWeight: 'medium' }}>
+                        <Typography
+                            variant="body1"
+                            sx={{ fontWeight: 'medium' }}
+                        >
                             Mastercredit
                         </Typography>
                     </Box>
                     <Box sx={{ display: 'flex', gap: 1 }}>
-                        <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+                        <Typography
+                            variant="body1"
+                            sx={{ color: 'text.secondary' }}
+                        >
                             Account number:
                         </Typography>
-                        <Typography variant="body1" sx={{ fontWeight: 'medium' }}>
+                        <Typography
+                            variant="body1"
+                            sx={{ fontWeight: 'medium' }}
+                        >
                             123456789
                         </Typography>
                     </Box>
                     <Box sx={{ display: 'flex', gap: 1 }}>
-                        <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+                        <Typography
+                            variant="body1"
+                            sx={{ color: 'text.secondary' }}
+                        >
                             Routing number:
                         </Typography>
-                        <Typography variant="body1" sx={{ fontWeight: 'medium' }}>
+                        <Typography
+                            variant="body1"
+                            sx={{ fontWeight: 'medium' }}
+                        >
                             987654321
                         </Typography>
                     </Box>

@@ -19,7 +19,8 @@ const items = [
         title: 'Tag',
     },
     {
-        description: 'User profiles showcasing authors’ expertise and contributions.',
+        description:
+            'User profiles showcasing authors’ expertise and contributions.',
         icon: <AccountCircleRounded />,
         imageDark: `url(/static/images/mobile-dark.png)`,
         imageLight: `url(/static/images/mobile-light.png)`,
@@ -43,7 +44,8 @@ const Chip = styled(MuiChip)<ChipProps>(({ theme }) => ({
         {
             props: ({ selected }) => !!selected,
             style: {
-                background: 'linear-gradient(to bottom right, hsl(210, 98%, 48%), hsl(210, 98%, 35%))',
+                background:
+                    'linear-gradient(to bottom right, hsl(210, 98%, 48%), hsl(210, 98%, 35%))',
                 color: 'hsl(0, 0%, 100%)',
                 borderColor: (theme.vars || theme).palette.primary.light,
                 '& .MuiChip-label': {
@@ -106,9 +108,11 @@ export function MobileLayout({
                     style={
                         items[selectedItemIndex]
                             ? ({
-                                '--items-imageDark': items[selectedItemIndex].imageDark,
-                                '--items-imageLight': items[selectedItemIndex].imageLight,
-                            } as any)
+                                  '--items-imageDark':
+                                      items[selectedItemIndex].imageDark,
+                                  '--items-imageLight':
+                                      items[selectedItemIndex].imageLight,
+                              } as any)
                             : {}
                     }
                 />
@@ -119,7 +123,10 @@ export function MobileLayout({
                     >
                         {selectedFeature.title}
                     </Typography>
-                    <Typography variant="body2" sx={{ color: 'text.secondary', mb: 1.5 }}>
+                    <Typography
+                        variant="body2"
+                        sx={{ color: 'text.secondary', mb: 1.5 }}
+                    >
                         {selectedFeature.description}
                     </Typography>
                 </Box>
@@ -152,7 +159,8 @@ export default function Features() {
                     sx={{ color: 'text.secondary', mb: { xs: 2, sm: 4 } }}
                     variant="body1"
                 >
-                    Our platform offers a clean, developer-focused space for publishing and discovering technical articles.
+                    Our platform offers a clean, developer-focused space for
+                    publishing and discovering technical articles.
                 </Typography>
             </Box>
             <Box
@@ -182,7 +190,9 @@ export default function Features() {
                                         p: 2,
                                         width: '100%',
                                         '&:hover': {
-                                            backgroundColor: (theme.vars || theme).palette.action.hover,
+                                            backgroundColor: (
+                                                theme.vars || theme
+                                            ).palette.action.hover,
                                         },
                                     }),
                                     selectedItemIndex === index && {
@@ -209,8 +219,12 @@ export default function Features() {
                                 >
                                     {icon}
 
-                                    <Typography variant="h6">{title}</Typography>
-                                    <Typography variant="body2">{description}</Typography>
+                                    <Typography variant="h6">
+                                        {title}
+                                    </Typography>
+                                    <Typography variant="body2">
+                                        {description}
+                                    </Typography>
                                 </Box>
                             </Box>
                         ))}
@@ -251,15 +265,19 @@ export default function Features() {
                             style={
                                 items[selectedItemIndex]
                                     ? ({
-                                        '--items-imageDark': items[selectedItemIndex].imageDark,
-                                        '--items-imageLight': items[selectedItemIndex].imageLight,
-                                    } as any)
+                                          '--items-imageDark':
+                                              items[selectedItemIndex]
+                                                  .imageDark,
+                                          '--items-imageLight':
+                                              items[selectedItemIndex]
+                                                  .imageLight,
+                                      } as any)
                                     : {}
                             }
                         />
                     </Card>
                 </Box>
             </Box>
-        </Container >
+        </Container>
     );
 }

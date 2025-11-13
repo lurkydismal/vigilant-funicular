@@ -25,10 +25,15 @@ function AccordionItem({
     question: string;
     answer: string;
     expanded: string[];
-    onChange: (panel: string) => (e: React.SyntheticEvent, isExpanded: boolean) => void;
+    onChange: (
+        panel: string,
+    ) => (e: React.SyntheticEvent, isExpanded: boolean) => void;
 }) {
     return (
-        <Accordion expanded={expanded.includes(panel)} onChange={onChange(panel)}>
+        <Accordion
+            expanded={expanded.includes(panel)}
+            onChange={onChange(panel)}
+        >
             <AccordionSummary
                 aria-controls={`${panel}d-content`}
                 expandIcon={<ExpandMoreIcon />}
@@ -39,7 +44,11 @@ function AccordionItem({
                 </Typography>
             </AccordionSummary>
             <AccordionDetails>
-                <Typography gutterBottom sx={{ maxWidth: { sm: '100%', md: '70%' } }} variant="body2">
+                <Typography
+                    gutterBottom
+                    sx={{ maxWidth: { sm: '100%', md: '70%' } }}
+                    variant="body2"
+                >
                     {answer}
                 </Typography>
             </AccordionDetails>

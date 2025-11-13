@@ -10,7 +10,8 @@ export const surfacesCustomizations: Components<Theme> = {
         },
         styleOverrides: {
             root: ({ theme }) => ({
-                backgroundColor: (theme.vars || theme).palette.background.default,
+                backgroundColor: (theme.vars || theme).palette.background
+                    .default,
                 border: '1px solid',
                 borderColor: (theme.vars || theme).palette.divider,
                 overflow: 'clip',
@@ -22,12 +23,16 @@ export const surfacesCustomizations: Components<Theme> = {
                     borderBottom: 'none',
                 },
                 '&:first-of-type': {
-                    borderTopLeftRadius: (theme.vars || theme).shape.borderRadius,
-                    borderTopRightRadius: (theme.vars || theme).shape.borderRadius,
+                    borderTopLeftRadius: (theme.vars || theme).shape
+                        .borderRadius,
+                    borderTopRightRadius: (theme.vars || theme).shape
+                        .borderRadius,
                 },
                 '&:last-of-type': {
-                    borderBottomLeftRadius: (theme.vars || theme).shape.borderRadius,
-                    borderBottomRightRadius: (theme.vars || theme).shape.borderRadius,
+                    borderBottomLeftRadius: (theme.vars || theme).shape
+                        .borderRadius,
+                    borderBottomRightRadius: (theme.vars || theme).shape
+                        .borderRadius,
                 },
             }),
         },

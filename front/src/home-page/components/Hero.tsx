@@ -39,7 +39,8 @@ export default function Hero() {
         <Box
             id="hero"
             sx={(theme) => ({
-                backgroundImage: 'radial-gradient(ellipse 80% 50% at 50% -20%, hsl(210, 100%, 90%), transparent)',
+                backgroundImage:
+                    'radial-gradient(ellipse 80% 50% at 50% -20%, hsl(210, 100%, 90%), transparent)',
                 backgroundRepeat: 'no-repeat',
                 width: '100%',
                 ...theme.applyStyles('dark', {
@@ -59,7 +60,10 @@ export default function Hero() {
             >
                 <Stack
                     spacing={2}
-                    sx={{ alignItems: 'center', width: { xs: '100%', sm: '70%' } }}
+                    sx={{
+                        alignItems: 'center',
+                        width: { xs: '100%', sm: '70%' },
+                    }}
                     useFlexGap
                 >
                     <Typography
@@ -93,16 +97,18 @@ export default function Hero() {
                             width: { sm: '100%', md: '80%' },
                         }}
                     >
-                        Explore our community of developers and creators
-                        sharing in-depth articles, insights, and project stories.
-                        Dive into topics that shape modern tech and innovation.
+                        Explore our community of developers and creators sharing
+                        in-depth articles, insights, and project stories. Dive
+                        into topics that shape modern tech and innovation.
                     </Typography>
                     <Button
                         color="primary"
                         size="small"
                         sx={{ minWidth: 'fit-content' }}
                         variant="contained"
-                        onClick={() => { navigate(`/auth/register`) }}
+                        onClick={() => {
+                            navigate(`/auth/register`);
+                        }}
                         href="#"
                     >
                         Sign up
@@ -114,7 +120,9 @@ export default function Hero() {
                     >
                         By clicking &quot;Sign up&quot; you agree to our&nbsp;
                         <Link
-                            onClick={() => { navigate(`/terms`) }}
+                            onClick={() => {
+                                navigate(`/terms`);
+                            }}
                             href="#"
                             color="primary"
                         >

@@ -313,10 +313,14 @@ export const inputsCustomizations: Components<Theme> = {
         defaultProps: {
             disableRipple: true,
             icon: (
-                <CheckBoxOutlineBlankRoundedIcon sx={{ color: 'hsla(210, 0%, 0%, 0.0)' }} />
+                <CheckBoxOutlineBlankRoundedIcon
+                    sx={{ color: 'hsla(210, 0%, 0%, 0.0)' }}
+                />
             ),
             checkedIcon: <CheckRoundedIcon sx={{ height: 14, width: 14 }} />,
-            indeterminateIcon: <RemoveRoundedIcon sx={{ height: 14, width: 14 }} />,
+            indeterminateIcon: (
+                <RemoveRoundedIcon sx={{ height: 14, width: 14 }} />
+            ),
         },
         styleOverrides: {
             root: ({ theme }) => ({
@@ -381,7 +385,8 @@ export const inputsCustomizations: Components<Theme> = {
                 padding: 0,
             },
             root: ({ theme }) => ({
-                backgroundColor: (theme.vars || theme).palette.background.default,
+                backgroundColor: (theme.vars || theme).palette.background
+                    .default,
                 border: `1px solid ${(theme.vars || theme).palette.divider}`,
                 borderRadius: (theme.vars || theme).shape.borderRadius,
                 color: (theme.vars || theme).palette.text.primary,

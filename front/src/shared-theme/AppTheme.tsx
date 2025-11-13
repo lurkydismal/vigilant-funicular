@@ -19,30 +19,28 @@ export default function AppTheme(props: AppThemeProps) {
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
     const theme = React.useMemo(() => {
-        return (
-            createTheme({
-                palette: {
-                    mode: prefersDarkMode ? 'dark' : 'light',
-                },
-                // For more details about CSS variables configuration, see https://mui.com/material-ui/customization/css-theme-variables/configuration/
-                cssVariables: {
-                    colorSchemeSelector: 'data-mui-color-scheme',
-                    cssVarPrefix: 'template',
-                },
-                colorSchemes,
-                shadows,
-                shape,
-                typography,
-                components: {
-                    ...inputsCustomizations,
-                    ...dataDisplayCustomizations,
-                    ...feedbackCustomizations,
-                    ...navigationCustomizations,
-                    ...surfacesCustomizations,
-                    ...themeComponents,
-                },
-            })
-        );
+        return createTheme({
+            palette: {
+                mode: prefersDarkMode ? 'dark' : 'light',
+            },
+            // For more details about CSS variables configuration, see https://mui.com/material-ui/customization/css-theme-variables/configuration/
+            cssVariables: {
+                colorSchemeSelector: 'data-mui-color-scheme',
+                cssVarPrefix: 'template',
+            },
+            colorSchemes,
+            shadows,
+            shape,
+            typography,
+            components: {
+                ...inputsCustomizations,
+                ...dataDisplayCustomizations,
+                ...feedbackCustomizations,
+                ...navigationCustomizations,
+                ...surfacesCustomizations,
+                ...themeComponents,
+            },
+        });
     }, [themeComponents]);
 
     return (

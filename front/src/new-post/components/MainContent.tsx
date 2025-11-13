@@ -16,7 +16,7 @@ import Typography from '@mui/material/Typography';
 interface Step {
     title: string;
     item: React.ReactElement;
-};
+}
 
 const steps: Step[] = [
     { title: 'Shipping address', item: <AddressForm /> },
@@ -50,7 +50,10 @@ export default function MainContent() {
                         sm: 'calc(100dvh - var(--template-frame-height, 0px))',
                     },
                     alignItems: 'start',
-                    backgroundColor: { xs: 'transparent', sm: 'background.default' },
+                    backgroundColor: {
+                        xs: 'transparent',
+                        sm: 'background.default',
+                    },
                     maxWidth: '100%',
                     px: { xs: 2, sm: 10 },
                     width: '100%',
@@ -82,7 +85,10 @@ export default function MainContent() {
                             {steps.map((step) => (
                                 <Step
                                     key={step.title}
-                                    sx={{ ':first-child': { pl: 0 }, ':last-child': { pr: 0 } }}
+                                    sx={{
+                                        ':first-child': { pl: 0 },
+                                        ':last-child': { pr: 0 },
+                                    }}
                                 >
                                     <StepLabel>{step.title}</StepLabel>
                                 </Step>
@@ -110,14 +116,20 @@ export default function MainContent() {
                         {steps.map((step) => (
                             <Step
                                 sx={{
-                                    '& .MuiStepConnector-root': { top: { xs: 6, sm: 12 } },
+                                    '& .MuiStepConnector-root': {
+                                        top: { xs: 6, sm: 12 },
+                                    },
                                     ':first-child': { pl: 0 },
                                     ':last-child': { pr: 0 },
                                 }}
                                 key={step.title}
                             >
                                 <StepLabel
-                                    sx={{ '.MuiStepLabel-labelContainer': { maxWidth: '70px' } }}
+                                    sx={{
+                                        '.MuiStepLabel-labelContainer': {
+                                            maxWidth: '70px',
+                                        },
+                                    }}
                                 >
                                     {step.title}
                                 </StepLabel>
@@ -127,14 +139,23 @@ export default function MainContent() {
                     {activeStep === steps.length ? (
                         <Stack spacing={2} useFlexGap>
                             <Typography variant="h1">📦</Typography>
-                            <Typography variant="h5">Thank you for your order!</Typography>
-                            <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+                            <Typography variant="h5">
+                                Thank you for your order!
+                            </Typography>
+                            <Typography
+                                variant="body1"
+                                sx={{ color: 'text.secondary' }}
+                            >
                                 Your order number is
-                                <strong>&nbsp;#140396</strong>. We have emailed your order
-                                confirmation and will update you once its shipped.
+                                <strong>&nbsp;#140396</strong>. We have emailed
+                                your order confirmation and will update you once
+                                its shipped.
                             </Typography>
                             <Button
-                                sx={{ alignSelf: 'start', width: { xs: '100%', sm: 'auto' } }}
+                                sx={{
+                                    alignSelf: 'start',
+                                    width: { xs: '100%', sm: 'auto' },
+                                }}
                                 variant="contained"
                             >
                                 Go to my orders
@@ -148,7 +169,10 @@ export default function MainContent() {
                                     {
                                         alignItems: 'end',
                                         display: 'flex',
-                                        flexDirection: { xs: 'column-reverse', sm: 'row' },
+                                        flexDirection: {
+                                            xs: 'column-reverse',
+                                            sm: 'row',
+                                        },
                                         flexGrow: 1,
                                         gap: 1,
                                         mb: '60px',
@@ -164,7 +188,9 @@ export default function MainContent() {
                                     <Button
                                         onClick={handleBack}
                                         startIcon={<ChevronLeftRoundedIcon />}
-                                        sx={{ display: { xs: 'none', sm: 'flex' } }}
+                                        sx={{
+                                            display: { xs: 'none', sm: 'flex' },
+                                        }}
                                         variant="text"
                                     >
                                         Previous
@@ -175,7 +201,9 @@ export default function MainContent() {
                                         fullWidth
                                         onClick={handleBack}
                                         startIcon={<ChevronLeftRoundedIcon />}
-                                        sx={{ display: { xs: 'flex', sm: 'none' } }}
+                                        sx={{
+                                            display: { xs: 'flex', sm: 'none' },
+                                        }}
                                         variant="outlined"
                                     >
                                         Previous
@@ -184,10 +212,17 @@ export default function MainContent() {
                                 <Button
                                     endIcon={<ChevronRightRoundedIcon />}
                                     onClick={handleNext}
-                                    sx={{ width: { xs: '100%', sm: 'fit-content' } }}
+                                    sx={{
+                                        width: {
+                                            xs: '100%',
+                                            sm: 'fit-content',
+                                        },
+                                    }}
                                     variant="contained"
                                 >
-                                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                                    {activeStep === steps.length - 1
+                                        ? 'Place order'
+                                        : 'Next'}
                                 </Button>
                             </Box>
                         </React.Fragment>

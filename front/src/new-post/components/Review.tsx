@@ -63,10 +63,15 @@ export default function Review() {
                                     sx={{ width: '100%', mb: 1 }}
                                     useFlexGap
                                 >
-                                    <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+                                    <Typography
+                                        variant="body1"
+                                        sx={{ color: 'text.secondary' }}
+                                    >
                                         {payment.name}
                                     </Typography>
-                                    <Typography variant="body2">{payment.detail}</Typography>
+                                    <Typography variant="body2">
+                                        {payment.detail}
+                                    </Typography>
                                 </Stack>
                             </React.Fragment>
                         ))}

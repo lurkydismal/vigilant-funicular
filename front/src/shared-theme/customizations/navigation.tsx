@@ -21,7 +21,10 @@ export const navigationCustomizations: Components<Theme> = {
                 },
                 [`&.${menuItemClasses.selected}`]: {
                     [`&.${menuItemClasses.focusVisible}`]: {
-                        backgroundColor: alpha(theme.palette.action.selected, 0.3),
+                        backgroundColor: alpha(
+                            theme.palette.action.selected,
+                            0.3,
+                        ),
                     },
                 },
             }),
@@ -40,25 +43,36 @@ export const navigationCustomizations: Components<Theme> = {
                 backgroundImage: 'none',
                 border: `1px solid ${(theme.vars || theme).palette.divider}`,
                 borderRadius: (theme.vars || theme).shape.borderRadius,
-                boxShadow: 'hsla(220, 30%, 5%, 0.07) 0px 4px 16px 0px, hsla(220, 25%, 10%, 0.07) 0px 8px 16px -5px',
+                boxShadow:
+                    'hsla(220, 30%, 5%, 0.07) 0px 4px 16px 0px, hsla(220, 25%, 10%, 0.07) 0px 8px 16px -5px',
                 marginTop: '4px',
                 [`& .${buttonBaseClasses.root}`]: {
                     '&.Mui-selected': {
-                        backgroundColor: alpha(theme.palette.action.selected, 0.3),
+                        backgroundColor: alpha(
+                            theme.palette.action.selected,
+                            0.3,
+                        ),
                     },
                 },
                 ...theme.applyStyles('dark', {
                     background: gray[900],
-                    boxShadow: 'hsla(220, 30%, 5%, 0.7) 0px 4px 16px 0px, hsla(220, 25%, 10%, 0.8) 0px 8px 16px -5px',
+                    boxShadow:
+                        'hsla(220, 30%, 5%, 0.7) 0px 4px 16px 0px, hsla(220, 25%, 10%, 0.8) 0px 8px 16px -5px',
                 }),
             }),
         },
     },
     MuiSelect: {
         defaultProps: {
-            IconComponent: React.forwardRef<SVGSVGElement, SvgIconProps>((props, ref) => (
-                <UnfoldMoreRoundedIcon fontSize="small" {...props} ref={ref} />
-            )),
+            IconComponent: React.forwardRef<SVGSVGElement, SvgIconProps>(
+                (props, ref) => (
+                    <UnfoldMoreRoundedIcon
+                        fontSize="small"
+                        {...props}
+                        ref={ref}
+                    />
+                ),
+            ),
         },
         styleOverrides: {
             root: ({ theme }) => ({
@@ -68,7 +82,8 @@ export const navigationCustomizations: Components<Theme> = {
                 borderRadius: (theme.vars || theme).shape.borderRadius,
                 boxShadow: `inset 0 1px 0 1px hsla(220, 0%, 100%, 0.6), inset 0 -1px 0 1px hsla(220, 35%, 90%, 0.5)`,
                 '&:hover': {
-                    backgroundColor: (theme.vars || theme).palette.background.paper,
+                    backgroundColor: (theme.vars || theme).palette.background
+                        .paper,
                     borderColor: gray[300],
                     boxShadow: 'none',
                 },
@@ -81,12 +96,14 @@ export const navigationCustomizations: Components<Theme> = {
                 },
 
                 ...theme.applyStyles('dark', {
-                    backgroundColor: (theme.vars || theme).palette.background.paper,
+                    backgroundColor: (theme.vars || theme).palette.background
+                        .paper,
                     borderColor: gray[700],
                     borderRadius: (theme.vars || theme).shape.borderRadius,
                     boxShadow: `inset 0 1px 0 1px ${alpha(gray[700], 0.15)}, inset 0 -1px 0 1px hsla(220, 0%, 0%, 0.7)`,
                     '&:hover': {
-                        backgroundColor: (theme.vars || theme).palette.background.paper,
+                        backgroundColor: (theme.vars || theme).palette
+                            .background.paper,
                         borderColor: alpha(gray[700], 0.7),
                         boxShadow: 'none',
                     },
@@ -124,7 +141,8 @@ export const navigationCustomizations: Components<Theme> = {
                 textDecoration: 'none',
                 width: 'fit-content',
                 '&::before': {
-                    backgroundColor: (theme.vars || theme).palette.text.secondary,
+                    backgroundColor: (theme.vars || theme).palette.text
+                        .secondary,
                     bottom: 0,
                     content: '""',
                     height: '1px',
@@ -148,7 +166,8 @@ export const navigationCustomizations: Components<Theme> = {
     MuiDrawer: {
         styleOverrides: {
             paper: ({ theme }) => ({
-                backgroundColor: (theme.vars || theme).palette.background.default,
+                backgroundColor: (theme.vars || theme).palette.background
+                    .default,
             }),
         },
     },

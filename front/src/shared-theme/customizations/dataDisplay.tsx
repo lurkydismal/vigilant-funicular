@@ -36,16 +36,25 @@ export const dataDisplayCustomizations: Components<Theme> = {
                     opacity: 0.7,
                     padding: '2px 8px',
                     '&.Mui-selected': {
-                        backgroundColor: alpha(theme.palette.action.selected, 0.3),
+                        backgroundColor: alpha(
+                            theme.palette.action.selected,
+                            0.3,
+                        ),
                         opacity: 1,
                         [`& .${svgIconClasses.root}`]: {
                             color: (theme.vars || theme).palette.text.primary,
                         },
                         '&:focus-visible': {
-                            backgroundColor: alpha(theme.palette.action.selected, 0.3),
+                            backgroundColor: alpha(
+                                theme.palette.action.selected,
+                                0.3,
+                            ),
                         },
                         '&:hover': {
-                            backgroundColor: alpha(theme.palette.action.selected, 0.5),
+                            backgroundColor: alpha(
+                                theme.palette.action.selected,
+                                0.5,
+                            ),
                         },
                     },
                     '&:focus-visible': {
