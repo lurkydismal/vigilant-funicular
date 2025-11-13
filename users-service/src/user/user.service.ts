@@ -46,7 +46,7 @@ export class UserService {
 
             // Send the file to the media microservice
             const form = new FormData();
-            form.append('file', buffer, { filename: avatarPath, contentType: 'image/png' });
+            form.append('file', buffer, { filename: avatarPath, contentType: 'image/jpeg' });
 
             const url = `http://media:3000/media/upload`;
 
