@@ -1,41 +1,44 @@
 {
-  "name": "material-ui-vite-tailwind-ts",
-  "private": true,
-  "version": "7.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@emotion/react": "latest",
-    "@emotion/styled": "latest",
-    "@fontsource/roboto": "latest",
-    "@mui/icons-material": "latest",
-    "@mui/material": "latest",
-    "@tailwindcss/vite": "latest",
-    "axios": "^1.13.2",
-    "mermaid": "^11.12.1",
-    "react": "latest",
-    "react-dom": "latest",
-    "react-hook-form": "^7.66.0",
-    "react-markdown": "^10.1.0",
-    "react-router-dom": "latest",
-    "react-syntax-highlighter": "^16.1.0",
-    "rehype-katex": "^7.0.1",
-    "remark-gfm": "^4.0.1",
-    "remark-math": "^6.0.0",
-    "tailwindcss": "latest"
-  },
-  "devDependencies": {
-    "@types/react": "latest",
-    "@types/react-dom": "latest",
-    "@types/react-syntax-highlighter": "^15.5.13",
-    "@vitejs/plugin-react": "latest",
-    "babel-plugin-react-compiler": "latest",
-    "typescript": "latest",
-    "vite": "latest"
-  }
+    "name": "material-ui-vite-tailwind-ts",
+    "private": true,
+    "version": "7.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc -b && vite build",
+        "lint": "eslint .",
+        "preview": "vite preview",
+        "format": "prettier --write \"src/**/*.{js,ts,jsx,tsx,json,css,scss,md}\"",
+        "format:check": "prettier --check \"src/**/*.{js,ts,jsx,tsx,json,css,scss,md}\""
+    },
+    "dependencies": {
+        "@emotion/react": "latest",
+        "@emotion/styled": "latest",
+        "@fontsource/roboto": "latest",
+        "@mui/icons-material": "latest",
+        "@mui/material": "latest",
+        "@tailwindcss/vite": "latest",
+        "axios": "^1.13.2",
+        "mermaid": "^11.12.1",
+        "react": "latest",
+        "react-dom": "latest",
+        "react-hook-form": "^7.66.0",
+        "react-markdown": "^10.1.0",
+        "react-router-dom": "latest",
+        "react-syntax-highlighter": "^16.1.0",
+        "rehype-katex": "^7.0.1",
+        "remark-gfm": "^4.0.1",
+        "remark-math": "^6.0.0",
+        "tailwindcss": "latest"
+    },
+    "devDependencies": {
+        "@types/react": "latest",
+        "@types/react-dom": "latest",
+        "@types/react-syntax-highlighter": "^15.5.13",
+        "@vitejs/plugin-react": "latest",
+        "babel-plugin-react-compiler": "latest",
+        "prettier": "^3.6.2",
+        "typescript": "latest",
+        "vite": "latest"
+    }
 }
