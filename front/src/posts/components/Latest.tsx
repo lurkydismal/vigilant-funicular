@@ -18,8 +18,14 @@ export default function Latest() {
             <Typography variant="h2" gutterBottom>
                 Latest
             </Typography>
-            <PostsWithoutImage posts={paginate(postsData, currentPage, perPage)}></PostsWithoutImage>
-            <PostsPagination total={postsData.length} perPage={perPage} onChange={onChange}></PostsPagination>
+            <PostsWithoutImage
+                posts={paginate(postsData, currentPage, perPage)}
+            ></PostsWithoutImage>
+            <PostsPagination
+                total={postsData.length}
+                perPage={perPage}
+                onChange={onChange}
+            ></PostsPagination>
         </div>
     );
 }

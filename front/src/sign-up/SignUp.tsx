@@ -74,18 +74,12 @@ export default function SignUp(props: AppThemeProps) {
     const onSubmit = async (data: FormValues) => {
         setLoading(true);
 
-        const formData = new FormData();
-        formData.append('username', data.username);
-        formData.append('password', data.password);
-
         try {
             if (!isDev) {
-                const res = await sendRequest(
-                    `/auth/register`,
-                    formData,
-                );
-
-                const json = await res.json();
+                const json = await sendRequest('/api/auth/register', {
+                    usename: data.username,
+                    password: data.password,
+                });
 
                 console.log(json);
 
@@ -118,15 +112,27 @@ export default function SignUp(props: AppThemeProps) {
                         <ReactHook.Controller
                             name="username"
                             control={control}
-                            rules={{ required: 'Username is required', minLength: { value: 6, message: 'Min 6 characters' } }}
+                            rules={{
+                                required: 'Username is required',
+                                minLength: {
+                                    value: 6,
+                                    message: 'Min 6 characters',
+                                },
+                            }}
                             render={({ field, fieldState }) => (
                                 <FormControl>
-                                    <FormLabel htmlFor="username">Username</FormLabel>
+                                    <FormLabel htmlFor="username">
+                                        Username
+                                    </FormLabel>
                                     <TextField
                                         {...field}
                                         autoComplete="username"
                                         autoFocus
-                                        color={Boolean(fieldState.error) ? 'error' : 'primary'}
+                                        color={
+                                            Boolean(fieldState.error)
+                                                ? 'error'
+                                                : 'primary'
+                                        }
                                         error={Boolean(fieldState.error)}
                                         fullWidth
                                         helperText={fieldState.error?.message}
@@ -143,14 +149,26 @@ export default function SignUp(props: AppThemeProps) {
                         <ReactHook.Controller
                             name="password"
                             control={control}
-                            rules={{ required: 'Password is required', minLength: { value: 8, message: 'Min 8 characters' } }}
+                            rules={{
+                                required: 'Password is required',
+                                minLength: {
+                                    value: 8,
+                                    message: 'Min 8 characters',
+                                },
+                            }}
                             render={({ field, fieldState }) => (
                                 <FormControl>
-                                    <FormLabel htmlFor="password">Password</FormLabel>
+                                    <FormLabel htmlFor="password">
+                                        Password
+                                    </FormLabel>
                                     <TextField
                                         {...field}
                                         autoComplete="new-password"
-                                        color={Boolean(fieldState.error) ? 'error' : 'primary'}
+                                        color={
+                                            Boolean(fieldState.error)
+                                                ? 'error'
+                                                : 'primary'
+                                        }
                                         error={Boolean(fieldState.error)}
                                         fullWidth
                                         helperText={fieldState.error?.message}
@@ -175,13 +193,23 @@ export default function SignUp(props: AppThemeProps) {
                         </Button>
                     </Box>
                     <Divider>
-                        <Typography sx={{ color: 'text.secondary' }}>or</Typography>
+                        <Typography sx={{ color: 'text.secondary' }}>
+                            or
+                        </Typography>
                     </Divider>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 2,
+                        }}
+                    >
                         <Typography sx={{ textAlign: 'center' }}>
                             Already have an account?{' '}
                             <Link
-                                onClick={() => { navigate(`/auth/login`) }}
+                                onClick={() => {
+                                    navigate(`/auth/login`);
+                                }}
                                 href="#"
                                 sx={{ alignSelf: 'center' }}
                                 variant="body2"

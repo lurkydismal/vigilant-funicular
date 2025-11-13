@@ -20,7 +20,9 @@ export default function LoadingScreen({ drawDurationMs = 4800 }: Props) {
 
         // wait for font/render then measure
         requestAnimationFrame(() => {
-            const len = (el.getComputedTextLength && el.getComputedTextLength()) || 4000;
+            const len =
+                (el.getComputedTextLength && el.getComputedTextLength()) ||
+                4000;
             // set CSS variables used by styled component
             el.style.setProperty('--len', String(Math.ceil(len)));
             el.style.setProperty('--draw-duration', `${drawDurationMs}ms`);
@@ -125,11 +127,11 @@ export function ProtectedRoute() {
     }, []);
 
     // Not yet known
-    if (authorized === null) return (<LoadingScreen />);
+    if (authorized === null) return <LoadingScreen />;
 
     // Not authorized
-    if (!authorized) return (<Navigate to="/auth/login" replace />);
+    if (!authorized) return <Navigate to="/auth/login" replace />;
 
     // Authorized
-    return (<Outlet />);
+    return <Outlet />;
 }

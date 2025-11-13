@@ -8,17 +8,13 @@ import Profile from './profile/Profile';
 import SignIn from './sign-in/SignIn';
 import SignUp from './sign-up/SignUp';
 import Typography from '@mui/material/Typography';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ProtectedRoute } from './ProtectedRoute';
 
 function NotFound() {
     return (
         <AppTheme>
-            <Typography
-                variant='h2'
-            >
-                404 - Page Not Found
-            </Typography>
+            <Typography variant="h2">404 - Page Not Found</Typography>
         </AppTheme>
     );
 }

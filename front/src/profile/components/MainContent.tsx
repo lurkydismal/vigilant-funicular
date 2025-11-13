@@ -53,14 +53,22 @@ export default function MainContent() {
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            {isMeProfile
-                ? <Author {...properties}></Author>
-                : <AuthorWithFollow {...properties} doesFollow={false}></AuthorWithFollow>
-            }
+            {isMeProfile ? (
+                <Author {...properties}></Author>
+            ) : (
+                <AuthorWithFollow
+                    {...properties}
+                    doesFollow={false}
+                ></AuthorWithFollow>
+            )}
             <SearchButton></SearchButton>
             <TagsAndSearchMobile tags={tags}></TagsAndSearchMobile>
             <Posts posts={paginate(postsData, currentPage, perPage)}></Posts>
-            <PostsPagination total={postsData.length} perPage={perPage} onChange={onChange}></PostsPagination>
-        </Box >
+            <PostsPagination
+                total={postsData.length}
+                perPage={perPage}
+                onChange={onChange}
+            ></PostsPagination>
+        </Box>
     );
 }

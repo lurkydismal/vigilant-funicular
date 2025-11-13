@@ -15,7 +15,13 @@ export default function Posts(props: AppThemeProps) {
             <Container
                 component="main"
                 maxWidth="xl"
-                sx={{ display: 'flex', flexDirection: 'column', marginTop: 13, marginBottom: 4, gap: 4 }}
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    marginTop: 13,
+                    marginBottom: 4,
+                    gap: 4,
+                }}
             >
                 <MainContent />
                 <Latest />

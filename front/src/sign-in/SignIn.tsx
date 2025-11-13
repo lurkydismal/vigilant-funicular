@@ -78,16 +78,11 @@ export default function SignIn(props: AppThemeProps) {
 
         try {
             if (!isDev) {
-                const res = await sendRequest(
-                    `/auth/login`,
-                    {
-                        username: data.username,
-                        password: data.password,
-                        rememberMe: (data.rememberMe ?? false),
-                    },
-                );
-
-                const json = await res.json();
+                const json = await sendRequest(`/auth/login`, {
+                    username: data.username,
+                    password: data.password,
+                    rememberMe: data.rememberMe ?? false,
+                });
 
                 console.log(json);
 
@@ -123,12 +118,18 @@ export default function SignIn(props: AppThemeProps) {
                             rules={{ required: 'Username is required' }}
                             render={({ field, fieldState }) => (
                                 <FormControl>
-                                    <FormLabel htmlFor="username">Username</FormLabel>
+                                    <FormLabel htmlFor="username">
+                                        Username
+                                    </FormLabel>
                                     <TextField
                                         {...field}
                                         autoComplete="username"
                                         autoFocus
-                                        color={Boolean(fieldState.error) ? 'error' : 'primary'}
+                                        color={
+                                            Boolean(fieldState.error)
+                                                ? 'error'
+                                                : 'primary'
+                                        }
                                         error={Boolean(fieldState.error)}
                                         fullWidth
                                         helperText={fieldState.error?.message}
@@ -148,11 +149,17 @@ export default function SignIn(props: AppThemeProps) {
                             rules={{ required: 'Password is required' }}
                             render={({ field, fieldState }) => (
                                 <FormControl>
-                                    <FormLabel htmlFor="password">Password</FormLabel>
+                                    <FormLabel htmlFor="password">
+                                        Password
+                                    </FormLabel>
                                     <TextField
                                         {...field}
                                         autoComplete="new-password"
-                                        color={Boolean(fieldState.error) ? 'error' : 'primary'}
+                                        color={
+                                            Boolean(fieldState.error)
+                                                ? 'error'
+                                                : 'primary'
+                                        }
                                         error={Boolean(fieldState.error)}
                                         fullWidth
                                         helperText={fieldState.error?.message}
@@ -173,7 +180,12 @@ export default function SignIn(props: AppThemeProps) {
                             render={({ field }) => (
                                 <FormControlLabel
                                     {...field}
-                                    control={<Checkbox value="remember" color="primary" />}
+                                    control={
+                                        <Checkbox
+                                            value="remember"
+                                            color="primary"
+                                        />
+                                    }
                                     label="Remember me"
                                 />
                             )}
@@ -189,11 +201,19 @@ export default function SignIn(props: AppThemeProps) {
                         </Button>
                     </Box>
                     <Divider>or</Divider>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 2,
+                        }}
+                    >
                         <Typography sx={{ textAlign: 'center' }}>
                             Don&apos;t have an account?{' '}
                             <Link
-                                onClick={() => { navigate(`/auth/register`) }}
+                                onClick={() => {
+                                    navigate(`/auth/register`);
+                                }}
                                 href="#"
                                 sx={{ alignSelf: 'center' }}
                                 variant="body2"
@@ -205,6 +225,6 @@ export default function SignIn(props: AppThemeProps) {
                     </Box>
                 </Card>
             </SignInContainer>
-        </AppTheme >
+        </AppTheme>
     );
 }

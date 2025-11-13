@@ -25,26 +25,23 @@ export default function MainContent() {
             <Typography variant="subtitle1" component="div">
                 {post.tag}
             </Typography>
-            <Typography
-                gutterBottom
-                tabIndex={0}
-                variant="h3"
-            >
+            <Typography gutterBottom tabIndex={0} variant="h3">
                 {post.title}
             </Typography>
             <CardMedia
                 alt="green iguana"
                 component="img"
-                image={post.imageUrl ?? `https://picsum.photos/2400/1800?random=${post.id}`}
+                image={
+                    post.imageUrl ??
+                    `https://picsum.photos/2400/1800?random=${post.id}`
+                }
                 sx={{
                     aspectRatio: '12 / 6',
                     borderBottom: '1px solid',
                     borderColor: 'divider',
                 }}
             />
-            <Markdown>
-                {post.content}
-            </Markdown>
-        </Box >
+            <Markdown>{post.content}</Markdown>
+        </Box>
     );
 }

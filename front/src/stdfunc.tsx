@@ -3,62 +3,53 @@ import axios from 'axios';
 
 type Method = 'POST' | 'GET' | 'PUT' | 'DELETE';
 
-export const isDev = (import.meta.env.MODE != 'production');
+export const isDev = import.meta.env.MODE != 'production';
 export const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
 
-export async function sendRequest(
+export async function sendRequest<T = any>(
     endpoint: string,
-    data?: (Record<string, any> | FormData),
+    data?: Record<string, any> | FormData,
     method: Method = 'POST',
-    toJSON: boolean = true,
-    devResponse?: string
-) {
-    if (isDev && devResponse)
+    devResponse?: T,
+): Promise<T> {
+    if (isDev && devResponse) {
+        return new Promise((resolve) =>
+            setTimeout(() => resolve(devResponse), 100),
+        );
+    }
 
-        let body: BodyInit | undefined;
-    let headers: Record<string, string> | undefined;
+    const isFormData = data instanceof FormData;
 
-    if (!data) {
-        body = undefined;
-        headers = undefined;
+    try {
+        const config = {
+            method,
+            endpoint,
+            headers: isFormData
+                ? { 'Content-Type': 'multipart/form-data' }
+                : { 'Content-Type': 'application/json' },
+            data: isFormData ? data : data ? JSON.stringify(data) : undefined,
+        };
 
-    } else if (data instanceof FormData) {
-        if (toJSON) {
-            const obj: Record<string, any> = {};
-            data.forEach((value: any, key) => {
-                if ((value instanceof File) || (value instanceof Blob)) {
-                    throw new Error(`Field "${key}" cannot be converted to JSON (File/Blob found)`);
-                }
-                if (typeof value !== 'string' && typeof value !== 'number' && typeof value !== 'boolean') {
-                    throw new Error(`Field "${key}" cannot be converted to JSON (unsupported type)`);
-                }
-                obj[key] = value;
-            });
-            body = JSON.stringify(obj);
-            headers = { 'Content-Type': 'application/json' };
-        } else {
-            body = data;
-            headers = undefined; // browser will set multipart/form-data
+        const response = await axios(config);
+
+        if (response.status < 200 || response.status >= 300) {
+            throw new Error(`Request failed with status ${response.status}`);
         }
-    } else {
-        body = JSON.stringify(data);
-        headers = { 'Content-Type': 'application/json' };
+
+        return response.data;
+    } catch (error: any) {
+        console.error(
+            'Request failed:',
+            error?.response?.status || error.message,
+        );
+        throw error;
     }
-
-    const res = await fetch(apiEndpoint + endpoint, { method, headers, body });
-
-    if (!res.ok) {
-        throw new Error(`Request failed with status ${res.status}: ${res.statusText}`);
-    }
-
-    return res;
 }
 
 // FIX: Do not log error 401
 export async function checkAuth(): Promise<boolean> {
     if (isDev) {
         return true;
-
     } else {
         // try {
         //     sendRequest('/auth/verify');
@@ -73,7 +64,7 @@ export async function checkAuth(): Promise<boolean> {
 
         const res = await axios.post(`${apiEndpoint}/auth/verify`, null, {});
 
-        return (res.status >= 200) && (res.status < 300);
+        return res.status >= 200 && res.status < 300;
     }
 }
 
@@ -94,7 +85,6 @@ export function storeCredentials(credentials: UserCredentials) {
 export function getCredentials(): UserCredentials {
     if (isDev) {
         return user;
-
     } else {
         const id = localStorage.getItem('id');
         const username = localStorage.getItem('username');
@@ -110,7 +100,11 @@ export function getCredentials(): UserCredentials {
     }
 }
 
-export function paginate<T>(items: T[], currentPage: number, perPage: number): T[] {
+export function paginate<T>(
+    items: T[],
+    currentPage: number,
+    perPage: number,
+): T[] {
     const start = (currentPage - 1) * perPage;
     const end = start + perPage;
 
