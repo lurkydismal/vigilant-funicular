@@ -32,11 +32,13 @@ const Fancy = styled(Typography)(({ theme }) => ({
     textAlign: 'center',
     color: '#fff', // primary requirement: white
     // subtle gradient + clipped white look for depth while remaining white
-    background: 'linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(250,250,250,0.98) 50%, rgba(245,245,245,0.96) 100%)',
+    background:
+        'linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(250,250,250,0.98) 50%, rgba(245,245,245,0.96) 100%)',
     WebkitBackgroundClip: 'text',
     WebkitTextFillColor: 'transparent',
     // glow + soft shadow for style
-    textShadow: '0 6px 18px rgba(255,255,255,0.06), 0 12px 40px rgba(0,0,0,0.6)',
+    textShadow:
+        '0 6px 18px rgba(255,255,255,0.06), 0 12px 40px rgba(0,0,0,0.6)',
     // small subtle animation
     animation: 'fadeInUp 600ms ease both, pulseGlow 2.8s ease-in-out infinite',
     // accessible wrap
@@ -46,8 +48,14 @@ const Fancy = styled(Typography)(({ theme }) => ({
         to: { opacity: 1, transform: 'translateY(0)' },
     },
     '@keyframes pulseGlow': {
-        '0%,100%': { textShadow: '0 6px 18px rgba(255,255,255,0.06), 0 12px 40px rgba(0,0,0,0.6)' },
-        '50%': { textShadow: '0 10px 30px rgba(255,255,255,0.10), 0 18px 50px rgba(0,0,0,0.6)' },
+        '0%,100%': {
+            textShadow:
+                '0 6px 18px rgba(255,255,255,0.06), 0 12px 40px rgba(0,0,0,0.6)',
+        },
+        '50%': {
+            textShadow:
+                '0 10px 30px rgba(255,255,255,0.10), 0 18px 50px rgba(0,0,0,0.6)',
+        },
     },
 }));
 
@@ -68,9 +76,14 @@ export default function MainFallback({
     itemsLength,
     className,
 }: Props) {
-    const childrenEmpty = isEmptyNode(children) && React.Children.count(children) === 0;
-    const countEmpty = itemsLength !== undefined && itemsLength !== null ? itemsLength === 0 : true;
-    const showFallback = childrenEmpty || (itemsLength === undefined ? true : countEmpty);
+    const childrenEmpty =
+        isEmptyNode(children) && React.Children.count(children) === 0;
+    const countEmpty =
+        itemsLength !== undefined && itemsLength !== null
+            ? itemsLength === 0
+            : true;
+    const showFallback =
+        childrenEmpty || (itemsLength === undefined ? true : countEmpty);
 
     if (!showFallback) {
         return (

@@ -1,15 +1,18 @@
-import Box from "@mui/material/Box";
-import Chip from "@mui/material/Chip";
-import { SearchButtonMobile } from "./SearchButton";
+import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
+import { SearchButtonMobile } from './SearchButton';
 
 interface Tag {
     id: number;
     name: string;
-};
+}
 
 // TODO: Implement
 const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    console.info('You clicked the filter chip. ', event.currentTarget.textContent);
+    console.info(
+        'You clicked the filter chip. ',
+        event.currentTarget.textContent,
+    );
 };
 
 export function Tags({ tags }: { tags: Tag[] }) {

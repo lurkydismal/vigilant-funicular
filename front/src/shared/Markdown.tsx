@@ -26,22 +26,34 @@ const MarkdownComponents = {
 
     // Heading
     h1: ({ children }: any) => (
-        <Typography variant="h3" gutterBottom>{children}</Typography>
+        <Typography variant="h3" gutterBottom>
+            {children}
+        </Typography>
     ),
     h2: ({ children }: any) => (
-        <Typography variant="h4" gutterBottom>{children}</Typography>
+        <Typography variant="h4" gutterBottom>
+            {children}
+        </Typography>
     ),
     h3: ({ children }: any) => (
-        <Typography variant="h5" gutterBottom>{children}</Typography>
+        <Typography variant="h5" gutterBottom>
+            {children}
+        </Typography>
     ),
     h4: ({ children }: any) => (
-        <Typography variant="h6" gutterBottom>{children}</Typography>
+        <Typography variant="h6" gutterBottom>
+            {children}
+        </Typography>
     ),
     h5: ({ children }: any) => (
-        <Typography variant="subtitle1" gutterBottom>{children}</Typography>
+        <Typography variant="subtitle1" gutterBottom>
+            {children}
+        </Typography>
     ),
     h6: ({ children }: any) => (
-        <Typography variant="subtitle2" gutterBottom>{children}</Typography>
+        <Typography variant="subtitle2" gutterBottom>
+            {children}
+        </Typography>
     ),
 
     // Paragraph
@@ -52,29 +64,42 @@ const MarkdownComponents = {
     // Link
     // TODO: Sanitize link maybe
     a: ({ href, children }: any) => (
-        <Link href={href} target="_blank" rel="noopener noreferrer">{children}</Link>
+        <Link href={href} target="_blank" rel="noopener noreferrer">
+            {children}
+        </Link>
     ),
 
     // Lists
     // TODO: Ordered list
-    ul: ({ children }: any) => <ListItem><ListItemText>{children}</ListItemText></ListItem>,
-    ol: ({ children }: any) => <ListItem><ListItemText>{children}</ListItemText></ListItem>,
+    ul: ({ children }: any) => (
+        <ListItem>
+            <ListItemText>{children}</ListItemText>
+        </ListItem>
+    ),
+    ol: ({ children }: any) => (
+        <ListItem>
+            <ListItemText>{children}</ListItemText>
+        </ListItem>
+    ),
     li: ({ children }: any) => <List>{children}</List>,
 
     // Blockquote
     blockquote: ({ children }: any) => (
         <Typography
             component="blockquote"
-            sx={{ borderLeft: '4px solid', paddingLeft: 2, color: 'text.secondary', fontStyle: 'italic' }}
+            sx={{
+                borderLeft: '4px solid',
+                paddingLeft: 2,
+                color: 'text.secondary',
+                fontStyle: 'italic',
+            }}
         >
             {children}
         </Typography>
     ),
 
     // Horizontal rule
-    hr: () => (
-        <Divider sx={{ borderColor: '#ccc', margin: '16px 0' }} />
-    ),
+    hr: () => <Divider sx={{ borderColor: '#ccc', margin: '16px 0' }} />,
 
     // Image
     img: ({ src, alt }: any) => (
@@ -97,17 +122,14 @@ const MarkdownComponents = {
                     borderRadius: 4,
                 }}
             />
-        </Container >
+        </Container>
     ),
 
     // remark-gfm
     // Table
     table: ({ children }: any) => (
         <TableContainer component={Paper}>
-            <Table
-                stickyHeader
-                sx={{ minWidth: 650 }}
-            >
+            <Table stickyHeader sx={{ minWidth: 650 }}>
                 {children}
             </Table>
         </TableContainer>
@@ -118,9 +140,7 @@ const MarkdownComponents = {
     th: ({ children }: any) => <TableCell>{children}</TableCell>,
     td: ({ children }: any) => <TableCell>{children}</TableCell>,
 
-    del: ({ node, ...props }: any) => (
-        <del {...props} ></del>
-    ),
+    del: ({ node, ...props }: any) => <del {...props}></del>,
 };
 
 export default function Markdown({ children }: { children: string }) {
@@ -135,7 +155,7 @@ export default function Markdown({ children }: { children: string }) {
         >
             <ReactMarkdown
                 remarkPlugins={[remarkGFM, remarkMath]}
-                rehypePlugins={[[rehypeKatex, { output: "mathml" }]]}
+                rehypePlugins={[[rehypeKatex, { output: 'mathml' }]]}
                 components={{ ...MarkdownComponents }}
             >
                 {children}

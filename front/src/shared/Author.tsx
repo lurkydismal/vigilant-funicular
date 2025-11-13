@@ -1,11 +1,11 @@
 import * as React from 'react';
 import * as ReactRouter from 'react-router-dom';
-import Avatar from "@mui/material/Avatar";
-import AvatarGroup from "@mui/material/AvatarGroup";
-import Box from "@mui/material/Box";
+import Avatar from '@mui/material/Avatar';
+import AvatarGroup from '@mui/material/AvatarGroup';
+import Box from '@mui/material/Box';
 import FollowButton from '../shared/FollowButton';
-import Typography from "@mui/material/Typography";
-import { TypographyVariant } from "@mui/material/styles";
+import Typography from '@mui/material/Typography';
+import { TypographyVariant } from '@mui/material/styles';
 import Link from '@mui/material/Link';
 
 export interface Author {
@@ -15,16 +15,24 @@ export interface Author {
 }
 
 // Helper: base container for an author row.
-function AuthorRow({ left, right }: { left: React.ReactNode; right?: React.ReactNode }) {
+function AuthorRow({
+    left,
+    right,
+}: {
+    left: React.ReactNode;
+    right?: React.ReactNode;
+}) {
     return (
-        <Box sx={{
-            alignItems: 'center',
-            display: 'flex',
-            flexDirection: 'row',
-            gap: 2,
-            justifyContent: 'space-between',
-            padding: '16px'
-        }}>
+        <Box
+            sx={{
+                alignItems: 'center',
+                display: 'flex',
+                flexDirection: 'row',
+                gap: 2,
+                justifyContent: 'space-between',
+                padding: '16px',
+            }}
+        >
             {left}
             {right && right}
         </Box>
@@ -34,9 +42,9 @@ function AuthorRow({ left, right }: { left: React.ReactNode; right?: React.React
 // Helper: single author avatar + name.
 function AuthorInfo({
     author,
-    variant = "caption",
+    variant = 'caption',
     avatarWidth = 24,
-    avatarHeight = 24
+    avatarHeight = 24,
 }: {
     author: Author;
     variant?: TypographyVariant;
@@ -44,8 +52,19 @@ function AuthorInfo({
     avatarHeight?: number;
 }) {
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center' }}>
-            <Avatar alt={author.name} src={author.avatar} sx={{ width: avatarWidth, height: avatarHeight }} />
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                gap: 1,
+                alignItems: 'center',
+            }}
+        >
+            <Avatar
+                alt={author.name}
+                src={author.avatar}
+                sx={{ width: avatarWidth, height: avatarHeight }}
+            />
             <Typography variant={variant}>{author.name}</Typography>
         </Box>
     );
@@ -54,9 +73,9 @@ function AuthorInfo({
 // Helper: multiple authors (AvatarGroup + names).
 function AuthorsInfo({
     authors,
-    variant = "caption",
+    variant = 'caption',
     avatarWidth = 24,
-    avatarHeight = 24
+    avatarHeight = 24,
 }: {
     authors: Author[];
     variant?: TypographyVariant;
@@ -64,7 +83,14 @@ function AuthorsInfo({
     avatarHeight?: number;
 }) {
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center' }}>
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                gap: 1,
+                alignItems: 'center',
+            }}
+        >
             <AvatarGroup max={3}>
                 {authors.map((author) => (
                     <Avatar
@@ -84,25 +110,63 @@ function AuthorsInfo({
 
 // Refactored components using the helpers:
 
-export function Author({ author, variant, avatarWidth, avatarHeight }: {
+export function Author({
+    author,
+    variant,
+    avatarWidth,
+    avatarHeight,
+}: {
     author: Author;
     variant?: TypographyVariant;
     avatarWidth?: number;
     avatarHeight?: number;
 }) {
-    return <AuthorRow left={<AuthorInfo author={author} variant={variant} avatarWidth={avatarWidth} avatarHeight={avatarHeight} />} />;
+    return (
+        <AuthorRow
+            left={
+                <AuthorInfo
+                    author={author}
+                    variant={variant}
+                    avatarWidth={avatarWidth}
+                    avatarHeight={avatarHeight}
+                />
+            }
+        />
+    );
 }
 
-export function Authors({ authors, variant, avatarWidth, avatarHeight }: {
+export function Authors({
+    authors,
+    variant,
+    avatarWidth,
+    avatarHeight,
+}: {
     authors: Author[];
     variant?: TypographyVariant;
     avatarWidth?: number;
     avatarHeight?: number;
 }) {
-    return <AuthorRow left={<AuthorsInfo authors={authors} variant={variant} avatarWidth={avatarWidth} avatarHeight={avatarHeight} />} />;
+    return (
+        <AuthorRow
+            left={
+                <AuthorsInfo
+                    authors={authors}
+                    variant={variant}
+                    avatarWidth={avatarWidth}
+                    avatarHeight={avatarHeight}
+                />
+            }
+        />
+    );
 }
 
-export function AuthorWithDate({ author, date = new Date(), variant, avatarWidth, avatarHeight }: {
+export function AuthorWithDate({
+    author,
+    date = new Date(),
+    variant,
+    avatarWidth,
+    avatarHeight,
+}: {
     author: Author;
     date?: Date;
     variant?: TypographyVariant;
@@ -111,15 +175,34 @@ export function AuthorWithDate({ author, date = new Date(), variant, avatarWidth
 }) {
     return (
         <AuthorRow
-            left={<AuthorInfo author={author} variant={variant} avatarWidth={avatarWidth} avatarHeight={avatarHeight} />}
-            right={<Typography variant={variant ?? "caption"}>
-                {date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
-            </Typography>}
+            left={
+                <AuthorInfo
+                    author={author}
+                    variant={variant}
+                    avatarWidth={avatarWidth}
+                    avatarHeight={avatarHeight}
+                />
+            }
+            right={
+                <Typography variant={variant ?? 'caption'}>
+                    {date.toLocaleDateString('en-US', {
+                        month: 'long',
+                        day: 'numeric',
+                        year: 'numeric',
+                    })}
+                </Typography>
+            }
         />
     );
 }
 
-export function AuthorWithDateAndLink({ author, date = new Date(), variant, avatarWidth, avatarHeight }: {
+export function AuthorWithDateAndLink({
+    author,
+    date = new Date(),
+    variant,
+    avatarWidth,
+    avatarHeight,
+}: {
     author: Author;
     date?: Date;
     variant?: TypographyVariant;
@@ -131,13 +214,28 @@ export function AuthorWithDateAndLink({ author, date = new Date(), variant, avat
     return (
         <AuthorRow
             left={
-                <Link onClick={() => navigate(`/profile/${author.id}`)} underline="none" href="#">
-                    <AuthorInfo author={author} variant={variant} avatarWidth={avatarWidth} avatarHeight={avatarHeight} />
+                <Link
+                    onClick={() => navigate(`/profile/${author.id}`)}
+                    underline="none"
+                    href="#"
+                >
+                    <AuthorInfo
+                        author={author}
+                        variant={variant}
+                        avatarWidth={avatarWidth}
+                        avatarHeight={avatarHeight}
+                    />
                 </Link>
             }
-            right={<Typography variant={variant ?? "caption"}>
-                {date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
-            </Typography>}
+            right={
+                <Typography variant={variant ?? 'caption'}>
+                    {date.toLocaleDateString('en-US', {
+                        month: 'long',
+                        day: 'numeric',
+                        year: 'numeric',
+                    })}
+                </Typography>
+            }
         />
     );
 }
@@ -147,7 +245,7 @@ export function AuthorsWithDateAndLink({
     date = new Date(),
     variant,
     avatarWidth,
-    avatarHeight
+    avatarHeight,
 }: {
     authors: Author[];
     date?: Date;
@@ -160,7 +258,14 @@ export function AuthorsWithDateAndLink({
     return (
         <AuthorRow
             left={
-                <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center' }}>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        gap: 1,
+                        alignItems: 'center',
+                    }}
+                >
                     {/* Stack avatars, each wrapped in a Link */}
                     <AvatarGroup max={3}>
                         {authors.map((author) => (
@@ -168,7 +273,10 @@ export function AuthorsWithDateAndLink({
                                 key={author.id}
                                 alt={author.name}
                                 src={author.avatar}
-                                sx={{ width: avatarWidth, height: avatarHeight }}
+                                sx={{
+                                    width: avatarWidth,
+                                    height: avatarHeight,
+                                }}
                             />
                         ))}
                     </AvatarGroup>
@@ -177,7 +285,9 @@ export function AuthorsWithDateAndLink({
                         {authors.map((author, index) => (
                             <React.Fragment key={author.id}>
                                 <Link
-                                    onClick={() => navigate(`/profile/${author.id}`)}
+                                    onClick={() =>
+                                        navigate(`/profile/${author.id}`)
+                                    }
                                     underline="none"
                                     href="#"
                                 >
@@ -190,15 +300,25 @@ export function AuthorsWithDateAndLink({
                 </Box>
             }
             right={
-                <Typography variant={variant ?? "caption"}>
-                    {date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+                <Typography variant={variant ?? 'caption'}>
+                    {date.toLocaleDateString('en-US', {
+                        month: 'long',
+                        day: 'numeric',
+                        year: 'numeric',
+                    })}
                 </Typography>
             }
         />
     );
 }
 
-export function AuthorsWithDate({ authors, date = new Date(), variant, avatarWidth, avatarHeight }: {
+export function AuthorsWithDate({
+    authors,
+    date = new Date(),
+    variant,
+    avatarWidth,
+    avatarHeight,
+}: {
     authors: Author[];
     date?: Date;
     variant?: TypographyVariant;
@@ -207,15 +327,34 @@ export function AuthorsWithDate({ authors, date = new Date(), variant, avatarWid
 }) {
     return (
         <AuthorRow
-            left={<AuthorsInfo authors={authors} variant={variant} avatarWidth={avatarWidth} avatarHeight={avatarHeight} />}
-            right={<Typography variant={variant ?? "caption"}>
-                {date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
-            </Typography>}
+            left={
+                <AuthorsInfo
+                    authors={authors}
+                    variant={variant}
+                    avatarWidth={avatarWidth}
+                    avatarHeight={avatarHeight}
+                />
+            }
+            right={
+                <Typography variant={variant ?? 'caption'}>
+                    {date.toLocaleDateString('en-US', {
+                        month: 'long',
+                        day: 'numeric',
+                        year: 'numeric',
+                    })}
+                </Typography>
+            }
         />
     );
 }
 
-export function AuthorWithFollow({ author, variant, avatarWidth, avatarHeight, doesFollow }: {
+export function AuthorWithFollow({
+    author,
+    variant,
+    avatarWidth,
+    avatarHeight,
+    doesFollow,
+}: {
     author: Author;
     variant?: TypographyVariant;
     avatarWidth?: number;
@@ -224,13 +363,32 @@ export function AuthorWithFollow({ author, variant, avatarWidth, avatarHeight, d
 }) {
     return (
         <AuthorRow
-            left={<AuthorInfo author={author} variant={variant} avatarWidth={avatarWidth} avatarHeight={avatarHeight} />}
-            right={<FollowButton id={author.id} doesFollow={doesFollow} size='large' />}
+            left={
+                <AuthorInfo
+                    author={author}
+                    variant={variant}
+                    avatarWidth={avatarWidth}
+                    avatarHeight={avatarHeight}
+                />
+            }
+            right={
+                <FollowButton
+                    id={author.id}
+                    doesFollow={doesFollow}
+                    size="large"
+                />
+            }
         />
     );
 }
 
-export function AuthorWithFollowAndLink({ author, variant, avatarWidth, avatarHeight, doesFollow }: {
+export function AuthorWithFollowAndLink({
+    author,
+    variant,
+    avatarWidth,
+    avatarHeight,
+    doesFollow,
+}: {
     author: Author;
     variant?: TypographyVariant;
     avatarWidth?: number;
@@ -242,11 +400,26 @@ export function AuthorWithFollowAndLink({ author, variant, avatarWidth, avatarHe
     return (
         <AuthorRow
             left={
-                <Link onClick={() => navigate(`/profile/${author.id}`)} underline='none' href="#">
-                    <AuthorInfo author={author} variant={variant} avatarWidth={avatarWidth} avatarHeight={avatarHeight} />
+                <Link
+                    onClick={() => navigate(`/profile/${author.id}`)}
+                    underline="none"
+                    href="#"
+                >
+                    <AuthorInfo
+                        author={author}
+                        variant={variant}
+                        avatarWidth={avatarWidth}
+                        avatarHeight={avatarHeight}
+                    />
                 </Link>
             }
-            right={<FollowButton id={author.id} doesFollow={doesFollow} size='large' />}
+            right={
+                <FollowButton
+                    id={author.id}
+                    doesFollow={doesFollow}
+                    size="large"
+                />
+            }
         />
     );
 }

@@ -31,10 +31,7 @@ export function Copyright() {
             }}
         >
             {'Copyright © '}
-            <Link
-                color="inherit"
-                href={githubUrl}
-            >
+            <Link color="inherit" href={githubUrl}>
                 LurkyDismal
             </Link>
             {` ${new Date().getFullYear()}.`}

@@ -36,18 +36,24 @@ export default function Footer() {
                         <Link
                             color="text.secondary"
                             variant="body2"
-                            onClick={() => { navigate(`/privacy`) }}
+                            onClick={() => {
+                                navigate(`/privacy`);
+                            }}
                             href="#"
                         >
                             Privacy Policy
                         </Link>
-                        <Typography sx={{ display: 'inline', mx: 0.5, opacity: 0.5 }}>
+                        <Typography
+                            sx={{ display: 'inline', mx: 0.5, opacity: 0.5 }}
+                        >
                             &nbsp;•&nbsp;
                         </Typography>
                         <Link
                             color="text.secondary"
                             variant="body2"
-                            onClick={() => { navigate(`/terms`) }}
+                            onClick={() => {
+                                navigate(`/terms`);
+                            }}
                             href="#"
                         >
                             Terms of Service

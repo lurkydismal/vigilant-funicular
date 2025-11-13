@@ -1,14 +1,14 @@
 import * as React from 'react';
 import * as ReactRouter from 'react-router-dom';
-import Box from "@mui/material/Box";
+import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Grid from "@mui/material/Grid";
+import Grid from '@mui/material/Grid';
 import MainFallback from './MainFallback';
 import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
-import Typography from "@mui/material/Typography";
-import { Author, AuthorsWithDate } from "./Author";
+import Typography from '@mui/material/Typography';
+import { Author, AuthorsWithDate } from './Author';
 import { styled } from '@mui/material/styles';
 
 export interface Post {
@@ -20,7 +20,7 @@ export interface Post {
     tag: string;
     imageUrl?: string;
     title: string;
-};
+}
 
 const StyledCard = styled(Card)(({ theme }) => ({
     backgroundColor: (theme.vars || theme).palette.background.paper,
@@ -61,9 +61,9 @@ const StyledTypography = styled(Typography)({
 export function Posts({ posts }: { posts: Post[] }) {
     const navigate = ReactRouter.useNavigate();
 
-    const [focusedCardIndex, setFocusedCardIndex] = React.useState<number | null>(
-        null,
-    );
+    const [focusedCardIndex, setFocusedCardIndex] = React.useState<
+        number | null
+    >(null);
 
     const handleFocus = (index: number) => {
         setFocusedCardIndex(index);
@@ -77,13 +77,14 @@ export function Posts({ posts }: { posts: Post[] }) {
         <MainFallback itemsLength={posts.length}>
             <Grid container spacing={2} columns={12}>
                 {posts.map((post, index) => (
-                    <Grid
-                        key={post.id ?? index}
-                        size={{ xs: 12, md: 4 }}
-                    >
+                    <Grid key={post.id ?? index} size={{ xs: 12, md: 4 }}>
                         <StyledCard
-                            onClick={() => { navigate(`/post/${post.id}`) }}
-                            className={focusedCardIndex === 0 ? 'Mui-focused' : ''}
+                            onClick={() => {
+                                navigate(`/post/${post.id}`);
+                            }}
+                            className={
+                                focusedCardIndex === 0 ? 'Mui-focused' : ''
+                            }
                             onBlur={handleBlur}
                             onFocus={() => handleFocus(0)}
                             tabIndex={0}
@@ -92,7 +93,10 @@ export function Posts({ posts }: { posts: Post[] }) {
                             <CardMedia
                                 alt="green iguana"
                                 component="img"
-                                image={post.imageUrl ?? `https://picsum.photos/800/450?random=${post.id ?? index}`}
+                                image={
+                                    post.imageUrl ??
+                                    `https://picsum.photos/800/450?random=${post.id ?? index}`
+                                }
                                 sx={{
                                     aspectRatio: '16 / 9',
                                     borderBottom: '1px solid',
@@ -100,13 +104,25 @@ export function Posts({ posts }: { posts: Post[] }) {
                                 }}
                             />
                             <StyledCardContent>
-                                <Typography gutterBottom variant="caption" component="div">
+                                <Typography
+                                    gutterBottom
+                                    variant="caption"
+                                    component="div"
+                                >
                                     {post.tag}
                                 </Typography>
-                                <Typography gutterBottom variant="h6" component="div">
+                                <Typography
+                                    gutterBottom
+                                    variant="h6"
+                                    component="div"
+                                >
                                     {post.title}
                                 </Typography>
-                                <StyledTypography variant="body2" color="text.secondary" gutterBottom>
+                                <StyledTypography
+                                    variant="body2"
+                                    color="text.secondary"
+                                    gutterBottom
+                                >
                                     {post.description}
                                 </StyledTypography>
                             </StyledCardContent>
@@ -159,9 +175,9 @@ const TitleTypography = styled(Typography)(({ theme }) => ({
 export function PostsWithoutImage({ posts }: { posts: Post[] }) {
     const navigate = ReactRouter.useNavigate();
 
-    const [focusedCardIndex, setFocusedCardIndex] = React.useState<number | null>(
-        null,
-    );
+    const [focusedCardIndex, setFocusedCardIndex] = React.useState<
+        number | null
+    >(null);
 
     const handleFocus = (index: number) => {
         setFocusedCardIndex(index);
@@ -185,12 +201,22 @@ export function PostsWithoutImage({ posts }: { posts: Post[] }) {
                                 justifyContent: 'space-between',
                             }}
                         >
-                            <Typography gutterBottom variant="caption" component="div">
+                            <Typography
+                                gutterBottom
+                                variant="caption"
+                                component="div"
+                            >
                                 {post.tag}
                             </Typography>
                             <TitleTypography
-                                onClick={() => { navigate(`/post/${post.id}`) }}
-                                className={focusedCardIndex === index ? 'Mui-focused' : ''}
+                                onClick={() => {
+                                    navigate(`/post/${post.id}`);
+                                }}
+                                className={
+                                    focusedCardIndex === index
+                                        ? 'Mui-focused'
+                                        : ''
+                                }
                                 gutterBottom
                                 onBlur={handleBlur}
                                 onFocus={() => handleFocus(index)}
@@ -203,7 +229,11 @@ export function PostsWithoutImage({ posts }: { posts: Post[] }) {
                                     sx={{ fontSize: '1rem' }}
                                 />
                             </TitleTypography>
-                            <StyledTypography variant="body2" color="text.secondary" gutterBottom>
+                            <StyledTypography
+                                variant="body2"
+                                color="text.secondary"
+                                gutterBottom
+                            >
                                 {post.description}
                             </StyledTypography>
 

@@ -50,14 +50,23 @@ export default function NavBar() {
         >
             <Container maxWidth="lg">
                 <StyledToolbar variant="dense" disableGutters>
-                    <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0 }}>
+                    <Box
+                        sx={{
+                            flexGrow: 1,
+                            display: 'flex',
+                            alignItems: 'center',
+                            px: 0,
+                        }}
+                    >
                         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                             <Button
                                 variant="text"
                                 color="info"
                                 size="small"
-                                onClick={() => { navigate('/epistles') }}
-                                href='#'
+                                onClick={() => {
+                                    navigate('/epistles');
+                                }}
+                                href="#"
                             >
                                 Epistles
                             </Button>
@@ -65,8 +74,10 @@ export default function NavBar() {
                                 variant="text"
                                 color="info"
                                 size="small"
-                                onClick={() => { navigate('/follows') }}
-                                href='#'
+                                onClick={() => {
+                                    navigate('/follows');
+                                }}
+                                href="#"
                             >
                                 Follows
                             </Button>
@@ -84,8 +95,10 @@ export default function NavBar() {
                             color="primary"
                             variant="contained"
                             size="small"
-                            onClick={() => { navigate('/new-post') }}
-                            href='#'
+                            onClick={() => {
+                                navigate('/new-post');
+                            }}
+                            href="#"
                         >
                             New post
                         </Button>
@@ -93,8 +106,10 @@ export default function NavBar() {
                             color="primary"
                             variant="contained"
                             size="small"
-                            onClick={() => { navigate('/posts') }}
-                            href='#'
+                            onClick={() => {
+                                navigate('/posts');
+                            }}
+                            href="#"
                         >
                             Posts
                         </Button>
@@ -102,14 +117,19 @@ export default function NavBar() {
                             color="primary"
                             variant="contained"
                             size="small"
-                            onClick={() => { navigate('/profile') }}
-                            href='#'
+                            onClick={() => {
+                                navigate('/profile');
+                            }}
+                            href="#"
                         >
                             My profile
                         </Button>
                     </Box>
                     <Box sx={{ display: { xs: 'flex', md: 'none' }, gap: 1 }}>
-                        <IconButton aria-label="Menu button" onClick={toggleDrawer(true)}>
+                        <IconButton
+                            aria-label="Menu button"
+                            onClick={toggleDrawer(true)}
+                        >
                             <MenuIcon />
                         </IconButton>
                         <Drawer
@@ -121,10 +141,15 @@ export default function NavBar() {
                                     sx: {
                                         top: 'var(--template-frame-height, 0px)',
                                     },
-                                }
+                                },
                             }}
                         >
-                            <Box sx={{ p: 1, backgroundColor: 'background.default' }}>
+                            <Box
+                                sx={{
+                                    p: 1,
+                                    backgroundColor: 'background.default',
+                                }}
+                            >
                                 <Box
                                     sx={{
                                         display: 'flex',
@@ -136,14 +161,18 @@ export default function NavBar() {
                                     </IconButton>
                                 </Box>
                                 <MenuItem
-                                    onClick={() => { navigate('/epistles') }}
-                                    href='#'
+                                    onClick={() => {
+                                        navigate('/epistles');
+                                    }}
+                                    href="#"
                                 >
                                     Epistles
                                 </MenuItem>
                                 <MenuItem
-                                    onClick={() => { navigate('/follows') }}
-                                    href='#'
+                                    onClick={() => {
+                                        navigate('/follows');
+                                    }}
+                                    href="#"
                                 >
                                     Follows
                                 </MenuItem>
@@ -152,8 +181,10 @@ export default function NavBar() {
                                     <Button
                                         color="primary"
                                         variant="contained"
-                                        onClick={() => { navigate('/new-posts') }}
-                                        href='#'
+                                        onClick={() => {
+                                            navigate('/new-posts');
+                                        }}
+                                        href="#"
                                         fullWidth
                                     >
                                         New posts
@@ -161,8 +192,10 @@ export default function NavBar() {
                                     <Button
                                         color="primary"
                                         variant="contained"
-                                        onClick={() => { navigate('/posts') }}
-                                        href='#'
+                                        onClick={() => {
+                                            navigate('/posts');
+                                        }}
+                                        href="#"
                                         fullWidth
                                     >
                                         Posts
@@ -170,8 +203,10 @@ export default function NavBar() {
                                     <Button
                                         color="primary"
                                         variant="contained"
-                                        onClick={() => { navigate('/profile') }}
-                                        href='#'
+                                        onClick={() => {
+                                            navigate('/profile');
+                                        }}
+                                        href="#"
                                         fullWidth
                                     >
                                         My profile

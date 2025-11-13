@@ -1,21 +1,27 @@
-import Box from "@mui/material/Box";
+import Box from '@mui/material/Box';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import IconButton from "@mui/material/IconButton";
+import IconButton from '@mui/material/IconButton';
 import RssFeedRoundedIcon from '@mui/icons-material/RssFeedRounded';
-import FormControl from "@mui/material/FormControl";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputAdornment from "@mui/material/InputAdornment";
+import FormControl from '@mui/material/FormControl';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputAdornment from '@mui/material/InputAdornment';
 
 function Search() {
     return (
-        <FormControl sx={{ width: { xs: '100%', md: '25ch' } }} variant="outlined">
+        <FormControl
+            sx={{ width: { xs: '100%', md: '25ch' } }}
+            variant="outlined"
+        >
             <OutlinedInput
                 id="search"
                 placeholder="Search…"
                 size="small"
                 sx={{ flexGrow: 1 }}
                 startAdornment={
-                    <InputAdornment position="start" sx={{ color: 'text.primary' }}>
+                    <InputAdornment
+                        position="start"
+                        sx={{ color: 'text.primary' }}
+                    >
                         <SearchRoundedIcon fontSize="small" />
                     </InputAdornment>
                 }

@@ -12,20 +12,21 @@ export default function Mermaid({ chart }: { chart: string }) {
 
         mermaid.initialize({
             startOnLoad: false, // We render manually
-            theme: (theme.palette.mode === 'dark') ? "dark" : "default",
+            theme: theme.palette.mode === 'dark' ? 'dark' : 'default',
         });
 
-        const id = "mermaid-" + Math.random().toString(36).substring(2, 11);
+        const id = 'mermaid-' + Math.random().toString(36).substring(2, 11);
 
-        mermaid.render(
-            id,
-            chart,
-        ).then((result) => {
-            container.current!.innerHTML = result.svg;
-        }).catch((err) => {
-            container.current!.innerHTML = `<pre style="color:red;">${err instanceof Error ? err.message : String(err)
+        mermaid
+            .render(id, chart)
+            .then((result) => {
+                container.current!.innerHTML = result.svg;
+            })
+            .catch((err) => {
+                container.current!.innerHTML = `<pre style="color:red;">${
+                    err instanceof Error ? err.message : String(err)
                 }</pre>`;
-        });
+            });
     }, [chart, theme]);
 
     return (
