@@ -2,9 +2,9 @@ import * as React from 'react';
 import * as ReactHook from 'react-hook-form';
 import * as ReactRouter from 'react-router-dom';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import AppTheme, { AppThemeProps } from '../shared-theme/AppTheme';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import MuiCard from '@mui/material/Card';
 import Checkbox from '@mui/material/Checkbox';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
@@ -12,14 +12,15 @@ import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import Link from '@mui/material/Link';
+import MuiCard from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
-import AppTheme, { AppThemeProps } from '../shared-theme/AppTheme';
 import { CopyrightAligned as Copyright } from '../shared/Copyright';
-import { sendRequest } from '../stdfunc';
 import { isDev } from '../stdvar';
+import { sendRequest } from '../stdfunc';
+import { styled } from '@mui/material/styles';
+import { log } from '../stdlog';
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: 'flex',
@@ -70,11 +71,15 @@ type FormValues = {
 };
 
 export default function SignIn(props: AppThemeProps) {
+    log.trace('SignIn component render');
+
     const navigate = ReactRouter.useNavigate();
     const { control, handleSubmit } = ReactHook.useForm<FormValues>();
     const [loading, setLoading] = React.useState(false);
 
     const onSubmit = async (data: FormValues) => {
+        log.trace(`onSubmit called: '${data}'`);
+
         setLoading(true);
 
         try {
@@ -85,17 +90,24 @@ export default function SignIn(props: AppThemeProps) {
                     rememberMe: data.rememberMe ?? false,
                 });
 
-                console.log(json);
-
                 // storeCredentials(json);
             }
 
             // navigate('/posts');
-        } catch {
+
+            log.trace('onSubmit finished');
+        } catch (err) {
+            log.error(`onSubmit error: '${err}'`);
         } finally {
             setLoading(false);
         }
     };
+
+    React.useEffect(() => {
+        log.trace('SignIn component mounted');
+
+        return () => { log.trace('SignIn component unmounted'); };
+    }, []);
 
     return (
         <AppTheme {...props}>
@@ -118,79 +130,91 @@ export default function SignIn(props: AppThemeProps) {
                             name="username"
                             control={control}
                             rules={{ required: 'Username is required' }}
-                            render={({ field, fieldState }) => (
-                                <FormControl>
-                                    <FormLabel htmlFor="username">
-                                        Username
-                                    </FormLabel>
-                                    <TextField
-                                        {...field}
-                                        autoComplete="username"
-                                        autoFocus
-                                        color={
-                                            Boolean(fieldState.error)
-                                                ? 'error'
-                                                : 'primary'
-                                        }
-                                        error={Boolean(fieldState.error)}
-                                        fullWidth
-                                        helperText={fieldState.error?.message}
-                                        id="username"
-                                        name="username"
-                                        placeholder="tralalero"
-                                        required
-                                        type="text"
-                                        variant="outlined"
-                                    />
-                                </FormControl>
-                            )}
+                            render={({ field, fieldState }) => {
+                                log.trace(`Rendering username field: '${field}'`);
+
+                                return (
+                                    <FormControl>
+                                        <FormLabel htmlFor="username">
+                                            Username
+                                        </FormLabel>
+                                        <TextField
+                                            {...field}
+                                            autoComplete="username"
+                                            autoFocus
+                                            color={
+                                                Boolean(fieldState.error)
+                                                    ? 'error'
+                                                    : 'primary'
+                                            }
+                                            error={Boolean(fieldState.error)}
+                                            fullWidth
+                                            helperText={fieldState.error?.message}
+                                            id="username"
+                                            name="username"
+                                            placeholder="tralalero"
+                                            required
+                                            type="text"
+                                            variant="outlined"
+                                        />
+                                    </FormControl>
+                                );
+                            }}
                         />
                         <ReactHook.Controller
                             name="password"
                             control={control}
                             rules={{ required: 'Password is required' }}
-                            render={({ field, fieldState }) => (
-                                <FormControl>
-                                    <FormLabel htmlFor="password">
-                                        Password
-                                    </FormLabel>
-                                    <TextField
-                                        {...field}
-                                        autoComplete="new-password"
-                                        color={
-                                            Boolean(fieldState.error)
-                                                ? 'error'
-                                                : 'primary'
-                                        }
-                                        error={Boolean(fieldState.error)}
-                                        fullWidth
-                                        helperText={fieldState.error?.message}
-                                        id="password"
-                                        name="password"
-                                        placeholder="••••••"
-                                        required
-                                        type="password"
-                                        variant="outlined"
-                                    />
-                                </FormControl>
-                            )}
+                            render={({ field, fieldState }) => {
+                                log.trace(`Rendering password field: '${field}'`);
+
+                                return (
+                                    <FormControl>
+                                        <FormLabel htmlFor="password">
+                                            Password
+                                        </FormLabel>
+                                        <TextField
+                                            {...field}
+                                            autoComplete="new-password"
+                                            color={
+                                                Boolean(fieldState.error)
+                                                    ? 'error'
+                                                    : 'primary'
+                                            }
+                                            error={Boolean(fieldState.error)}
+                                            fullWidth
+                                            helperText={fieldState.error?.message}
+                                            id="password"
+                                            name="password"
+                                            placeholder="••••••"
+                                            required
+                                            type="password"
+                                            variant="outlined"
+                                        />
+                                    </FormControl>
+                                );
+                            }}
                         />
                         <ReactHook.Controller
                             name="rememberMe"
                             defaultValue={false}
                             control={control}
-                            render={({ field }) => (
-                                <FormControlLabel
-                                    {...field}
-                                    control={
-                                        <Checkbox
-                                            value="remember"
-                                            color="primary"
-                                        />
-                                    }
-                                    label="Remember me"
-                                />
-                            )}
+                            render={({ field }) => {
+                                log.trace(`Rendering rememberMe checkbox: '${field}'`);
+
+                                return (
+                                    <FormControlLabel
+                                        {...field}
+                                        control={
+                                            <Checkbox
+                                                value="remember"
+                                                color="primary"
+                                            />
+                                        }
+                                        label="Remember me"
+                                    />
+                                );
+                            }}
                         />
                         <Button
                             endIcon={<AccountCircle />}
@@ -214,6 +238,8 @@ export default function SignIn(props: AppThemeProps) {
                             Don&apos;t have an account?{' '}
                             <Link
                                 onClick={() => {
+                                    log.trace('Navigate to register');
+
                                     navigate(`/auth/register`);
                                 }}
                                 href="#"

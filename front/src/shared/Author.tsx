@@ -7,6 +7,7 @@ import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import { TypographyVariant } from '@mui/material/styles';
 import FollowButton from '../shared/FollowButton';
+import { log } from '../stdlog';
 
 export interface Author {
     id: number;
@@ -22,6 +23,8 @@ function AuthorRow({
     left: React.ReactNode;
     right?: React.ReactNode;
 }) {
+    log.trace(`Rendering AuthorRow: ${{ left, right }}`);
+
     return (
         <Box
             sx={{
@@ -51,6 +54,8 @@ function AuthorInfo({
     avatarWidth?: number;
     avatarHeight?: number;
 }) {
+    log.trace(`Rendering AuthorInfo: ${{ author, variant, avatarWidth, avatarHeight }}`);
+
     return (
         <Box
             sx={{
@@ -82,6 +87,8 @@ function AuthorsInfo({
     avatarWidth?: number;
     avatarHeight?: number;
 }) {
+    log.trace(`Rendering AuthorsInfo: ${{ authors, variant, avatarWidth, avatarHeight }}`);
+
     return (
         <Box
             sx={{
@@ -121,6 +128,8 @@ export function Author({
     avatarWidth?: number;
     avatarHeight?: number;
 }) {
+    log.trace(`Rendering Author component: ${{ author }}`);
+
     return (
         <AuthorRow
             left={
@@ -146,6 +155,8 @@ export function Authors({
     avatarWidth?: number;
     avatarHeight?: number;
 }) {
+    log.trace(`Rendering Authors component: ${{ authors }}`);
+
     return (
         <AuthorRow
             left={
@@ -173,6 +184,8 @@ export function AuthorWithDate({
     avatarWidth?: number;
     avatarHeight?: number;
 }) {
+    log.trace(`Rendering AuthorWithDate: ${{ author, date }}`);
+
     return (
         <AuthorRow
             left={
@@ -209,6 +222,8 @@ export function AuthorWithDateAndLink({
     avatarWidth?: number;
     avatarHeight?: number;
 }) {
+    log.trace(`Rendering AuthorWithDateAndLink: ${{ author, date }}`);
+
     const navigate = ReactRouter.useNavigate();
 
     return (
@@ -253,6 +268,8 @@ export function AuthorsWithDateAndLink({
     avatarWidth?: number;
     avatarHeight?: number;
 }) {
+    log.trace(`Rendering AuthorsWithDateAndLink: ${{ authors, date }}`);
+
     const navigate = ReactRouter.useNavigate();
 
     return (
@@ -325,6 +342,8 @@ export function AuthorsWithDate({
     avatarWidth?: number;
     avatarHeight?: number;
 }) {
+    log.trace(`Rendering AuthorsWithDate: ${{ authors, date }}`);
+
     return (
         <AuthorRow
             left={
@@ -361,6 +380,8 @@ export function AuthorWithFollow({
     avatarHeight?: number;
     doesFollow: boolean;
 }) {
+    log.trace(`Rendering AuthorWithFollow: ${{ author, doesFollow }}`);
+
     return (
         <AuthorRow
             left={
@@ -395,6 +416,8 @@ export function AuthorWithFollowAndLink({
     avatarHeight?: number;
     doesFollow: boolean;
 }) {
+    log.trace(`Rendering AuthorWithFollowAndLink: ${{ author, doesFollow }}`);
+
     const navigate = ReactRouter.useNavigate();
 
     return (

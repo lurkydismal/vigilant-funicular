@@ -18,6 +18,7 @@ import { CopyrightAligned as Copyright } from '../shared/Copyright';
 import { isDev } from '../stdvar';
 import { sendRequest } from '../stdfunc';
 import { styled } from '@mui/material/styles';
+import { log } from '../stdlog';
 
 const Card = styled(MuiCard)(({ theme }) => ({
     alignSelf: 'center',
@@ -68,11 +69,15 @@ type FormValues = {
 };
 
 export default function SignUp(props: AppThemeProps) {
+    log.trace('SignUp component render');
+
     const navigate = ReactRouter.useNavigate();
     const { control, handleSubmit } = ReactHook.useForm<FormValues>();
     const [loading, setLoading] = React.useState(false);
 
     const onSubmit = async (data: FormValues) => {
+        log.trace(`onSubmit called: '${data}'`);
+
         setLoading(true);
 
         try {
@@ -82,17 +87,24 @@ export default function SignUp(props: AppThemeProps) {
                     password: data.password,
                 });
 
-                console.log(json);
-
                 // storeCredentials(json);
             }
 
             // navigate('/posts');
-        } catch {
+
+            log.trace('onSubmit finished');
+        } catch (err) {
+            log.error(`onSubmit error: '${err}'`);
         } finally {
             setLoading(false);
         }
     };
+
+    React.useEffect(() => {
+        log.trace('SignUp component mounted');
+
+        return () => { log.trace('SignUp component unmounted'); };
+    }, []);
 
     return (
         <AppTheme {...props}>
@@ -121,32 +133,36 @@ export default function SignUp(props: AppThemeProps) {
                                     message: 'Min 6 characters',
                                 },
                             }}
-                            render={({ field, fieldState }) => (
-                                <FormControl>
-                                    <FormLabel htmlFor="username">
-                                        Username
-                                    </FormLabel>
-                                    <TextField
-                                        {...field}
-                                        autoComplete="username"
-                                        autoFocus
-                                        color={
-                                            Boolean(fieldState.error)
-                                                ? 'error'
-                                                : 'primary'
-                                        }
-                                        error={Boolean(fieldState.error)}
-                                        fullWidth
-                                        helperText={fieldState.error?.message}
-                                        id="username"
-                                        name="username"
-                                        placeholder="tralalero"
-                                        required
-                                        type="text"
-                                        variant="outlined"
-                                    />
-                                </FormControl>
-                            )}
+                            render={({ field, fieldState }) => {
+                                log.trace(`Rendering username field: '${field}'`);
+
+                                return (
+                                    <FormControl>
+                                        <FormLabel htmlFor="username">
+                                            Username
+                                        </FormLabel>
+                                        <TextField
+                                            {...field}
+                                            autoComplete="username"
+                                            autoFocus
+                                            color={
+                                                Boolean(fieldState.error)
+                                                    ? 'error'
+                                                    : 'primary'
+                                            }
+                                            error={Boolean(fieldState.error)}
+                                            fullWidth
+                                            helperText={fieldState.error?.message}
+                                            id="username"
+                                            name="username"
+                                            placeholder="tralalero"
+                                            required
+                                            type="text"
+                                            variant="outlined"
+                                        />
+                                    </FormControl>
+                                );
+                            }}
                         />
                         <ReactHook.Controller
                             name="password"
@@ -158,31 +174,35 @@ export default function SignUp(props: AppThemeProps) {
                                     message: 'Min 8 characters',
                                 },
                             }}
-                            render={({ field, fieldState }) => (
-                                <FormControl>
-                                    <FormLabel htmlFor="password">
-                                        Password
-                                    </FormLabel>
-                                    <TextField
-                                        {...field}
-                                        autoComplete="new-password"
-                                        color={
-                                            Boolean(fieldState.error)
-                                                ? 'error'
-                                                : 'primary'
-                                        }
-                                        error={Boolean(fieldState.error)}
-                                        fullWidth
-                                        helperText={fieldState.error?.message}
-                                        id="password"
-                                        name="password"
-                                        placeholder="••••••"
-                                        required
-                                        type="password"
-                                        variant="outlined"
-                                    />
-                                </FormControl>
-                            )}
+                            render={({ field, fieldState }) => {
+                                log.trace(`Rendering password field: '${field}'`);
+
+                                return (
+                                    <FormControl>
+                                        <FormLabel htmlFor="password">
+                                            Password
+                                        </FormLabel>
+                                        <TextField
+                                            {...field}
+                                            autoComplete="new-password"
+                                            color={
+                                                Boolean(fieldState.error)
+                                                    ? 'error'
+                                                    : 'primary'
+                                            }
+                                            error={Boolean(fieldState.error)}
+                                            fullWidth
+                                            helperText={fieldState.error?.message}
+                                            id="password"
+                                            name="password"
+                                            placeholder="••••••"
+                                            required
+                                            type="password"
+                                            variant="outlined"
+                                        />
+                                    </FormControl>
+                                );
+                            }}
                         />
                         <Button
                             endIcon={<AccountCircle />}
@@ -210,6 +230,8 @@ export default function SignUp(props: AppThemeProps) {
                             Already have an account?{' '}
                             <Link
                                 onClick={() => {
+                                    log.trace('Navigate to login');
+
                                     navigate(`/auth/login`);
                                 }}
                                 href="#"

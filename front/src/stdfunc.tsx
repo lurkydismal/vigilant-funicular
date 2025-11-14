@@ -122,7 +122,7 @@ export function paginate<T>(
     currentPage: number,
     perPage: number,
 ): T[] {
-    log.debug(`Paginate page=${currentPage} size=${perPage}`);
+    log.trace(`Paginate page=${currentPage} size=${perPage}`);
 
     const start = (currentPage - 1) * perPage;
     const end = start + perPage;
