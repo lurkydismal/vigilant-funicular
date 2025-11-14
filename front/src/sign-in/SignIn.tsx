@@ -18,7 +18,8 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import AppTheme, { AppThemeProps } from '../shared-theme/AppTheme';
 import { CopyrightAligned as Copyright } from '../shared/Copyright';
-import { isDev, sendRequest } from '../stdfunc';
+import { sendRequest } from '../stdfunc';
+import { isDev } from '../stdvar';
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: 'flex',
@@ -99,6 +100,7 @@ export default function SignIn(props: AppThemeProps) {
     return (
         <AppTheme {...props}>
             <CssBaseline enableColorScheme />
+
             <SignInContainer direction="column" justifyContent="space-between">
                 <Card variant="outlined">
                     <Box

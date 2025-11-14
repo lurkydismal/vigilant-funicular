@@ -2,21 +2,22 @@ import * as React from 'react';
 import * as ReactHook from 'react-hook-form';
 import * as ReactRouter from 'react-router-dom';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import AppTheme, { AppThemeProps } from '../shared-theme/AppTheme';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import MuiCard from '@mui/material/Card';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Link from '@mui/material/Link';
+import MuiCard from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
-import AppTheme, { AppThemeProps } from '../shared-theme/AppTheme';
 import { CopyrightAligned as Copyright } from '../shared/Copyright';
-import { isDev, sendRequest } from '../stdfunc';
+import { isDev } from '../stdvar';
+import { sendRequest } from '../stdfunc';
+import { styled } from '@mui/material/styles';
 
 const Card = styled(MuiCard)(({ theme }) => ({
     alignSelf: 'center',
@@ -77,7 +78,7 @@ export default function SignUp(props: AppThemeProps) {
         try {
             if (!isDev) {
                 const json = await sendRequest('auth/register', {
-                    usename: data.username,
+                    username: data.username,
                     password: data.password,
                 });
 
@@ -96,6 +97,7 @@ export default function SignUp(props: AppThemeProps) {
     return (
         <AppTheme {...props}>
             <CssBaseline enableColorScheme />
+
             <SignUpContainer direction="column" justifyContent="space-between">
                 <Card variant="outlined">
                     <Box
