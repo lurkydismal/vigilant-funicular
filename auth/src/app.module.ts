@@ -1,19 +1,30 @@
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthGuard } from './auth.guard';
+import { AuthRpcController } from './app.rpc.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
+import { LoggerModule } from 'nestjs-pino';
 import { Module } from '@nestjs/common';
 import { RedisProvider } from './redis.provider';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/user.entity';
 import { UsersModule } from './users/users.module';
-import { AuthRpcController } from './app.rpc.controller';
-import { AuthGuard } from './auth.guard';
 
 @Module({
     imports: [
         ConfigModule.forRoot({ isGlobal: true }),
+        LoggerModule.forRoot({
+            pinoHttp: {
+                transport: {
+                    target: 'pino-pretty',
+                    options: {
+                        colorize: true,
+                    },
+                },
+            },
+        }),
         TypeOrmModule.forRootAsync({
             imports: [ConfigModule],
             inject: [ConfigService],

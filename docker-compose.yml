@@ -4,7 +4,7 @@ services:
       context: front
       dockerfile: Dockerfile
       args:
-        VITE_API_ENDPOINT: ${API_ENDPOINT}
+        VITE_API_GATEWAY: ${API_GATEWAY}
     image: front-service
     depends_on:
       - auth
@@ -32,9 +32,9 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.auth.rule=Host(`localhost`) && PathPrefix(`${API_ENDPOINT}/auth`)"
+      - "traefik.http.routers.auth.rule=Host(`localhost`) && PathPrefix(`${API_GATEWAY}/auth`)"
       - "traefik.http.services.auth.loadbalancer.server.port=3000"
-      - "traefik.http.middlewares.auth-strip-prefix.stripprefix.prefixes=${API_ENDPOINT}"
+      - "traefik.http.middlewares.auth-strip-prefix.stripprefix.prefixes=${API_GATEWAY}"
       - "traefik.http.routers.auth.middlewares=auth-strip-prefix"
 
   users:
@@ -45,7 +45,7 @@ services:
     environment:
       DATABASE_URL: ${DATABASE_URL}
       RABBITMQ_URL: ${RABBITMQ_URL}
-      API_ENDPOINT: ${API_ENDPOINT}
+      API_GATEWAY: ${API_GATEWAY}
     depends_on:
       - postgres
       - rabbitmq
@@ -53,9 +53,9 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.users.rule=Host(`localhost`) && PathRegexp(`${API_ENDPOINT}/users/[0-9]+`)"
+      - "traefik.http.routers.users.rule=Host(`localhost`) && PathRegexp(`${API_GATEWAY}/users/[0-9]+`)"
       - "traefik.http.services.users.loadbalancer.server.port=3000"
-      - "traefik.http.middlewares.users-strip-prefix.stripprefix.prefixes=${API_ENDPOINT}"
+      - "traefik.http.middlewares.users-strip-prefix.stripprefix.prefixes=${API_GATEWAY}"
       - "traefik.http.routers.users.middlewares=users-strip-prefix"
 
   posts:
@@ -73,9 +73,9 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.posts.rule=Host(`localhost`) && PathPrefix(`${API_ENDPOINT}/posts`)"
+      - "traefik.http.routers.posts.rule=Host(`localhost`) && PathPrefix(`${API_GATEWAY}/posts`)"
       - "traefik.http.services.posts.loadbalancer.server.port=3000"
-      - "traefik.http.middlewares.posts-strip-prefix.stripprefix.prefixes=${API_ENDPOINT}"
+      - "traefik.http.middlewares.posts-strip-prefix.stripprefix.prefixes=${API_GATEWAY}"
       - "traefik.http.routers.posts.middlewares=posts-strip-prefix"
 
   media:
@@ -100,9 +100,9 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.media.rule=Host(`localhost`) && PathPrefix(`${API_ENDPOINT}/media`)"
+      - "traefik.http.routers.media.rule=Host(`localhost`) && PathPrefix(`${API_GATEWAY}/media`)"
       - "traefik.http.services.media.loadbalancer.server.port=3000"
-      - "traefik.http.middlewares.media-strip-prefix.stripprefix.prefixes=${API_ENDPOINT}"
+      - "traefik.http.middlewares.media-strip-prefix.stripprefix.prefixes=${API_GATEWAY}"
       - "traefik.http.routers.media.middlewares=media-strip-prefix"
 
   rt:
@@ -117,9 +117,9 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.rt.rule=Host(`localhost`) && PathPrefix(`${API_ENDPOINT}/rt`)"
+      - "traefik.http.routers.rt.rule=Host(`localhost`) && PathPrefix(`${API_GATEWAY}/rt`)"
       - "traefik.http.services.rt.loadbalancer.server.port=3000"
-      - "traefik.http.middlewares.rt-strip-prefix.stripprefix.prefixes=${API_ENDPOINT}"
+      - "traefik.http.middlewares.rt-strip-prefix.stripprefix.prefixes=${API_GATEWAY}"
       - "traefik.http.routers.rt.middlewares=rt-strip-prefix"
 
   postgres:

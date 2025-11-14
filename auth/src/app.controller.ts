@@ -1,18 +1,25 @@
-import { setAccessTokenCookie } from './stdfunc';
-import { Controller, Post, Body, HttpCode, HttpStatus, Res, UseGuards } from '@nestjs/common';
 import { AppService } from './app.service';
-import { RegisterDto } from './register.dto';
-import { type Response } from 'express';
-import { LoginDto } from './login.dto';
 import { AuthGuard } from './auth.guard';
+import { Controller, Post, Body, HttpCode, HttpStatus, Res, UseGuards } from '@nestjs/common';
+import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
+import { LoginDto } from './login.dto';
+import { RegisterDto } from './register.dto';
+import { setAccessTokenCookie } from './stdfunc';
+import { type Response } from 'express';
 
 @Controller('auth')
 export class AppController {
-    constructor(private readonly app: AppService) { }
+    constructor(
+        @InjectPinoLogger(AppService.name) private logger: PinoLogger,
+        private readonly app: AppService) { }
 
     @Post('register')
     @HttpCode(HttpStatus.CREATED)
     async register(@Body() dto: RegisterDto, @Res({ passthrough: true }) res: Response) {
+        this.logger.info('hello');
+        this.logger.error('problem!');
+        this.logger.trace(dto);
+
         const data = await this.app.register(dto.username, dto.password);
 
         setAccessTokenCookie(res, data.accessToken);
