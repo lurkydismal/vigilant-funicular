@@ -3,6 +3,7 @@ import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { checkAuth } from './stdfunc';
+import { log } from './stdlog';
 
 type Props = {
     drawDurationMs?: number;
@@ -12,21 +13,36 @@ type Props = {
 export default function LoadingScreen({ drawDurationMs = 4800 }: Props) {
     const textRef = React.useRef<SVGTextElement | null>(null);
     const [filled, setFilled] = React.useState(false);
+    const text = 'LOADING';
 
     React.useEffect(() => {
+        log.trace('LoadingScreen effect start');
+
         const el = textRef.current;
-        if (!el) return;
+        if (!el) {
+            log.warn('Text ref not found');
+
+            return;
+        }
 
         // wait for font/render then measure
         requestAnimationFrame(() => {
             const len =
                 (el.getComputedTextLength && el.getComputedTextLength()) ||
                 4000;
+
+            log.trace(`Computed text length: ${len}`);
+
             // set CSS variables used by styled component
             el.style.setProperty('--len', String(Math.ceil(len)));
             el.style.setProperty('--draw-duration', `${drawDurationMs}ms`);
 
-            const t = setTimeout(() => setFilled(true), drawDurationMs + 80);
+            const t = setTimeout(() => {
+                setFilled(true), drawDurationMs + 80
+
+                log.trace(`${text} animation completed, filled set to true`);
+            });
+
             return () => clearTimeout(t);
         });
     }, [drawDurationMs]);
@@ -48,7 +64,7 @@ export default function LoadingScreen({ drawDurationMs = 4800 }: Props) {
                     dominantBaseline="middle"
                     textAnchor="middle"
                 >
-                    LOADING
+                    {text}
                 </LoadingText>
             </StyledSvg>
         </Root>
@@ -122,15 +138,36 @@ export function ProtectedRoute() {
     const [authorized, setAuthorized] = useState<boolean | null>(null);
 
     useEffect(() => {
-        checkAuth().then(setAuthorized);
+        log.trace('ProtectedRoute: checking auth...');
+
+        checkAuth()
+            .then((result) => {
+                log.trace(`Auth result: ${result}`);
+
+                setAuthorized(result);
+            }).catch((err) => {
+                log.error(`Auth check failed: ${err}`);
+
+                setAuthorized(false);
+            });;
     }, []);
 
     // Not yet known
-    if (authorized === null) return <LoadingScreen />;
+    if (authorized === null) {
+        log.trace('ProtectedRoute: auth status unknown, showing LoadingScreen');
+
+        return (<LoadingScreen />);
+    }
 
     // Not authorized
-    if (!authorized) return <Navigate to="/auth/login" replace />;
+    if (!authorized) {
+        log.trace('ProtectedRoute: user not authorized, redirecting to login');
+
+        return (<Navigate to="/auth/login" replace />);
+    }
 
     // Authorized
+    log.trace('ProtectedRoute: user authorized, rendering outlet');
+
     return <Outlet />;
 }
