@@ -1,10 +1,24 @@
-import axios from 'axios';
+import { Logger } from 'tslog';
+import axios, { AxiosRequestConfig } from 'axios';
 import { user } from './shared/TestData';
+
+const needTrace = false;
+export const isDev = import.meta.env.DEV;
+const apiGateway = import.meta.env.VITE_API_GATEWAY ?? "/mockGate";
+
+const log = new Logger(
+    {
+        type: 'pretty',
+        // name: 'Front-end Logger',
+        minLevel: needTrace ? 1 : (isDev ? 2 : 3),
+    }
+);
 
 type Method = 'POST' | 'GET' | 'PUT' | 'DELETE';
 
-export const isDev = import.meta.env.MODE != 'production';
-export const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
+log.info(`Running ${isDev ? 'DEVELOPMENT' : 'PRODUCTION'} build`);
+
+log.debug(`API gateway ${isDev ? 'DEVELOPMENT' : 'PRODUCTION'} build`);
 
 export async function sendRequest<T = any>(
     endpoint: string,
@@ -21,13 +35,13 @@ export async function sendRequest<T = any>(
     const isFormData = data instanceof FormData;
 
     try {
-        const config = {
+        const config: AxiosRequestConfig = {
             method,
-            endpoint,
+            url: `${apiGateway}/${endpoint}`,
             headers: isFormData
                 ? { 'Content-Type': 'multipart/form-data' }
                 : { 'Content-Type': 'application/json' },
-            data: isFormData ? data : data ? JSON.stringify(data) : undefined,
+            data: data,
         };
 
         const response = await axios(config);
@@ -62,7 +76,7 @@ export async function checkAuth(): Promise<boolean> {
             return false;
         }
 
-        const res = await axios.post(`${apiEndpoint}/auth/verify`, null, {});
+        const res = await axios.post(`${apiGateway}/auth/verify`);
 
         return res.status >= 200 && res.status < 300;
     }

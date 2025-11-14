@@ -3,14 +3,13 @@ import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Stepper from '@mui/material/Stepper';
 import Typography from '@mui/material/Typography';
 import AddressForm from './AddressForm';
-import PaymentForm from './PaymentForm';
+import PaymentForm from './Attachments';
 import Review from './Review';
 
 interface Step {
@@ -36,199 +35,149 @@ export default function MainContent() {
     };
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <div>
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 2,
+                width: '100%',
+                px: { xs: 0, sm: 2 },
+                // flex: 1, // let Container give it height
+                // justifyContent: 'space-between', // push footer to bottom
+            }}
+        >
+            {/* Header */}
+            <Box>
                 <Typography variant="h2" gutterBottom>
                     New post
                 </Typography>
-            </div>
-            <Grid
-                size={{ sm: 12, md: 7, lg: 8 }}
-                sx={{
-                    height: {
-                        xs: '100%',
-                        sm: 'calc(100dvh - var(--template-frame-height, 0px))',
-                    },
-                    alignItems: 'start',
-                    backgroundColor: {
-                        xs: 'transparent',
-                        sm: 'background.default',
-                    },
-                    maxWidth: '100%',
-                    px: { xs: 2, sm: 10 },
-                    width: '100%',
-                }}
-            >
-                <Box
-                    sx={{
-                        alignItems: 'center',
-                        display: 'flex',
-                        justifyContent: { sm: 'space-between', md: 'flex-end' },
-                        maxWidth: { sm: '100%', md: 600 },
-                        width: '100%',
-                    }}
-                >
-                    <Box
-                        sx={{
-                            alignItems: 'flex-end',
-                            display: { xs: 'none', md: 'flex' },
-                            flexDirection: 'column',
-                            flexGrow: 1,
-                            justifyContent: 'space-between',
-                        }}
-                    >
-                        <Stepper
-                            activeStep={activeStep}
-                            id="desktop-stepper"
-                            sx={{ width: '100%', height: 40 }}
-                        >
-                            {steps.map((step) => (
-                                <Step
-                                    key={step.title}
-                                    sx={{
-                                        ':first-child': { pl: 0 },
-                                        ':last-child': { pr: 0 },
-                                    }}
-                                >
-                                    <StepLabel>{step.title}</StepLabel>
-                                </Step>
-                            ))}
-                        </Stepper>
-                    </Box>
-                </Box>
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        flexGrow: 1,
-                        gap: { xs: 5, md: 'none' },
-                        maxHeight: '720px',
-                        maxWidth: { sm: '100%', md: 600 },
-                        width: '100%',
-                    }}
-                >
-                    <Stepper
-                        activeStep={activeStep}
-                        alternativeLabel
-                        id="mobile-stepper"
-                        sx={{ display: { sm: 'flex', md: 'none' } }}
-                    >
+
+                {/* Desktop stepper (keeps original desktop behavior) */}
+                <Box sx={{ display: { xs: 'none', md: 'block' }, mb: 2 }}>
+                    <Stepper activeStep={activeStep} sx={{ px: 0 }}>
                         {steps.map((step) => (
-                            <Step
-                                sx={{
-                                    '& .MuiStepConnector-root': {
-                                        top: { xs: 6, sm: 12 },
-                                    },
-                                    ':first-child': { pl: 0 },
-                                    ':last-child': { pr: 0 },
-                                }}
-                                key={step.title}
-                            >
-                                <StepLabel
-                                    sx={{
-                                        '.MuiStepLabel-labelContainer': {
-                                            maxWidth: '70px',
-                                        },
-                                    }}
-                                >
-                                    {step.title}
-                                </StepLabel>
+                            <Step key={step.title}>
+                                <StepLabel>{step.title}</StepLabel>
                             </Step>
                         ))}
                     </Stepper>
-                    {activeStep === steps.length ? (
-                        <Stack spacing={2} useFlexGap>
-                            <Typography variant="h1">📦</Typography>
-                            <Typography variant="h5">
-                                Thank you for your order!
-                            </Typography>
-                            <Typography
-                                variant="body1"
-                                sx={{ color: 'text.secondary' }}
-                            >
-                                Your order number is
-                                <strong>&nbsp;#140396</strong>. We have emailed
-                                your order confirmation and will update you once
-                                its shipped.
-                            </Typography>
-                            <Button
-                                sx={{
-                                    alignSelf: 'start',
-                                    width: { xs: '100%', sm: 'auto' },
-                                }}
-                                variant="contained"
-                            >
-                                Go to my orders
-                            </Button>
-                        </Stack>
-                    ) : (
-                        <React.Fragment>
-                            {steps[activeStep].item}
-                            <Box
-                                sx={[
-                                    {
-                                        alignItems: 'end',
-                                        display: 'flex',
-                                        flexDirection: {
-                                            xs: 'column-reverse',
-                                            sm: 'row',
-                                        },
-                                        flexGrow: 1,
-                                        gap: 1,
-                                        mb: '60px',
-                                        mt: { xs: 2, sm: 0 },
-                                        pb: { xs: 12, sm: 0 },
-                                    },
-                                    activeStep !== 0
-                                        ? { justifyContent: 'space-between' }
-                                        : { justifyContent: 'flex-end' },
-                                ]}
-                            >
-                                {activeStep !== 0 && (
-                                    <Button
-                                        onClick={handleBack}
-                                        startIcon={<ChevronLeftRoundedIcon />}
-                                        sx={{
-                                            display: { xs: 'none', sm: 'flex' },
-                                        }}
-                                        variant="text"
-                                    >
-                                        Previous
-                                    </Button>
-                                )}
-                                {activeStep !== 0 && (
-                                    <Button
-                                        fullWidth
-                                        onClick={handleBack}
-                                        startIcon={<ChevronLeftRoundedIcon />}
-                                        sx={{
-                                            display: { xs: 'flex', sm: 'none' },
-                                        }}
-                                        variant="outlined"
-                                    >
-                                        Previous
-                                    </Button>
-                                )}
-                                <Button
-                                    endIcon={<ChevronRightRoundedIcon />}
-                                    onClick={handleNext}
-                                    sx={{
-                                        width: {
-                                            xs: '100%',
-                                            sm: 'fit-content',
-                                        },
-                                    }}
-                                    variant="contained"
-                                >
-                                    {activeStep === steps.length - 1
-                                        ? 'Place order'
-                                        : 'Next'}
-                                </Button>
-                            </Box>
-                        </React.Fragment>
-                    )}
                 </Box>
-            </Grid>
+            </Box>
+
+            {/* Main content area - grows and scrolls if necessary */}
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 2,
+                    flexGrow: 1,
+                    minHeight: 0, // allow proper overflow within flex children
+                    overflow: 'auto',
+                    maxHeight:
+                        'calc(100dvh - var(--template-frame-height, 0px) - 220px)', // optional safeguard
+                }}
+            >
+                {/* Mobile stepper */}
+                <Stepper
+                    activeStep={activeStep}
+                    alternativeLabel
+                    sx={{ display: { sm: 'flex', md: 'none' } }}
+                >
+                    {steps.map((step) => (
+                        <Step key={step.title}>
+                            <StepLabel
+                                sx={{
+                                    '.MuiStepLabel-labelContainer': {
+                                        maxWidth: '70px',
+                                    },
+                                }}
+                            >
+                                {step.title}
+                            </StepLabel>
+                        </Step>
+                    ))}
+                </Stepper>
+
+                {/* Current step content */}
+                {activeStep === steps.length ? (
+                    <Stack spacing={2} useFlexGap>
+                        <Typography variant="h1">📦</Typography>
+                        <Typography variant="h5">
+                            Thank you for your order!
+                        </Typography>
+                        <Typography
+                            variant="body1"
+                            sx={{ color: 'text.secondary' }}
+                        >
+                            Your order number is <strong>&nbsp;#140396</strong>.
+                            We have emailed your order confirmation and will
+                            update you once it's shipped.
+                        </Typography>
+                        <Button variant="contained" sx={{ alignSelf: 'start' }}>
+                            Go to my orders
+                        </Button>
+                    </Stack>
+                ) : (
+                    <>{steps[activeStep].item}</>
+                )}
+            </Box>
+
+            {/* Footer — buttons. With the parent using space-between, this will sit at the bottom */}
+            <Box
+                component="footer"
+                sx={{
+                    display: 'flex',
+                    gap: 1,
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                    // On small screens stack column-reverse (Previous above Next)
+                    flexDirection: { xs: 'column-reverse', sm: 'row' },
+                    justifyContent:
+                        activeStep !== 0 ? 'space-between' : 'flex-end',
+                    pt: 1,
+                }}
+            >
+                {activeStep !== 0 && (
+                    // desktop "Previous"
+                    <Button
+                        onClick={handleBack}
+                        startIcon={<ChevronLeftRoundedIcon />}
+                        sx={{
+                            display: { xs: 'none', sm: 'inline-flex' },
+                        }}
+                        variant="text"
+                    >
+                        Previous
+                    </Button>
+                )}
+                {activeStep !== 0 && (
+                    // mobile "Previous" (full width)
+                    <Button
+                        onClick={handleBack}
+                        startIcon={<ChevronLeftRoundedIcon />}
+                        sx={{
+                            display: { xs: 'flex', sm: 'none' },
+                            width: '100%',
+                        }}
+                        variant="outlined"
+                    >
+                        Previous
+                    </Button>
+                )}
+
+                <Box sx={{ ml: { sm: 'auto' } }}>
+                    <Button
+                        endIcon={<ChevronRightRoundedIcon />}
+                        onClick={handleNext}
+                        sx={{ width: { xs: '100%', sm: 'auto' } }}
+                        variant="contained"
+                    >
+                        {activeStep === steps.length - 1
+                            ? 'Place order'
+                            : 'Next'}
+                    </Button>
+                </Box>
+            </Box>
         </Box>
     );
 }

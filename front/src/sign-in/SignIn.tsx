@@ -18,7 +18,7 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import AppTheme, { AppThemeProps } from '../shared-theme/AppTheme';
 import { CopyrightAligned as Copyright } from '../shared/Copyright';
-import { isDev, sendRequest, storeCredentials } from '../stdfunc';
+import { isDev, sendRequest } from '../stdfunc';
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: 'flex',
@@ -78,7 +78,7 @@ export default function SignIn(props: AppThemeProps) {
 
         try {
             if (!isDev) {
-                const json = await sendRequest(`/auth/login`, {
+                const json = await sendRequest(`auth/login`, {
                     username: data.username,
                     password: data.password,
                     rememberMe: data.rememberMe ?? false,
@@ -86,10 +86,10 @@ export default function SignIn(props: AppThemeProps) {
 
                 console.log(json);
 
-                storeCredentials(json);
+                // storeCredentials(json);
             }
 
-            navigate('/posts');
+            // navigate('/posts');
         } catch {
         } finally {
             setLoading(false);
