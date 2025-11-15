@@ -39,8 +39,6 @@
         "@vitejs/plugin-react": "latest",
         "babel-plugin-react-compiler": "latest",
         "prettier": "^3.6.2",
-        "tslog": "^4.10.2",
-        "typescript": "latest",
-        "vite": "latest"
+        "tslog": "^4.10.2"
     }
 }
