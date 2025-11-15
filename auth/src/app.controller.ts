@@ -16,11 +16,13 @@ export class AppController {
     @Post('register')
     @HttpCode(HttpStatus.CREATED)
     async register(@Body() dto: RegisterDto, @Res({ passthrough: true }) res: Response) {
-        this.logger.trace(dto);
+        this.logger.trace(dto, 'Registration request');
 
         const data = await this.app.register(dto.username, dto.password);
 
         setAccessTokenCookie(res, data.accessToken);
+
+        this.logger.debug(data, 'register success');
 
         return data.user;
     }
@@ -28,9 +30,13 @@ export class AppController {
     @Post('login')
     @HttpCode(HttpStatus.OK)
     async login(@Body() dto: LoginDto, @Res({ passthrough: true }) res: Response) {
+        this.logger.trace(dto, 'Login request');
+
         const data = await this.app.login(dto.username, dto.password);
 
         setAccessTokenCookie(res, data.accessToken, dto.rememberMe ?? false);
+
+        this.logger.(data, 'register success');
 
         return data.user;
     }
@@ -39,5 +45,6 @@ export class AppController {
     @Post('verify')
     @HttpCode(HttpStatus.OK)
     async verify() {
+        this.logger.trace('Verify request');
     }
 }

@@ -7,8 +7,6 @@ services:
         SERVICE_PATH: front
         VITE_API_GATEWAY: ${API_GATEWAY}
     image: front-service
-    # volumes:
-    #   - front_pnpm:/app/node_modules
     depends_on:
       - auth
       - users
@@ -32,8 +30,6 @@ services:
       NEED_TRACE: ${NEED_TRACE}
       DATABASE_URL: ${DATABASE_URL}
       RABBITMQ_URL: ${RABBITMQ_URL}
-    volumes:
-      - auth_pnpm:/app/node_modules
     depends_on:
       - postgres
       - rabbitmq
@@ -57,8 +53,6 @@ services:
       DATABASE_URL: ${DATABASE_URL}
       RABBITMQ_URL: ${RABBITMQ_URL}
       API_GATEWAY: ${API_GATEWAY}
-    volumes:
-      - users_pnpm:/app/node_modules
     depends_on:
       - postgres
       - rabbitmq
@@ -82,8 +76,6 @@ services:
       NEED_TRACE: ${NEED_TRACE}
       DATABASE_URL: ${DATABASE_URL}
       RABBITMQ_URL: ${RABBITMQ_URL}
-    volumes:
-      - posts_pnpm:/app/node_modules
     depends_on:
       - postgres
       - rabbitmq
@@ -113,8 +105,6 @@ services:
       MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
       MINIO_BUCKET: ${MINIO_BUCKET}
       MINIO_USE_SSL: ${MINIO_USE_SSL}
-    volumes:
-      - media_pnpm:/app/node_modules
     depends_on:
       - postgres
       - rabbitmq
@@ -137,8 +127,6 @@ services:
     environment:
       NEED_TRACE: ${NEED_TRACE}
       RABBITMQ_URL: ${RABBITMQ_URL}
-    volumes:
-      - rt_pnpm:/app/node_modules
     depends_on:
       - rabbitmq
     restart: unless-stopped
@@ -326,12 +314,6 @@ services:
   #   restart: unless-stopped
 
 volumes:
-  front_pnpm:
-  auth_pnpm:
-  users_pnpm:
-  posts_pnpm:
-  media_pnpm:
-  rt_pnpm:
   postgres_data:
   redis_data:
   rabbitmq_data:

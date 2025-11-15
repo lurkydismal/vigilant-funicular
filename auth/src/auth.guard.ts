@@ -12,7 +12,8 @@ export class AuthGuard implements CanActivate {
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const request = context.switchToHttp().getRequest();
 
-        const token = request.cookies?.accessToken; // read cookie
+        const token = request.cookies?.accessToken;
+
         if (!token) throw new UnauthorizedException('No access token');
 
         try {
@@ -28,6 +29,7 @@ export class AuthGuard implements CanActivate {
 
             // attach user info from RPC to request
             request.user = result.user; // attach user info to request
+
             return true;
         } catch (err) {
             console.log(err);

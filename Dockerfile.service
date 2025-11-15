@@ -8,20 +8,17 @@ ARG SERVICE_PATH
 ENV SERVICE_PATH=${SERVICE_PATH}
 
 # Copy package.json and package-lock.json
-COPY ${SERVICE_PATH}/package.json pnpm-lock.yaml ./
+COPY ${SERVICE_PATH}/package*.json ./
 
 # Install dependencies
 RUN npm i -g typescript
-RUN npm i -g pnpm
-RUN pnpm i
+RUN npm i
 
 # Copy the rest of the application code
 COPY ${SERVICE_PATH}/ ./
 
-RUN pnpm i
-
 # Build the application
-RUN pnpm run build
+RUN npm run build
 
 # ---------- runtime stage ----------
 FROM node:current-alpine AS runner
@@ -35,13 +32,12 @@ ARG SERVICE_PATH
 ENV SERVICE_PATH=${SERVICE_PATH}
 
 # Only install production deps
-COPY ${SERVICE_PATH}/package.json pnpm-lock.yaml ./
+COPY ${SERVICE_PATH}/package*.json ./
 
 ENV NODE_ENV=production
 
 # Install dependencies
-RUN npm i -g pnpm
-RUN pnpm i -P
+RUN npm i --omit=dev
 
 # Copy compiled app from builder
 COPY --from=builder /app/dist ./dist
@@ -55,4 +51,4 @@ ENV PORT=3000
 EXPOSE 3000
 
 # Run the application
-CMD ["pnpm", "run", "start:prod"]
+CMD ["npm", "run", "start:prod"]

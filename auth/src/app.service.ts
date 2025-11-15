@@ -1,6 +1,7 @@
 import * as argon2 from 'argon2';
 import { ClientProxy } from '@nestjs/microservices';
 import { Inject, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 import { JwtService } from '@nestjs/jwt';
 import { UnauthorizedException } from '@nestjs/common';
 import { UsersService } from './users/users.service';
@@ -8,6 +9,7 @@ import { UsersService } from './users/users.service';
 @Injectable()
 export class AppService {
     constructor(
+        @InjectPinoLogger(AppService.name) private readonly logger: PinoLogger,
         private readonly users: UsersService,
         private readonly jwt: JwtService,
         @Inject('USER_SERVICE') private readonly client: ClientProxy
@@ -21,9 +23,15 @@ export class AppService {
         try {
             const user = await this.users.createUser({ username: username, password });
 
-            this.client.emit('user.created', { id: user.id });
+            try {
+                this.client.emit('user.created', { id: user.id });
+                this.logger.trace(user, 'User.created event emitted');
+            } catch (err) {
+                this.logger.error({ err, user: user }, 'Emitting user.created event');
+            }
 
             const token = await this.jwt.signAsync(this.jwtPayload({ id: user.id, username: user.username }));
+
             return { user: this.users.sanitize(user), accessToken: token };
         } catch (err) {
             // users.createUser already throws ConflictException for duplicates
@@ -34,12 +42,23 @@ export class AppService {
 
     async login(username: string, password: string) {
         const user = await this.users.findByUsername(username);
-        if (!user) throw new UnauthorizedException('Invalid credentials');
+
+        if (!user) {
+            this.logger.debug({ username }, 'User not found');
+
+            throw new UnauthorizedException('Invalid credentials');
+        }
 
         const ok = await argon2.verify(user.passwordHash, password);
-        if (!ok) throw new UnauthorizedException('Invalid credentials');
+
+        if (!ok) {
+            this.logger.debug(user, 'Password mismatch');
+
+            throw new UnauthorizedException('Invalid credentials');
+        }
 
         const token = await this.jwt.signAsync(this.jwtPayload({ id: user.id, username: user.username }));
+
         return { user: this.users.sanitize(user), accessToken: token };
     }
 }
