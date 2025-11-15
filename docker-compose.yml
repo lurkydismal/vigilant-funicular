@@ -1,11 +1,14 @@
 services:
   front:
     build:
-      context: front
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.front
       args:
+        SERVICE_PATH: front
         VITE_API_GATEWAY: ${API_GATEWAY}
     image: front-service
+    # volumes:
+    #   - front_pnpm:/app/node_modules
     depends_on:
       - auth
       - users
@@ -20,13 +23,17 @@ services:
 
   auth:
     build:
-      context: auth
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.service
+      args:
+        SERVICE_PATH: auth
     image: auth-service
     environment:
       NEED_TRACE: ${NEED_TRACE}
       DATABASE_URL: ${DATABASE_URL}
       RABBITMQ_URL: ${RABBITMQ_URL}
+    volumes:
+      - auth_pnpm:/app/node_modules
     depends_on:
       - postgres
       - rabbitmq
@@ -40,14 +47,18 @@ services:
 
   users:
     build:
-      context: users-service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.service
+      args:
+        SERVICE_PATH: users-service
     image: users-service
     environment:
       NEED_TRACE: ${NEED_TRACE}
       DATABASE_URL: ${DATABASE_URL}
       RABBITMQ_URL: ${RABBITMQ_URL}
       API_GATEWAY: ${API_GATEWAY}
+    volumes:
+      - users_pnpm:/app/node_modules
     depends_on:
       - postgres
       - rabbitmq
@@ -62,13 +73,17 @@ services:
 
   posts:
     build:
-      context: posts-service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.service
+      args:
+        SERVICE_PATH: posts-service
     image: posts-service
     environment:
       NEED_TRACE: ${NEED_TRACE}
       DATABASE_URL: ${DATABASE_URL}
       RABBITMQ_URL: ${RABBITMQ_URL}
+    volumes:
+      - posts_pnpm:/app/node_modules
     depends_on:
       - postgres
       - rabbitmq
@@ -83,8 +98,10 @@ services:
 
   media:
     build:
-      context: media-service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.service
+      args:
+        SERVICE_PATH: media-service
     image: media-service
     environment:
       NEED_TRACE: ${NEED_TRACE}
@@ -96,6 +113,8 @@ services:
       MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
       MINIO_BUCKET: ${MINIO_BUCKET}
       MINIO_USE_SSL: ${MINIO_USE_SSL}
+    volumes:
+      - media_pnpm:/app/node_modules
     depends_on:
       - postgres
       - rabbitmq
@@ -110,12 +129,16 @@ services:
 
   rt:
     build:
-      context: rt-service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.service
+      args:
+        SERVICE_PATH: rt-service
     image: rt-service
     environment:
       NEED_TRACE: ${NEED_TRACE}
       RABBITMQ_URL: ${RABBITMQ_URL}
+    volumes:
+      - rt_pnpm:/app/node_modules
     depends_on:
       - rabbitmq
     restart: unless-stopped
@@ -303,6 +326,12 @@ services:
   #   restart: unless-stopped
 
 volumes:
+  front_pnpm:
+  auth_pnpm:
+  users_pnpm:
+  posts_pnpm:
+  media_pnpm:
+  rt_pnpm:
   postgres_data:
   redis_data:
   rabbitmq_data:

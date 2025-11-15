@@ -7,17 +7,24 @@ WORKDIR /app
 ARG VITE_API_GATEWAY
 ENV VITE_API_GATEWAY=$VITE_API_GATEWAY
 
+ARG SERVICE_PATH
+ENV SERVICE_PATH=${SERVICE_PATH}
+
 # Copy package.json and package-lock.json
-COPY package*.json ./
+COPY ${SERVICE_PATH}/package.json pnpm-lock.yaml ./
 
 # Install dependencies
-RUN npm ci
+RUN npm i -g vite typescript
+RUN npm i -g pnpm
+RUN pnpm i
 
 # Copy the rest of the application code
-COPY . .
+COPY ${SERVICE_PATH}/ ./
+
+RUN pnpm i
 
 # Build the application
-RUN npm run build
+RUN pnpm run build
 
 # ---------- runtime stage ----------
 FROM nginx:alpine AS runner
