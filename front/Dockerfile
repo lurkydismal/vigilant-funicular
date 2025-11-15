@@ -4,8 +4,8 @@ FROM node:current-alpine AS builder
 # Set the working directory in the container
 WORKDIR /app
 
-ARG VITE_API_ENDPOINT
-ENV VITE_API_ENDPOINT=$VITE_API_ENDPOINT
+ARG VITE_API_GATEWAY
+ENV VITE_API_GATEWAY=$VITE_API_GATEWAY
 
 # Copy package.json and package-lock.json
 COPY package*.json ./

@@ -53,7 +53,6 @@ export async function sendRequest<T = any>(
     }
 }
 
-// FIX: Do not log error 401
 export async function checkAuth(): Promise<boolean> {
     if (isDev) {
         log.debug("Auth verification skipped");
@@ -61,20 +60,18 @@ export async function checkAuth(): Promise<boolean> {
         return true;
     }
 
-    // try {
-    //     sendRequest('/auth/verify');
-    //
-    //     return true;
-    // } catch {
-    //     return false;
-    // }
     if (!getCredentials()) {
         return false;
     }
 
-    const res = await sendRequest(`auth/verify`);
+    try {
+        await sendRequest(`auth/verify`);
 
-    return Boolean(res);
+        return true;
+    } catch {
+        return false;
+    }
+
 }
 
 interface UserCredentials {

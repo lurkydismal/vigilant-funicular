@@ -10,14 +10,12 @@ import { type Response } from 'express';
 @Controller('auth')
 export class AppController {
     constructor(
-        @InjectPinoLogger(AppService.name) private logger: PinoLogger,
+        @InjectPinoLogger(AppService.name) private readonly logger: PinoLogger,
         private readonly app: AppService) { }
 
     @Post('register')
     @HttpCode(HttpStatus.CREATED)
     async register(@Body() dto: RegisterDto, @Res({ passthrough: true }) res: Response) {
-        this.logger.info('hello');
-        this.logger.error('problem!');
         this.logger.trace(dto);
 
         const data = await this.app.register(dto.username, dto.password);
