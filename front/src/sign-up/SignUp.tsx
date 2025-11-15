@@ -16,7 +16,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { CopyrightAligned as Copyright } from '../shared/Copyright';
 import { isDev } from '../stdvar';
-import { sendRequest } from '../stdfunc';
+import { sendRequest, storeCredentials } from '../stdfunc';
 import { styled } from '@mui/material/styles';
 import { log } from '../stdlog';
 
@@ -87,10 +87,10 @@ export default function SignUp(props: AppThemeProps) {
                     password: data.password,
                 });
 
-                // storeCredentials(json);
+                storeCredentials(json);
             }
 
-            // navigate('/posts');
+            navigate('/posts');
 
             log.trace('onSubmit finished');
         } catch (err) {

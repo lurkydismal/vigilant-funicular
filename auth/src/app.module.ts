@@ -10,23 +10,43 @@ import { Module } from '@nestjs/common';
 import { RedisProvider } from './redis.provider';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/user.entity';
+import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 import { UsersModule } from './users/users.module';
 
 @Module({
     imports: [
         ConfigModule.forRoot({ isGlobal: true }),
-        LoggerModule.forRoot({
-            pinoHttp: {
-                transport: {
-                    target: 'pino-pretty',
-                    options: {
-                        colorize: true,
-                    },
-                },
+        PrometheusModule.register({
+            defaultMetrics: {
+                enabled: true,
             },
         }),
+        LoggerModule.forRootAsync({
+            inject: [ConfigService],
+            useFactory: (cfg: ConfigService) => ({
+                pinoHttp: {
+                    level: Boolean(cfg.get('NEED_TRACE')) ? 'trace' : (cfg.get('NODE_ENV') !== 'production' ? 'debug' : 'info'),
+                    transport: {
+                        target: 'pino-pretty',
+                        options: {
+                            colorize: true,
+                            translateTime: 'SYS:standard',
+                        },
+                    },
+                },
+            }),
+        }),
+        // LoggerModule.forRoot({
+        //     pinoHttp: {
+        //         transport: {
+        //             target: 'pino-pretty',
+        //             options: {
+        //                 colorize: true,
+        //             },
+        //         },
+        //     },
+        // }),
         TypeOrmModule.forRootAsync({
-            imports: [ConfigModule],
             inject: [ConfigService],
             useFactory: (cfg: ConfigService) => ({
                 type: 'postgres',
@@ -37,7 +57,6 @@ import { UsersModule } from './users/users.module';
             }),
         }),
         JwtModule.registerAsync({
-            imports: [ConfigModule],
             inject: [ConfigService],
             useFactory: (cfg: ConfigService) => {
                 const rawDefault = 3600;
