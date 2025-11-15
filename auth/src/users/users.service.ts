@@ -39,7 +39,7 @@ export class UsersService {
         return this.repo.findOne({ where: { id } });
     }
 
-    sanitize(user: any) {
+    sanitize(user: User) {
         const { passwordHash, ...rest } = user;
         return rest;
     }
