@@ -25,7 +25,7 @@ export class AppService {
 
             try {
                 this.client.emit('user.created', { id: user.id });
-                this.logger.trace(user, 'User.created event emitted');
+                this.logger.trace(user, 'user.created event emitted');
             } catch (err) {
                 this.logger.error({ err, user: user }, 'Emitting user.created event');
             }
@@ -36,6 +36,7 @@ export class AppService {
         } catch (err) {
             // users.createUser already throws ConflictException for duplicates
             if (err.name === 'ConflictException') throw err;
+
             throw new InternalServerErrorException('Failed to create user');
         }
     }

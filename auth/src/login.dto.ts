@@ -3,6 +3,8 @@ import { IsString, MinLength, MaxLength, IsNotEmpty, IsBoolean, IsOptional } fro
 export class LoginDto {
     @IsString()
     @IsNotEmpty()
+    @MinLength(6)
+    @MaxLength(32)
     username: string;
 
     @IsString()

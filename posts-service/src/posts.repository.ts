@@ -1,30 +1,56 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Post } from './post/post.entity';
 // import { Attachment } from './post/attachment.entity';
+import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Post } from './post/post.entity';
+import { Repository } from 'typeorm';
+import { Tag } from './post/tag.entity';
 
 @Injectable()
 export class PostsRepository {
     constructor(
+        @InjectPinoLogger(PostsRepository.name) private readonly logger: PinoLogger,
         @InjectRepository(Post) private readonly postRepo: Repository<Post>,
+        @InjectRepository(Tag) private readonly tagRepo: Repository<Tag>,
         // @InjectRepository(Attachment) private readonly attachRepo: Repository<Attachment>,
         // private readonly dataSource: DataSource,
     ) { }
 
-    async createPost(userId: number, content: string) {
-        const l_post = this.postRepo.create({
-            user_id: userId,
+    async createPost(userId: number, tagName: string, title: string, description: string, content: string) {
+        const tag = await this.tagRepo.findOne({ where: { name: tagName } });
+
+        if (!tag) {
+            this.logger.error({ userId, tagName, title }, 'Finding one tag id by name');
+
+            throw new InternalServerErrorException('Failed to find tag');
+        }
+
+        const post = this.postRepo.create({
+            userId,
+            tag,
+            title,
+            description,
             content,
         });
-        return this.postRepo.save(l_post);
+
+        return this.postRepo.save(post);
+    }
+
+    async getPosts() {
+        const posts = this.postRepo
+            .createQueryBuilder('p')
+            .leftJoinAndSelect('p.tag', 't')
+            .orderBy('p.created_at', 'DESC')
+            .getMany();
+
+        return posts;
     }
 
     // async addAttachment(postId: number, fileUrl: string, mimeType: string) {
-    //     const l_post = await this.postRepo.findOne({ where: { id: postId } });
-    //     if (!l_post) throw new Error('post not found');
+    //     const post = await this.postRepo.findOne({ where: { id: postId } });
+    //     if (!post) throw new Error('post not found');
     //     const l_attach = this.attachRepo.create({
-    //         post: l_post,
+    //         post: post,
     //         file_url: fileUrl,
     //         mime_type: mimeType,
     //     });
@@ -49,7 +75,7 @@ export class PostsRepository {
 
     async findByUser(userId: number, limit = 20, offset = 0) {
         return this.postRepo.find({
-            where: { user_id: userId },
+            where: { userId: userId },
             relations: ['attachments'],
             order: { created_at: 'DESC' },
             take: limit,

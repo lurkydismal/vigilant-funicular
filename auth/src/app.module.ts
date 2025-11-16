@@ -25,7 +25,7 @@ import { UsersModule } from './users/users.module';
             inject: [ConfigService],
             useFactory: (cfg: ConfigService) => ({
                 pinoHttp: {
-                    level: Boolean(cfg.get('NEED_TRACE')) ? 'trace' : (cfg.get('NODE_ENV') !== 'production' ? 'debug' : 'info'),
+                    level: Boolean(cfg.get('NEED_TRACE') == 'true') ? 'trace' : (cfg.get('NODE_ENV') !== 'production' ? 'debug' : 'info'),
                     transport: {
                         target: 'pino-pretty',
                         options: {

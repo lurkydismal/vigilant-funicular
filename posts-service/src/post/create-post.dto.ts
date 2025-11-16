@@ -1,11 +1,30 @@
-import { IsInt, IsString, Length, Min } from 'class-validator';
+import {
+    IsInt,
+    IsNotEmpty,
+    IsString,
+    MaxLength,
+} from 'class-validator';
 
 export class CreatePostDto {
     @IsInt()
-    @Min(1)
-    user_id!: number;
+    user_id: number;
 
     @IsString()
-    @Length(1, 5000)
-    content!: string;
+    @IsNotEmpty()
+    @MaxLength(32)
+    tag_name: string;
+
+    @IsString()
+    @IsNotEmpty()
+    @MaxLength(80)
+    title: string;
+
+    @IsString()
+    @IsNotEmpty()
+    @MaxLength(200)
+    description: string;
+
+    @IsString()
+    @IsNotEmpty()
+    content: string;
 }
