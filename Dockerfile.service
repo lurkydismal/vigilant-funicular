@@ -18,6 +18,8 @@ RUN npm i
 COPY ${SERVICE_PATH}/ ./
 COPY backend-lib ./backend-lib
 
+RUN cd backend-lib && npm i
+
 # Build the application
 RUN npm run build
 
