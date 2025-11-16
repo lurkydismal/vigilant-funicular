@@ -2,95 +2,27 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthGuard } from './auth.guard';
 import { AuthRpcController } from './app.rpc.controller';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { JwtModule } from '@nestjs/jwt';
-import { LoggerModule } from 'nestjs-pino';
+import { Transport } from '@nestjs/microservices';
 import { Module } from '@nestjs/common';
-import { RedisProvider } from './redis.provider';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { RedisProvider } from '../backend-lib/redis.provider';
 import { User } from './users/user.entity';
-import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 import { UsersModule } from './users/users.module';
+import { LogModule } from 'backend-lib/logger.module';
+import { registerModule } from 'backend-lib/dynamic.module';
+import { getRMQUrl } from 'backend-lib/stdfunc';
+import { JWTModule } from 'backend-lib/jwt.module';
+import { registerTypeORM } from 'backend-lib/typeorm.module';
+import { PromModule } from 'backend-lib/prometheus.module';
 
 @Module({
     imports: [
-        ConfigModule.forRoot({ isGlobal: true }),
-        PrometheusModule.register({
-            defaultMetrics: {
-                enabled: true,
-            },
-        }),
-        LoggerModule.forRootAsync({
-            inject: [ConfigService],
-            useFactory: (cfg: ConfigService) => ({
-                pinoHttp: {
-                    level: Boolean(cfg.get('NEED_TRACE') == 'true') ? 'trace' : (cfg.get('NODE_ENV') !== 'production' ? 'debug' : 'info'),
-                    transport: {
-                        target: 'pino-pretty',
-                        options: {
-                            colorize: true,
-                            translateTime: 'SYS:standard',
-                        },
-                    },
-                },
-            }),
-        }),
-        // LoggerModule.forRoot({
-        //     pinoHttp: {
-        //         transport: {
-        //             target: 'pino-pretty',
-        //             options: {
-        //                 colorize: true,
-        //             },
-        //         },
-        //     },
-        // }),
-        TypeOrmModule.forRootAsync({
-            inject: [ConfigService],
-            useFactory: (cfg: ConfigService) => ({
-                type: 'postgres',
-                url: cfg.get<string>('DATABASE_URL'),
-                entities: [User],
-                autoLoadEntities: true,
-                synchronize: cfg.get('NODE_ENV') !== 'production',
-            }),
-        }),
-        JwtModule.registerAsync({
-            inject: [ConfigService],
-            useFactory: (cfg: ConfigService) => {
-                const rawDefault = 3600;
-                const raw = cfg.get<string>('JWT_EXPIRES_IN', String(rawDefault));
-                const expiresInNum = Number(raw);
-                return {
-                    secret: cfg.get<string>('JWT_SECRET', 'dev-secret'),
-                    signOptions: { expiresIn: Number.isFinite(expiresInNum) ? expiresInNum : rawDefault },
-                };
-            },
-        }),
+        PromModule,
+        LogModule,
+        registerTypeORM([User]),
+        JWTModule,
         UsersModule,
-        ClientsModule.register([
-            {
-                name: 'AUTH_SERVICE',
-                transport: Transport.RMQ,
-                options: {
-                    urls: [process.env.RABBITMQ_URL!],
-                    queue: 'auth_rpc_queue',
-                    queueOptions: { durable: true },
-                },
-            },
-        ]),
-        ClientsModule.register([
-            {
-                name: 'USER_SERVICE',
-                transport: Transport.RMQ,
-                options: {
-                    urls: [process.env.RABBITMQ_URL!],
-                    queue: 'user_rpc_queue',
-                    queueOptions: { durable: true },
-                },
-            },
-        ]),
+        registerModule('auth', Transport.RMQ, [getRMQUrl()]),
+        registerModule('user', Transport.RMQ, [getRMQUrl()]),
     ],
     controllers: [AppController, AuthRpcController],
     providers: [RedisProvider, AppService, AuthGuard],

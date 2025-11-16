@@ -12,5 +12,14 @@
   "packageManager": "pnpm@10.22.0",
   "devDependencies": {
     "@types/node": "^24.10.1"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.1.9",
+    "@nestjs/jwt": "^11.0.1",
+    "@nestjs/microservices": "^11.1.9",
+    "@nestjs/typeorm": "^11.0.0",
+    "@willsoto/nestjs-prometheus": "^6.0.2",
+    "ioredis": "^5.8.2",
+    "nestjs-pino": "^4.4.1"
   }
 }
