@@ -36,7 +36,7 @@ export class AppController {
 
         setAccessTokenCookie(res, data.accessToken, dto.rememberMe ?? false);
 
-        this.logger.(data, 'register success');
+        this.logger.debug(data, 'register success');
 
         return data.user;
     }

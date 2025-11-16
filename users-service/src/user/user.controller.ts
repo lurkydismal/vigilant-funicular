@@ -1,27 +1,35 @@
 import {
-  Controller,
-  Get,
-  Patch,
-  Param,
-  Body,
-  ParseIntPipe,
+    Controller,
+    Get,
+    Patch,
+    Param,
+    Body,
+    ParseIntPipe,
 } from '@nestjs/common';
 import { UserService } from './user.service';
+import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 import { UpdateProfileDto } from './update-profile.dto';
 
 @Controller('users')
 export class UserController {
-  constructor(private svc: UserService) {}
+    constructor(
+        @InjectPinoLogger(UserService.name) private readonly logger: PinoLogger,
+        private svc: UserService
+    ) { }
 
-  @Get(':id')
-  get(@Param('id', ParseIntPipe) id: number) {
-    return this.svc.getProfileByUserId(id);
-  }
+    @Get(':id')
+    get(@Param('id', ParseIntPipe) id: number) {
+        this.logger.trace(id, 'User profile get request');
 
-  @Patch(':id')
-  patch(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateProfileDto) {
-    return this.svc.saveProfile(id, { avatarUrl: dto.avatarUrl });
-  }
+        return this.svc.getProfileByUserId(id);
+    }
+
+    @Patch(':id')
+    patch(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateProfileDto) {
+        this.logger.trace(id, 'User profile patch request');
+
+        return this.svc.saveProfile(id, { avatarUrl: dto.avatarUrl });
+    }
 }
 
 // const payload = await this.jwt.verifyAsync(token);

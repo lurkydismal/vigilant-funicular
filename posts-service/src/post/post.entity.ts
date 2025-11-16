@@ -1,12 +1,14 @@
 import {
-    Entity,
-    PrimaryGeneratedColumn,
+    // OneToMany,
     Column,
     CreateDateColumn,
-    // OneToMany,
-    // ManyToOne,
+    Entity,
     Index,
+    JoinColumn,
+    ManyToOne,
+    PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Tag } from './tag.entity';
 // import { Attachment } from './attachment.entity';
 
 @Entity({ name: 'posts' })
@@ -14,9 +16,19 @@ export class Post {
     @PrimaryGeneratedColumn('increment')
     id!: number;
 
-    @Column({ type: 'int' })
+    @Column({ type: 'int', name: 'user_id' })
     @Index()
-    user_id!: number;
+    userId!: number;
+
+    @ManyToOne(() => Tag, tag => tag.posts)
+    @JoinColumn({ name: 'tag_id' })
+    tag!: Tag;
+
+    @Column({ type: 'text' })
+    title!: string;
+
+    @Column({ type: 'text' })
+    description!: string;
 
     @Column({ type: 'text' })
     content!: string;
