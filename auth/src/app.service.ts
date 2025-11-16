@@ -62,4 +62,10 @@ export class AppService {
 
         return { user: this.users.sanitize(user), accessToken: token };
     }
+
+    async getUser(id: number) {
+        const user = await this.users.findById(id);
+
+        return { user: this.users.sanitize(user) };
+    }
 }

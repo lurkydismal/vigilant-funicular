@@ -6,6 +6,7 @@ import {
 } from 'class-validator';
 
 export class CreatePostDto {
+    // TODO: Replace with JWT
     @IsInt()
     user_id: number;
 

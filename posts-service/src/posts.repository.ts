@@ -1,4 +1,5 @@
 // import { Attachment } from './post/attachment.entity';
+import axios from 'axios';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
@@ -15,6 +16,27 @@ export class PostsRepository {
         // @InjectRepository(Attachment) private readonly attachRepo: Repository<Attachment>,
         // private readonly dataSource: DataSource,
     ) { }
+
+    private async populateUsers(posts: Post[]) {
+        return await Promise.all(
+            posts.map(async post => {
+                try {
+                    const response = await axios.get(`http://auth:3000/auth/user/${post.userId}`);
+
+                    const user = response.data;
+
+                    // Replace userId with user object
+                    return { ...post, user };
+                } catch (err) {
+                    const message = 'Failed to fetch user';
+
+                    this.logger.error({ err, userId: post.userId }, message);
+
+                    throw new InternalServerErrorException(message);
+                }
+            })
+        );
+    }
 
     async createPost(userId: number, tagName: string, title: string, description: string, content: string) {
         const tag = await this.tagRepo.findOne({ where: { name: tagName } });
@@ -43,7 +65,7 @@ export class PostsRepository {
             .orderBy('p.created_at', 'DESC')
             .getMany();
 
-        return posts;
+        return this.populateUsers(await posts);
     }
 
     // async addAttachment(postId: number, fileUrl: string, mimeType: string) {

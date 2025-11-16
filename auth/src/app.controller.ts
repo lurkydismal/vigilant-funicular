@@ -1,6 +1,6 @@
 import { AppService } from './app.service';
 import { AuthGuard } from './auth.guard';
-import { Controller, Post, Body, HttpCode, HttpStatus, Res, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, HttpStatus, Res, UseGuards, Get, Param } from '@nestjs/common';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 import { LoginDto } from './login.dto';
 import { RegisterDto } from './register.dto';
@@ -28,7 +28,6 @@ export class AppController {
     }
 
     @Post('login')
-    @HttpCode(HttpStatus.OK)
     async login(@Body() dto: LoginDto, @Res({ passthrough: true }) res: Response) {
         this.logger.trace(dto, 'Login request');
 
@@ -43,8 +42,12 @@ export class AppController {
 
     @UseGuards(AuthGuard)
     @Post('verify')
-    @HttpCode(HttpStatus.OK)
     async verify() {
         this.logger.trace('Verify request');
+    }
+
+    @Get('user/:id')
+    async getUser(@Param('id') id: number) {
+        return this.app.getUser(id);
     }
 }

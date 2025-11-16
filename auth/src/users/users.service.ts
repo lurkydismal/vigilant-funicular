@@ -1,12 +1,14 @@
-import { Injectable, ConflictException } from '@nestjs/common';
-import { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
 import * as argon2 from 'argon2';
+import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable, ConflictException, InternalServerErrorException } from '@nestjs/common';
+import { Repository } from 'typeorm';
 import { User } from './user.entity';
 
 @Injectable()
 export class UsersService {
     constructor(
+        @InjectPinoLogger(UsersService.name) private readonly logger: PinoLogger,
         @InjectRepository(User)
         private readonly repo: Repository<User>,
     ) { }
@@ -32,15 +34,36 @@ export class UsersService {
     }
 
     async findByUsername(username: string) {
-        return this.repo.findOne({ where: { username } });
+        const user = await this.repo.findOne({ where: { username } });
+
+        if (!user) {
+            const message = 'Failed to find user by id';
+
+            this.logger.error(message);
+
+            throw new InternalServerErrorException(message);
+        }
+
+        return user;
     }
 
     async findById(id: number) {
-        return this.repo.findOne({ where: { id } });
+        const user = await this.repo.findOne({ where: { id } });
+
+        if (!user) {
+            const message = 'Failed to find user by id';
+
+            this.logger.error(message);
+
+            throw new InternalServerErrorException(message);
+        }
+
+        return user;
     }
 
     sanitize(user: User) {
         const { passwordHash, ...rest } = user;
+
         return rest;
     }
 }
