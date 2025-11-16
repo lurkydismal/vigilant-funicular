@@ -305,6 +305,9 @@ importers:
       amqplib:
         specifier: ^0.10.9
         version: 0.10.9
+      axios:
+        specifier: ^1.13.2
+        version: 1.13.2
       class-transformer:
         specifier: ^0.5.1
         version: 0.5.1
