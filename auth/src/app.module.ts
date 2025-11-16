@@ -2,17 +2,17 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthGuard } from './auth.guard';
 import { AuthRpcController } from './app.rpc.controller';
-import { Transport } from '@nestjs/microservices';
+import { JWTModule } from 'backend-lib/jwt.module';
+import { LogModule } from 'backend-lib/logger.module';
 import { Module } from '@nestjs/common';
+import { PromModule } from 'backend-lib/prometheus.module';
 import { RedisProvider } from '../backend-lib/redis.provider';
+import { Transport } from '@nestjs/microservices';
 import { User } from './users/user.entity';
 import { UsersModule } from './users/users.module';
-import { LogModule } from 'backend-lib/logger.module';
-import { registerModule } from 'backend-lib/dynamic.module';
 import { getRMQUrl } from 'backend-lib/stdfunc';
-import { JWTModule } from 'backend-lib/jwt.module';
+import { registerModule } from 'backend-lib/dynamic.module';
 import { registerTypeORM } from 'backend-lib/typeorm.module';
-import { PromModule } from 'backend-lib/prometheus.module';
 
 @Module({
     imports: [

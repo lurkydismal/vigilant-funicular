@@ -1,6 +1,8 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
+import { Response } from 'express';
 import { Transport, RmqOptions } from '@nestjs/microservices';
 
+// NOTE: May be unset
 export const isProd = process.env.NODE_ENV === 'production';
 export const isDev = !isProd;
 export const needTrace = process.env.NEED_TRACE === 'true';
@@ -44,5 +46,30 @@ export function connectMicroserviceRMQ(app: INestApplication, queueName: string,
             queue: `${queueName}_rpc_queue`,
             queueOptions: { durable },
         },
+    });
+}
+
+export const second = 1000;
+export const minute = (second * 60);
+export const hour = (minute * 60);
+export const day = (hour * 24);
+
+export function setResponseCookie(
+    response: Response,
+    name: string,
+    value: string,
+    needRemember?: boolean,
+    httpOnly?: boolean,
+    secure?: boolean,
+    path?: string
+) {
+    const maxAge = needRemember ? hour : (hour * 12);
+
+    response.cookie(name, value, {
+        httpOnly,
+        secure: secure ?? isProd,
+        sameSite: 'strict', // CSRF protection
+        maxAge,
+        path,
     });
 }
