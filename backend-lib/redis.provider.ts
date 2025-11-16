@@ -1,5 +1,5 @@
 import Redis from 'ioredis';
-import { getEnvUrl } from 'stdfunc';
+import { getEnvUrl } from './stdfunc';
 
 function getRedisUrl() {
     return getEnvUrl('REDIS');

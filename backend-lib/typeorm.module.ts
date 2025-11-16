@@ -1,5 +1,5 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { getEnvUrl, isDev } from 'stdfunc';
+import { getEnvUrl, isDev } from './stdfunc';
 
 // TODO: Better type
 export function registerTypeORM(entities: any[]) {
