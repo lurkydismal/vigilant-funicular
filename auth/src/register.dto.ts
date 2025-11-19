@@ -13,4 +13,3 @@ export class RegisterDto {
     @MaxLength(32)
     password: string;
 }
-
