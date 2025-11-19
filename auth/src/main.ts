@@ -1,10 +1,10 @@
 import cookieParser from 'cookie-parser';
-import { AppModule } from './auth.module';
+import { AuthModule } from './auth.module';
 import { NestFactory } from '@nestjs/core';
 import { connectMicroserviceRMQ, enableGlobalPipes } from '../backend-lib/stdfunc';
 
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule);
+    const app = await NestFactory.create(AuthModule);
 
     app.use(cookieParser());
 

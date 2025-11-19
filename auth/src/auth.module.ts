@@ -1,5 +1,5 @@
-import { AppController } from './auth.controller';
-import { AppService } from './auth.service';
+import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
 import { AuthRpcController } from './auth.rpc.controller';
 import { JWTModule } from 'backend-lib/jwt.module';
@@ -16,14 +16,14 @@ import { DefaultModule } from 'backend-lib/default.module';
 @Module({
     imports: [
         DefaultModule,
-        registerTypeORM([User]),
         JWTModule,
         UserModule,
         registerModule('auth', Transport.RMQ, [getRMQUrl()]),
         registerModule('user', Transport.RMQ, [getRMQUrl()]),
+        registerTypeORM([User]),
     ],
-    controllers: [AppController, AuthRpcController],
-    providers: [RedisProvider, AppService, AuthGuard],
-    exports: [RedisProvider, AppService, AuthGuard],
+    controllers: [AuthController, AuthRpcController],
+    providers: [RedisProvider, AuthService, AuthGuard],
+    exports: [RedisProvider, AuthService, AuthGuard],
 })
-export class AppModule { }
+export class AuthModule { }

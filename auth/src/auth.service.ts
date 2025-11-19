@@ -7,9 +7,9 @@ import { UnauthorizedException } from '@nestjs/common';
 import { UserService } from './user/user.service';
 
 @Injectable()
-export class AppService {
+export class AuthService {
     constructor(
-        @InjectPinoLogger(AppService.name) private readonly logger: PinoLogger,
+        @InjectPinoLogger(AuthService.name) private readonly logger: PinoLogger,
         private readonly user: UserService,
         private readonly jwt: JwtService,
         @Inject('USER_SERVICE') private readonly client: ClientProxy

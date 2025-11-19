@@ -1,4 +1,4 @@
-import { AppService } from './auth.service';
+import { AuthService } from './auth.service';
 import { setResponseCookie } from 'backend-lib/stdfunc';
 import { AuthGuard } from './auth.guard';
 import { Controller, Post, Body, HttpCode, HttpStatus, Res, UseGuards, Get, Param } from '@nestjs/common';
@@ -8,10 +8,10 @@ import { RegisterDto } from './register.dto';
 import { type Response } from 'express';
 
 @Controller('auth')
-export class AppController {
+export class AuthController {
     constructor(
-        @InjectPinoLogger(AppService.name) private readonly logger: PinoLogger,
-        private readonly app: AppService) { }
+        @InjectPinoLogger(AuthService.name) private readonly logger: PinoLogger,
+        private readonly app: AuthService) { }
 
     private setAccessTokenCookie(response: Response, token: string, needRemember?: boolean) {
         setResponseCookie(response, 'accessToken', token, needRemember, true);
