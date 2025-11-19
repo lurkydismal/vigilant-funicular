@@ -1,6 +1,6 @@
 // import { Test, TestingModule } from '@nestjs/testing';
-// import { AppController } from './app.controller';
-// import { AppService } from './app.service';
+// import { AppController } from './auth.controller';
+// import { AppService } from './auth.service';
 //
 // describe('AppController', () => {
 //   let appController: AppController;
@@ -11,7 +11,7 @@
 //       providers: [AppService],
 //     }).compile();
 //
-//     appController = app.get<AppController>(AppController);
+//     appController = auth.get<AppController>(AppController);
 //   });
 //
 //   describe('root', () => {

@@ -6,9 +6,9 @@ import { Repository } from 'typeorm';
 import { User } from './user.entity';
 
 @Injectable()
-export class UsersService {
+export class UserService {
     constructor(
-        @InjectPinoLogger(UsersService.name) private readonly logger: PinoLogger,
+        @InjectPinoLogger(UserService.name) private readonly logger: PinoLogger,
         @InjectRepository(User)
         private readonly repo: Repository<User>,
     ) { }

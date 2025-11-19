@@ -1,5 +1,5 @@
 import cookieParser from 'cookie-parser';
-import { AppModule } from './app.module';
+import { AppModule } from './auth.module';
 import { NestFactory } from '@nestjs/core';
 import { connectMicroserviceRMQ, enableGlobalPipes } from '../backend-lib/stdfunc';
 

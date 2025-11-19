@@ -1,4 +1,4 @@
-import { AppService } from './app.service';
+import { AppService } from './auth.service';
 import { setResponseCookie } from 'backend-lib/stdfunc';
 import { AuthGuard } from './auth.guard';
 import { Controller, Post, Body, HttpCode, HttpStatus, Res, UseGuards, Get, Param } from '@nestjs/common';

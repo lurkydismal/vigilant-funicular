@@ -10,7 +10,7 @@ const client = ClientProxyFactory.create({
     },
 });
 
-async function verifyToken(token: string) {
+export async function verifyToken(token: string) {
     const reply = await lastValueFrom(client.send('auth.verify', { token }));
     return reply as { valid: boolean; user?: { id: number; username: string }; error?: string };
 }

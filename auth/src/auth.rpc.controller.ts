@@ -3,13 +3,13 @@ import type Redis from 'ioredis';
 import { Controller, Inject } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { UsersService } from './users/users.service';
+import { UserService } from './user/user.service';
 
 @Controller()
 export class AuthRpcController {
     constructor(
         private readonly jwt: JwtService,
-        private readonly users: UsersService,
+        private readonly user: UserService,
         @Inject('REDIS_CLIENT') private readonly redis: Redis,
     ) { }
 
@@ -39,7 +39,7 @@ export class AuthRpcController {
             const ttl = remaining ? Math.min(remaining, MAX_TTL) : MAX_TTL;
 
             const id = Number(payload.sub);
-            const user = await this.users.findById(id);
+            const user = await this.user.findById(id);
             if (!user) {
                 const res = { valid: false, error: 'user_not_found' };
                 await this.redis.set(key, JSON.stringify(res), 'EX', 30); // short cache for misses
