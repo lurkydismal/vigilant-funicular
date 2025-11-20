@@ -4,7 +4,6 @@ import { UserService } from '../user/user.service';
 import type Redis from 'ioredis';
 import * as crypto from 'crypto';
 import { Injectable, CanActivate, ExecutionContext, UnauthorizedException, Inject, } from '@nestjs/common';
-import { timeout, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
