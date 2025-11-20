@@ -74,6 +74,6 @@ export class AuthController {
     async getUsersBatch(@Query() query: UserRequestQueryDto) {
         const users = await this.authService.findManyByIds(query.ids);
 
-        return users.map(u => plainToInstance(UserDto, u, { excludeExtraneousValues: true }));
+        return users.map(user => plainToInstance(UserDto, user, { excludeExtraneousValues: true }));
     }
 }

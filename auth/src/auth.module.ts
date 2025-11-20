@@ -14,16 +14,15 @@ import { registerModule } from 'backend-lib/dynamic.module';
 import { registerTypeORM } from 'backend-lib/typeorm.module';
 
 @Module({
-  imports: [
-    DefaultModule,
-    JWTModule,
-    UserModule,
-    registerModule('auth', Transport.RMQ, [getRMQUrl()]),
-    registerModule('user', Transport.RMQ, [getRMQUrl()]),
-    registerTypeORM([User]),
-  ],
-  controllers: [AuthController, AuthRpcController],
-  providers: [RedisProvider, AuthService, AuthGuard],
-  exports: [RedisProvider, AuthService, AuthGuard],
+    imports: [
+        DefaultModule,
+        JWTModule,
+        UserModule,
+        registerModule('auth', Transport.RMQ, [getRMQUrl()]),
+        registerModule('user', Transport.RMQ, [getRMQUrl()]),
+        registerTypeORM([User]),
+    ],
+    controllers: [AuthController, AuthRpcController],
+    providers: [RedisProvider, AuthService, AuthGuard],
 })
-export class AuthModule {}
+export class AuthModule { }
