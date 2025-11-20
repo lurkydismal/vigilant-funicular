@@ -29,5 +29,6 @@ function registerJWT() {
     imports: [
         registerJWT(),
     ],
+    exports: [JwtModule],
 })
 export class JWTModule { }
