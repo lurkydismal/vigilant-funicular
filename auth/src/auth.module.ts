@@ -1,6 +1,5 @@
 import { AuthController } from './auth.controller';
 import { AuthGuard } from './guard/auth.guard';
-import { AuthRpcController } from './auth.rpc.controller';
 import { AuthService } from './auth.service';
 import { DefaultModule } from 'backend-lib/default.module';
 import { JWTModule } from 'backend-lib/jwt.module';
@@ -22,7 +21,7 @@ import { registerTypeORM } from 'backend-lib/typeorm.module';
         registerModule('user', Transport.RMQ, [getRMQUrl()]),
         registerTypeORM([User]),
     ],
-    controllers: [AuthController, AuthRpcController],
+    controllers: [AuthController],
     providers: [RedisProvider, AuthService, AuthGuard],
 })
 export class AuthModule { }
