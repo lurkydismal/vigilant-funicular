@@ -6,7 +6,7 @@ services:
       args:
         SERVICE_PATH: front
         VITE_API_GATEWAY: ${API_GATEWAY}
-    image: front-service
+    image: front
     depends_on:
       - auth
       - users
@@ -25,7 +25,7 @@ services:
       dockerfile: Dockerfile.service
       args:
         SERVICE_PATH: auth
-    image: auth-service
+    image: auth
     environment:
       NEED_TRACE: ${NEED_TRACE}
       JWT_SECRET: ${JWT_SECRET}
@@ -50,8 +50,8 @@ services:
       context: .
       dockerfile: Dockerfile.service
       args:
-        SERVICE_PATH: users-service
-    image: users-service
+        SERVICE_PATH: users
+    image: users
     environment:
       NEED_TRACE: ${NEED_TRACE}
       DATABASE_URL: ${DATABASE_URL}
@@ -74,8 +74,8 @@ services:
       context: .
       dockerfile: Dockerfile.service
       args:
-        SERVICE_PATH: posts-service
-    image: posts-service
+        SERVICE_PATH: posts
+    image: posts
     environment:
       NEED_TRACE: ${NEED_TRACE}
       DATABASE_URL: ${DATABASE_URL}
@@ -97,8 +97,8 @@ services:
       context: .
       dockerfile: Dockerfile.service
       args:
-        SERVICE_PATH: media-service
-    image: media-service
+        SERVICE_PATH: media
+    image: media
     environment:
       NEED_TRACE: ${NEED_TRACE}
       DATABASE_URL: ${DATABASE_URL}
@@ -126,8 +126,8 @@ services:
       context: .
       dockerfile: Dockerfile.service
       args:
-        SERVICE_PATH: rt-service
-    image: rt-service
+        SERVICE_PATH: rt
+    image: rt
     environment:
       NEED_TRACE: ${NEED_TRACE}
       RABBITMQ_URL: ${RABBITMQ_URL}

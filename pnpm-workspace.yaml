@@ -1,7 +1,7 @@
 packages:
   - "auth"
   - "front"
-  - "media-service"
-  - "posts-service"
-  - "rt-service"
-  - "users-service"
+  - "media"
+  - "posts"
+  - "rt"
+  - "users"
