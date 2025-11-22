@@ -17,7 +17,6 @@ import { registerTypeORM } from 'backend-lib/typeorm.module';
         DefaultModule,
         JWTModule,
         UserModule,
-        registerModule('auth', Transport.RMQ, [getRMQUrl()]),
         registerModule('user', Transport.RMQ, [getRMQUrl()]),
         registerTypeORM([User]),
     ],

@@ -28,10 +28,14 @@ services:
     image: auth-service
     environment:
       NEED_TRACE: ${NEED_TRACE}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN}
       DATABASE_URL: ${DATABASE_URL}
+      REDIS_URL: ${REDIS_URL}
       RABBITMQ_URL: ${RABBITMQ_URL}
     depends_on:
       - postgres
+      - redis
       - rabbitmq
     restart: unless-stopped
     labels:

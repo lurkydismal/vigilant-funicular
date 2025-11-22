@@ -2,7 +2,7 @@
 FROM node:current-alpine AS builder
 
 # Set the working directory in the container
-WORKDIR /app
+WORKDIR /service
 
 ARG SERVICE_PATH
 ENV SERVICE_PATH=${SERVICE_PATH}
@@ -14,12 +14,12 @@ COPY ${SERVICE_PATH}/package*.json ./
 RUN npm i -g typescript
 RUN npm i
 
-# Copy the rest of the application code
+# Copy the rest of the service code
 COPY ${SERVICE_PATH}/ ./
 COPY backend-lib ./backend-lib
-RUN cd backend-lib && npm i
+RUN cd backend-lib && cp -r /service/node_modules . && npm i
 
-# Build the application
+# Build the service
 RUN npm run build
 
 # ---------- runtime stage ----------
@@ -28,7 +28,7 @@ FROM node:current-alpine AS runner
 # Small runtime deps
 RUN apk add --no-cache ca-certificates
 
-WORKDIR /app
+WORKDIR /service
 
 ARG SERVICE_PATH
 ENV SERVICE_PATH=${SERVICE_PATH}
@@ -41,16 +41,16 @@ ENV NODE_ENV=production
 # Install dependencies
 RUN npm i --omit=dev
 
-# Copy compiled app from builder
-COPY --from=builder /app/dist ./dist
+# Copy compiled service from builder
+COPY --from=builder /service/dist ./dist
 
 # Non-root runtime user
-RUN addgroup -S app && adduser -S app -G app
-USER app
+RUN addgroup -S service && adduser -S service -G service
+USER service
 
 ENV PORT=3000
 
 EXPOSE 3000
 
-# Run the application
-CMD ["npm", "run", "start:prod"]
+# Run the service
+CMD ["node", "dist/src/main"]

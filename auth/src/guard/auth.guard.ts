@@ -25,7 +25,8 @@ export class AuthGuard implements CanActivate {
             .digest('hex');
         const key = `auth:token:${tokenHash}`;
 
-        // 1) check cache
+        // check cache
+        // TODO: Improve caching
         const cached = await this.redis.get(key);
 
         if (cached) {
@@ -36,7 +37,7 @@ export class AuthGuard implements CanActivate {
             }
         }
 
-        // 2) verify JWT and lookup user
+        // verify JWT and lookup user
         try {
             const payload = this.jwt.verify(token);
 
@@ -83,13 +84,23 @@ export class AuthGuard implements CanActivate {
 
         const token = request.cookies?.accessToken;
 
-        if (!token) throw new UnauthorizedException('No access token');
+        if (!token) {
+            const message = 'No access token';
+
+            this.logger.debug(message);
+
+            throw new UnauthorizedException(message);
+        }
 
         try {
             const result = await this.verify(token);
 
             if (!result || !result.valid) {
-                throw new UnauthorizedException(result?.error ?? 'Invalid token');
+                const message = result?.error ?? 'Invalid token';
+
+                this.logger.debug(message);
+
+                throw new UnauthorizedException(message);
             }
 
             // attach user info from RPC to request
