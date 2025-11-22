@@ -4,11 +4,12 @@ import { UserController } from './user.controller';
 import { UserEventsController } from './user.events';
 import { UserService } from './user.service';
 import { Profile } from './profile.entity';
+import { NetworkService } from './network.service';
 
 @Module({
     imports: [TypeOrmModule.forFeature([Profile])],
     controllers: [UserController, UserEventsController],
-    providers: [UserService],
-    exports: [UserService],
+    providers: [UserService, NetworkService],
+    exports: [UserService, NetworkService],
 })
 export class UserModule { }

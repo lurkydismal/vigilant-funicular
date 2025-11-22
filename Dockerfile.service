@@ -45,8 +45,8 @@ RUN npm i --omit=dev
 COPY --from=builder /service/dist ./dist
 
 # Non-root runtime user
-RUN addgroup -S service && adduser -S service -G service
-USER service
+# RUN addgroup -S service && adduser -S service -G service
+# USER service
 
 ENV PORT=3000
 

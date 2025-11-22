@@ -54,7 +54,6 @@ export class MediaService {
 
     private putObject(bucket: string, objectName: string, buffer: Buffer, size: number, contentType: string) {
         return new Promise<void>((res, rej) => {
-            // `putObject(bucket, objectName, stream|buffer, size, metaData?, callback)`
             const meta = { 'Content-Type': contentType };
             (this.minio as any).putObject(bucket, objectName, buffer, size, meta, (err: Error | null) => {
                 if (err) return rej(err);
@@ -63,7 +62,6 @@ export class MediaService {
         });
     }
 
-    // TODO: Improve localhost for external use
     private presignedGetObject(bucket: string, objectName: string, expirySeconds: number) {
         return this.minio.presignedGetObject(bucket, objectName, expirySeconds, { requestHost: 'localhost:9000' });
     }
