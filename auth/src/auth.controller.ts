@@ -1,29 +1,19 @@
 import { AuthGuard } from './guard/auth.guard';
 import { AuthService } from './auth.service';
-import {
-    Controller,
-    Post,
-    Body,
-    HttpCode,
-    HttpStatus,
-    Res,
-    UseGuards,
-    Get,
-    Param,
-    Query,
-    ParseIntPipe,
-} from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, HttpStatus, Res, UseGuards, Get, Param, Query, ParseIntPipe, } from '@nestjs/common';
 import { LoginDto } from './DTO/login.dto';
 import { RegisterDto } from './DTO/register.dto';
+import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 import { setResponseCookie } from 'backend-lib/stdfunc';
 import { type Response } from 'express';
-import { plainToInstance } from 'class-transformer';
-import { UserDto } from './DTO/user.dto';
 import { UserRequestQueryDto } from './DTO/user.request.query.dto';
 
 @Controller('auth')
 export class AuthController {
-    constructor(private readonly authService: AuthService) { }
+    constructor(
+        @InjectPinoLogger(AuthGuard.name) private readonly logger: PinoLogger,
+        private readonly authService: AuthService
+    ) { }
 
     private setAccessTokenCookie(
         response: Response,
@@ -65,15 +55,20 @@ export class AuthController {
     @UseGuards(AuthGuard)
     @Get('user/:id')
     async getUser(@Param('id', ParseIntPipe) id: number) {
+        this.logger.debug({ id });
+
         const user = this.authService.findOneById(id);
 
-        return plainToInstance(UserDto, user, { excludeExtraneousValues: true });
+        return user;
     }
 
+    @UseGuards(AuthGuard)
     @Get('users')
     async getUsersBatch(@Query() query: UserRequestQueryDto) {
+        this.logger.debug({ ids: query.ids });
+
         const users = await this.authService.findManyByIds(query.ids);
 
-        return users.map(user => plainToInstance(UserDto, user, { excludeExtraneousValues: true }));
+        return users;
     }
 }

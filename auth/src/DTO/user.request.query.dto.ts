@@ -4,7 +4,7 @@ import { ArrayMaxSize, ArrayNotEmpty, IsInt } from 'class-validator';
 export class UserRequestQueryDto {
     // Accept comma-separated ids: ?ids=1,2,3
     @Transform(({ value }) =>
-        value instanceof String
+        typeof value === 'string'
             ? value
                 .split(',')
                 .map((v) => Number(v.trim()))

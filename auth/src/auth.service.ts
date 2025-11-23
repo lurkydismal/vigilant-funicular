@@ -79,6 +79,8 @@ export class AuthService {
     }
 
     async findManyByIds(ids: number[]) {
-        return await this.user.findManyByIds(ids);
+        const users = await this.user.findManyByIds(ids);
+
+        return users.map(user => this.user.sanitize(user));
     }
 }
