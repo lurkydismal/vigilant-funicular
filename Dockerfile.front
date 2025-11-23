@@ -11,7 +11,7 @@ ARG SERVICE_PATH
 ENV SERVICE_PATH=${SERVICE_PATH}
 
 # Copy package.json and package-lock.json
-COPY ${SERVICE_PATH}/package*.json ./
+COPY ${SERVICE_PATH}/package.json ./
 
 # Install dependencies
 RUN npm i -g vite typescript
