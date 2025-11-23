@@ -13,7 +13,7 @@ import { UpdateProfileDto } from './update-profile.dto';
 @Controller('users')
 export class UserController {
     constructor(
-        @InjectPinoLogger(UserService.name) private readonly logger: PinoLogger,
+        @InjectPinoLogger(UserController.name) private readonly logger: PinoLogger,
         private svc: UserService
     ) { }
 

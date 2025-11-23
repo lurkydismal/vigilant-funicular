@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-import { getEnvVar } from './stdfunc';
+import { getEnvVar } from '../stdfunc';
 
 function getEnvJWTVar(name: string) {
     return getEnvVar(`JWT_${name}`);

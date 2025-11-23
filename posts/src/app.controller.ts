@@ -6,7 +6,7 @@ import { PostsService } from './app.service';
 @Controller('posts')
 export class AppController {
     constructor(
-        @InjectPinoLogger(PostsService.name) private readonly logger: PinoLogger,
+        @InjectPinoLogger(AppController.name) private readonly logger: PinoLogger,
         private readonly postsService: PostsService
     ) { }
 

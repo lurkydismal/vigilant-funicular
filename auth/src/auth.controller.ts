@@ -11,7 +11,7 @@ import { UserRequestQueryDto } from './DTO/user.request.query.dto';
 @Controller('auth')
 export class AuthController {
     constructor(
-        @InjectPinoLogger(AuthGuard.name) private readonly logger: PinoLogger,
+        @InjectPinoLogger(AuthController.name) private readonly logger: PinoLogger,
         private readonly authService: AuthService
     ) { }
 

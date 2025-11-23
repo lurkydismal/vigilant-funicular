@@ -5,27 +5,14 @@ import {
     UploadedFile,
     Get,
     Param,
-    BadRequestException
+    BadRequestException,
+    UseGuards
 } from '@nestjs/common';
+import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 import { FileInterceptor } from '@nestjs/platform-express';
 import * as multer from 'multer';
-import { MediaService } from './app.service';
-
-// @Controller('media')
-// export class MediaController {
-//     constructor(private readonly service: MediaService) { }
-//
-//     @Post('upload')
-//     @UseInterceptors(FileInterceptor('file'))
-//     async upload(@UploadedFile() file: Express.Multer.File) {
-//         return this.service.upload(file);
-//     }
-//
-//     @Get('url/:filename')
-//     async getUrl(@Param('filename') filename: string) {
-//         return this.service.getSignedUrl(filename);
-//     }
-// }
+import { AuthGuard } from 'backend-lib/guard/auth.guard';
+import { MediaService } from './media.service';
 
 const uploadMiddleware = FileInterceptor('file', {
     storage: multer.memoryStorage(),
@@ -37,8 +24,12 @@ const uploadMiddleware = FileInterceptor('file', {
 
 @Controller('media')
 export class MediaController {
-    constructor(private readonly media: MediaService) { }
+    constructor(
+        @InjectPinoLogger(MediaController.name) private readonly logger: PinoLogger,
+        private readonly media: MediaService
+    ) { }
 
+    @UseGuards(AuthGuard)
     @Post('upload')
     @UseInterceptors(uploadMiddleware)
     async upload(@UploadedFile() file: Express.Multer.File) {
@@ -48,6 +39,7 @@ export class MediaController {
         return this.media.uploadBuffer(file.buffer, file.originalname, file.mimetype);
     }
 
+    @UseGuards(AuthGuard)
     @Get('url/:filename')
     async getUrl(@Param('filename') filename: string) {
         if (!filename) throw new BadRequestException('filename required');

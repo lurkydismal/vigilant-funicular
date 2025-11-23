@@ -1,15 +1,14 @@
+import cookieParser from 'cookie-parser';
+import { MediaModule } from './media.module';
 import { NestFactory } from '@nestjs/core';
-import { MediaModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common/pipes/validation.pipe';
+import { enableGlobalPipes, } from '../backend-lib/stdfunc';
 
 async function bootstrap() {
     const app = await NestFactory.create(MediaModule);
 
-    app.useGlobalPipes(new ValidationPipe({
-        whitelist: true,
-        forbidNonWhitelisted: true,
-        transform: true,
-    }));
+    app.use(cookieParser());
+
+    enableGlobalPipes(app);
 
     await app.listen(process.env.PORT ?? 3000);
 }

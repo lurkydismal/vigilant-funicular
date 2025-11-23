@@ -1,22 +1,6 @@
 import { Inject, Injectable, BadRequestException } from '@nestjs/common';
 import { Client } from 'minio';
 
-// @Injectable()
-// export class MediaService {
-//     constructor(@Inject('MINIO_CLIENT') private readonly minio: Client) { }
-//
-//     async upload(file: Express.Multer.File) {
-//         const key = Date.now() + '-' + file.originalname;
-//         await minioClient.putObject('media', key, file.buffer);
-//         return { key };
-//     }
-//
-//     async getSignedUrl(filename: string) {
-//         const url = await minioClient.presignedGetObject('media', filename, 24 * 60 * 60);
-//         return { url };
-//     }
-// }
-
 @Injectable()
 export class MediaService {
     private readonly bucket: string;

@@ -114,6 +114,7 @@ services:
     environment:
       NEED_TRACE: ${NEED_TRACE}
       PORT: ${MEDIA_PORT}
+      API_GATEWAY: ${API_GATEWAY}
       MINIO_ENDPOINT: ${MINIO_ENDPOINT}
       MINIO_PORT: ${MINIO_PORT}
       MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
