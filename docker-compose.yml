@@ -33,6 +33,7 @@ services:
       DATABASE_URL: ${DATABASE_URL}
       REDIS_URL: ${REDIS_URL}
       RABBITMQ_URL: ${RABBITMQ_URL}
+      API_GATEWAY: ${API_GATEWAY}
     depends_on:
       - postgres
       - redis
@@ -82,6 +83,7 @@ services:
       NEED_TRACE: ${NEED_TRACE}
       DATABASE_URL: ${DATABASE_URL}
       RABBITMQ_URL: ${RABBITMQ_URL}
+      API_GATEWAY: ${API_GATEWAY}
     depends_on:
       - postgres
       - rabbitmq
@@ -136,6 +138,7 @@ services:
     environment:
       NEED_TRACE: ${NEED_TRACE}
       RABBITMQ_URL: ${RABBITMQ_URL}
+      API_GATEWAY: ${API_GATEWAY}
     depends_on:
       - rabbitmq
     restart: unless-stopped
