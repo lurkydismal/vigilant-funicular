@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { apiGateway, isDev } from './stdvar';
 import { user } from './shared/TestData';
 import { log } from './stdlog';
+import { apiGateway, isDev } from './stdvar';
 
 type Method = 'POST' | 'GET' | 'PUT' | 'DELETE';
 
@@ -11,7 +11,9 @@ export async function sendRequest<T = any>(
     method: Method = 'POST',
     devResponse?: T,
 ): Promise<T> {
-    log.trace(`${method} request to ${endpoint}${data ? ` with data: '${JSON.stringify(data)}'` : ""}`);
+    log.trace(
+        `${method} request to ${endpoint}${data ? ` with data: '${JSON.stringify(data)}'` : ''}`,
+    );
 
     if (isDev && devResponse) {
         log.debug(`Mock response: ${devResponse}`);
@@ -47,7 +49,9 @@ export async function sendRequest<T = any>(
 
         return response.data;
     } catch (error: any) {
-        log.trace(`Request failed: ${error?.response?.status || error.message}`);
+        log.trace(
+            `Request failed: ${error?.response?.status || error.message}`,
+        );
 
         throw error;
     }
@@ -55,7 +59,7 @@ export async function sendRequest<T = any>(
 
 export async function checkAuth(): Promise<boolean> {
     if (isDev) {
-        log.debug("Auth verification skipped");
+        log.debug('Auth verification skipped');
 
         return true;
     }
@@ -71,7 +75,6 @@ export async function checkAuth(): Promise<boolean> {
     } catch {
         return false;
     }
-
 }
 
 interface UserCredentials {

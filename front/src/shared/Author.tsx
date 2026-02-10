@@ -54,7 +54,9 @@ function AuthorInfo({
     avatarWidth?: number;
     avatarHeight?: number;
 }) {
-    log.trace(`Rendering AuthorInfo: ${{ author, variant, avatarWidth, avatarHeight }}`);
+    log.trace(
+        `Rendering AuthorInfo: ${{ author, variant, avatarWidth, avatarHeight }}`,
+    );
 
     return (
         <Box
@@ -87,7 +89,9 @@ function AuthorsInfo({
     avatarWidth?: number;
     avatarHeight?: number;
 }) {
-    log.trace(`Rendering AuthorsInfo: ${{ authors, variant, avatarWidth, avatarHeight }}`);
+    log.trace(
+        `Rendering AuthorsInfo: ${{ authors, variant, avatarWidth, avatarHeight }}`,
+    );
 
     return (
         <Box

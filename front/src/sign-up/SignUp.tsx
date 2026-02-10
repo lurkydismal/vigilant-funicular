@@ -2,23 +2,23 @@ import * as React from 'react';
 import * as ReactHook from 'react-hook-form';
 import * as ReactRouter from 'react-router-dom';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import AppTheme, { AppThemeProps } from '../shared-theme/AppTheme';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import MuiCard from '@mui/material/Card';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Link from '@mui/material/Link';
-import MuiCard from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { CopyrightAligned as Copyright } from '../shared/Copyright';
-import { isDev } from '../stdvar';
-import { sendRequest, storeCredentials } from '../stdfunc';
 import { styled } from '@mui/material/styles';
+import AppTheme, { AppThemeProps } from '../shared-theme/AppTheme';
+import { CopyrightAligned as Copyright } from '../shared/Copyright';
+import { sendRequest, storeCredentials } from '../stdfunc';
 import { log } from '../stdlog';
+import { isDev } from '../stdvar';
 
 const Card = styled(MuiCard)(({ theme }) => ({
     alignSelf: 'center',
@@ -103,7 +103,9 @@ export default function SignUp(props: AppThemeProps) {
     React.useEffect(() => {
         log.trace('SignUp component mounted');
 
-        return () => { log.trace('SignUp component unmounted'); };
+        return () => {
+            log.trace('SignUp component unmounted');
+        };
     }, []);
 
     return (
@@ -134,7 +136,9 @@ export default function SignUp(props: AppThemeProps) {
                                 },
                             }}
                             render={({ field, fieldState }) => {
-                                log.trace(`Rendering username field: '${field}'`);
+                                log.trace(
+                                    `Rendering username field: '${field}'`,
+                                );
 
                                 return (
                                     <FormControl>
@@ -152,7 +156,9 @@ export default function SignUp(props: AppThemeProps) {
                                             }
                                             error={Boolean(fieldState.error)}
                                             fullWidth
-                                            helperText={fieldState.error?.message}
+                                            helperText={
+                                                fieldState.error?.message
+                                            }
                                             id="username"
                                             name="username"
                                             placeholder="tralalero"
@@ -175,7 +181,9 @@ export default function SignUp(props: AppThemeProps) {
                                 },
                             }}
                             render={({ field, fieldState }) => {
-                                log.trace(`Rendering password field: '${field}'`);
+                                log.trace(
+                                    `Rendering password field: '${field}'`,
+                                );
 
                                 return (
                                     <FormControl>
@@ -192,7 +200,9 @@ export default function SignUp(props: AppThemeProps) {
                                             }
                                             error={Boolean(fieldState.error)}
                                             fullWidth
-                                            helperText={fieldState.error?.message}
+                                            helperText={
+                                                fieldState.error?.message
+                                            }
                                             id="password"
                                             name="password"
                                             placeholder="••••••"

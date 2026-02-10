@@ -38,7 +38,7 @@ export default function LoadingScreen({ drawDurationMs = 4800 }: Props) {
             el.style.setProperty('--draw-duration', `${drawDurationMs}ms`);
 
             const t = setTimeout(() => {
-                setFilled(true), drawDurationMs + 80
+                (setFilled(true), drawDurationMs + 80);
 
                 log.trace(`${text} animation completed, filled set to true`);
             });
@@ -145,25 +145,26 @@ export function ProtectedRoute() {
                 log.trace(`Auth result: ${result}`);
 
                 setAuthorized(result);
-            }).catch((err) => {
+            })
+            .catch((err) => {
                 log.error(`Auth check failed: ${err}`);
 
                 setAuthorized(false);
-            });;
+            });
     }, []);
 
     // Not yet known
     if (authorized === null) {
         log.trace('ProtectedRoute: auth status unknown, showing LoadingScreen');
 
-        return (<LoadingScreen />);
+        return <LoadingScreen />;
     }
 
     // Not authorized
     if (!authorized) {
         log.trace('ProtectedRoute: user not authorized, redirecting to login');
 
-        return (<Navigate to="/auth/login" replace />);
+        return <Navigate to="/auth/login" replace />;
     }
 
     // Authorized
