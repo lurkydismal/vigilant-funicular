@@ -31,24 +31,22 @@ export default function DesktopNav({
                     px: 0,
                 }}
             >
-                {items.map((value, index) => {
-                    return value.position === "left" ? (
-                        <Box
-                            key={`${value.href}-${index}`}
-                            sx={{ display: { xs: "none", md: "flex" } }}
+                {left.map((value, index) => (
+                    <Box
+                        key={value.href ?? `left-${index}`}
+                        sx={{ display: { xs: "none", md: "flex" } }}
+                    >
+                        <Button
+                            variant="text"
+                            color="info"
+                            size="small"
+                            href={value.href}
+                            component={NextLink}
                         >
-                            <Button
-                                variant="text"
-                                color="info"
-                                size="small"
-                                href={value.href}
-                                component={NextLink}
-                            >
-                                {value.name}
-                            </Button>
-                        </Box>
-                    ) : null;
-                })}
+                            {value.name}
+                        </Button>
+                    </Box>
+                ))}
             </Box>
 
             <Box
@@ -59,20 +57,18 @@ export default function DesktopNav({
                     gap: 1,
                 }}
             >
-                {items.map((value, index) => {
-                    return value.position === "right" ? (
-                        <Button
-                            key={`${value.href}-${index}`}
-                            color="primary"
-                            variant="contained"
-                            size="small"
-                            href={value.href}
-                            component={NextLink}
-                        >
-                            {value.name}
-                        </Button>
-                    ) : null;
-                })}
+                {right.map((value, index) => (
+                    <Button
+                        key={value.href ?? `right-${index}`}
+                        color="primary"
+                        variant="contained"
+                        size="small"
+                        href={value.href}
+                        component={NextLink}
+                    >
+                        {value.name}
+                    </Button>
+                ))}
             </Box>
         </Box>
     );
