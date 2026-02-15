@@ -1,3 +1,5 @@
+"use client";
+
 import { CloseRounded, Menu } from "@mui/icons-material";
 import { useCallback, useMemo, useState } from "react";
 import NextLink from "@/components/Link";
