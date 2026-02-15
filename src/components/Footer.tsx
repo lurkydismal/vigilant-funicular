@@ -4,8 +4,9 @@ import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { Copyright, githubUrl } from "./Copyright";
+import { Copyright } from "./Copyright";
 import { Link } from "@/components/Link";
+import { githubUrl } from "@/utils/stdvar";
 
 export default function Footer() {
     return (

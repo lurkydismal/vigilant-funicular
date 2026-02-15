@@ -49,6 +49,13 @@ export const isServer = typeof window === "undefined";
 export const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL ?? "/api";
 
 /**
+ * [TODO:Document]
+ */
+export const githubUrl = process.env.GITHUB_LINK ?? "#";
+
+export const buildYear = new Date().getFullYear();
+
+/**
  * Name of the application.
  * - Used in logging, UI, or headers.
  */

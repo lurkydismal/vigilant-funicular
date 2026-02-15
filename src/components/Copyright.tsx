@@ -1,7 +1,6 @@
+import { buildYear, githubUrl } from "@/utils/stdvar";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
-
-export const githubUrl = process.env.GITHUB_LINK ?? "#";
 
 export function CopyrightAligned() {
     return (
@@ -16,7 +15,7 @@ export function CopyrightAligned() {
             <Link color="inherit" href={githubUrl}>
                 LurkyDismal
             </Link>
-            {` ${new Date().getFullYear()}.`}
+            {` ${buildYear}.`}
         </Typography>
     );
 }
@@ -34,7 +33,7 @@ export function Copyright({ ...props }) {
             <Link color="inherit" href={githubUrl}>
                 LurkyDismal
             </Link>
-            {` ${new Date().getFullYear()}.`}
+            {` ${buildYear}.`}
         </Typography>
     );
 }
