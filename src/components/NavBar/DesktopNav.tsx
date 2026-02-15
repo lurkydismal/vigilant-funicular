@@ -1,11 +1,7 @@
-import NextLink from "../Link";
+import { NavItem } from "@/data/navbat";
+import NextLink from "@/components/Link";
 import { Box, Button, SxProps } from "@mui/material";
 
-type NavItem = {
-    name: string;
-    href: string;
-    position?: "left" | "right";
-};
 export default function DesktopNav({
     items,
     containerSx,

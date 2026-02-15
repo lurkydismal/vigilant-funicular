@@ -11,9 +11,10 @@ import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import { alpha, styled } from "@mui/material/styles";
 import { useState } from "react";
-import NextLink from "../Link";
+import NextLink from "@/components/Link";
 import DesktopNav from "./DesktopNav";
 import { items } from "@/data/navbat";
+import MobileNav from "./MobileNav";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
     alignItems: "center",
@@ -32,12 +33,6 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 }));
 
 export default function NavBar() {
-    const [open, setOpen] = useState(false);
-
-    const toggleDrawer = (newOpen: boolean) => () => {
-        setOpen(newOpen);
-    };
-
     return (
         <AppBar
             enableColorOnDark
@@ -53,76 +48,7 @@ export default function NavBar() {
                 <StyledToolbar variant="dense" disableGutters>
                     <DesktopNav items={items} containerSx={{ display: "flex", alignItems: "center" }} />
 
-                    <Box sx={{ display: { xs: "flex", md: "none" }, gap: 1 }}>
-                        <IconButton
-                            aria-label="Menu button"
-                            onClick={toggleDrawer(true)}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-
-                        <Drawer
-                            anchor="top"
-                            onClose={toggleDrawer(false)}
-                            open={open}
-                            slotProps={{
-                                paper: {
-                                    sx: {
-                                        top: "var(--template-frame-height, 0px)",
-                                    },
-                                },
-                            }}
-                        >
-                            <Box
-                                sx={{
-                                    p: 1,
-                                    backgroundColor: "background.default",
-                                }}
-                            >
-                                <Box
-                                    sx={{
-                                        display: "flex",
-                                        justifyContent: "flex-end",
-                                    }}
-                                >
-                                    <IconButton onClick={toggleDrawer(false)}>
-                                        <CloseRoundedIcon />
-                                    </IconButton>
-                                </Box>
-
-                                {items.map((value, index) => {
-                                    return value.position === "left" ? (
-                                        <MenuItem
-                                            key={`${value.href}-${index}`}
-                                            href={value.href}
-                                            component={NextLink}
-                                        >
-                                            {value.name}
-                                        </MenuItem>
-                                    ) : null;
-                                })}
-
-                                <Divider sx={{ my: 3 }} />
-
-                                <MenuItem sx={{ gap: 1 }}>
-                                    {items.map((value, index) => {
-                                        return value.position === "right" ? (
-                                            <Button
-                                                key={`${value.href}-${index}`}
-                                                color="primary"
-                                                variant="contained"
-                                                href={value.href}
-                                                component={NextLink}
-                                                fullWidth
-                                            >
-                                                {value.name}
-                                            </Button>
-                                        ) : null;
-                                    })}
-                                </MenuItem>
-                            </Box>
-                        </Drawer>
-                    </Box>
+                    <MobileNav items={items} />
                 </StyledToolbar>
             </Container>
         </AppBar>
