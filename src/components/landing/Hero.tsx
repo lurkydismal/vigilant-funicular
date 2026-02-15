@@ -126,11 +126,11 @@ export default function Hero() {
                             color="primary"
                             variant="outlined"
                             size="medium"
-                            href="/docs"
+                            href="/auth/login"
                             component={NextLink}
-                            aria-label="Read documentation"
+                            aria-label="Sign in"
                         >
-                            Documentation
+                            Sign in
                         </Button>
                     </Stack>
 
