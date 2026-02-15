@@ -13,7 +13,7 @@ export default function FeatureList({
     items: FeatureItem[];
     selectedItemIndex: number;
     handleItemClick: (index: number) => void;
-    selectedFeature: (typeof items)[0];
+    selectedFeature: FeatureItem;
 }) {
     return (
         <>

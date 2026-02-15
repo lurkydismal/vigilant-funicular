@@ -13,7 +13,7 @@ export default function FeaturesSection({
 }: {
     items: FeatureItem[];
     handleItemClick: (index: number) => void;
-    selectedFeature: (typeof items)[0];
+    selectedFeature: FeatureItem;
     selectedItemIndex: number;
 }) {
     return (
@@ -61,11 +61,11 @@ export default function FeaturesSection({
                         style={
                             items[selectedItemIndex]
                                 ? ({
-                                      "--items-imageDark":
-                                          items[selectedItemIndex].imageDark,
-                                      "--items-imageLight":
-                                          items[selectedItemIndex].imageLight,
-                                  } as CSSProperties)
+                                    "--items-imageDark":
+                                        items[selectedItemIndex].imageDark,
+                                    "--items-imageLight":
+                                        items[selectedItemIndex].imageLight,
+                                } as CSSProperties)
                                 : {}
                         }
                     />

@@ -1,7 +1,7 @@
 "use client";
 
 import { FeatureItem } from "@/data/landing/features";
-import { Box, Card, Chip as MuiChip, styled, Typography } from "@mui/material";
+import { Box, Card, CSSProperties, Chip as MuiChip, styled, Typography } from "@mui/material";
 
 interface ChipProps {
     selected?: boolean;
@@ -79,11 +79,11 @@ export default function MobileLayout({
                     style={
                         items[selectedItemIndex]
                             ? ({
-                                  "--items-imageDark":
-                                      items[selectedItemIndex].imageDark,
-                                  "--items-imageLight":
-                                      items[selectedItemIndex].imageLight,
-                              } as CSSProperties)
+                                "--items-imageDark":
+                                    items[selectedItemIndex].imageDark,
+                                "--items-imageLight":
+                                    items[selectedItemIndex].imageLight,
+                            } as CSSProperties)
                             : {}
                     }
                 />
