@@ -1,4 +1,3 @@
-import * as ReactHook from "react-hook-form";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -8,13 +7,12 @@ import Divider from "@mui/material/Divider";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
-import NextLink from "@/components/Link";
+import { Link } from "@/components/Link";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import { CopyrightAligned as Copyright } from "@/components/Copyright";
-import { sendRequest, storeCredentials } from "@/utils/stdfunc";
 import log from "@/utils/stdlog";
 import { isDev } from "@/utils/stdvar";
 import { useState, useEffect } from "react";
@@ -137,6 +135,7 @@ export default function SignIn() {
                                         <FormLabel htmlFor="username">
                                             Username
                                         </FormLabel>
+
                                         <TextField
                                             {...field}
                                             autoComplete="username"
@@ -162,6 +161,7 @@ export default function SignIn() {
                                 );
                             }}
                         />
+
                         <ReactHook.Controller
                             name="password"
                             control={control}
@@ -247,13 +247,13 @@ export default function SignIn() {
                     >
                         <Typography sx={{ textAlign: "center" }}>
                             Don&apos;t have an account?{" "}
-                            <NextLink
+                            <Link
                                 href="/auth/register"
                                 sx={{ alignSelf: "center" }}
                                 variant="body2"
                             >
                                 Sign up
-                            </NextLink>
+                            </Link>
                         </Typography>
 
                         <Copyright />

@@ -1,4 +1,3 @@
-import * as ReactHook from "react-hook-form";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -6,13 +5,12 @@ import MuiCard from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-import Link from "@mui/material/Link";
+import { Link } from "@/components/Link";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import { CopyrightAligned as Copyright } from "@/components/Copyright";
-import { sendRequest, storeCredentials } from "@/utils/stdfunc";
 import log from "@/utils/stdlog";
 import { isDev } from "@/utils/stdvar";
 import { useState, useEffect } from "react";
@@ -140,6 +138,7 @@ export default function SignUp() {
                                         <FormLabel htmlFor="username">
                                             Username
                                         </FormLabel>
+
                                         <TextField
                                             {...field}
                                             autoComplete="username"
@@ -165,6 +164,7 @@ export default function SignUp() {
                                 );
                             }}
                         />
+
                         <ReactHook.Controller
                             name="password"
                             control={control}
@@ -185,6 +185,7 @@ export default function SignUp() {
                                         <FormLabel htmlFor="password">
                                             Password
                                         </FormLabel>
+
                                         <TextField
                                             {...field}
                                             autoComplete="new-password"
@@ -209,6 +210,7 @@ export default function SignUp() {
                                 );
                             }}
                         />
+
                         <Button
                             endIcon={<AccountCircle />}
                             fullWidth
@@ -219,11 +221,13 @@ export default function SignUp() {
                             Sign up
                         </Button>
                     </Box>
+
                     <Divider>
                         <Typography sx={{ color: "text.secondary" }}>
                             or
                         </Typography>
                     </Divider>
+
                     <Box
                         sx={{
                             display: "flex",
@@ -234,18 +238,14 @@ export default function SignUp() {
                         <Typography sx={{ textAlign: "center" }}>
                             Already have an account?{" "}
                             <Link
-                                onClick={() => {
-                                    log.trace("Navigate to login");
-
-                                    navigate(`/auth/login`);
-                                }}
-                                href="#"
+                                href="/auth/login"
                                 sx={{ alignSelf: "center" }}
                                 variant="body2"
                             >
                                 Sign in
                             </Link>
                         </Typography>
+
                         <Copyright />
                     </Box>
                 </Card>
