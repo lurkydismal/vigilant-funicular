@@ -1,14 +1,16 @@
 "use client";
 
-import { items } from "@/data/landing/features";
 import { Box, Card } from "@mui/material";
 import FeatureList from "./FeaturesList";
+import { FeatureItem } from "@/data/landing/features";
 
 export default function FeaturesSection({
+    items,
     selectedItemIndex,
     handleItemClick,
     selectedFeature,
 }: {
+    items: FeatureItem[];
     handleItemClick: (index: number) => void;
     selectedFeature: (typeof items)[0];
     selectedItemIndex: number;
@@ -22,6 +24,7 @@ export default function FeaturesSection({
             }}
         >
             <FeatureList
+                items={items}
                 selectedItemIndex={selectedItemIndex}
                 handleItemClick={handleItemClick}
                 selectedFeature={selectedFeature}

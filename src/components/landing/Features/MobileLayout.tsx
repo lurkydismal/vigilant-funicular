@@ -1,6 +1,6 @@
 "use client";
 
-import { items } from "@/data/landing/features";
+import { FeatureItem } from "@/data/landing/features";
 import { Box, Card, Chip as MuiChip, styled, Typography } from "@mui/material";
 
 interface ChipProps {
@@ -28,12 +28,14 @@ const Chip = styled(MuiChip)<ChipProps>(({ theme }) => ({
 }));
 
 interface MobileLayoutProps {
+    items: FeatureItem[];
     handleItemClick: (index: number) => void;
-    selectedFeature: (typeof items)[0];
+    selectedFeature: FeatureItem;
     selectedItemIndex: number;
 }
 
 export default function MobileLayout({
+    items,
     selectedItemIndex,
     handleItemClick,
     selectedFeature,

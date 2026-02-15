@@ -1,14 +1,16 @@
 "use client";
 
-import { items } from "@/data/landing/features";
+import { FeatureItem } from "@/data/landing/features";
 import MobileLayout from "./MobileLayout";
 import { Box, Button, Typography } from "@mui/material";
 
 export default function FeatureList({
+    items,
     selectedItemIndex,
     handleItemClick,
     selectedFeature,
 }: {
+    items: FeatureItem[];
     selectedItemIndex: number;
     handleItemClick: (index: number) => void;
     selectedFeature: (typeof items)[0];
@@ -73,6 +75,7 @@ export default function FeatureList({
             </Box>
 
             <MobileLayout
+                items={items}
                 handleItemClick={handleItemClick}
                 selectedFeature={selectedFeature}
                 selectedItemIndex={selectedItemIndex}

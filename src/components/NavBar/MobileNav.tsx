@@ -1,77 +1,91 @@
-import { CloseRounded } from "@mui/icons-material";
-import { useState } from "react";
+import { CloseRounded, Menu } from "@mui/icons-material";
+import { useCallback, useMemo, useState } from "react";
 import NextLink from "@/components/Link";
-import { items, NavItem } from "@/data/navbat";
+import { NavItem } from "@/data/navbat";
 import { Drawer, Box, IconButton, MenuItem, Divider, Button } from "@mui/material";
 
 export default function MobileNav({ items }: { items: NavItem[] }) {
     const [open, setOpen] = useState(false);
 
-    const toggleDrawer = (newOpen: boolean) => () => {
-        setOpen(newOpen);
-    };
+    const left = useMemo(() => items.filter((i) => i.position === "left"), [items]);
+    const right = useMemo(() => items.filter((i) => i.position === "right"), [items]);
+
+    const openDrawer = useCallback(() => setOpen(true), []);
+    const closeDrawer = useCallback(() => setOpen(false), []);
+
+    // close drawer when a nav link is clicked (works even when using component={NextLink})
+    const onLinkClick = useCallback(() => {
+        closeDrawer();
+    }, [closeDrawer]);
 
     return (
-        <Drawer
-            anchor="top"
-            onClose={toggleDrawer(false)}
-            open={open}
-            slotProps={{
-                paper: {
-                    sx: {
-                        top: "var(--template-frame-height, 0px)",
+        <Box sx={{ display: { xs: "flex", md: "none" }, gap: 1 }}>
+            <IconButton
+                aria-label="Open navigation"
+                aria-haspopup="true"
+                aria-expanded={open}
+                onClick={openDrawer}
+                size="large"
+            >
+                <Menu />
+            </IconButton>
+
+            <Drawer
+                anchor="top"
+                open={open}
+                onClose={closeDrawer}
+                keepMounted // avoid unmounting for smoother close on mobile
+                slotProps={{
+                    paper: {
+                        sx: { top: "var(--template-frame-height, 0px)" },
+                        role: "menu",
+                        "aria-label": "Mobile primary navigation",
                     },
-                },
-            }}
-        >
-            <Box
-                sx={{
-                    p: 1,
-                    backgroundColor: "background.default",
+                }}
+                ModalProps={{
+                    // ensures focus trap and Escape key close are active
+                    keepMounted: true,
                 }}
             >
-                <Box
-                    sx={{
-                        display: "flex",
-                        justifyContent: "flex-end",
-                    }}
-                >
-                    <IconButton onClick={toggleDrawer(false)}>
-                        <CloseRounded />
-                    </IconButton>
-                </Box>
+                <Box sx={{ p: 1, backgroundColor: "background.default" }}>
+                    <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                        <IconButton onClick={closeDrawer} aria-label="Close navigation" size="large">
+                            <CloseRounded />
+                        </IconButton>
+                    </Box>
 
-                {items.map((value, index) => {
-                    return value.position === "left" ? (
+                    {left.map((value, index) => (
                         <MenuItem
-                            key={`${value.href}-${index}`}
+                            key={value.href ?? `left-${index}`}
                             href={value.href}
                             component={NextLink}
+                            onClick={onLinkClick}
+                            data-nav-position="left"
                         >
                             {value.name}
                         </MenuItem>
-                    ) : null;
-                })}
+                    ))}
 
-                <Divider sx={{ my: 3 }} />
+                    <Divider sx={{ my: 3 }} />
 
-                <MenuItem sx={{ gap: 1 }}>
-                    {items.map((value, index) => {
-                        return value.position === "right" ? (
+                    <MenuItem sx={{ gap: 1 }}>
+                        {right.map((value, index) => (
                             <Button
-                                key={`${value.href}-${index}`}
+                                key={value.href ?? `right-${index}`}
                                 color="primary"
                                 variant="contained"
                                 href={value.href}
                                 component={NextLink}
                                 fullWidth
+                                onClick={onLinkClick}
+                                data-nav-position="right"
                             >
                                 {value.name}
                             </Button>
-                        ) : null;
-                    })}
-                </MenuItem>
-            </Box>
-        </Drawer>
+                        ))}
+                    </MenuItem>
+                </Box>
+            </Drawer>
+        </Box>
     );
 }

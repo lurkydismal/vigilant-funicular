@@ -6,7 +6,7 @@ import {
 } from "@mui/icons-material";
 import { ReactElement } from "react";
 
-interface Item {
+export interface FeatureItem {
     description: string;
     icon: ReactElement;
     imageDark: string;
@@ -14,7 +14,7 @@ interface Item {
     title: string;
 }
 
-export const items: Item[] = [
+export const items: FeatureItem[] = [
     {
         description: "Tag-based discovery for topics and technologies.",
         icon: <LocalOfferRounded />,

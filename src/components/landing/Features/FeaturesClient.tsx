@@ -15,6 +15,7 @@ export default function FeaturesClient({ initialIndex }: { initialIndex: number 
 
     return (
         <FeaturesSection
+            items={items}
             selectedItemIndex={selectedItemIndex}
             handleItemClick={handleItemClick}
             selectedFeature={selectedFeature}
