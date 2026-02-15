@@ -1,7 +1,6 @@
 import GitHubIcon from "@mui/icons-material/GitHub";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
@@ -34,11 +33,13 @@ export default function Footer() {
                     >
                         Privacy Policy
                     </Link>
+
                     <Typography
                         sx={{ display: "inline", mx: 0.5, opacity: 0.5 }}
                     >
                         &nbsp;•&nbsp;
                     </Typography>
+
                     <Link
                         color="text.secondary"
                         variant="body2"

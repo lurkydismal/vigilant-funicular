@@ -21,13 +21,13 @@ export function CopyrightAligned() {
     );
 }
 
-export function Copyright() {
+export function Copyright({ ...props }) {
     return (
         <Typography
+            {...props}
             variant="body2"
             sx={{
                 color: "text.secondary",
-                mt: 1,
             }}
         >
             {"Copyright © "}
