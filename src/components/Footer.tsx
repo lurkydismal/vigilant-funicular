@@ -22,51 +22,58 @@ export default function Footer() {
                 sx={{
                     display: "flex",
                     justifyContent: "space-between",
+                    alignItems: "center",
                     width: "100%",
                 }}
             >
-                <>
-                    <Link
-                        color="text.secondary"
-                        variant="body2"
-                        href="/privacy"
-                    >
-                        Privacy Policy
-                    </Link>
+                {/* LEFT SIDE */}
+                <Stack spacing={0.5}>
+                    {/* Row 1 */}
+                    <Stack direction="row" spacing={1} alignItems="center">
+                        <Link
+                            color="text.secondary"
+                            variant="body2"
+                            href="/privacy"
+                        >
+                            Privacy Policy
+                        </Link>
 
-                    <Typography
-                        sx={{ display: "inline", mx: 0.5, opacity: 0.5 }}
-                    >
-                        &nbsp;•&nbsp;
-                    </Typography>
+                        <Typography sx={{ opacity: 0.5 }}>
+                            •
+                        </Typography>
 
-                    <Link
-                        color="text.secondary"
-                        variant="body2"
-                        href="/terms"
-                    >
-                        Terms of Service
-                    </Link>
+                        <Link
+                            color="text.secondary"
+                            variant="body2"
+                            href="/terms"
+                        >
+                            Terms of Service
+                        </Link>
+                    </Stack>
 
+                    {/* Row 2 */}
                     <Copyright />
-                </>
-
-                <Stack
-                    direction="row"
-                    spacing={1}
-                    sx={{ justifyContent: "left", color: "text.secondary" }}
-                    useFlexGap
-                >
-                    <IconButton
-                        aria-label="GitHub"
-                        color="inherit"
-                        href={githubUrl}
-                        size="small"
-                        sx={{ alignSelf: "center" }}
-                    >
-                        <GitHubIcon />
-                    </IconButton>
                 </Stack>
+
+                {/* RIGHT SIDE */}
+                <IconButton
+                    aria-label="GitHub"
+                    href={githubUrl}
+                    size="small"
+                    sx={{
+                        border: "1px solid white",
+                        borderRadius: 1,
+                        color: "white",
+
+                        transition: "border-color 200ms ease, background-color 200ms ease",
+
+                        "&:hover": {
+                            borderColor: "gray",
+                        },
+                    }}
+                >
+                    <GitHubIcon fontSize="small" />
+                </IconButton>
             </Box>
         </Container>
     );
