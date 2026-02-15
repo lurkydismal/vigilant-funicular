@@ -83,7 +83,7 @@ export default function MobileLayout({
                                     items[selectedItemIndex].imageDark,
                                 "--items-imageLight":
                                     items[selectedItemIndex].imageLight,
-                            } as any)
+                            } as CSSProperties)
                             : {}
                     }
                 />

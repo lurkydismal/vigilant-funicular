@@ -1,5 +1,7 @@
-import lightImg from "@/public/static/screenshots/dashboard.png";
-import darkImg from "@/public/static/screenshots/dashboard-dark.png";
+"use client";
+
+import lightImg from "@/../public/static/screenshots/dashboard.png";
+import darkImg from "@/../public/static/screenshots/dashboard-dark.png";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -138,7 +140,11 @@ export default function Hero() {
                         variant="caption"
                     >
                         By clicking &quot;Sign up&quot; you agree to our&nbsp;
-                        <Link color="primary" href="/terms" aria-label="Terms and Conditions">
+                        <Link
+                            color="primary"
+                            href="/terms"
+                            aria-label="Terms and Conditions"
+                        >
                             Terms &amp; Conditions
                         </Link>
                         .
@@ -147,7 +153,10 @@ export default function Hero() {
 
                 <ImageWrapper id="image" role="img" aria-hidden="true">
                     {/* Use <picture> so the browser only downloads the correct (light/dark) asset */}
-                    <Box component="picture" sx={{ position: "absolute", inset: 0 }}>
+                    <Box
+                        component="picture"
+                        sx={{ position: "absolute", inset: 0 }}
+                    >
                         <Box
                             component="source"
                             srcSet={darkImg.src}
@@ -158,7 +167,10 @@ export default function Hero() {
                             alt="App dashboard screenshot"
                             fill
                             sizes="(min-width:1024px) 700px, (min-width:600px) 420px, 100vw"
-                            style={{ objectFit: "cover", objectPosition: "center" }}
+                            style={{
+                                objectFit: "cover",
+                                objectPosition: "center",
+                            }}
                             priority // improves LCP for hero image
                         />
                     </Box>

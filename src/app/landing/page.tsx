@@ -11,9 +11,13 @@ export default function Page() {
 
             <>
                 <Features />
+
                 <Divider />
+
                 <FAQ />
+
                 <Divider />
+
                 <Footer />
             </>
         </>

@@ -36,7 +36,10 @@ export default function NavBar() {
         >
             <Container maxWidth="lg">
                 <StyledToolbar variant="dense" disableGutters>
-                    <DesktopNav items={items} containerSx={{ display: "flex", alignItems: "center" }} />
+                    <DesktopNav
+                        items={items}
+                        containerSx={{ display: "flex", alignItems: "center" }}
+                    />
 
                     <MobileNav items={items} />
                 </StyledToolbar>

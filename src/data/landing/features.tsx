@@ -2,7 +2,6 @@ import {
     AccountCircleRounded,
     DevicesRounded,
     LocalOfferRounded,
-    SvgIconComponent,
 } from "@mui/icons-material";
 import { ReactElement } from "react";
 

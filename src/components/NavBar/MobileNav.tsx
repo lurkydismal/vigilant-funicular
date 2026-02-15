@@ -4,13 +4,26 @@ import { CloseRounded, Menu } from "@mui/icons-material";
 import { useCallback, useMemo, useState } from "react";
 import NextLink from "@/components/Link";
 import { NavItem } from "@/data/navbat";
-import { Drawer, Box, IconButton, MenuItem, Divider, Button } from "@mui/material";
+import {
+    Drawer,
+    Box,
+    IconButton,
+    MenuItem,
+    Divider,
+    Button,
+} from "@mui/material";
 
 export default function MobileNav({ items }: { items: NavItem[] }) {
     const [open, setOpen] = useState(false);
 
-    const left = useMemo(() => items.filter((i) => i.position === "left"), [items]);
-    const right = useMemo(() => items.filter((i) => i.position === "right"), [items]);
+    const left = useMemo(
+        () => items.filter((i) => i.position === "left"),
+        [items],
+    );
+    const right = useMemo(
+        () => items.filter((i) => i.position === "right"),
+        [items],
+    );
 
     const openDrawer = useCallback(() => setOpen(true), []);
     const closeDrawer = useCallback(() => setOpen(false), []);
@@ -51,7 +64,11 @@ export default function MobileNav({ items }: { items: NavItem[] }) {
             >
                 <Box sx={{ p: 1, backgroundColor: "background.default" }}>
                     <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                        <IconButton onClick={closeDrawer} aria-label="Close navigation" size="large">
+                        <IconButton
+                            onClick={closeDrawer}
+                            aria-label="Close navigation"
+                            size="large"
+                        >
                             <CloseRounded />
                         </IconButton>
                     </Box>
