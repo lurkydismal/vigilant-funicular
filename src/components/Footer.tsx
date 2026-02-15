@@ -10,67 +10,63 @@ import { Link } from "@/components/Link";
 
 export default function Footer() {
     return (
-        <>
-            <Divider />
-
-            <Container
+        <Container
+            sx={{
+                alignItems: "center",
+                display: "flex",
+                flexDirection: "column",
+                py: { xs: 1, sm: 2 },
+                textAlign: { sm: "center", md: "left" },
+            }}
+        >
+            <Box
                 sx={{
-                    alignItems: "center",
                     display: "flex",
-                    flexDirection: "column",
-                    py: { xs: 1, sm: 2 },
-                    textAlign: { sm: "center", md: "left" },
+                    justifyContent: "space-between",
+                    width: "100%",
                 }}
             >
-                <Box
-                    sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        width: "100%",
-                    }}
-                >
-                    <>
-                        <Link
-                            color="text.secondary"
-                            variant="body2"
-                            href="/privacy"
-                        >
-                            Privacy Policy
-                        </Link>
-                        <Typography
-                            sx={{ display: "inline", mx: 0.5, opacity: 0.5 }}
-                        >
-                            &nbsp;•&nbsp;
-                        </Typography>
-                        <Link
-                            color="text.secondary"
-                            variant="body2"
-                            href="/terms"
-                        >
-                            Terms of Service
-                        </Link>
-
-                        <Copyright />
-                    </>
-
-                    <Stack
-                        direction="row"
-                        spacing={1}
-                        sx={{ justifyContent: "left", color: "text.secondary" }}
-                        useFlexGap
+                <>
+                    <Link
+                        color="text.secondary"
+                        variant="body2"
+                        href="/privacy"
                     >
-                        <IconButton
-                            aria-label="GitHub"
-                            color="inherit"
-                            href={githubUrl}
-                            size="small"
-                            sx={{ alignSelf: "center" }}
-                        >
-                            <GitHubIcon />
-                        </IconButton>
-                    </Stack>
-                </Box>
-            </Container>
-        </>
+                        Privacy Policy
+                    </Link>
+                    <Typography
+                        sx={{ display: "inline", mx: 0.5, opacity: 0.5 }}
+                    >
+                        &nbsp;•&nbsp;
+                    </Typography>
+                    <Link
+                        color="text.secondary"
+                        variant="body2"
+                        href="/terms"
+                    >
+                        Terms of Service
+                    </Link>
+
+                    <Copyright />
+                </>
+
+                <Stack
+                    direction="row"
+                    spacing={1}
+                    sx={{ justifyContent: "left", color: "text.secondary" }}
+                    useFlexGap
+                >
+                    <IconButton
+                        aria-label="GitHub"
+                        color="inherit"
+                        href={githubUrl}
+                        size="small"
+                        sx={{ alignSelf: "center" }}
+                    >
+                        <GitHubIcon />
+                    </IconButton>
+                </Stack>
+            </Box>
+        </Container>
     );
 }
