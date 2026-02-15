@@ -11,7 +11,9 @@ import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import { alpha, styled } from "@mui/material/styles";
 import { useState } from "react";
-import NextLink from "./Link";
+import NextLink from "../Link";
+import DesktopNav from "./DesktopNav";
+import { items } from "@/data/navbat";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
     alignItems: "center",
@@ -28,37 +30,6 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
     justifyContent: "space-between",
     padding: "8px 12px",
 }));
-
-type Position = "left" | "right";
-
-interface ArrayT {
-    name: string;
-    href: string;
-    position: Position;
-}
-
-const array: ArrayT[] = [
-    {
-        name: "Follows",
-        href: "/follows",
-        position: "left",
-    },
-    {
-        name: "New post",
-        href: "/new-post",
-        position: "right",
-    },
-    {
-        name: "Posts",
-        href: "/posts",
-        position: "right",
-    },
-    {
-        name: "My profile",
-        href: "/profile",
-        position: "right",
-    },
-];
 
 export default function NavBar() {
     const [open, setOpen] = useState(false);
@@ -80,57 +51,7 @@ export default function NavBar() {
         >
             <Container maxWidth="lg">
                 <StyledToolbar variant="dense" disableGutters>
-                    <Box
-                        sx={{
-                            flexGrow: 1,
-                            display: "flex",
-                            alignItems: "center",
-                            px: 0,
-                        }}
-                    >
-                        {array.map((value, index) => {
-                            return value.position === "left" ? (
-                                <Box
-                                    key={`${value.href}-${index}`}
-                                    sx={{ display: { xs: "none", md: "flex" } }}
-                                >
-                                    <Button
-                                        variant="text"
-                                        color="info"
-                                        size="small"
-                                        href={value.href}
-                                        component={NextLink}
-                                    >
-                                        {value.name}
-                                    </Button>
-                                </Box>
-                            ) : null;
-                        })}
-                    </Box>
-
-                    <Box
-                        sx={{
-                            paddingRight: 2,
-                            alignItems: "center",
-                            display: { xs: "none", md: "flex" },
-                            gap: 1,
-                        }}
-                    >
-                        {array.map((value, index) => {
-                            return value.position === "right" ? (
-                                <Button
-                                    key={`${value.href}-${index}`}
-                                    color="primary"
-                                    variant="contained"
-                                    size="small"
-                                    href={value.href}
-                                    component={NextLink}
-                                >
-                                    {value.name}
-                                </Button>
-                            ) : null;
-                        })}
-                    </Box>
+                    <DesktopNav items={items} containerSx={{ display: "flex", alignItems: "center" }} />
 
                     <Box sx={{ display: { xs: "flex", md: "none" }, gap: 1 }}>
                         <IconButton
@@ -169,7 +90,7 @@ export default function NavBar() {
                                     </IconButton>
                                 </Box>
 
-                                {array.map((value, index) => {
+                                {items.map((value, index) => {
                                     return value.position === "left" ? (
                                         <MenuItem
                                             key={`${value.href}-${index}`}
@@ -184,7 +105,7 @@ export default function NavBar() {
                                 <Divider sx={{ my: 3 }} />
 
                                 <MenuItem sx={{ gap: 1 }}>
-                                    {array.map((value, index) => {
+                                    {items.map((value, index) => {
                                         return value.position === "right" ? (
                                             <Button
                                                 key={`${value.href}-${index}`}
