@@ -1,19 +1,31 @@
-"use client";
-
-import React from "react";
+import React, { ComponentProps } from "react";
 import { buildYear, githubUrl } from "@/utils/stdvar";
-import { styled, TypographyProps, Theme, Typography, SxProps } from "@mui/material";
+import { TypographyProps, Theme, Typography, SxProps, LinkProps as MuiLinkProps } from "@mui/material";
 import { Link } from "./Link";
 
-const GitHubLink = styled(Link)(({ theme }) => ({
-    color: theme.palette.text.secondary,
-    transition: "color 120ms ease, text-decoration-color 120ms ease",
-    textDecoration: "none",
-    "&:hover": {
-        color: theme.palette.primary.main,
-        textDecoration: "underline",
-    },
-}));
+type GitHubLinkComposedProps = ComponentProps<typeof Link>;
+
+type GitHubLinkProps = MuiLinkProps & {
+    href: GitHubLinkComposedProps["href"];
+};
+function GitHubLink({ href, ...props }: Readonly<GitHubLinkProps>) {
+    return (
+        <Link
+            {...props}
+            href={href}
+            color="inherit" // inherit from parent typography (guarantees visibility if parent is readable)
+            display="inline-block"
+            sx={{
+                textDecoration: "none",
+                transition: "color 120ms ease, text-decoration-color 120ms ease",
+                "&:hover": {
+                    textDecoration: "underline",
+                }
+            }}
+        >
+        </Link>
+    );
+}
 
 type Props = TypographyProps & {
     href?: string;
@@ -34,10 +46,9 @@ function CopyrightBase({
     const target = openInNewTab ? "_blank" : undefined;
     const rel = openInNewTab ? "noopener noreferrer" : undefined;
 
-    // ensure the component's color is applied but allow callers to override/extend via sx
     const mergedSx: SxProps<Theme> =
         typeof sx === "function"
-            ? (theme) => ({ color: theme.palette.text.secondary, ...sx(theme) })
+            ? (theme) => ({ color: theme.palette.text.secondary, ...sx(theme) }) // use text.secondary for contrast
             : { color: "text.secondary", ...(sx ?? {}) };
 
     return (
