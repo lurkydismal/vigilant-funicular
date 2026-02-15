@@ -87,6 +87,7 @@ export default function Hero() {
                             funicular
                         </Typography>
                     </Typography>
+
                     <Typography
                         sx={{
                             color: "text.secondary",
@@ -98,6 +99,7 @@ export default function Hero() {
                         in-depth articles, insights, and project stories. Dive
                         into topics that shape modern tech and innovation.
                     </Typography>
+
                     <Button
                         color="primary"
                         size="small"
@@ -108,6 +110,7 @@ export default function Hero() {
                     >
                         Sign up
                     </Button>
+
                     <Typography
                         color="text.secondary"
                         sx={{ textAlign: "center" }}
@@ -120,6 +123,7 @@ export default function Hero() {
                         .
                     </Typography>
                 </Stack>
+
                 <StyledBox id="image" />
             </Container>
         </Box>
