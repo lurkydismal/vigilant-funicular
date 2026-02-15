@@ -20,7 +20,10 @@ export default function SignUpPage() {
         };
     }, []);
 
-    const handleSignUp = async (data: { username: string; password: string }) => {
+    const handleSignUp = async (data: {
+        username: string;
+        password: string;
+    }) => {
         log.trace(`onSubmit called: '${JSON.stringify(data)}'`);
 
         try {
@@ -40,7 +43,11 @@ export default function SignUpPage() {
         <>
             <Typography sx={{ textAlign: "center" }}>
                 Already have an account?{" "}
-                <Link href="/auth/login" sx={{ alignSelf: "center" }} variant="body2">
+                <Link
+                    href="/auth/login"
+                    sx={{ alignSelf: "center" }}
+                    variant="body2"
+                >
                     Sign in
                 </Link>
             </Typography>

@@ -25,7 +25,9 @@ export interface AppThemeProps {
 // Main AppTheme component providing theme and localization
 export default function AppTheme(props: AppThemeProps) {
     const { children, themeComponents } = props;
-    const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)", { noSsr: true });
+    const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)", {
+        noSsr: true,
+    });
 
     // Get user's browser locale (e.g., "en-US") and extract language code ("en")
     const userLocale = navigator.language || "en-US";

@@ -39,9 +39,7 @@ export default function Footer() {
                             Privacy Policy
                         </Link>
 
-                        <Typography sx={{ opacity: 0.5 }}>
-                            •
-                        </Typography>
+                        <Typography sx={{ opacity: 0.5 }}>•</Typography>
 
                         <Link
                             color="text.secondary"
@@ -66,7 +64,8 @@ export default function Footer() {
                         borderRadius: 1,
                         color: "white",
 
-                        transition: "border-color 200ms ease, background-color 200ms ease",
+                        transition:
+                            "border-color 200ms ease, background-color 200ms ease",
 
                         "&:hover": {
                             borderColor: "gray",

@@ -61,11 +61,11 @@ export default function FeaturesSection({
                         style={
                             items[selectedItemIndex]
                                 ? ({
-                                    "--items-imageDark":
-                                        items[selectedItemIndex].imageDark,
-                                    "--items-imageLight":
-                                        items[selectedItemIndex].imageLight,
-                                } as CSSProperties)
+                                      "--items-imageDark":
+                                          items[selectedItemIndex].imageDark,
+                                      "--items-imageLight":
+                                          items[selectedItemIndex].imageLight,
+                                  } as CSSProperties)
                                 : {}
                         }
                     />

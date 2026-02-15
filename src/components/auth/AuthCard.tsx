@@ -50,7 +50,11 @@ type Props = {
     variant?: "outlined" | "elevation";
 };
 
-export default function AuthCard({ children, footer, variant = "outlined" }: Props) {
+export default function AuthCard({
+    children,
+    footer,
+    variant = "outlined",
+}: Props) {
     return (
         <AuthContainer direction="column" justifyContent="space-between">
             <Card variant={variant}>

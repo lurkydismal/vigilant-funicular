@@ -1,5 +1,13 @@
 import { AccountCircle } from "@mui/icons-material";
-import { Box, FormControl, FormLabel, TextField, FormControlLabel, Checkbox, Button } from "@mui/material";
+import {
+    Box,
+    FormControl,
+    FormLabel,
+    TextField,
+    FormControlLabel,
+    Checkbox,
+    Button,
+} from "@mui/material";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
@@ -16,13 +24,13 @@ type SignUpValues = {
 
 type Props =
     | {
-        mode: "signin";
-        onSubmit: (data: SignInValues) => Promise<void> | void;
-    }
+          mode: "signin";
+          onSubmit: (data: SignInValues) => Promise<void> | void;
+      }
     | {
-        mode: "signup";
-        onSubmit: (data: SignUpValues) => Promise<void> | void;
-    };
+          mode: "signup";
+          onSubmit: (data: SignUpValues) => Promise<void> | void;
+      };
 
 export default function AuthForm(props: Props) {
     const isSignIn = props.mode === "signin";
@@ -65,7 +73,9 @@ export default function AuthForm(props: Props) {
                             {...field}
                             autoComplete="username"
                             autoFocus
-                            color={Boolean(fieldState.error) ? "error" : "primary"}
+                            color={
+                                Boolean(fieldState.error) ? "error" : "primary"
+                            }
                             error={Boolean(fieldState.error)}
                             fullWidth
                             helperText={fieldState.error?.message}
@@ -85,7 +95,10 @@ export default function AuthForm(props: Props) {
                 control={control}
                 rules={{
                     required: "Password is required",
-                    minLength: props.mode === "signup" ? { value: 8, message: "Min 8 characters" } : undefined,
+                    minLength:
+                        props.mode === "signup"
+                            ? { value: 8, message: "Min 8 characters" }
+                            : undefined,
                 }}
                 render={({ field, fieldState }) => (
                     <FormControl>
@@ -93,7 +106,9 @@ export default function AuthForm(props: Props) {
                         <TextField
                             {...field}
                             autoComplete="new-password"
-                            color={Boolean(fieldState.error) ? "error" : "primary"}
+                            color={
+                                Boolean(fieldState.error) ? "error" : "primary"
+                            }
                             error={Boolean(fieldState.error)}
                             fullWidth
                             helperText={fieldState.error?.message}
@@ -117,7 +132,9 @@ export default function AuthForm(props: Props) {
                             control={
                                 <Checkbox
                                     checked={Boolean(field.value)}
-                                    onChange={(e) => field.onChange(e.target.checked)}
+                                    onChange={(e) =>
+                                        field.onChange(e.target.checked)
+                                    }
                                     color="primary"
                                 />
                             }

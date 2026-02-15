@@ -20,7 +20,11 @@ export default function SignInPage() {
         };
     }, []);
 
-    const handleSignIn = async (data: { username: string; password: string; rememberMe?: boolean }) => {
+    const handleSignIn = async (data: {
+        username: string;
+        password: string;
+        rememberMe?: boolean;
+    }) => {
         log.trace(`onSubmit called: '${JSON.stringify(data)}'`);
 
         try {
@@ -40,7 +44,11 @@ export default function SignInPage() {
         <>
             <Typography sx={{ textAlign: "center" }}>
                 Don&apos;t have an account?{" "}
-                <Link href="/auth/register" sx={{ alignSelf: "center" }} variant="body2">
+                <Link
+                    href="/auth/register"
+                    sx={{ alignSelf: "center" }}
+                    variant="body2"
+                >
                     Sign up
                 </Link>
             </Typography>
