@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useEffect } from "react";
 import AuthCard from "@/components/auth/AuthCard";
 import AuthForm from "@/components/auth/AuthForm";
 import { Link } from "@/components/Link";
@@ -9,6 +8,7 @@ import log from "@/utils/stdlog";
 import { isDev } from "@/utils/stdvar";
 import { useRouter } from "next/navigation";
 import { Typography } from "@mui/material";
+import { useEffect } from "react";
 
 export default function SignInPage() {
     const router = useRouter();
@@ -34,7 +34,8 @@ export default function SignInPage() {
             }
 
             log.trace("onSubmit finished");
-            await router.push("/posts");
+
+            router.push("/posts");
         } catch (err) {
             log.error(`onSubmit error: '${String(err)}'`);
         }
