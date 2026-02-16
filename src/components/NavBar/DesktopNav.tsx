@@ -1,6 +1,50 @@
 import { NavItem } from "@/data/navbat";
 import NextLink from "@/components/Link";
 import { Box, Button, Divider, SxProps } from "@mui/material";
+import { usePathname } from "next/navigation";
+
+const navButtonSx = {
+    px: 2,
+    borderRadius: 2,
+    textTransform: "none",
+    fontWeight: 500,
+    transition: "all 0.2s ease",
+    "&:hover": {
+        backgroundColor: "action.hover",
+        transform: "translateY(-1px)",
+    },
+};
+
+const activeButtonSx = {
+    backgroundColor: "primary.main",
+    color: "primary.contrastText",
+    "&:hover": {
+        backgroundColor: "primary.dark",
+        transform: "translateY(-1px)",
+    },
+};
+
+function NavButton({
+    item,
+    isActive,
+}: {
+    item: NavItem;
+    isActive: boolean;
+}) {
+    return (
+        <Button
+            component={NextLink}
+            href={item.href}
+            size="small"
+            sx={{
+                ...navButtonSx,
+                ...(isActive && activeButtonSx),
+            }}
+        >
+            {item.name}
+        </Button>
+    );
+}
 
 export default function DesktopNav({
     items,
@@ -9,20 +53,18 @@ export default function DesktopNav({
     items: NavItem[];
     containerSx?: SxProps;
 }) {
-    const left = items.filter((i) => i.position === "left");
-    const right = items.filter((i) => i.position === "right");
+    const pathname = usePathname();
 
-    const navButtonSx: SxProps = {
-        px: 2,
-        borderRadius: 2,
-        textTransform: "none",
-        fontWeight: 500,
-        transition: "all 0.2s ease",
-        "&:hover": {
-            backgroundColor: "action.hover",
-            transform: "translateY(-1px)",
+    const { left, right } = items.reduce(
+        (acc, item) => {
+            acc[item.position].push(item);
+            return acc;
         },
-    };
+        { left: [] as NavItem[], right: [] as NavItem[] }
+    );
+
+    const isActive = (href?: string) =>
+        !!(href && (pathname === href || pathname.startsWith(href + "/")));
 
     return (
         <Box
@@ -43,21 +85,12 @@ export default function DesktopNav({
                     gap: 1,
                 }}
             >
-                {left.map((value, index) => (
-                    <Box
-                        key={value.href ?? `left-${index}`}
-                        sx={{ display: { xs: "none", md: "flex" } }}
-                    >
-                        <Button
-                            variant="text"
-                            color="info"
-                            size="small"
-                            href={value.href}
-                            component={NextLink}
-                        >
-                            {value.name}
-                        </Button>
-                    </Box>
+                {left.map((value,) => (
+                    <NavButton
+                        key={value.href}
+                        item={value}
+                        isActive={isActive(value.href)}
+                    />
                 ))}
             </Box>
 
@@ -75,16 +108,12 @@ export default function DesktopNav({
                     gap: 1,
                 }}
             >
-                {right.map((value, index) => (
-                    <Button
-                        key={value.href ?? `right-${index}`}
-                        color="primary"
-                        size="small"
-                        href={value.href}
-                        component={NextLink}
-                    >
-                        {value.name}
-                    </Button>
+                {right.map((value,) => (
+                    <NavButton
+                        key={value.href}
+                        item={value}
+                        isActive={isActive(value.href)}
+                    />
                 ))}
             </Box>
         </Box>

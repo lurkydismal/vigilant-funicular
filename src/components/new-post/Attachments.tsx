@@ -1,3 +1,5 @@
+"use client";
+
 import CreditCardRoundedIcon from "@mui/icons-material/CreditCardRounded";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";

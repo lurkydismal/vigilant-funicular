@@ -64,9 +64,11 @@ function AuthorInfo({
         >
             <Avatar
                 alt={author.name}
-                src={author.avatar}
+                // src={author.avatar}
                 sx={{ width: avatarWidth, height: avatarHeight }}
-            />
+            >
+                {author.avatar ? author.avatar[0].toUpperCase() : ""}
+            </Avatar>
             <Typography variant={variant}>{author.name}</Typography>
         </Box>
     );
@@ -102,9 +104,11 @@ function AuthorsInfo({
                     <Avatar
                         key={author.id}
                         alt={author.name}
-                        src={author.avatar}
+                        // src={author.avatar}
                         sx={{ width: avatarWidth, height: avatarHeight }}
-                    />
+                    >
+                        {author.avatar ? author.avatar[0].toUpperCase() : ""}
+                    </Avatar>
                 ))}
             </AvatarGroup>
             <Typography variant={variant}>
@@ -280,12 +284,14 @@ export function AuthorsWithDateAndLink({
                             <Avatar
                                 key={author.id}
                                 alt={author.name}
-                                src={author.avatar}
+                                // src={author.avatar}
                                 sx={{
                                     width: avatarWidth,
                                     height: avatarHeight,
                                 }}
-                            />
+                            >
+                                {author.avatar ? author.avatar[0].toUpperCase() : ""}
+                            </Avatar>
                         ))}
                     </AvatarGroup>
                     {/* List names separated by commas, each name wrapped in a Link */}

@@ -1,3 +1,5 @@
+"use client";
+
 import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
 import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 import Box from "@mui/material/Box";

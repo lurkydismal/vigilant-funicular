@@ -20,12 +20,15 @@ export default function MainContent({ id }: { id: number }) {
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <AuthorsWithDateAndLink {...properties} />
+
             <Typography variant="subtitle1" component="div">
                 {post.tag}
             </Typography>
+
             <Typography gutterBottom tabIndex={0} variant="h3">
                 {post.title}
             </Typography>
+
             <CardMedia
                 alt="green iguana"
                 component="img"
@@ -39,6 +42,7 @@ export default function MainContent({ id }: { id: number }) {
                     borderColor: "divider",
                 }}
             />
+
             <Markdown>{post.content}</Markdown>
         </Box>
     );

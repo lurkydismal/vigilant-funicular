@@ -3,7 +3,7 @@
  * - `true` forces verbose logging regardless of environment.
  * - `false` disables trace-level logging unless explicitly set elsewhere.
  */
-export const needTrace = true;
+export const needTrace = false;
 
 /**
  * Flag indicating if the current environment is development.

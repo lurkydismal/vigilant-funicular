@@ -1,3 +1,5 @@
+"use client";
+
 import Box from "@mui/material/Box";
 import { Author, AuthorWithFollow } from "@/components/Author";
 import PostsPagination from "@/components/Pagination";
