@@ -290,7 +290,9 @@ export function AuthorsWithDateAndLink({
                                     height: avatarHeight,
                                 }}
                             >
-                                {author.avatar ? author.avatar[0].toUpperCase() : ""}
+                                {author.avatar
+                                    ? author.avatar[0].toUpperCase()
+                                    : ""}
                             </Avatar>
                         ))}
                     </AvatarGroup>

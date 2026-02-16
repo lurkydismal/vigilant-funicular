@@ -24,13 +24,7 @@ const activeButtonSx = {
     },
 };
 
-function NavButton({
-    item,
-    isActive,
-}: {
-    item: NavItem;
-    isActive: boolean;
-}) {
+function NavButton({ item, isActive }: { item: NavItem; isActive: boolean }) {
     return (
         <Button
             component={NextLink}
@@ -60,7 +54,7 @@ export default function DesktopNav({
             acc[item.position].push(item);
             return acc;
         },
-        { left: [] as NavItem[], right: [] as NavItem[] }
+        { left: [] as NavItem[], right: [] as NavItem[] },
     );
 
     const isActive = (href?: string) =>
@@ -85,7 +79,7 @@ export default function DesktopNav({
                     gap: 1,
                 }}
             >
-                {left.map((value,) => (
+                {left.map((value) => (
                     <NavButton
                         key={value.href}
                         item={value}
@@ -108,7 +102,7 @@ export default function DesktopNav({
                     gap: 1,
                 }}
             >
-                {right.map((value,) => (
+                {right.map((value) => (
                     <NavButton
                         key={value.href}
                         item={value}
