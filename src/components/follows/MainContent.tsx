@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import PostsPagination from "@/components/Pagination";
 import { SearchButton } from "@/components/SearchButton";
 import { TagsAndSearchMobile } from "@/components/Tags";
-import { follows, tags } from "@/components/TestData";
+import { follows, tags } from "@/data/follows";
 import { paginate } from "@/utils/stdfunc";
 import { Follows } from "./Follows";
 import { useState, ChangeEvent } from "react";

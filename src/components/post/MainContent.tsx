@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import { AuthorsWithDateAndLink } from "@/components/Author";
 import Markdown from "@/components/Markdown";
 import { Post } from "@/components/Posts";
-import { postsData } from "@/components/TestData";
+import { postsData } from "@/data/post";
 import { ComponentProps } from "react";
 
 export default function MainContent({ id }: { id: number }) {

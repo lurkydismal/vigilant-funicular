@@ -1,6 +1,6 @@
 import { NavItem } from "@/data/navbat";
 import NextLink from "@/components/Link";
-import { Box, Button, SxProps } from "@mui/material";
+import { Box, Button, Divider, SxProps } from "@mui/material";
 
 export default function DesktopNav({
     items,
@@ -12,19 +12,35 @@ export default function DesktopNav({
     const left = items.filter((i) => i.position === "left");
     const right = items.filter((i) => i.position === "right");
 
+    const navButtonSx: SxProps = {
+        px: 2,
+        borderRadius: 2,
+        textTransform: "none",
+        fontWeight: 500,
+        transition: "all 0.2s ease",
+        "&:hover": {
+            backgroundColor: "action.hover",
+            transform: "translateY(-1px)",
+        },
+    };
+
     return (
         <Box
             component="nav"
             role="navigation"
             aria-label="Primary"
-            sx={containerSx}
+            sx={{
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
+                ...containerSx,
+            }}
         >
             <Box
                 sx={{
-                    flexGrow: 1,
-                    display: "flex",
+                    display: { xs: "none", md: "flex" },
                     alignItems: "center",
-                    px: 0,
+                    gap: 1,
                 }}
             >
                 {left.map((value, index) => (
@@ -45,11 +61,17 @@ export default function DesktopNav({
                 ))}
             </Box>
 
+            <Divider
+                orientation="vertical"
+                flexItem
+                sx={{ mx: 2, display: { xs: "none", md: "block" } }}
+            />
+
             <Box
                 sx={{
-                    paddingRight: 2,
-                    alignItems: "center",
+                    ml: "auto",
                     display: { xs: "none", md: "flex" },
+                    alignItems: "center",
                     gap: 1,
                 }}
             >
@@ -57,7 +79,6 @@ export default function DesktopNav({
                     <Button
                         key={value.href ?? `right-${index}`}
                         color="primary"
-                        variant="contained"
                         size="small"
                         href={value.href}
                         component={NextLink}

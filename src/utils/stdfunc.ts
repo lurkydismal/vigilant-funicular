@@ -1,3 +1,5 @@
+import log from "./stdlog";
+
 /**
  * Get an environment variable, or throw/log error if not set.
  * @param key - The environment variable name
@@ -155,4 +157,20 @@ export function delay(milliseconds: number): Promise<void> {
     const safeMs = Math.floor(ms);
 
     return new Promise((resolve) => setTimeout(resolve, safeMs));
+}
+
+/**
+ * [TODO:Document]
+ */
+export function paginate<T>(
+    items: T[],
+    currentPage: number,
+    perPage: number,
+): T[] {
+    log.trace(`Paginate page=${currentPage} size=${perPage}`);
+
+    const start = (currentPage - 1) * perPage;
+    const end = start + perPage;
+
+    return items.slice(start, end);
 }

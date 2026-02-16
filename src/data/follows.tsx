@@ -1,3 +1,11 @@
+import { buildDate } from "@/utils/stdvar";
+
+const createDate = buildDate.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+});
+
 export const user = {
     id: 1,
     username: "TestUser",
@@ -155,11 +163,7 @@ console.log("Hello!");
                 avatar: "/static/images/avatar/2.jpg",
             },
         ],
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -175,11 +179,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Product",
         title: "Innovative product features that drive success",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -195,11 +195,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Design",
         title: "Designing for the future: trends and insights",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -215,11 +211,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Company",
         title: "Our company's journey: milestones and achievements",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         description:
@@ -240,11 +232,7 @@ console.log("Hello!");
                 avatar: "/static/images/avatar/5.jpg",
             },
         ],
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -260,11 +248,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Product",
         title: "Maximizing efficiency with our latest product updates",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -280,11 +264,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Product",
         title: "Innovative product features that drive success",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -300,11 +280,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Design",
         title: "Designing for the future: trends and insights",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -320,11 +296,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Company",
         title: "Our company's journey: milestones and achievements",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         description:
@@ -345,11 +317,7 @@ console.log("Hello!");
                 avatar: "/static/images/avatar/5.jpg",
             },
         ],
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -365,11 +333,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Product",
         title: "Maximizing efficiency with our latest product updates",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         description:
@@ -390,11 +354,7 @@ console.log("Hello!");
                 avatar: "/static/images/avatar/2.jpg",
             },
         ],
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -410,11 +370,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Product",
         title: "Innovative product features that drive success",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -430,11 +386,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Design",
         title: "Designing for the future: trends and insights",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -450,11 +402,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Company",
         title: "Our company's journey: milestones and achievements",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         description:
@@ -475,11 +423,7 @@ console.log("Hello!");
                 avatar: "/static/images/avatar/5.jpg",
             },
         ],
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -495,11 +439,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Product",
         title: "Maximizing efficiency with our latest product updates",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         description:
@@ -520,11 +460,7 @@ console.log("Hello!");
                 avatar: "/static/images/avatar/2.jpg",
             },
         ],
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -540,11 +476,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Product",
         title: "Innovative product features that drive success",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -560,11 +492,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Design",
         title: "Designing for the future: trends and insights",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -580,11 +508,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Company",
         title: "Our company's journey: milestones and achievements",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         description:
@@ -605,11 +529,7 @@ console.log("Hello!");
                 avatar: "/static/images/avatar/5.jpg",
             },
         ],
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -625,11 +545,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Product",
         title: "Maximizing efficiency with our latest product updates",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         description:
@@ -650,11 +566,7 @@ console.log("Hello!");
                 avatar: "/static/images/avatar/2.jpg",
             },
         ],
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -670,11 +582,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Product",
         title: "Innovative product features that drive success",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -690,11 +598,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Design",
         title: "Designing for the future: trends and insights",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -710,11 +614,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Company",
         title: "Our company's journey: milestones and achievements",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         description:
@@ -735,11 +635,7 @@ console.log("Hello!");
                 avatar: "/static/images/avatar/5.jpg",
             },
         ],
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -755,11 +651,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Product",
         title: "Maximizing efficiency with our latest product updates",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         description:
@@ -780,11 +672,7 @@ console.log("Hello!");
                 avatar: "/static/images/avatar/2.jpg",
             },
         ],
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -800,11 +688,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Product",
         title: "Innovative product features that drive success",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -820,11 +704,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Design",
         title: "Designing for the future: trends and insights",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -840,11 +720,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Company",
         title: "Our company's journey: milestones and achievements",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         description:
@@ -865,11 +741,7 @@ console.log("Hello!");
                 avatar: "/static/images/avatar/5.jpg",
             },
         ],
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -885,11 +757,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Product",
         title: "Maximizing efficiency with our latest product updates",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         description:
@@ -910,11 +778,7 @@ console.log("Hello!");
                 avatar: "/static/images/avatar/2.jpg",
             },
         ],
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -930,11 +794,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Product",
         title: "Innovative product features that drive success",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -950,11 +810,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Design",
         title: "Designing for the future: trends and insights",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -970,11 +826,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Company",
         title: "Our company's journey: milestones and achievements",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         description:
@@ -995,11 +847,7 @@ console.log("Hello!");
                 avatar: "/static/images/avatar/5.jpg",
             },
         ],
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -1015,11 +863,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Product",
         title: "Maximizing efficiency with our latest product updates",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         description:
@@ -1040,11 +884,7 @@ console.log("Hello!");
                 avatar: "/static/images/avatar/2.jpg",
             },
         ],
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -1060,11 +900,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Product",
         title: "Innovative product features that drive success",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -1080,11 +916,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Design",
         title: "Designing for the future: trends and insights",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -1100,11 +932,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Company",
         title: "Our company's journey: milestones and achievements",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         description:
@@ -1125,11 +953,7 @@ console.log("Hello!");
                 avatar: "/static/images/avatar/5.jpg",
             },
         ],
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
     {
         authors: [
@@ -1145,11 +969,7 @@ console.log("Hello!");
             "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
         tag: "Product",
         title: "Maximizing efficiency with our latest product updates",
-        createdAt: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        }),
+        createdAt: createDate,
     },
 ];
 

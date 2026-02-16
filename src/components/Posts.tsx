@@ -1,3 +1,5 @@
+"use client";
+
 import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";

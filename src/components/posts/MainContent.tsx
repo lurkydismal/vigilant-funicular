@@ -1,10 +1,10 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Posts } from "../../shared/Posts";
-import { SearchButton } from "../../shared/SearchButton";
-import { TagsAndSearchMobile } from "../../shared/Tags";
-import { postsData, tags } from "../../shared/TestData";
-import { paginate } from "../../stdfunc";
+import { Posts } from "@/components/Posts";
+import { SearchButton } from "@/components/SearchButton";
+import { TagsAndSearchMobile } from "@/components/Tags";
+import { postsData, tags } from "@/data/posts";
+import { paginate } from "@/utils/stdfunc";
 
 export default function MainContent() {
     const perPage = 6;

@@ -25,6 +25,6 @@ export const items: NavItem[] = [
     {
         name: "My profile",
         href: "/profile",
-        position: "right",
+        position: "left",
     },
 ];

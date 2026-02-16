@@ -4,8 +4,8 @@ import PostsPagination from "@/components/Pagination";
 import { Posts } from "@/components/Posts";
 import { SearchButton } from "@/components/SearchButton";
 import { TagsAndSearchMobile } from "@/components/Tags";
-import { postsData, tags, user } from "@/components/TestData";
-import { getCredentials, paginate } from "@/utils/stdfunc";
+import { postsData, tags, user } from "@/data/profile";
+import { paginate } from "@/utils/stdfunc";
 import { useState, ChangeEvent, ComponentProps } from "react";
 
 // TODO: Fix avatar src

@@ -53,7 +53,15 @@ export const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL ?? "/api";
  */
 export const githubUrl = process.env.GITHUB_LINK ?? "#";
 
-export const buildYear = new Date().getFullYear();
+/**
+ * [TODO:Document]
+ */
+export const buildDate = new Date();
+
+/**
+ * [TODO:Document]
+ */
+export const buildYear = buildDate.getFullYear();
 
 /**
  * Name of the application.

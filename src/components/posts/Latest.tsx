@@ -1,7 +1,9 @@
+"use client";
+
 import Typography from "@mui/material/Typography";
 import PostsPagination from "@/components/Pagination";
 import { PostsWithoutImage } from "@/components/Posts";
-import { postsData } from "@/components/TestData";
+import { postsData } from "@/data/posts";
 import { paginate } from "@/utils/stdfunc";
 import { useState, ChangeEvent } from "react";
 

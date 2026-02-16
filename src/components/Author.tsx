@@ -8,6 +8,7 @@ import FollowButton from "@/components/FollowButton";
 import log from "@/utils/stdlog";
 import { ReactNode } from "react";
 import { Fragment } from "react/jsx-runtime";
+import { buildDate } from "@/utils/stdvar";
 
 export interface Author {
     id: number;
@@ -171,7 +172,7 @@ export function Authors({
 
 export function AuthorWithDate({
     author,
-    date = new Date(),
+    date = buildDate,
     variant,
     avatarWidth,
     avatarHeight,
@@ -209,7 +210,7 @@ export function AuthorWithDate({
 
 export function AuthorWithDateAndLink({
     author,
-    date = new Date(),
+    date = buildDate,
     variant,
     avatarWidth,
     avatarHeight,
@@ -249,7 +250,7 @@ export function AuthorWithDateAndLink({
 
 export function AuthorsWithDateAndLink({
     authors,
-    date = new Date(),
+    date = buildDate,
     variant,
     avatarWidth,
     avatarHeight,
@@ -318,7 +319,7 @@ export function AuthorsWithDateAndLink({
 
 export function AuthorsWithDate({
     authors,
-    date = new Date(),
+    date = buildDate,
     variant,
     avatarWidth,
     avatarHeight,
