@@ -9,11 +9,11 @@ import {
     Check as CheckIcon,
     ContentCopy as ContentCopyIcon,
 } from "@mui/icons-material";
+import { useColorScheme } from "@mui/material/styles";
 import Mermaid from "@/components/Mermaid";
 import { gray } from "@/theme/themePrimitives";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Box, IconButton, Tooltip, Typography } from "@mui/material";
-import { useHtmlDataDark } from "@/utils/stdhook";
 import { useSnackbar } from "@/components/SnackbarProvider";
 
 /**
@@ -39,6 +39,9 @@ export default function CodeBlock({
     node?: unknown;
 }) {
     const { showInfo } = useSnackbar();
+
+    // Access Material UI theme for dynamic styling
+    const { mode } = useColorScheme();
 
     // Detect language dynamically
     const match = /language-(\w+)/.exec(className || "");
@@ -88,13 +91,8 @@ export default function CodeBlock({
         }
     }, []);
 
-    const isDark = useHtmlDataDark();
-
     // Memoize the syntax highlighting theme based on the current MUI theme mode
-    const syntaxTheme = useMemo(
-        () => (isDark ? darkTheme : lightTheme),
-        [isDark],
-    );
+    const syntaxTheme = mode === "dark" ? darkTheme : lightTheme;
 
     // Inline code or unknown language fallback
     if (inline || !match) {
