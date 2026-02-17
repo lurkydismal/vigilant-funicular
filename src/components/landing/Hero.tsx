@@ -37,7 +37,6 @@ const ImageWrapper = styled(Box)(({ theme }) => ({
 export default function Hero() {
     return (
         <Box
-            id="hero"
             component="section"
             sx={(theme) => ({
                 backgroundImage:
@@ -151,7 +150,7 @@ export default function Hero() {
                     </Typography>
                 </Stack>
 
-                <ImageWrapper id="image" role="img" aria-hidden="true">
+                <ImageWrapper role="img" aria-hidden="true">
                     {/* Use <picture> so the browser only downloads the correct (light/dark) asset */}
                     <Box
                         component="picture"

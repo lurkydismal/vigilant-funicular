@@ -13,7 +13,6 @@ function Search() {
             variant="outlined"
         >
             <OutlinedInput
-                id="search"
                 placeholder="Search…"
                 size="small"
                 sx={{ flexGrow: 1 }}

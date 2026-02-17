@@ -3,11 +3,11 @@ import UnollowIcon from "@mui/icons-material/PersonRemove";
 import Button from "@mui/material/Button";
 
 export default function Follow({
-    id,
+    uid,
     doesFollow,
     size,
 }: {
-    id: number;
+    uid: string;
     doesFollow: boolean;
     size?: "small" | "medium" | "large";
 }) {
@@ -15,7 +15,7 @@ export default function Follow({
         <Button
             size={size ?? "small"}
             onClick={() => {
-                console.log("Follow: ", id);
+                console.log("Follow: ", uid);
             }}
             color={doesFollow ? "error" : "success"}
             variant="contained"

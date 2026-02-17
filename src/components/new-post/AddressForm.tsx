@@ -19,7 +19,6 @@ export default function AddressForm() {
                 </FormLabel>
                 <OutlinedInput
                     autoComplete="first name"
-                    id="first-name"
                     name="first-name"
                     placeholder="John"
                     required
@@ -33,7 +32,6 @@ export default function AddressForm() {
                 </FormLabel>
                 <OutlinedInput
                     autoComplete="last name"
-                    id="last-name"
                     name="last-name"
                     placeholder="Snow"
                     required
@@ -47,7 +45,6 @@ export default function AddressForm() {
                 </FormLabel>
                 <OutlinedInput
                     autoComplete="shipping address-line1"
-                    id="address1"
                     name="address1"
                     placeholder="Street name and number"
                     required
@@ -59,7 +56,6 @@ export default function AddressForm() {
                 <FormLabel htmlFor="address2">Address line 2</FormLabel>
                 <OutlinedInput
                     autoComplete="shipping address-line2"
-                    id="address2"
                     name="address2"
                     placeholder="Apartment, suite, unit, etc. (optional)"
                     required
@@ -73,7 +69,6 @@ export default function AddressForm() {
                 </FormLabel>
                 <OutlinedInput
                     autoComplete="City"
-                    id="city"
                     name="city"
                     placeholder="New York"
                     required
@@ -87,7 +82,6 @@ export default function AddressForm() {
                 </FormLabel>
                 <OutlinedInput
                     autoComplete="State"
-                    id="state"
                     name="state"
                     placeholder="NY"
                     required
@@ -101,7 +95,6 @@ export default function AddressForm() {
                 </FormLabel>
                 <OutlinedInput
                     autoComplete="shipping postal-code"
-                    id="zip"
                     name="zip"
                     placeholder="12345"
                     required
@@ -115,7 +108,6 @@ export default function AddressForm() {
                 </FormLabel>
                 <OutlinedInput
                     autoComplete="shipping country"
-                    id="country"
                     name="country"
                     placeholder="United States"
                     required

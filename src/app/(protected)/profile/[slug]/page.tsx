@@ -31,7 +31,7 @@ export default async function Page({
                     gap: 4,
                 }}
             >
-                <MainContent id={Number(slug)} />
+                <MainContent id={slug} />
             </Container>
 
             <Footer />

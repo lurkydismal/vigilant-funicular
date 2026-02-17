@@ -81,7 +81,7 @@ export function Follows({ follows }: { follows: Follow[] }) {
                     const user = follow.author;
 
                     return (
-                        <Grid key={user.id} size={{ xs: 12, sm: 6 }}>
+                        <Grid key={user.uid} size={{ xs: 12, sm: 6 }}>
                             <Box
                                 sx={{
                                     borderRadius: 1,

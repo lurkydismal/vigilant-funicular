@@ -7,7 +7,7 @@ import { Post } from "@/components/Posts";
 import { postsData } from "@/data/post";
 import { ComponentProps } from "react";
 
-export default function MainContent({ id }: { id: number }) {
+export default function MainContent({ id }: { id: string }) {
     const post: Post = postsData[id];
 
     const properties = {

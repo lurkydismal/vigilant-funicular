@@ -34,7 +34,6 @@ export default function Attachments() {
                         }}
                     >
                         <OutlinedInput
-                            id="card-number"
                             onChange={handleCardNumberChange}
                             placeholder="Image"
                             size="small"

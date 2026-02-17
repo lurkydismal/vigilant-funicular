@@ -24,13 +24,13 @@ type SignUpValues = {
 
 type Props =
     | {
-          mode: "signin";
-          onSubmit: (data: SignInValues) => Promise<void> | void;
-      }
+        mode: "signin";
+        onSubmit: (data: SignInValues) => Promise<void> | void;
+    }
     | {
-          mode: "signup";
-          onSubmit: (data: SignUpValues) => Promise<void> | void;
-      };
+        mode: "signup";
+        onSubmit: (data: SignUpValues) => Promise<void> | void;
+    };
 
 export default function AuthForm(props: Props) {
     const isSignIn = props.mode === "signin";
@@ -79,7 +79,6 @@ export default function AuthForm(props: Props) {
                             error={Boolean(fieldState.error)}
                             fullWidth
                             helperText={fieldState.error?.message}
-                            id="username"
                             name="username"
                             placeholder="tralalero"
                             required
@@ -112,7 +111,6 @@ export default function AuthForm(props: Props) {
                             error={Boolean(fieldState.error)}
                             fullWidth
                             helperText={fieldState.error?.message}
-                            id="password"
                             name="password"
                             placeholder="••••••"
                             required

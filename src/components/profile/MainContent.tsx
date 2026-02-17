@@ -11,7 +11,7 @@ import { paginate } from "@/utils/stdfunc";
 import { useState, ChangeEvent, ComponentProps } from "react";
 
 // TODO: Fix avatar src
-export default function MainContent({ id }: { id: number }) {
+export default function MainContent({ id }: { id: string }) {
     const [currentPage, setCurrentPage] = useState(1);
     const perPage = 6;
     const username: string = user.username;
@@ -33,7 +33,7 @@ export default function MainContent({ id }: { id: number }) {
     };
 
     const properties = {
-        author: { id, name: username, avatar: username },
+        author: { uid: id, name: username, avatar: username },
         variant: "h2",
         avatarWidth: 48,
         avatarHeight: 48,

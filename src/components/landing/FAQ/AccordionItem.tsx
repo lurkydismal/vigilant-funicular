@@ -30,7 +30,6 @@ export default function AccordionItem({
             <AccordionSummary
                 aria-controls={`${panel}d-content`}
                 expandIcon={<ExpandMoreIcon />}
-                id={`${panel}d-header`}
             >
                 <Typography component="span" variant="subtitle2">
                     {question}

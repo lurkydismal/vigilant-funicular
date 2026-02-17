@@ -11,7 +11,7 @@ import { Fragment } from "react/jsx-runtime";
 import { buildDate } from "@/utils/stdvar";
 
 export interface Author {
-    id: number;
+    uid: string;
     name: string;
     avatar?: string;
 }
@@ -102,7 +102,7 @@ function AuthorsInfo({
             <AvatarGroup max={3}>
                 {authors.map((author) => (
                     <Avatar
-                        key={author.id}
+                        key={author.uid}
                         alt={author.name}
                         // src={author.avatar}
                         sx={{ width: avatarWidth, height: avatarHeight }}
@@ -230,7 +230,7 @@ export function AuthorWithDateAndLink({
     return (
         <AuthorRow
             left={
-                <Link underline="none" href={`/profile/${author.id}`}>
+                <Link underline="none" href={`/profile/${author.uid}`}>
                     <AuthorInfo
                         author={author}
                         variant={variant}
@@ -282,7 +282,7 @@ export function AuthorsWithDateAndLink({
                     <AvatarGroup max={3}>
                         {authors.map((author) => (
                             <Avatar
-                                key={author.id}
+                                key={author.uid}
                                 alt={author.name}
                                 // src={author.avatar}
                                 sx={{
@@ -299,10 +299,10 @@ export function AuthorsWithDateAndLink({
                     {/* List names separated by commas, each name wrapped in a Link */}
                     <Typography variant={variant}>
                         {authors.map((author, index) => (
-                            <Fragment key={author.id}>
+                            <Fragment key={author.uid}>
                                 <Link
                                     underline="none"
-                                    href={`/profile/${author.id}`}
+                                    href={`/profile/${author.uid}`}
                                 >
                                     {author.name}
                                 </Link>
@@ -390,7 +390,7 @@ export function AuthorWithFollow({
             }
             right={
                 <FollowButton
-                    id={author.id}
+                    uid={author.uid}
                     doesFollow={doesFollow}
                     size="large"
                 />
@@ -417,7 +417,7 @@ export function AuthorWithFollowAndLink({
     return (
         <AuthorRow
             left={
-                <Link underline="none" href={`/profile/${author.id}`}>
+                <Link underline="none" href={`/profile/${author.uid}`}>
                     <AuthorInfo
                         author={author}
                         variant={variant}
@@ -428,7 +428,7 @@ export function AuthorWithFollowAndLink({
             }
             right={
                 <FollowButton
-                    id={author.id}
+                    uid={author.uid}
                     doesFollow={doesFollow}
                     size="large"
                 />

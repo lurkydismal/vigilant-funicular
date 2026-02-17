@@ -19,7 +19,7 @@ export default async function Page() {
                     gap: 4,
                 }}
             >
-                <MainContent id={Number(0)} />
+                <MainContent id={"0"} />
             </Container>
 
             <Footer />
