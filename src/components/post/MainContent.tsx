@@ -1,7 +1,7 @@
 import { AuthorsWithDateAndLink } from "@/components/Author";
 import Markdown from "@/components/Markdown";
-import { Post } from "@/components/Posts";
 import { postsData } from "@/data/post";
+import { Post } from "@/data/posts/types";
 import { Box, Typography, CardMedia } from "@mui/material";
 import { ComponentProps } from "react";
 

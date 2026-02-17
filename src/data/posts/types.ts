@@ -5,7 +5,7 @@ export interface Post {
     content: string;
     createdAt: string;
     description: string;
-    id: number;
+    id: string;
     tag: string;
     imageUrl?: string;
     title: string;

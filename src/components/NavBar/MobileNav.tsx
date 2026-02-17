@@ -1,7 +1,7 @@
 "use client";
 
 import { CloseRounded, Menu } from "@mui/icons-material";
-import { useCallback, useMemo, useState } from "react";
+import { Fragment, useCallback, useMemo, useState } from "react";
 import NextLink from "@/components/Link";
 import { NavItem } from "@/data/navbat";
 import {
@@ -77,9 +77,8 @@ export default function MobileNav({ items }: { items: NavItem[] }) {
                         const isLast = index === left.length - 1;
 
                         return (
-                            <>
+                            <Fragment key={value.href ?? `left-${index}`} >
                                 <MenuItem
-                                    key={value.href ?? `left-${index}`}
                                     href={value.href}
                                     component={NextLink}
                                     onClick={onLinkClick}
@@ -89,7 +88,7 @@ export default function MobileNav({ items }: { items: NavItem[] }) {
                                 </MenuItem>
 
                                 {!isLast && <Divider />}
-                            </>
+                            </Fragment>
                         );
                     })}
 
