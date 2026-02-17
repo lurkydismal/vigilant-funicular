@@ -371,12 +371,14 @@ export function AuthorWithFollow({
     avatarWidth,
     avatarHeight,
     doesFollow,
+    needText,
 }: {
     author: Author;
     variant?: TypographyVariant;
     avatarWidth?: number;
     avatarHeight?: number;
     doesFollow: boolean;
+    needText?: boolean;
 }) {
     log.trace(`Rendering AuthorWithFollow: ${{ author, doesFollow }}`);
 
@@ -395,6 +397,7 @@ export function AuthorWithFollow({
                     uid={author.uid}
                     doesFollow={doesFollow}
                     size="large"
+                    text={needText}
                 />
             }
         />
@@ -407,12 +410,14 @@ export function AuthorWithFollowAndLink({
     avatarWidth,
     avatarHeight,
     doesFollow,
+    needText,
 }: {
     author: Author;
     variant?: TypographyVariant;
     avatarWidth?: number;
     avatarHeight?: number;
     doesFollow: boolean;
+    needText?: boolean;
 }) {
     log.trace(`Rendering AuthorWithFollowAndLink: ${{ author, doesFollow }}`);
 
@@ -433,6 +438,7 @@ export function AuthorWithFollowAndLink({
                     uid={author.uid}
                     doesFollow={doesFollow}
                     size="large"
+                    text={needText}
                 />
             }
         />

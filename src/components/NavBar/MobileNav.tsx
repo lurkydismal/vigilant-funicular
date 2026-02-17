@@ -73,17 +73,25 @@ export default function MobileNav({ items }: { items: NavItem[] }) {
                         </IconButton>
                     </Box>
 
-                    {left.map((value, index) => (
-                        <MenuItem
-                            key={value.href ?? `left-${index}`}
-                            href={value.href}
-                            component={NextLink}
-                            onClick={onLinkClick}
-                            data-nav-position="left"
-                        >
-                            {value.name}
-                        </MenuItem>
-                    ))}
+                    {left.map((value, index) => {
+                        const isLast = index === left.length - 1;
+
+                        return (
+                            <>
+                                <MenuItem
+                                    key={value.href ?? `left-${index}`}
+                                    href={value.href}
+                                    component={NextLink}
+                                    onClick={onLinkClick}
+                                    data-nav-position="left"
+                                >
+                                    {value.name}
+                                </MenuItem>
+
+                                {!isLast && <Divider />}
+                            </>
+                        );
+                    })}
 
                     <Divider sx={{ my: 3 }} />
 

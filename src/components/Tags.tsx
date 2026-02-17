@@ -57,6 +57,7 @@ export function TagsAndSearchMobile({ tags }: { tags: Tag[] }) {
             }}
         >
             <Tags tags={tags}></Tags>
+
             <SearchButtonMobile></SearchButtonMobile>
         </Box>
     );

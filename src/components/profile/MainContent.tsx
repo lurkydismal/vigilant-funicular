@@ -48,7 +48,7 @@ export default function MainContent({ id }: { id?: string }) {
             {isMeProfile ? (
                 <Author {...properties} />
             ) : (
-                <AuthorWithFollow {...properties} doesFollow={false} />
+                <AuthorWithFollow {...properties} doesFollow={false} needText />
             )}
 
             <SearchButton />
