@@ -14,6 +14,7 @@ type GitHubLinkComposedProps = ComponentProps<typeof Link>;
 type GitHubLinkProps = MuiLinkProps & {
     href: GitHubLinkComposedProps["href"];
 };
+
 function GitHubLink({ href, ...props }: Readonly<GitHubLinkProps>) {
     return (
         <Link
