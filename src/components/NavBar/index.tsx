@@ -14,7 +14,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
     borderColor: (theme.vars || theme).palette.divider,
     borderRadius: `calc(${theme.shape.borderRadius}px + 8px)`,
     boxShadow: (theme.vars || theme).shadows[1],
-    border: "1px solid",
+    // border: "1px solid",
     display: "flex",
     flexShrink: 0,
     justifyContent: "space-between",

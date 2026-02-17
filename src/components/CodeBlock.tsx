@@ -12,8 +12,9 @@ import {
 import Mermaid from "@/components/Mermaid";
 import { gray } from "@/theme/themePrimitives";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Box, IconButton, Snackbar, Tooltip, Typography } from "@mui/material";
+import { Box, IconButton, Tooltip, Typography } from "@mui/material";
 import { useHtmlDataDark } from "@/utils/stdhook";
+import { useSnackbar } from "@/components/SnackbarProvider";
 
 /**
  * CodeBlock component
@@ -37,6 +38,8 @@ export default function CodeBlock({
     children?: React.ReactNode;
     node?: unknown;
 }) {
+    const { showInfo } = useSnackbar();
+
     // Detect language dynamically
     const match = /language-(\w+)/.exec(className || "");
 
@@ -75,6 +78,8 @@ export default function CodeBlock({
                 await navigator.clipboard.writeText(s);
 
                 setCopied(true);
+
+                showInfo("Copied to clipboard");
 
                 return;
             } catch {
@@ -181,33 +186,6 @@ export default function CodeBlock({
             >
                 {trimmed}
             </SyntaxHighlighter>
-
-            {/* Snackbar for copy feedback */}
-            <Snackbar
-                anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-                autoHideDuration={2000}
-                message="Copied to clipboard"
-                onClose={() => setCopied(false)}
-                open={copied}
-                slotProps={{
-                    content: {
-                        sx: [
-                            () => ({
-                                backgroundColor: gray[200],
-                                color: gray[900],
-                                border: `1px solid ${gray[300]}`,
-                                fontWeight: 500,
-                            }),
-                            (theme) =>
-                                theme.applyStyles("dark", {
-                                    backgroundColor: gray[800],
-                                    color: gray[100],
-                                    border: `1px solid ${gray[700]}`,
-                                }),
-                        ],
-                    },
-                }}
-            />
         </Box>
     );
 }
