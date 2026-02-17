@@ -1,6 +1,8 @@
-import FollowIcon from "@mui/icons-material/PersonAdd";
-import UnollowIcon from "@mui/icons-material/PersonRemove";
-import Button from "@mui/material/Button";
+import {
+    PersonRemove as UnfollowIcon,
+    PersonAdd as FollowIcon,
+} from "@mui/icons-material";
+import { Button } from "@mui/material";
 
 export default function Follow({
     uid,
@@ -19,7 +21,7 @@ export default function Follow({
             }}
             color={doesFollow ? "error" : "success"}
             variant="contained"
-            startIcon={doesFollow ? <UnollowIcon /> : <FollowIcon />}
+            startIcon={doesFollow ? <UnfollowIcon /> : <FollowIcon />}
         >
             {doesFollow ? "Unfollow" : "Follow"}
         </Button>

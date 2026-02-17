@@ -61,6 +61,7 @@
         "eslint-config-next": "16.1.6",
         "eslint-plugin-drizzle": "^0.2.3",
         "eslint-plugin-perfectionist": "^5.5.0",
+        "prettier": "^3.8.1",
         "tailwindcss": "^4",
         "typescript": "^5",
         "vitest": "^4.0.18"

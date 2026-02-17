@@ -1,10 +1,8 @@
-import Box from "@mui/material/Box";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
 import { AuthorsWithDateAndLink } from "@/components/Author";
 import Markdown from "@/components/Markdown";
 import { Post } from "@/components/Posts";
 import { postsData } from "@/data/post";
+import { Box, Typography, CardMedia } from "@mui/material";
 import { ComponentProps } from "react";
 
 export default function MainContent({ id }: { id: string }) {

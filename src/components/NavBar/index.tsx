@@ -1,12 +1,9 @@
 "use client";
 
-import AppBar from "@mui/material/AppBar";
-import Container from "@mui/material/Container";
-import Toolbar from "@mui/material/Toolbar";
-import { alpha, styled } from "@mui/material/styles";
 import DesktopNav from "./DesktopNav";
 import { items } from "@/data/navbat";
 import MobileNav from "./MobileNav";
+import { styled, Toolbar, alpha, AppBar, Container } from "@mui/material";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
     alignItems: "center",

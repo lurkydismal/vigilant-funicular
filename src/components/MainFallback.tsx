@@ -1,6 +1,4 @@
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import { styled } from "@mui/material/styles";
+import { styled, Box, Typography } from "@mui/material";
 import { ReactNode, Children } from "react";
 
 type Props = {

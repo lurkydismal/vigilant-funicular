@@ -6,7 +6,15 @@ import MainFallback from "@/components/MainFallback";
 import { useRouter } from "next/navigation";
 import { Post } from "@/data/posts/types";
 import { Truncated } from "./styled";
-import { styled, Card, Box, CardContent, Grid, CardMedia, Typography } from "@mui/material";
+import {
+    styled,
+    Card,
+    Box,
+    CardContent,
+    Grid,
+    CardMedia,
+    Typography,
+} from "@mui/material";
 
 /* Card wrapper — lift + subtle shadow on hover/focus */
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -87,7 +95,7 @@ const StyledCardContent = styled(CardContent)(({ theme }) => ({
     },
 }));
 
-export function Posts({ posts }: { posts: Post[] }) {
+export default function Posts({ posts }: { posts: Post[] }) {
     const router = useRouter();
 
     const handleNavigate = (id: number) => {
@@ -116,7 +124,9 @@ export function Posts({ posts }: { posts: Post[] }) {
                             variant="outlined"
                             sx={{
                                 // sync overlay + image transform via sx for hover state
-                                "&:hover .post-image": { transform: "scale(1.06)" },
+                                "&:hover .post-image": {
+                                    transform: "scale(1.06)",
+                                },
                                 "&:hover .post-overlay": {
                                     opacity: 1,
                                     transform: "translateY(0)",
@@ -141,11 +151,13 @@ export function Posts({ posts }: { posts: Post[] }) {
                                     loading="lazy"
                                 />
 
+                                {/*
                                 <MediaOverlay className="post-overlay">
                                     <Box className="arrowBox" aria-hidden>
                                         <NavigateNextRounded />
                                     </Box>
                                 </MediaOverlay>
+                                */}
                             </MediaWrapper>
 
                             <StyledCardContent>
@@ -156,7 +168,9 @@ export function Posts({ posts }: { posts: Post[] }) {
                                     {post.tag}
                                 </Typography>
 
-                                <Typography variant="h6">{post.title}</Typography>
+                                <Typography variant="h6">
+                                    {post.title}
+                                </Typography>
 
                                 <Truncated
                                     variant="body2"

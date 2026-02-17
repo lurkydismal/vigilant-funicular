@@ -1,14 +1,16 @@
-import Avatar from "@mui/material/Avatar";
-import AvatarGroup from "@mui/material/AvatarGroup";
-import Box from "@mui/material/Box";
 import { Link } from "@/components/Link";
-import Typography from "@mui/material/Typography";
-import { TypographyVariant } from "@mui/material/styles";
 import FollowButton from "@/components/FollowButton";
 import log from "@/utils/stdlog";
 import { ReactNode } from "react";
 import { Fragment } from "react/jsx-runtime";
 import { buildDate } from "@/utils/stdvar";
+import {
+    Box,
+    TypographyVariant,
+    Avatar,
+    Typography,
+    AvatarGroup,
+} from "@mui/material";
 
 export interface Author {
     uid: string;

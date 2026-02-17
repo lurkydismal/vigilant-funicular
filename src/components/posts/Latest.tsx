@@ -1,10 +1,10 @@
 "use client";
 
-import Typography from "@mui/material/Typography";
 import PostsPagination from "@/components/Pagination";
 import { PostsWithoutImage } from "@/components/Posts";
 import { postsData } from "@/data/posts";
 import { paginate } from "@/utils/stdfunc";
+import { Typography } from "@mui/material";
 import { useState, ChangeEvent } from "react";
 
 export default function Latest() {

@@ -1,13 +1,10 @@
-import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import { styled } from "@mui/material/styles";
+import { NavigateNextRounded } from "@mui/icons-material";
 import { Author, AuthorWithFollowAndLink } from "@/components/Author";
 import MainFallback from "@/components/MainFallback";
 import { Post } from "@/components/Posts";
 import { useState } from "react";
 import { redirect } from "next/navigation";
+import { styled, Typography, Grid, Box } from "@mui/material";
 
 export interface Follow {
     author: Author;
@@ -119,7 +116,7 @@ export function Follows({ follows }: { follows: Follow[] }) {
                                 >
                                     {post.title}
 
-                                    <NavigateNextRoundedIcon
+                                    <NavigateNextRounded
                                         className="arrow"
                                         sx={{ fontSize: "1rem" }}
                                     />

@@ -1,5 +1,4 @@
-import Box from "@mui/material/Box";
-import Pagination from "@mui/material/Pagination";
+import { Box, Pagination } from "@mui/material";
 
 export default function PostsPagination({
     total,

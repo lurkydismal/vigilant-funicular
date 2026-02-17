@@ -1,18 +1,19 @@
 "use client";
 
-import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
-import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import Stepper from "@mui/material/Stepper";
-import Typography from "@mui/material/Typography";
+import { ChevronLeftRounded, ChevronRightRounded } from "@mui/icons-material";
 import AddressForm from "./AddressForm";
 import PaymentForm from "./Attachments";
 import Review from "./Review";
 import { ReactElement, useState } from "react";
+import {
+    Box,
+    Typography,
+    Stepper,
+    Step,
+    StepLabel,
+    Stack,
+    Button,
+} from "@mui/material";
 
 interface Step {
     title: string;
@@ -143,7 +144,7 @@ export default function MainContent() {
                     // desktop "Previous"
                     <Button
                         onClick={handleBack}
-                        startIcon={<ChevronLeftRoundedIcon />}
+                        startIcon={<ChevronLeftRounded />}
                         sx={{
                             display: { xs: "none", sm: "inline-flex" },
                         }}
@@ -156,7 +157,7 @@ export default function MainContent() {
                     // mobile "Previous" (full width)
                     <Button
                         onClick={handleBack}
-                        startIcon={<ChevronLeftRoundedIcon />}
+                        startIcon={<ChevronLeftRounded />}
                         sx={{
                             display: { xs: "flex", sm: "none" },
                             width: "100%",
@@ -169,7 +170,7 @@ export default function MainContent() {
 
                 <Box sx={{ ml: { sm: "auto" } }}>
                     <Button
-                        endIcon={<ChevronRightRoundedIcon />}
+                        endIcon={<ChevronRightRounded />}
                         onClick={handleNext}
                         sx={{ width: { xs: "100%", sm: "auto" } }}
                         variant="contained"

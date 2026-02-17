@@ -1,8 +1,8 @@
-import Container from "@mui/material/Container";
 import Footer from "@/components/Footer";
 import NavBar from "@/components/NavBar";
 import Latest from "@/components/posts/Latest";
 import MainContent from "@/components/posts/MainContent";
+import { Container } from "@mui/material";
 
 export default function Posts() {
     return (

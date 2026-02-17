@@ -45,7 +45,7 @@ const TitleTypography = styled(Typography)(({ theme }) => ({
     },
 }));
 
-export function PostsWithoutImage({ posts }: { posts: Post[] }) {
+export default function PostsWithoutImage({ posts }: { posts: Post[] }) {
     const router = useRouter();
 
     const handleNavigate = (id: number) => {

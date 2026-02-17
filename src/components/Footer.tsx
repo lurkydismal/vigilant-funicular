@@ -1,13 +1,15 @@
-import GitHubIcon from "@mui/icons-material/GitHub";
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import IconButton from "@mui/material/IconButton";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
+import { GitHub } from "@mui/icons-material";
 import { Copyright } from "./Copyright";
 import { Link } from "@/components/Link";
 import { githubUrl } from "@/utils/stdvar";
-import { Divider } from "@mui/material";
+import {
+    Divider,
+    Container,
+    Box,
+    Stack,
+    Typography,
+    IconButton,
+} from "@mui/material";
 
 export default function Footer() {
     return (
@@ -76,7 +78,7 @@ export default function Footer() {
                             },
                         }}
                     >
-                        <GitHubIcon fontSize="small" />
+                        <GitHub fontSize="small" />
                     </IconButton>
                 </Box>
             </Container>

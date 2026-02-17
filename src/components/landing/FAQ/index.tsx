@@ -1,11 +1,9 @@
 "use client";
 
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
 import { SyntheticEvent, useState } from "react";
 import AccordionItem from "./AccordionItem";
 import { items } from "@/data/landing/FAQ";
+import { Container, Typography, Box } from "@mui/material";
 
 export default function FAQ() {
     const [expanded, setExpanded] = useState<string[]>([]);

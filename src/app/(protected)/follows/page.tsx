@@ -1,7 +1,7 @@
-import Container from "@mui/material/Container";
 import Footer from "@/components//Footer";
 import NavBar from "@/components//NavBar";
 import MainContent from "@/components/follows/MainContent";
+import { Container } from "@mui/material";
 
 export default function Follows() {
     return (

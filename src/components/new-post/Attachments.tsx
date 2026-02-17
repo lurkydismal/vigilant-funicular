@@ -1,11 +1,7 @@
 "use client";
 
-import CreditCardRoundedIcon from "@mui/icons-material/CreditCardRounded";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import InputAdornment from "@mui/material/InputAdornment";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import Stack from "@mui/material/Stack";
+import { CreditCardRounded } from "@mui/icons-material";
+import { Stack, Box, Card, OutlinedInput, InputAdornment } from "@mui/material";
 import { useState } from "react";
 
 export default function Attachments() {
@@ -40,7 +36,7 @@ export default function Attachments() {
                             value={cardNumber}
                             endAdornment={
                                 <InputAdornment position="start">
-                                    <CreditCardRoundedIcon />
+                                    <CreditCardRounded />
                                 </InputAdornment>
                             }
                         />

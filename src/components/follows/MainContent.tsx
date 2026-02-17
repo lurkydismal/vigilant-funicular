@@ -1,5 +1,3 @@
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import PostsPagination from "@/components/Pagination";
 import { SearchButton } from "@/components/SearchButton";
 import { TagsAndSearchMobile } from "@/components/Tags";
@@ -7,6 +5,7 @@ import { follows, tags } from "@/data/follows";
 import { paginate } from "@/utils/stdfunc";
 import { Follows } from "./Follows";
 import { useState, ChangeEvent } from "react";
+import { Box, Typography } from "@mui/material";
 
 export default function MainContent() {
     const [currentPage, setCurrentPage] = useState(1);

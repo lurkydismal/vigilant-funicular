@@ -1,7 +1,6 @@
 "use client";
 
-import Box from "@mui/material/Box";
-import Chip from "@mui/material/Chip";
+import { Box, Chip } from "@mui/material";
 import { SearchButtonMobile } from "./SearchButton";
 
 interface Tag {

@@ -1,9 +1,11 @@
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormLabel from "@mui/material/FormLabel";
-import Grid from "@mui/material/Grid";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import { styled } from "@mui/material/styles";
+import {
+    styled,
+    Grid,
+    FormLabel,
+    OutlinedInput,
+    FormControlLabel,
+    Checkbox,
+} from "@mui/material";
 
 const FormGrid = styled(Grid)(() => ({
     display: "flex",

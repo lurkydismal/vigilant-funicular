@@ -2,14 +2,16 @@
 
 import lightImg from "@/../public/static/screenshots/dashboard.png";
 import darkImg from "@/../public/static/screenshots/dashboard-dark.png";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
 import NextLink, { Link } from "@/components/Link";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import { styled } from "@mui/material/styles";
 import Image from "next/image";
+import {
+    styled,
+    Box,
+    Container,
+    Stack,
+    Typography,
+    Button,
+} from "@mui/material";
 
 const ImageWrapper = styled(Box)(({ theme }) => ({
     position: "relative",

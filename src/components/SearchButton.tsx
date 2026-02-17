@@ -1,10 +1,11 @@
-import RssFeedRoundedIcon from "@mui/icons-material/RssFeedRounded";
-import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import Box from "@mui/material/Box";
-import FormControl from "@mui/material/FormControl";
-import IconButton from "@mui/material/IconButton";
-import InputAdornment from "@mui/material/InputAdornment";
-import OutlinedInput from "@mui/material/OutlinedInput";
+import { RssFeedRounded, SearchRounded } from "@mui/icons-material";
+import {
+    FormControl,
+    OutlinedInput,
+    InputAdornment,
+    Box,
+    IconButton,
+} from "@mui/material";
 
 function Search() {
     return (
@@ -21,7 +22,7 @@ function Search() {
                         position="start"
                         sx={{ color: "text.primary" }}
                     >
-                        <SearchRoundedIcon fontSize="small" />
+                        <SearchRounded fontSize="small" />
                     </InputAdornment>
                 }
                 inputProps={{
@@ -45,7 +46,7 @@ export function SearchButton() {
         >
             <Search />
             <IconButton size="small" aria-label="RSS feed">
-                <RssFeedRoundedIcon />
+                <RssFeedRounded />
             </IconButton>
         </Box>
     );
@@ -64,7 +65,7 @@ export function SearchButtonMobile() {
         >
             <Search />
             <IconButton size="small" aria-label="RSS feed">
-                <RssFeedRoundedIcon />
+                <RssFeedRounded />
             </IconButton>
         </Box>
     );
