@@ -7,7 +7,7 @@ const createDate = buildDate.toLocaleDateString("en-US", {
 });
 
 export const user = {
-    id: 1,
+    id: "1",
     username: "TestUser",
 };
 
@@ -153,14 +153,14 @@ console.log("Hello!");
         title: "Revolutionizing software development with cutting-edge tools",
         authors: [
             {
-                id: 1,
+                uid: "1",
                 name: "Remy Sharp",
-                avatar: "/static/images/avatar/1.jpg",
+                avatar: "Remy Sharp",
             },
             {
-                id: 2,
+                uid: "2",
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         createdAt: createDate,
@@ -168,9 +168,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 3,
+                uid: "3",
                 name: "Erica Johns",
-                avatar: "/static/images/avatar/6.jpg",
+                avatar: "Erica Johns",
             },
         ],
         description:
@@ -184,9 +184,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 4,
+                uid: "4",
                 name: "Kate Morrison",
-                avatar: "/static/images/avatar/7.jpg",
+                avatar: "Kate Morrison",
             },
         ],
         description:
@@ -200,9 +200,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 5,
+                uid: "5",
                 name: "Cindy Baker",
-                avatar: "/static/images/avatar/3.jpg",
+                avatar: "Cindy Baker",
             },
         ],
         description:
@@ -222,14 +222,14 @@ console.log("Hello!");
         title: "Pioneering sustainable engineering solutions",
         authors: [
             {
-                id: 6,
+                uid: "6",
                 name: "Agnes Walker",
-                avatar: "/static/images/avatar/4.jpg",
+                avatar: "Agnes Walker",
             },
             {
-                id: 7,
+                uid: "7",
                 name: "Trevor Henderson",
-                avatar: "/static/images/avatar/5.jpg",
+                avatar: "Trevor Henderson",
             },
         ],
         createdAt: createDate,
@@ -237,9 +237,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 8,
+                uid: "8",
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         description:
@@ -253,9 +253,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 9,
+                uid: "9",
                 name: "Erica Johns",
-                avatar: "/static/images/avatar/6.jpg",
+                avatar: "Erica Johns",
             },
         ],
         description:
@@ -269,9 +269,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 10,
+                uid: "10",
                 name: "Kate Morrison",
-                avatar: "/static/images/avatar/7.jpg",
+                avatar: "Kate Morrison",
             },
         ],
         description:
@@ -285,9 +285,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 11,
+                uid: "11",
                 name: "Cindy Baker",
-                avatar: "/static/images/avatar/3.jpg",
+                avatar: "Cindy Baker",
             },
         ],
         description:
@@ -307,14 +307,14 @@ console.log("Hello!");
         title: "Pioneering sustainable engineering solutions",
         authors: [
             {
-                id: 12,
+                uid: "12",
                 name: "Agnes Walker",
-                avatar: "/static/images/avatar/4.jpg",
+                avatar: "Agnes Walker",
             },
             {
-                id: 13,
+                uid: "13",
                 name: "Trevor Henderson",
-                avatar: "/static/images/avatar/5.jpg",
+                avatar: "Trevor Henderson",
             },
         ],
         createdAt: createDate,
@@ -322,115 +322,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 14,
+                uid: "14",
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
-            },
-        ],
-        description:
-            "Our recent product updates are designed to help you maximize efficiency and achieve more. Get a detailed overview of the new features and improvements that can elevate your workflow.",
-        content:
-            "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
-        tag: "Product",
-        title: "Maximizing efficiency with our latest product updates",
-        createdAt: createDate,
-    },
-    {
-        description:
-            "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
-        content:
-            "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
-        tag: "Engineering",
-        title: "Revolutionizing software development with cutting-edge tools",
-        authors: [
-            {
-                id: 15,
-                name: "Remy Sharp",
-                avatar: "/static/images/avatar/1.jpg",
-            },
-            {
-                id: 16,
-                name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
-            },
-        ],
-        createdAt: createDate,
-    },
-    {
-        authors: [
-            {
-                id: 17,
-                name: "Erica Johns",
-                avatar: "/static/images/avatar/6.jpg",
-            },
-        ],
-        description:
-            "Explore the key features of our latest product release that are helping businesses achieve their goals. From user-friendly interfaces to robust functionality, learn why our product stands out.",
-        content:
-            "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
-        tag: "Product",
-        title: "Innovative product features that drive success",
-        createdAt: createDate,
-    },
-    {
-        authors: [
-            {
-                id: 18,
-                name: "Kate Morrison",
-                avatar: "/static/images/avatar/7.jpg",
-            },
-        ],
-        description:
-            "Stay ahead of the curve with the latest design trends and insights. Our design team shares their expertise on creating intuitive and visually stunning user experiences.",
-        content:
-            "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
-        tag: "Design",
-        title: "Designing for the future: trends and insights",
-        createdAt: createDate,
-    },
-    {
-        authors: [
-            {
-                id: 19,
-                name: "Cindy Baker",
-                avatar: "/static/images/avatar/3.jpg",
-            },
-        ],
-        description:
-            "Take a look at our company's journey and the milestones we've achieved along the way. From humble beginnings to industry leader, discover our story of growth and success.",
-        content:
-            "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
-        tag: "Company",
-        title: "Our company's journey: milestones and achievements",
-        createdAt: createDate,
-    },
-    {
-        description:
-            "Learn about our commitment to sustainability and the innovative engineering solutions we're implementing to create a greener future. Discover the impact of our eco-friendly initiatives.",
-        content:
-            "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
-        tag: "Engineering",
-        title: "Pioneering sustainable engineering solutions",
-        authors: [
-            {
-                id: 20,
-                name: "Agnes Walker",
-                avatar: "/static/images/avatar/4.jpg",
-            },
-            {
-                id: 21,
-                name: "Trevor Henderson",
-                avatar: "/static/images/avatar/5.jpg",
-            },
-        ],
-        createdAt: createDate,
-    },
-    {
-        authors: [
-            {
-                id: 22,
-                name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         description:
@@ -450,14 +344,14 @@ console.log("Hello!");
         title: "Revolutionizing software development with cutting-edge tools",
         authors: [
             {
-                id: 23,
+                uid: "15",
                 name: "Remy Sharp",
-                avatar: "/static/images/avatar/1.jpg",
+                avatar: "Remy Sharp",
             },
             {
-                id: 24,
+                uid: "16",
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         createdAt: createDate,
@@ -465,9 +359,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 25,
+                uid: "17",
                 name: "Erica Johns",
-                avatar: "/static/images/avatar/6.jpg",
+                avatar: "Erica Johns",
             },
         ],
         description:
@@ -481,9 +375,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 26,
+                uid: "18",
                 name: "Kate Morrison",
-                avatar: "/static/images/avatar/7.jpg",
+                avatar: "Kate Morrison",
             },
         ],
         description:
@@ -497,9 +391,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 27,
+                uid: "19",
                 name: "Cindy Baker",
-                avatar: "/static/images/avatar/3.jpg",
+                avatar: "Cindy Baker",
             },
         ],
         description:
@@ -519,14 +413,14 @@ console.log("Hello!");
         title: "Pioneering sustainable engineering solutions",
         authors: [
             {
-                id: 28,
+                uid: "20",
                 name: "Agnes Walker",
-                avatar: "/static/images/avatar/4.jpg",
+                avatar: "Agnes Walker",
             },
             {
-                id: 29,
+                uid: "21",
                 name: "Trevor Henderson",
-                avatar: "/static/images/avatar/5.jpg",
+                avatar: "Trevor Henderson",
             },
         ],
         createdAt: createDate,
@@ -534,9 +428,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 30,
+                uid: "22",
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         description:
@@ -556,14 +450,14 @@ console.log("Hello!");
         title: "Revolutionizing software development with cutting-edge tools",
         authors: [
             {
-                id: 31,
+                uid: "23",
                 name: "Remy Sharp",
-                avatar: "/static/images/avatar/1.jpg",
+                avatar: "Remy Sharp",
             },
             {
-                id: 32,
+                uid: "24",
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         createdAt: createDate,
@@ -571,9 +465,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 33,
+                uid: "25",
                 name: "Erica Johns",
-                avatar: "/static/images/avatar/6.jpg",
+                avatar: "Erica Johns",
             },
         ],
         description:
@@ -587,9 +481,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 34,
+                uid: "26",
                 name: "Kate Morrison",
-                avatar: "/static/images/avatar/7.jpg",
+                avatar: "Kate Morrison",
             },
         ],
         description:
@@ -603,9 +497,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 35,
+                uid: "27",
                 name: "Cindy Baker",
-                avatar: "/static/images/avatar/3.jpg",
+                avatar: "Cindy Baker",
             },
         ],
         description:
@@ -625,14 +519,14 @@ console.log("Hello!");
         title: "Pioneering sustainable engineering solutions",
         authors: [
             {
-                id: 36,
+                uid: "28",
                 name: "Agnes Walker",
-                avatar: "/static/images/avatar/4.jpg",
+                avatar: "Agnes Walker",
             },
             {
-                id: 37,
+                uid: "29",
                 name: "Trevor Henderson",
-                avatar: "/static/images/avatar/5.jpg",
+                avatar: "Trevor Henderson",
             },
         ],
         createdAt: createDate,
@@ -640,9 +534,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 38,
+                uid: "30",
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         description:
@@ -662,14 +556,14 @@ console.log("Hello!");
         title: "Revolutionizing software development with cutting-edge tools",
         authors: [
             {
-                id: 39,
+                uid: "31",
                 name: "Remy Sharp",
-                avatar: "/static/images/avatar/1.jpg",
+                avatar: "Remy Sharp",
             },
             {
-                id: 40,
+                uid: "32",
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         createdAt: createDate,
@@ -677,9 +571,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 41,
+                uid: "33",
                 name: "Erica Johns",
-                avatar: "/static/images/avatar/6.jpg",
+                avatar: "Erica Johns",
             },
         ],
         description:
@@ -693,9 +587,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 42,
+                uid: "34",
                 name: "Kate Morrison",
-                avatar: "/static/images/avatar/7.jpg",
+                avatar: "Kate Morrison",
             },
         ],
         description:
@@ -709,9 +603,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 43,
+                uid: "35",
                 name: "Cindy Baker",
-                avatar: "/static/images/avatar/3.jpg",
+                avatar: "Cindy Baker",
             },
         ],
         description:
@@ -731,14 +625,14 @@ console.log("Hello!");
         title: "Pioneering sustainable engineering solutions",
         authors: [
             {
-                id: 44,
+                uid: "36",
                 name: "Agnes Walker",
-                avatar: "/static/images/avatar/4.jpg",
+                avatar: "Agnes Walker",
             },
             {
-                id: 45,
+                uid: "37",
                 name: "Trevor Henderson",
-                avatar: "/static/images/avatar/5.jpg",
+                avatar: "Trevor Henderson",
             },
         ],
         createdAt: createDate,
@@ -746,9 +640,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 46,
+                uid: "38",
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         description:
@@ -768,14 +662,14 @@ console.log("Hello!");
         title: "Revolutionizing software development with cutting-edge tools",
         authors: [
             {
-                id: 47,
+                uid: "39",
                 name: "Remy Sharp",
-                avatar: "/static/images/avatar/1.jpg",
+                avatar: "Remy Sharp",
             },
             {
-                id: 48,
+                uid: "40",
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         createdAt: createDate,
@@ -783,9 +677,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 49,
+                uid: "41",
                 name: "Erica Johns",
-                avatar: "/static/images/avatar/6.jpg",
+                avatar: "Erica Johns",
             },
         ],
         description:
@@ -799,9 +693,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 50,
+                uid: "42",
                 name: "Kate Morrison",
-                avatar: "/static/images/avatar/7.jpg",
+                avatar: "Kate Morrison",
             },
         ],
         description:
@@ -815,9 +709,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 51,
+                uid: "43",
                 name: "Cindy Baker",
-                avatar: "/static/images/avatar/3.jpg",
+                avatar: "Cindy Baker",
             },
         ],
         description:
@@ -837,14 +731,14 @@ console.log("Hello!");
         title: "Pioneering sustainable engineering solutions",
         authors: [
             {
-                id: 52,
+                uid: "44",
                 name: "Agnes Walker",
-                avatar: "/static/images/avatar/4.jpg",
+                avatar: "Agnes Walker",
             },
             {
-                id: 53,
+                uid: "45",
                 name: "Trevor Henderson",
-                avatar: "/static/images/avatar/5.jpg",
+                avatar: "Trevor Henderson",
             },
         ],
         createdAt: createDate,
@@ -852,9 +746,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 54,
+                uid: "46",
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         description:
@@ -874,14 +768,14 @@ console.log("Hello!");
         title: "Revolutionizing software development with cutting-edge tools",
         authors: [
             {
-                id: 55,
+                uid: "47",
                 name: "Remy Sharp",
-                avatar: "/static/images/avatar/1.jpg",
+                avatar: "Remy Sharp",
             },
             {
-                id: 56,
+                uid: "48",
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         createdAt: createDate,
@@ -889,9 +783,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 57,
+                uid: "49",
                 name: "Erica Johns",
-                avatar: "/static/images/avatar/6.jpg",
+                avatar: "Erica Johns",
             },
         ],
         description:
@@ -905,9 +799,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 58,
+                uid: "50",
                 name: "Kate Morrison",
-                avatar: "/static/images/avatar/7.jpg",
+                avatar: "Kate Morrison",
             },
         ],
         description:
@@ -921,9 +815,9 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 59,
+                uid: "51",
                 name: "Cindy Baker",
-                avatar: "/static/images/avatar/3.jpg",
+                avatar: "Cindy Baker",
             },
         ],
         description:
@@ -943,14 +837,14 @@ console.log("Hello!");
         title: "Pioneering sustainable engineering solutions",
         authors: [
             {
-                id: 60,
+                uid: "52",
                 name: "Agnes Walker",
-                avatar: "/static/images/avatar/4.jpg",
+                avatar: "Agnes Walker",
             },
             {
-                id: 61,
+                uid: "53",
                 name: "Trevor Henderson",
-                avatar: "/static/images/avatar/5.jpg",
+                avatar: "Trevor Henderson",
             },
         ],
         createdAt: createDate,
@@ -958,9 +852,115 @@ console.log("Hello!");
     {
         authors: [
             {
-                id: 62,
+                uid: "54",
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
+            },
+        ],
+        description:
+            "Our recent product updates are designed to help you maximize efficiency and achieve more. Get a detailed overview of the new features and improvements that can elevate your workflow.",
+        content:
+            "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
+        tag: "Product",
+        title: "Maximizing efficiency with our latest product updates",
+        createdAt: createDate,
+    },
+    {
+        description:
+            "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
+        content:
+            "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
+        tag: "Engineering",
+        title: "Revolutionizing software development with cutting-edge tools",
+        authors: [
+            {
+                uid: "55",
+                name: "Remy Sharp",
+                avatar: "Remy Sharp",
+            },
+            {
+                uid: "56",
+                name: "Travis Howard",
+                avatar: "Travis Hpward",
+            },
+        ],
+        createdAt: createDate,
+    },
+    {
+        authors: [
+            {
+                uid: "57",
+                name: "Erica Johns",
+                avatar: "Erica Johns",
+            },
+        ],
+        description:
+            "Explore the key features of our latest product release that are helping businesses achieve their goals. From user-friendly interfaces to robust functionality, learn why our product stands out.",
+        content:
+            "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
+        tag: "Product",
+        title: "Innovative product features that drive success",
+        createdAt: createDate,
+    },
+    {
+        authors: [
+            {
+                uid: "58",
+                name: "Kate Morrison",
+                avatar: "Kate Morrison",
+            },
+        ],
+        description:
+            "Stay ahead of the curve with the latest design trends and insights. Our design team shares their expertise on creating intuitive and visually stunning user experiences.",
+        content:
+            "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
+        tag: "Design",
+        title: "Designing for the future: trends and insights",
+        createdAt: createDate,
+    },
+    {
+        authors: [
+            {
+                uid: "59",
+                name: "Cindy Baker",
+                avatar: "Cindy Baker",
+            },
+        ],
+        description:
+            "Take a look at our company's journey and the milestones we've achieved along the way. From humble beginnings to industry leader, discover our story of growth and success.",
+        content:
+            "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
+        tag: "Company",
+        title: "Our company's journey: milestones and achievements",
+        createdAt: createDate,
+    },
+    {
+        description:
+            "Learn about our commitment to sustainability and the innovative engineering solutions we're implementing to create a greener future. Discover the impact of our eco-friendly initiatives.",
+        content:
+            "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
+        tag: "Engineering",
+        title: "Pioneering sustainable engineering solutions",
+        authors: [
+            {
+                uid: "60",
+                name: "Agnes Walker",
+                avatar: "Agnes Walker",
+            },
+            {
+                uid: "61",
+                name: "Trevor Henderson",
+                avatar: "Trevor Henderson",
+            },
+        ],
+        createdAt: createDate,
+    },
+    {
+        authors: [
+            {
+                uid: "62",
+                name: "Travis Howard",
+                avatar: "Travis Hpward",
             },
         ],
         description:
@@ -980,19 +980,19 @@ export const postsData = postsDataTemp.map((post, index) => ({
 
 export const tags = [
     {
-        id: 1,
+        id: "1",
         name: "Engineering",
     },
     {
-        id: 2,
+        id: "2",
         name: "Product",
     },
     {
-        id: 3,
+        id: "3",
         name: "Design",
     },
     {
-        id: 4,
+        id: "4",
         name: "Company",
     },
 ];

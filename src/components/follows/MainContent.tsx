@@ -1,3 +1,5 @@
+"use client";
+
 import PostsPagination from "@/components/Pagination";
 import { SearchButton } from "@/components/SearchButton";
 import { TagsAndSearchMobile } from "@/components/Tags";
@@ -23,9 +25,9 @@ export default function MainContent() {
                 </Typography>
             </>
 
-            <SearchButton></SearchButton>
+            <SearchButton />
 
-            <TagsAndSearchMobile tags={tags}></TagsAndSearchMobile>
+            <TagsAndSearchMobile tags={tags} />
 
             <Follows
                 follows={paginate(follows, currentPage, perPage)}

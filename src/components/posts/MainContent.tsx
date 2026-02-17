@@ -17,11 +17,11 @@ export default function MainContent() {
                 </Typography>
             </div>
 
-            <SearchButton></SearchButton>
+            <SearchButton />
 
-            <TagsAndSearchMobile tags={tags}></TagsAndSearchMobile>
+            <TagsAndSearchMobile tags={tags} />
 
-            <Posts posts={paginate(postsData, 1, perPage)}></Posts>
+            <Posts posts={paginate(postsData, 1, perPage)} />
         </Box>
     );
 }

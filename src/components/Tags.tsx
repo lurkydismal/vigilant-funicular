@@ -4,7 +4,7 @@ import { Box, Chip } from "@mui/material";
 import { SearchButtonMobile } from "./SearchButton";
 
 interface Tag {
-    id: number;
+    id: string;
     name: string;
 }
 

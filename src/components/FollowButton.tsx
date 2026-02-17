@@ -2,9 +2,9 @@ import {
     PersonRemove as UnfollowIcon,
     PersonAdd as FollowIcon,
 } from "@mui/icons-material";
-import { Button } from "@mui/material";
+import { IconButton } from "@mui/material";
 
-export default function Follow({
+export default function FollowButton({
     uid,
     doesFollow,
     size,
@@ -14,16 +14,14 @@ export default function Follow({
     size?: "small" | "medium" | "large";
 }) {
     return (
-        <Button
+        <IconButton
             size={size ?? "small"}
             onClick={() => {
                 console.log("Follow: ", uid);
             }}
             color={doesFollow ? "error" : "success"}
-            variant="contained"
-            startIcon={doesFollow ? <UnfollowIcon /> : <FollowIcon />}
         >
-            {doesFollow ? "Unfollow" : "Follow"}
-        </Button>
+            {doesFollow ? <UnfollowIcon /> : <FollowIcon />}
+        </IconButton>
     );
 }

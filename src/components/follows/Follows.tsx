@@ -1,10 +1,12 @@
+"use client";
+
 import { NavigateNextRounded } from "@mui/icons-material";
 import { Author, AuthorWithFollowAndLink } from "@/components/Author";
 import MainFallback from "@/components/MainFallback";
-import { Post } from "@/components/Posts";
 import { useState } from "react";
 import { redirect } from "next/navigation";
 import { styled, Typography, Grid, Box } from "@mui/material";
+import { Post } from "@/data/posts/types";
 
 export interface Follow {
     author: Author;
@@ -97,7 +99,7 @@ export function Follows({ follows }: { follows: Follow[] }) {
                                 <AuthorWithFollowAndLink
                                     author={follow.author}
                                     variant="h6"
-                                    doesFollow={true}
+                                    doesFollow={(index % 5 !== 2)}
                                 />
 
                                 <TitleTypography

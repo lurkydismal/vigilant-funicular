@@ -155,12 +155,12 @@ console.log("Hello!");
             {
                 id: 1,
                 name: "Remy Sharp",
-                avatar: "/static/images/avatar/1.jpg",
+                avatar: "Remy Sharp",
             },
             {
                 id: 2,
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         createdAt: createDate,
@@ -170,7 +170,7 @@ console.log("Hello!");
             {
                 id: 3,
                 name: "Erica Johns",
-                avatar: "/static/images/avatar/6.jpg",
+                avatar: "Erica Johns",
             },
         ],
         description:
@@ -186,7 +186,7 @@ console.log("Hello!");
             {
                 id: 4,
                 name: "Kate Morrison",
-                avatar: "/static/images/avatar/7.jpg",
+                avatar: "Kate Morrison",
             },
         ],
         description:
@@ -202,7 +202,7 @@ console.log("Hello!");
             {
                 id: 5,
                 name: "Cindy Baker",
-                avatar: "/static/images/avatar/3.jpg",
+                avatar: "Cindy Baker",
             },
         ],
         description:
@@ -224,12 +224,12 @@ console.log("Hello!");
             {
                 id: 6,
                 name: "Agnes Walker",
-                avatar: "/static/images/avatar/4.jpg",
+                avatar: "Agnes Walker",
             },
             {
                 id: 7,
                 name: "Trevor Henderson",
-                avatar: "/static/images/avatar/5.jpg",
+                avatar: "Trevor Henderson",
             },
         ],
         createdAt: createDate,
@@ -239,7 +239,7 @@ console.log("Hello!");
             {
                 id: 8,
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         description:
@@ -255,7 +255,7 @@ console.log("Hello!");
             {
                 id: 9,
                 name: "Erica Johns",
-                avatar: "/static/images/avatar/6.jpg",
+                avatar: "Erica Johns",
             },
         ],
         description:
@@ -271,7 +271,7 @@ console.log("Hello!");
             {
                 id: 10,
                 name: "Kate Morrison",
-                avatar: "/static/images/avatar/7.jpg",
+                avatar: "Kate Morrison",
             },
         ],
         description:
@@ -287,7 +287,7 @@ console.log("Hello!");
             {
                 id: 11,
                 name: "Cindy Baker",
-                avatar: "/static/images/avatar/3.jpg",
+                avatar: "Cindy Baker",
             },
         ],
         description:
@@ -309,12 +309,12 @@ console.log("Hello!");
             {
                 id: 12,
                 name: "Agnes Walker",
-                avatar: "/static/images/avatar/4.jpg",
+                avatar: "Agnes Walker",
             },
             {
                 id: 13,
                 name: "Trevor Henderson",
-                avatar: "/static/images/avatar/5.jpg",
+                avatar: "Trevor Henderson",
             },
         ],
         createdAt: createDate,
@@ -324,7 +324,7 @@ console.log("Hello!");
             {
                 id: 14,
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         description:
@@ -346,12 +346,12 @@ console.log("Hello!");
             {
                 id: 15,
                 name: "Remy Sharp",
-                avatar: "/static/images/avatar/1.jpg",
+                avatar: "Remy Sharp",
             },
             {
                 id: 16,
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         createdAt: createDate,
@@ -361,7 +361,7 @@ console.log("Hello!");
             {
                 id: 17,
                 name: "Erica Johns",
-                avatar: "/static/images/avatar/6.jpg",
+                avatar: "Erica Johns",
             },
         ],
         description:
@@ -377,7 +377,7 @@ console.log("Hello!");
             {
                 id: 18,
                 name: "Kate Morrison",
-                avatar: "/static/images/avatar/7.jpg",
+                avatar: "Kate Morrison",
             },
         ],
         description:
@@ -393,7 +393,7 @@ console.log("Hello!");
             {
                 id: 19,
                 name: "Cindy Baker",
-                avatar: "/static/images/avatar/3.jpg",
+                avatar: "Cindy Baker",
             },
         ],
         description:
@@ -415,12 +415,12 @@ console.log("Hello!");
             {
                 id: 20,
                 name: "Agnes Walker",
-                avatar: "/static/images/avatar/4.jpg",
+                avatar: "Agnes Walker",
             },
             {
                 id: 21,
                 name: "Trevor Henderson",
-                avatar: "/static/images/avatar/5.jpg",
+                avatar: "Trevor Henderson",
             },
         ],
         createdAt: createDate,
@@ -430,7 +430,7 @@ console.log("Hello!");
             {
                 id: 22,
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         description:
@@ -452,12 +452,12 @@ console.log("Hello!");
             {
                 id: 23,
                 name: "Remy Sharp",
-                avatar: "/static/images/avatar/1.jpg",
+                avatar: "Remy Sharp",
             },
             {
                 id: 24,
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         createdAt: createDate,
@@ -467,7 +467,7 @@ console.log("Hello!");
             {
                 id: 25,
                 name: "Erica Johns",
-                avatar: "/static/images/avatar/6.jpg",
+                avatar: "Erica Johns",
             },
         ],
         description:
@@ -483,7 +483,7 @@ console.log("Hello!");
             {
                 id: 26,
                 name: "Kate Morrison",
-                avatar: "/static/images/avatar/7.jpg",
+                avatar: "Kate Morrison",
             },
         ],
         description:
@@ -499,7 +499,7 @@ console.log("Hello!");
             {
                 id: 27,
                 name: "Cindy Baker",
-                avatar: "/static/images/avatar/3.jpg",
+                avatar: "Cindy Baker",
             },
         ],
         description:
@@ -521,12 +521,12 @@ console.log("Hello!");
             {
                 id: 28,
                 name: "Agnes Walker",
-                avatar: "/static/images/avatar/4.jpg",
+                avatar: "Agnes Walker",
             },
             {
                 id: 29,
                 name: "Trevor Henderson",
-                avatar: "/static/images/avatar/5.jpg",
+                avatar: "Trevor Henderson",
             },
         ],
         createdAt: createDate,
@@ -536,7 +536,7 @@ console.log("Hello!");
             {
                 id: 30,
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         description:
@@ -558,12 +558,12 @@ console.log("Hello!");
             {
                 id: 31,
                 name: "Remy Sharp",
-                avatar: "/static/images/avatar/1.jpg",
+                avatar: "Remy Sharp",
             },
             {
                 id: 32,
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         createdAt: createDate,
@@ -573,7 +573,7 @@ console.log("Hello!");
             {
                 id: 33,
                 name: "Erica Johns",
-                avatar: "/static/images/avatar/6.jpg",
+                avatar: "Erica Johns",
             },
         ],
         description:
@@ -589,7 +589,7 @@ console.log("Hello!");
             {
                 id: 34,
                 name: "Kate Morrison",
-                avatar: "/static/images/avatar/7.jpg",
+                avatar: "Kate Morrison",
             },
         ],
         description:
@@ -605,7 +605,7 @@ console.log("Hello!");
             {
                 id: 35,
                 name: "Cindy Baker",
-                avatar: "/static/images/avatar/3.jpg",
+                avatar: "Cindy Baker",
             },
         ],
         description:
@@ -627,12 +627,12 @@ console.log("Hello!");
             {
                 id: 36,
                 name: "Agnes Walker",
-                avatar: "/static/images/avatar/4.jpg",
+                avatar: "Agnes Walker",
             },
             {
                 id: 37,
                 name: "Trevor Henderson",
-                avatar: "/static/images/avatar/5.jpg",
+                avatar: "Trevor Henderson",
             },
         ],
         createdAt: createDate,
@@ -642,7 +642,7 @@ console.log("Hello!");
             {
                 id: 38,
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         description:
@@ -664,12 +664,12 @@ console.log("Hello!");
             {
                 id: 39,
                 name: "Remy Sharp",
-                avatar: "/static/images/avatar/1.jpg",
+                avatar: "Remy Sharp",
             },
             {
                 id: 40,
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         createdAt: createDate,
@@ -679,7 +679,7 @@ console.log("Hello!");
             {
                 id: 41,
                 name: "Erica Johns",
-                avatar: "/static/images/avatar/6.jpg",
+                avatar: "Erica Johns",
             },
         ],
         description:
@@ -695,7 +695,7 @@ console.log("Hello!");
             {
                 id: 42,
                 name: "Kate Morrison",
-                avatar: "/static/images/avatar/7.jpg",
+                avatar: "Kate Morrison",
             },
         ],
         description:
@@ -711,7 +711,7 @@ console.log("Hello!");
             {
                 id: 43,
                 name: "Cindy Baker",
-                avatar: "/static/images/avatar/3.jpg",
+                avatar: "Cindy Baker",
             },
         ],
         description:
@@ -733,12 +733,12 @@ console.log("Hello!");
             {
                 id: 44,
                 name: "Agnes Walker",
-                avatar: "/static/images/avatar/4.jpg",
+                avatar: "Agnes Walker",
             },
             {
                 id: 45,
                 name: "Trevor Henderson",
-                avatar: "/static/images/avatar/5.jpg",
+                avatar: "Trevor Henderson",
             },
         ],
         createdAt: createDate,
@@ -748,7 +748,7 @@ console.log("Hello!");
             {
                 id: 46,
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         description:
@@ -770,12 +770,12 @@ console.log("Hello!");
             {
                 id: 47,
                 name: "Remy Sharp",
-                avatar: "/static/images/avatar/1.jpg",
+                avatar: "Remy Sharp",
             },
             {
                 id: 48,
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         createdAt: createDate,
@@ -785,7 +785,7 @@ console.log("Hello!");
             {
                 id: 49,
                 name: "Erica Johns",
-                avatar: "/static/images/avatar/6.jpg",
+                avatar: "Erica Johns",
             },
         ],
         description:
@@ -801,7 +801,7 @@ console.log("Hello!");
             {
                 id: 50,
                 name: "Kate Morrison",
-                avatar: "/static/images/avatar/7.jpg",
+                avatar: "Kate Morrison",
             },
         ],
         description:
@@ -817,7 +817,7 @@ console.log("Hello!");
             {
                 id: 51,
                 name: "Cindy Baker",
-                avatar: "/static/images/avatar/3.jpg",
+                avatar: "Cindy Baker",
             },
         ],
         description:
@@ -839,12 +839,12 @@ console.log("Hello!");
             {
                 id: 52,
                 name: "Agnes Walker",
-                avatar: "/static/images/avatar/4.jpg",
+                avatar: "Agnes Walker",
             },
             {
                 id: 53,
                 name: "Trevor Henderson",
-                avatar: "/static/images/avatar/5.jpg",
+                avatar: "Trevor Henderson",
             },
         ],
         createdAt: createDate,
@@ -854,7 +854,7 @@ console.log("Hello!");
             {
                 id: 54,
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         description:
@@ -876,12 +876,12 @@ console.log("Hello!");
             {
                 id: 55,
                 name: "Remy Sharp",
-                avatar: "/static/images/avatar/1.jpg",
+                avatar: "Remy Sharp",
             },
             {
                 id: 56,
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         createdAt: createDate,
@@ -891,7 +891,7 @@ console.log("Hello!");
             {
                 id: 57,
                 name: "Erica Johns",
-                avatar: "/static/images/avatar/6.jpg",
+                avatar: "Erica Johns",
             },
         ],
         description:
@@ -907,7 +907,7 @@ console.log("Hello!");
             {
                 id: 58,
                 name: "Kate Morrison",
-                avatar: "/static/images/avatar/7.jpg",
+                avatar: "Kate Morrison",
             },
         ],
         description:
@@ -923,7 +923,7 @@ console.log("Hello!");
             {
                 id: 59,
                 name: "Cindy Baker",
-                avatar: "/static/images/avatar/3.jpg",
+                avatar: "Cindy Baker",
             },
         ],
         description:
@@ -945,12 +945,12 @@ console.log("Hello!");
             {
                 id: 60,
                 name: "Agnes Walker",
-                avatar: "/static/images/avatar/4.jpg",
+                avatar: "Agnes Walker",
             },
             {
                 id: 61,
                 name: "Trevor Henderson",
-                avatar: "/static/images/avatar/5.jpg",
+                avatar: "Trevor Henderson",
             },
         ],
         createdAt: createDate,
@@ -960,7 +960,7 @@ console.log("Hello!");
             {
                 id: 62,
                 name: "Travis Howard",
-                avatar: "/static/images/avatar/2.jpg",
+                avatar: "Travis Hpward",
             },
         ],
         description:
