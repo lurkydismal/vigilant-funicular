@@ -11,6 +11,7 @@ import {
     Typography,
     AvatarGroup,
 } from "@mui/material";
+import { linkSx } from "@/data/styles";
 
 export interface Author {
     uid: string;
@@ -298,16 +299,20 @@ export function AuthorsWithDateAndLink({
                             </Avatar>
                         ))}
                     </AvatarGroup>
+
                     {/* List names separated by commas, each name wrapped in a Link */}
                     <Typography variant={variant}>
                         {authors.map((author, index) => (
                             <Fragment key={author.uid}>
                                 <Link
                                     underline="none"
+                                    variant="h4"
                                     href={`/profile/${author.uid}`}
+                                    sx={linkSx}
                                 >
                                     {author.name}
                                 </Link>
+
                                 {index < authors.length - 1 && ", "}
                             </Fragment>
                         ))}
@@ -315,7 +320,10 @@ export function AuthorsWithDateAndLink({
                 </Box>
             }
             right={
-                <Typography variant={variant ?? "caption"}>
+                <Typography
+                    variant={variant ?? "caption"}
+                    sx={linkSx}
+                >
                     {date.toLocaleDateString("en-US", {
                         month: "long",
                         day: "numeric",
