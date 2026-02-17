@@ -16,8 +16,6 @@ export default function Page() {
 
                 <FAQ />
 
-                <Divider />
-
                 <Footer />
             </>
         </>
