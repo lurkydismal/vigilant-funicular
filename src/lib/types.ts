@@ -21,6 +21,7 @@ export function parseRawTarget(rawTarget: DbTarget) {
     return table;
 }
 
-export type ActionResult =
-    | { ok: true; data?: any }
-    | { ok: false; error: string };
+type SuccessResult<T> = { ok: true; data: T };
+type FailureResult = { ok: false; error: string };
+
+export type ActionResult<T> = SuccessResult<T> | FailureResult;

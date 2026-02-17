@@ -22,27 +22,30 @@ type SignUpValues = {
     password: string;
 };
 
+type Values = SignInValues | SignUpValues;
+
 type Props =
     | {
-          mode: "signin";
-          onSubmit: (data: SignInValues) => Promise<void> | void;
-      }
+        mode: "signin";
+        onSubmit: (data: SignInValues) => Promise<void> | void;
+    }
     | {
-          mode: "signup";
-          onSubmit: (data: SignUpValues) => Promise<void> | void;
-      };
+        mode: "signup";
+        onSubmit: (data: SignUpValues) => Promise<void> | void;
+    };
 
 export default function AuthForm(props: Props) {
     const isSignIn = props.mode === "signin";
-    const { control, handleSubmit } = useForm<any>({
+    const { control, handleSubmit } = useForm<Values>({
         defaultValues: isSignIn
             ? { username: "", password: "", rememberMe: false }
             : { username: "", password: "" },
     });
     const [loading, setLoading] = useState(false);
 
-    const _onSubmit = async (data: any) => {
+    const _onSubmit = async (data: Values) => {
         setLoading(true);
+
         try {
             await props.onSubmit(data);
         } finally {

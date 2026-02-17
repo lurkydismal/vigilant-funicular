@@ -151,13 +151,11 @@ export default function Posts({ posts }: { posts: Post[] }) {
                                     loading="lazy"
                                 />
 
-                                {/*
                                 <MediaOverlay className="post-overlay">
                                     <Box className="arrowBox" aria-hidden>
                                         <NavigateNextRounded />
                                     </Box>
                                 </MediaOverlay>
-                                */}
                             </MediaWrapper>
 
                             <StyledCardContent>
