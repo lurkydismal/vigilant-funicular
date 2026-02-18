@@ -1,5 +1,4 @@
 import MainContent from "@/components/post/MainContent";
-import { Container } from "@mui/material";
 
 export default async function Page({
     params,
@@ -15,18 +14,6 @@ export default async function Page({
     const { slug } = await params;
 
     return (
-        <Container
-            component="main"
-            maxWidth="xl"
-            sx={{
-                display: "flex",
-                flexDirection: "column",
-                marginTop: 11,
-                marginBottom: 4,
-                gap: 4,
-            }}
-        >
-            <MainContent id={slug} />
-        </Container>
+        <MainContent id={slug} />
     );
 }

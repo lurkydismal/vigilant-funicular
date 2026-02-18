@@ -7,6 +7,12 @@ export default function NewPost() {
             component="main"
             maxWidth="xl"
             sx={{
+                // display: "flex",
+                // flexdirection: "column",
+                // margintop: 13,
+                // marginbottom: 4,
+                // gap: 4,
+
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center", // center horizontally

@@ -52,6 +52,7 @@ export default function SignUpPage() {
                     Sign in
                 </Link>
             </Typography>
+
             <Copyright />
         </>
     );
