@@ -21,15 +21,21 @@ export interface Author {
 
 const nameSx = {
     ...linkSx,
+    px: 1,
+    py: 0.75,
 
     "&::after": {
-        ...linkSx["&::after"],
         transformOrigin: "left",
         bottom: 2,
     },
 
     "&:hover": {
+        backgroundColor: "action.hover",
         transform: "translateY(-2px)",
+    },
+
+    "&:active": {
+        transform: "translateY(0px)",
     },
 };
 

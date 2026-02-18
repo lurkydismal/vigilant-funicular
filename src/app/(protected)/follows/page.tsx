@@ -1,28 +1,20 @@
-import Footer from "@/components//Footer";
-import NavBar from "@/components//NavBar";
 import MainContent from "@/components/follows/MainContent";
 import { Container } from "@mui/material";
 
 export default function Follows() {
     return (
-        <>
-            <NavBar />
-
-            <Container
-                component="main"
-                maxWidth="xl"
-                sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    marginTop: 13,
-                    marginBottom: 4,
-                    gap: 4,
-                }}
-            >
-                <MainContent />
-            </Container>
-
-            <Footer />
-        </>
+        <Container
+            component="main"
+            maxWidth="xl"
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                marginTop: 13,
+                marginBottom: 4,
+                gap: 4,
+            }}
+        >
+            <MainContent />
+        </Container>
     );
 }
