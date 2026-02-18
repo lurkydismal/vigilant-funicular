@@ -30,5 +30,5 @@ export const linkSx = {
         outline: "2px solid",
         outlineColor: "primary.main",
         outlineOffset: 2,
-    }
+    },
 };

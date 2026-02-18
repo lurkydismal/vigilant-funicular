@@ -99,7 +99,7 @@ export function Follows({ follows }: { follows: Follow[] }) {
                                 <AuthorWithFollowAndLink
                                     author={follow.author}
                                     variant="h6"
-                                    doesFollow={(index % 5 !== 2)}
+                                    doesFollow={index % 5 !== 2}
                                 />
 
                                 <TitleTypography

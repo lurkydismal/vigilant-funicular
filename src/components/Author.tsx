@@ -320,10 +320,7 @@ export function AuthorsWithDateAndLink({
                 </Box>
             }
             right={
-                <Typography
-                    variant={variant ?? "caption"}
-                    sx={linkSx}
-                >
+                <Typography variant={variant ?? "caption"} sx={linkSx}>
                     {date.toLocaleDateString("en-US", {
                         month: "long",
                         day: "numeric",

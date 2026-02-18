@@ -77,7 +77,7 @@ export default function MobileNav({ items }: { items: NavItem[] }) {
                         const isLast = index === left.length - 1;
 
                         return (
-                            <Fragment key={value.href ?? `left-${index}`} >
+                            <Fragment key={value.href ?? `left-${index}`}>
                                 <MenuItem
                                     href={value.href}
                                     component={NextLink}

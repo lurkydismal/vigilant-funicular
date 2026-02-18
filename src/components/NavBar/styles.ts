@@ -31,7 +31,7 @@ export const navButtonSx = {
         outline: "2px solid",
         outlineColor: "primary.main",
         outlineOffset: 2,
-    }
+    },
 };
 
 export const activeButtonSx = {

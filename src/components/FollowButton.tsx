@@ -14,12 +14,7 @@ type Props = ButtonProps & {
     sx?: SxProps<Theme>;
 };
 
-function FollowBase({
-    uid,
-    doesFollow,
-    size,
-    text = false,
-}: Props) {
+function FollowBase({ uid, doesFollow, size, text = false }: Props) {
     const color = doesFollow ? "error" : "success";
     const icon = doesFollow ? <UnfollowIcon /> : <FollowIcon />;
     const handleClick = () => {
@@ -37,11 +32,7 @@ function FollowBase({
             {doesFollow ? "Unfollow" : "Follow"}
         </Button>
     ) : (
-        <IconButton
-            size={size ?? "medium"}
-            onClick={handleClick}
-            color={color}
-        >
+        <IconButton size={size ?? "medium"} onClick={handleClick} color={color}>
             {icon}
         </IconButton>
     );

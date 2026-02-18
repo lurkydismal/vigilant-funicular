@@ -35,7 +35,7 @@ const tagSx = {
         outline: "2px solid",
         outlineColor: "primary.main",
         outlineOffset: 2,
-    }
+    },
 };
 
 export default function MainContent({ id }: { id: string }) {

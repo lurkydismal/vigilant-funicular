@@ -974,14 +974,17 @@ console.log("Hello!");
     },
 ];
 
-export const postsData = postsDataTemp.reduce<Record<string, Post>>((acc, curr, index) => {
-    acc[String(index)] = {
-        id: String(index),
-        ...curr,
-    }
+export const postsData = postsDataTemp.reduce<Record<string, Post>>(
+    (acc, curr, index) => {
+        acc[String(index)] = {
+            id: String(index),
+            ...curr,
+        };
 
-    return acc;
-}, {});
+        return acc;
+    },
+    {},
+);
 
 export const tags = [
     {
