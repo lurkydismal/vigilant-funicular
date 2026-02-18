@@ -19,6 +19,55 @@ export interface Author {
     avatar?: string;
 }
 
+const nameSx = {
+    ...linkSx,
+    px: 2.5,
+
+    "&::after": {
+        content: '""',
+        position: "absolute",
+        left: 16,
+        right: 16,
+        bottom: 2,
+        height: 2,
+        backgroundColor: "primary.main",
+        transform: "scaleX(0)",
+        transition: "transform 0.2s ease",
+    },
+
+    "&:hover": {
+        backgroundColor: "action.hover",
+        transform: "translateY(-2px)",
+    },
+
+    "&:hover::after": {
+        transform: "scaleX(1)",
+    },
+
+    "&:focus-visible": {
+        outline: "2px solid",
+        outlineColor: "primary.main",
+        outlineOffset: 2,
+    },
+};
+
+const dateSx = {
+    ...linkSx,
+    px: 2.5,
+
+    "&::after": {
+        content: '""',
+        position: "absolute",
+        left: 16,
+        right: 16,
+        bottom: 2,
+        height: 2,
+        backgroundColor: "primary.main",
+        transform: "scaleX(0)",
+        transition: "transform 0.2s ease",
+    },
+};
+
 // Helper: base container for an author row.
 function AuthorRow({ left, right }: { left: ReactNode; right?: ReactNode }) {
     log.trace(`Rendering AuthorRow: ${{ left, right }}`);
@@ -308,7 +357,7 @@ export function AuthorsWithDateAndLink({
                                     underline="none"
                                     variant="h4"
                                     href={`/profile/${author.uid}`}
-                                    sx={linkSx}
+                                    sx={nameSx}
                                 >
                                     {author.name}
                                 </Link>
@@ -320,7 +369,7 @@ export function AuthorsWithDateAndLink({
                 </Box>
             }
             right={
-                <Typography variant={variant ?? "caption"} sx={linkSx}>
+                <Typography variant={variant ?? "caption"} sx={dateSx}>
                     {date.toLocaleDateString("en-US", {
                         month: "long",
                         day: "numeric",
