@@ -21,33 +21,13 @@ export interface Author {
 
 const nameSx = {
     ...linkSx,
-    px: 2.5,
+    flex: 1,
+    width: "100%",
 
     "&::after": {
-        content: '""',
-        position: "absolute",
-        left: 16,
-        right: 16,
+        ...linkSx["&::after"],
+        transformOrigin: "left",
         bottom: 2,
-        height: 2,
-        backgroundColor: "primary.main",
-        transform: "scaleX(0)",
-        transition: "transform 0.2s ease",
-    },
-
-    "&:hover": {
-        backgroundColor: "action.hover",
-        transform: "translateY(-2px)",
-    },
-
-    "&:hover::after": {
-        transform: "scaleX(1)",
-    },
-
-    "&:focus-visible": {
-        outline: "2px solid",
-        outlineColor: "primary.main",
-        outlineOffset: 2,
     },
 };
 
@@ -56,15 +36,10 @@ const dateSx = {
     px: 2.5,
 
     "&::after": {
-        content: '""',
-        position: "absolute",
+        ...linkSx["&::after"],
         left: 16,
         right: 16,
         bottom: 2,
-        height: 2,
-        backgroundColor: "primary.main",
-        transform: "scaleX(0)",
-        transition: "transform 0.2s ease",
     },
 };
 

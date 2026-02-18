@@ -31,7 +31,7 @@ import SnackbarProvider from "@/components/SnackbarProvider";
 
 // Configure Geist Mono font with CSS variable for global usage
 const font = Geist_Mono({
-    variable: "--font-nain",
+    variable: "--font-main",
     subsets: ["latin"],
     display: "swap",
 });
