@@ -1,6 +1,6 @@
 import Footer from "@/components/Footer";
 import NavBar from "@/components/NavBar";
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 
 export default function Layout({
     children,
@@ -8,17 +8,24 @@ export default function Layout({
     children: React.ReactNode;
 }>) {
     return (
-        <>
+        <Box
+            sx={{
+                minHeight: "100vh",
+                display: "flex",
+                flexDirection: "column",
+            }}
+        >
             <NavBar />
 
             <Container
                 component="main"
                 maxWidth="xl"
                 sx={{
+                    flexGrow: 1,
                     display: "flex",
                     flexDirection: "column",
-                    marginTop: 11,
-                    marginBottom: 4,
+                    mt: 11,
+                    mb: 4,
                     gap: 4,
                 }}
             >
@@ -26,6 +33,6 @@ export default function Layout({
             </Container>
 
             <Footer />
-        </>
+        </Box>
     );
 }
