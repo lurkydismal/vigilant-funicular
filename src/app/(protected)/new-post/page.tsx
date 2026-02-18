@@ -17,7 +17,7 @@ export default function NewPost() {
                 flexDirection: "column",
                 alignItems: "center", // center horizontally
                 justifyContent: "flex-start",
-                mt: 16,
+                mt: 24,
                 marginBottom: 5,
                 px: { xs: 2, sm: 3 },
                 py: { xs: 3, sm: 6 },
