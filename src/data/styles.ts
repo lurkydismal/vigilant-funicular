@@ -4,6 +4,7 @@ export const linkSx = {
     textTransform: "none",
     position: "relative",
     transition: "all 0.2s ease",
+    willChange: "transform",
 
     "&::after": {
         content: '""',

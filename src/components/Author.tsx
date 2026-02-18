@@ -21,13 +21,15 @@ export interface Author {
 
 const nameSx = {
     ...linkSx,
-    flex: 1,
-    width: "100%",
 
     "&::after": {
         ...linkSx["&::after"],
         transformOrigin: "left",
         bottom: 2,
+    },
+
+    "&:hover": {
+        transform: "translateY(-2px)",
     },
 };
 
@@ -453,7 +455,11 @@ export function AuthorWithFollowAndLink({
     return (
         <AuthorRow
             left={
-                <Link underline="none" href={`/profile/${author.uid}`}>
+                <Link
+                    underline="none"
+                    href={`/profile/${author.uid}`}
+                    sx={nameSx}
+                >
                     <AuthorInfo
                         author={author}
                         variant={variant}

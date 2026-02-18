@@ -21,7 +21,7 @@
 import type { Metadata } from "next";
 import { InitColorSchemeScript } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v16-appRouter";
-import { Geist_Mono } from "next/font/google";
+import { Inter as Font } from "next/font/google";
 import "./globals.css";
 import log from "@/utils/stdlog";
 import { isDev, appName, appVersion } from "@/utils/stdvar";
@@ -30,7 +30,7 @@ import { Suspense } from "react";
 import SnackbarProvider from "@/components/SnackbarProvider";
 
 // Configure Geist Mono font with CSS variable for global usage
-const font = Geist_Mono({
+const font = Font({
     variable: "--font-main",
     subsets: ["latin"],
     display: "swap",
