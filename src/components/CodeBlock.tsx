@@ -75,21 +75,24 @@ export default function CodeBlock({
      * Sets `copied` state to true if successful, false otherwise
      * @param s - Text to copy
      */
-    const copyToClipboard = useCallback(async (s: string) => {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            try {
-                await navigator.clipboard.writeText(s);
+    const copyToClipboard = useCallback(
+        async (s: string) => {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                try {
+                    await navigator.clipboard.writeText(s);
 
-                setCopied(true);
+                    setCopied(true);
 
-                showInfo("Copied to clipboard");
+                    showInfo("Copied to clipboard");
 
-                return;
-            } catch {
-                setCopied(false);
+                    return;
+                } catch {
+                    setCopied(false);
+                }
             }
-        }
-    }, [showInfo]);
+        },
+        [showInfo],
+    );
 
     // Memoize the syntax highlighting theme based on the current MUI theme mode
     const syntaxTheme = mode === "dark" ? darkTheme : lightTheme;

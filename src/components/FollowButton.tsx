@@ -2,7 +2,13 @@ import {
     PersonRemove as UnfollowIcon,
     PersonAdd as FollowIcon,
 } from "@mui/icons-material";
-import { ButtonProps, IconButton, SxProps, Theme } from "@mui/material";
+import {
+    ButtonProps,
+    IconButton,
+    SxProps,
+    Theme,
+    Tooltip,
+} from "@mui/material";
 
 import { Button } from "@mui/material";
 
@@ -10,18 +16,19 @@ type Props = ButtonProps & {
     uid: string;
     doesFollow: boolean;
     size?: "small" | "medium" | "large";
-    text?: boolean;
+    needText?: boolean;
     sx?: SxProps<Theme>;
 };
 
-function FollowBase({ uid, doesFollow, size, text = false }: Props) {
+function FollowBase({ uid, doesFollow, size, needText = false }: Props) {
+    const text = doesFollow ? "Unfollow" : "Follow";
     const color = doesFollow ? "error" : "success";
     const icon = doesFollow ? <UnfollowIcon /> : <FollowIcon />;
     const handleClick = () => {
         console.log("Follow: ", uid);
     };
 
-    return text ? (
+    return needText ? (
         <Button
             size={size ?? "small"}
             onClick={handleClick}
@@ -29,17 +36,23 @@ function FollowBase({ uid, doesFollow, size, text = false }: Props) {
             variant="contained"
             startIcon={icon}
         >
-            {doesFollow ? "Unfollow" : "Follow"}
+            {text}
         </Button>
     ) : (
-        <IconButton size={size ?? "medium"} onClick={handleClick} color={color}>
-            {icon}
-        </IconButton>
+        <Tooltip title={text} placement="top" arrow>
+            <IconButton
+                size={size ?? "medium"}
+                onClick={handleClick}
+                color={color}
+            >
+                {icon}
+            </IconButton>
+        </Tooltip>
     );
 }
 
-export function FollowButtonWithText(props: Omit<Props, "text">) {
-    return <FollowBase {...props} text />;
+export function FollowButtonWithText(props: Omit<Props, "needText">) {
+    return <FollowBase {...props} needText />;
 }
 
 export function FollowButton(props: Props) {

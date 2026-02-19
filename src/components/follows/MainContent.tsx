@@ -29,9 +29,7 @@ export default function MainContent() {
 
             <TagsAndSearchMobile tags={tags} />
 
-            <Follows
-                follows={paginate(follows, currentPage, perPage)}
-            ></Follows>
+            <Follows follows={paginate(follows, currentPage, perPage)} />
 
             <PostsPagination
                 total={follows.length}

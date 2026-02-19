@@ -1,11 +1,19 @@
 import { NavItem } from "@/data/navbat";
 import NextLink from "@/components/Link";
-import { Box, Button, Divider, SxProps } from "@mui/material";
+import { Badge, Box, Button, Divider, SxProps } from "@mui/material";
 import { usePathname } from "next/navigation";
 import { activeButtonSx, navButtonSx } from "./styles";
 
+const badgeSx = {
+    transition: "all 0.2s ease",
+
+    "&:hover": {
+        transform: "translateY(-2px)",
+    },
+};
+
 function NavButton({ item, isActive }: { item: NavItem; isActive: boolean }) {
-    return (
+    const button = (
         <Button
             component={NextLink}
             href={item.href}
@@ -17,6 +25,25 @@ function NavButton({ item, isActive }: { item: NavItem; isActive: boolean }) {
         >
             {item.name}
         </Button>
+    );
+
+    if (isActive) return button;
+
+    const badgeContent = (item.badge ?? false) ? 1 : 0;
+
+    return (
+        <Badge
+            badgeContent={badgeContent}
+            color="info"
+            overlap="circular"
+            variant="dot"
+            anchorOrigin={{
+                horizontal: item.position,
+            }}
+            sx={badgeSx}
+        >
+            {button}
+        </Badge>
     );
 }
 

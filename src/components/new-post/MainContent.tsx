@@ -45,8 +45,6 @@ export default function MainContent() {
                 gap: 2,
                 width: "100%",
                 px: { xs: 0, sm: 2 },
-                // flex: 1, // let Container give it height
-                // justifyContent: 'space-between', // push footer to bottom
             }}
         >
             {/* Header */}

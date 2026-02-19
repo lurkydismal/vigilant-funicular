@@ -975,7 +975,7 @@ console.log("Hello!");
 
 export const postsData = postsDataTemp.map((post, index) => ({
     ...post,
-    id: index,
+    id: String(index),
 }));
 
 export const tags = [

@@ -4,6 +4,7 @@ export interface NavItem {
     name: string;
     href: string;
     position: Position;
+    badge?: boolean;
 }
 
 export const items: NavItem[] = [

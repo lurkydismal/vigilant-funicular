@@ -434,7 +434,7 @@ export function AuthorWithFollow({
                     uid={author.uid}
                     doesFollow={doesFollow}
                     size="large"
-                    text={needText}
+                    needText={needText}
                 />
             }
         />
@@ -479,7 +479,7 @@ export function AuthorWithFollowAndLink({
                     uid={author.uid}
                     doesFollow={doesFollow}
                     size="large"
-                    text={needText}
+                    needText={needText}
                 />
             }
         />
