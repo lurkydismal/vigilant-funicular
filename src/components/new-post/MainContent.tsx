@@ -48,21 +48,15 @@ export default function MainContent() {
             }}
         >
             {/* Header */}
-            <Box>
-                <Typography variant="h2" gutterBottom>
-                    New post
-                </Typography>
-
-                {/* Desktop stepper (keeps original desktop behavior) */}
-                <Box sx={{ display: { xs: "none", md: "block" }, mb: 2 }}>
-                    <Stepper activeStep={activeStep} sx={{ px: 0 }}>
-                        {steps.map((step) => (
-                            <Step key={step.title}>
-                                <StepLabel>{step.title}</StepLabel>
-                            </Step>
-                        ))}
-                    </Stepper>
-                </Box>
+            {/* Desktop stepper */}
+            <Box sx={{ display: { xs: "none", md: "block" }, mb: 2 }}>
+                <Stepper activeStep={activeStep} sx={{ px: 0 }}>
+                    {steps.map((step) => (
+                        <Step key={step.title}>
+                            <StepLabel>{step.title}</StepLabel>
+                        </Step>
+                    ))}
+                </Stepper>
             </Box>
 
             {/* Main content area - grows and scrolls if necessary */}
@@ -103,9 +97,11 @@ export default function MainContent() {
                 {activeStep === steps.length ? (
                     <Stack spacing={2} useFlexGap>
                         <Typography variant="h1">📦</Typography>
+
                         <Typography variant="h5">
                             Thank you for your order!
                         </Typography>
+
                         <Typography
                             variant="body1"
                             sx={{ color: "text.secondary" }}
@@ -114,6 +110,7 @@ export default function MainContent() {
                             We have emailed your order confirmation and will
                             update you once it{"'"}s shipped.
                         </Typography>
+
                         <Button variant="contained" sx={{ alignSelf: "start" }}>
                             Go to my orders
                         </Button>
@@ -121,63 +118,6 @@ export default function MainContent() {
                 ) : (
                     <>{steps[activeStep].item}</>
                 )}
-            </Box>
-
-            {/* Footer — buttons. With the parent using space-between, this will sit at the bottom */}
-            <Box
-                component="footer"
-                sx={{
-                    display: "flex",
-                    gap: 1,
-                    alignItems: "center",
-                    flexWrap: "wrap",
-                    // On small screens stack column-reverse (Previous above Next)
-                    flexDirection: { xs: "column-reverse", sm: "row" },
-                    justifyContent:
-                        activeStep !== 0 ? "space-between" : "flex-end",
-                    pt: 1,
-                }}
-            >
-                {activeStep !== 0 && (
-                    // desktop "Previous"
-                    <Button
-                        onClick={handleBack}
-                        startIcon={<ChevronLeftRounded />}
-                        sx={{
-                            display: { xs: "none", sm: "inline-flex" },
-                        }}
-                        variant="text"
-                    >
-                        Previous
-                    </Button>
-                )}
-                {activeStep !== 0 && (
-                    // mobile "Previous" (full width)
-                    <Button
-                        onClick={handleBack}
-                        startIcon={<ChevronLeftRounded />}
-                        sx={{
-                            display: { xs: "flex", sm: "none" },
-                            width: "100%",
-                        }}
-                        variant="outlined"
-                    >
-                        Previous
-                    </Button>
-                )}
-
-                <Box sx={{ ml: { sm: "auto" } }}>
-                    <Button
-                        endIcon={<ChevronRightRounded />}
-                        onClick={handleNext}
-                        sx={{ width: { xs: "100%", sm: "auto" } }}
-                        variant="contained"
-                    >
-                        {activeStep === steps.length - 1
-                            ? "Place order"
-                            : "Next"}
-                    </Button>
-                </Box>
             </Box>
         </Box>
     );
