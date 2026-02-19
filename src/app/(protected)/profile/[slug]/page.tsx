@@ -13,7 +13,5 @@ export default async function Page({
 }) {
     const { slug } = await params;
 
-    return (
-        <MainContent id={slug} />
-    );
+    return <MainContent id={slug} />;
 }

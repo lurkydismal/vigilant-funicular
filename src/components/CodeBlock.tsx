@@ -89,7 +89,7 @@ export default function CodeBlock({
                 setCopied(false);
             }
         }
-    }, []);
+    }, [showInfo]);
 
     // Memoize the syntax highlighting theme based on the current MUI theme mode
     const syntaxTheme = mode === "dark" ? darkTheme : lightTheme;
