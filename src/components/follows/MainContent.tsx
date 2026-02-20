@@ -19,11 +19,9 @@ export default function MainContent() {
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-            <>
-                <Typography variant="h2" gutterBottom>
-                    Follows
-                </Typography>
-            </>
+            <Typography variant="h2" gutterBottom>
+                Follows
+            </Typography>
 
             <SearchButton />
 
