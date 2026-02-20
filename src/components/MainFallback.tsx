@@ -34,25 +34,28 @@ const pulseGlow = keyframes`
 `;
 
 const Fancy = styled(Typography)(({ theme }) => ({
+    position: "relative",
     fontWeight: theme.typography.fontWeightMedium,
     fontSize: "clamp(20px, 6vw, 64px)",
     lineHeight: 1,
     textTransform: "uppercase",
     letterSpacing: "0.12em",
     textAlign: "center",
-    color: "#fff", // primary requirement: white
-    // subtle gradient + clipped white look for depth while remaining white
-    background:
-        "linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(250,250,250,0.98) 50%, rgba(245,245,245,0.96) 100%)",
+    color: "#fff",
+    background: "linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(250,250,250,0.98) 50%, rgba(245,245,245,0.96) 100%)",
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
-    // glow + soft shadow for style
-    textShadow:
-        "0 6px 18px rgba(255,255,255,0.06), 0 12px 40px rgba(0,0,0,0.6)",
-    // small subtle animation
     animation: `${fadeInUp} 600ms ease both, ${pulseGlow} 2.8s ease-in-out infinite`,
-    // accessible wrap
-    wordBreak: "break-word",
+    "&::before": {
+        content: '""',
+        position: "absolute",
+        inset: 0,
+        zIndex: -1,
+        filter: "blur(20px)",
+        background: "white",
+        opacity: 0.15,
+        borderRadius: "inherit",
+    },
 }));
 
 function isEmptyNode(node?: ReactNode) {
