@@ -186,6 +186,8 @@ export const postSelectSchema = createSelectSchema(posts);
 export const postInsertSchema = createInsertSchema(posts);
 export const postUpdateSchema = createUpdateSchema(posts);
 
-export const postWithCategory = postSelectSchema.extend({
+export const postFullSchema = postSelectSchema.extend({
+    author: userSelectSchema,
+    coAuthor: userSelectSchema,
     category: categorySelectSchema,
 });

@@ -13,7 +13,8 @@ import {
     CardMedia,
     Typography,
 } from "@mui/material";
-import { PostsRowWithCategory } from "@/db/types";
+import { PostsRowFull } from "@/db/types";
+import { buildDate } from "@/utils/stdvar";
 
 /* Card wrapper — lift + subtle shadow on hover/focus */
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -94,7 +95,7 @@ const StyledCardContent = styled(CardContent)(({ theme }) => ({
     },
 }));
 
-export default function Posts({ posts }: { posts: PostsRowWithCategory[] }) {
+export default function Posts({ posts }: { posts: PostsRowFull[] }) {
     const router = useRouter();
 
     const handleNavigate = (id: number) => {
@@ -161,7 +162,7 @@ export default function Posts({ posts }: { posts: PostsRowWithCategory[] }) {
                                 variant="caption"
                                 color="text.secondary"
                             >
-                                {post.category.name}
+                                {post.category?.name ?? "Unknown"}
                             </Typography>
 
                             <Typography variant="h6">
@@ -176,7 +177,13 @@ export default function Posts({ posts }: { posts: PostsRowWithCategory[] }) {
                             </Truncated>
                         </StyledCardContent>
 
-                        <AuthorsWithDate authors={post.author_id} />
+                        <AuthorsWithDate authors={[
+                            (post.author ?? {
+                                username: "Unknown",
+                                avatar_url: null,
+                            }),
+                            ...(post.coAuthor ? [post.coAuthor] : []),
+                        ]} />
                     </StyledCard>
                 </Grid>
             ))}

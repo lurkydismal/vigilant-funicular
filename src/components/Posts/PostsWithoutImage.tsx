@@ -6,7 +6,8 @@ import MainFallback from "@/components/MainFallback";
 import { useRouter } from "next/navigation";
 import { Truncated } from "./styled";
 import { styled, Typography, Grid, Box } from "@mui/material";
-import { PostsRowWithCategory } from "@/db/types";
+import { PostsRowFull } from "@/db/types";
+import { buildDate } from "@/utils/stdvar";
 
 const TitleTypography = styled(Typography)(({ theme }) => ({
     "&:hover": { cursor: "pointer" },
@@ -45,7 +46,7 @@ const TitleTypography = styled(Typography)(({ theme }) => ({
     },
 }));
 
-export default function PostsWithoutImage({ posts }: { posts: PostsRowWithCategory[] }) {
+export default function PostsWithoutImage({ posts }: { posts: PostsRowFull[] }) {
     const router = useRouter();
 
     const handleNavigate = (id: number) => {
@@ -79,7 +80,7 @@ export default function PostsWithoutImage({ posts }: { posts: PostsRowWithCatego
                                 variant="caption"
                                 component="div"
                             >
-                                {post.category.name}
+                                {post.category?.name ?? "Unknown"}
                             </Typography>
 
                             <TitleTypography
@@ -105,7 +106,13 @@ export default function PostsWithoutImage({ posts }: { posts: PostsRowWithCatego
                                 {post.description}
                             </Truncated>
 
-                            <AuthorsWithDate authors={post.authors} />
+                            <AuthorsWithDate authors={[
+                                (post.author ?? {
+                                    username: "Unknown",
+                                    avatar_url: null,
+                                }),
+                                ...(post.coAuthor ? [post.coAuthor] : []),
+                            ]} />
                         </Box>
                     </Grid>
                 ))}

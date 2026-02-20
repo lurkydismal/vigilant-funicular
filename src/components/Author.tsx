@@ -12,7 +12,7 @@ import {
     AvatarGroup,
 } from "@mui/material";
 import { linkSx } from "@/data/styles";
-import { UsersRow } from "@/db/types";
+import { UsersRowPublic } from "@/db/types";
 
 const nameSx = {
     ...linkSx,
@@ -74,7 +74,7 @@ function AuthorInfo({
     avatarWidth = 24,
     avatarHeight = 24,
 }: {
-    author: UsersRow;
+    author: UsersRowPublic;
     variant?: TypographyVariant;
     avatarWidth?: number;
     avatarHeight?: number;
@@ -112,7 +112,7 @@ function AuthorsInfo({
     avatarWidth = 24,
     avatarHeight = 24,
 }: {
-    authors: UsersRow[];
+    authors: UsersRowPublic[];
     variant?: TypographyVariant;
     avatarWidth?: number;
     avatarHeight?: number;
@@ -133,7 +133,7 @@ function AuthorsInfo({
             <AvatarGroup max={3}>
                 {authors.map((author) => (
                     <Avatar
-                        key={author.id}
+                        key={author.username}
                         alt={author.username}
                         // src={author.avatar}
                         sx={{ width: avatarWidth, height: avatarHeight }}
@@ -158,7 +158,7 @@ export function Author({
     avatarWidth,
     avatarHeight,
 }: {
-    author: UsersRow;
+    author: UsersRowPublic;
     variant?: TypographyVariant;
     avatarWidth?: number;
     avatarHeight?: number;
@@ -185,7 +185,7 @@ export function Authors({
     avatarWidth,
     avatarHeight,
 }: {
-    authors: UsersRow[];
+    authors: UsersRowPublic[];
     variant?: TypographyVariant;
     avatarWidth?: number;
     avatarHeight?: number;
@@ -213,7 +213,7 @@ export function AuthorWithDate({
     avatarWidth,
     avatarHeight,
 }: {
-    author: UsersRow;
+    author: UsersRowPublic;
     date?: Date;
     variant?: TypographyVariant;
     avatarWidth?: number;
@@ -251,7 +251,7 @@ export function AuthorWithDateAndLink({
     avatarWidth,
     avatarHeight,
 }: {
-    author: UsersRow;
+    author: UsersRowPublic;
     date?: Date;
     variant?: TypographyVariant;
     avatarWidth?: number;
@@ -259,10 +259,11 @@ export function AuthorWithDateAndLink({
 }) {
     log.trace(`Rendering AuthorWithDateAndLink: ${{ author, date }}`);
 
+    // FIX: Encode username
     return (
         <AuthorRow
             left={
-                <Link underline="none" href={`/profile/${author.id}`}>
+                <Link underline="none" href={`/profile/${author.username}`}>
                     <AuthorInfo
                         author={author}
                         variant={variant}
@@ -291,7 +292,7 @@ export function AuthorsWithDateAndLink({
     avatarWidth,
     avatarHeight,
 }: {
-    authors: UsersRow[];
+    authors: UsersRowPublic[];
     date?: Date;
     variant?: TypographyVariant;
     avatarWidth?: number;
@@ -299,6 +300,7 @@ export function AuthorsWithDateAndLink({
 }) {
     log.trace(`Rendering AuthorsWithDateAndLink: ${{ authors, date }}`);
 
+    // FIX: Encode username
     return (
         <AuthorRow
             left={
@@ -314,7 +316,7 @@ export function AuthorsWithDateAndLink({
                     <AvatarGroup max={3}>
                         {authors.map((author) => (
                             <Avatar
-                                key={author.id}
+                                key={author.username}
                                 alt={author.username}
                                 // src={author.avatar}
                                 sx={{
@@ -330,11 +332,11 @@ export function AuthorsWithDateAndLink({
                     {/* List names separated by commas, each name wrapped in a Link */}
                     <Typography variant={variant}>
                         {authors.map((author, index) => (
-                            <Fragment key={author.id}>
+                            <Fragment key={author.username}>
                                 <Link
                                     underline="none"
                                     variant="h4"
-                                    href={`/profile/${author.id}`}
+                                    href={`/profile/${author.username}`}
                                     sx={nameSx}
                                 >
                                     {author.username}
@@ -366,7 +368,7 @@ export function AuthorsWithDate({
     avatarWidth,
     avatarHeight,
 }: {
-    authors: UsersRow[];
+    authors: UsersRowPublic[];
     date?: Date;
     variant?: TypographyVariant;
     avatarWidth?: number;
@@ -405,7 +407,7 @@ export function AuthorWithFollow({
     doesFollow,
     needText,
 }: {
-    author: UsersRow;
+    author: UsersRowPublic;
     variant?: TypographyVariant;
     avatarWidth?: number;
     avatarHeight?: number;
@@ -426,7 +428,7 @@ export function AuthorWithFollow({
             }
             right={
                 <FollowButton
-                    uid={String(author.id)}
+                    uid={author.username} // FIX: Encode
                     doesFollow={doesFollow}
                     size="large"
                     needText={needText}
@@ -444,7 +446,7 @@ export function AuthorWithFollowAndLink({
     doesFollow,
     needText,
 }: {
-    author: UsersRow;
+    author: UsersRowPublic;
     variant?: TypographyVariant;
     avatarWidth?: number;
     avatarHeight?: number;
@@ -458,7 +460,7 @@ export function AuthorWithFollowAndLink({
             left={
                 <Link
                     underline="none"
-                    href={`/profile/${author.id}`}
+                    href={`/profile/${author.username}`} // FIX: Encode
                     sx={nameSx}
                 >
                     <AuthorInfo
@@ -471,7 +473,7 @@ export function AuthorWithFollowAndLink({
             }
             right={
                 <FollowButton
-                    uid={String(author.id)}
+                    uid={author.username}
                     doesFollow={doesFollow}
                     size="large"
                     needText={needText}
