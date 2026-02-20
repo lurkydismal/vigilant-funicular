@@ -98,12 +98,12 @@ const StyledCardContent = styled(CardContent)(({ theme }) => ({
 export default function Posts({ posts }: { posts: Post[] }) {
     const router = useRouter();
 
-    const handleNavigate = (id: number) => {
+    const handleNavigate = (id: string) => {
         router.push(`/post/${id}`);
     };
 
     // keyboard accessible navigation
-    const handleKey = (e: React.KeyboardEvent, id: number) => {
+    const handleKey = (e: React.KeyboardEvent, id: string) => {
         if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
             handleNavigate(id);
