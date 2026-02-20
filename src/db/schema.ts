@@ -1,19 +1,61 @@
-import { serial, pgTable, text, uniqueIndex, check } from "drizzle-orm/pg-core";
-import { timestamps } from "@/db/helpers";
+import { varchar, serial, pgTable, text, uniqueIndex, check, integer, index, primaryKey } from "drizzle-orm/pg-core";
+import { timestamps } from "./helpers";
 import { sql } from "drizzle-orm";
 
-export const template_table = {
+export const users = pgTable("users", {
     id: serial().primaryKey(),
-    content: text().notNull(),
+    username: varchar({ length: 50 }).unique().notNull(),
+    passwordHash: text().notNull(),
+    avatarUrl: text(),
     ...timestamps,
-};
+}, (t) => [
+    check("content_not_blank", sql`length(trim(${t.username})) > 0`),
 
-export const table = pgTable("table", template_table, (t) => [
-    check("content_not_blank", sql`length(trim(${t.content})) > 0`),
-
-    uniqueIndex().on(t.created_at),
-    uniqueIndex().on(t.updated_at),
+    uniqueIndex().on(t.username),
 ]);
 
-export type TableRow = typeof table.$inferSelect;
-export type TableRowInsert = typeof table.$inferInsert;
+export const follows = pgTable('follows', {
+    followerId: integer().notNull().references(() => users.id, { onDelete: "cascade" }),
+    followingId: integer().notNull().references(() => users.id, { onDelete: "cascade" }),
+    created_at: timestamps.created_at,
+}, (t) => [
+    primaryKey({ columns: [t.followerId, t.followingId] }),
+
+    index().on(t.followerId),
+    index().on(t.followingId),
+]);
+
+export type UsersRow = typeof users.$inferSelect;
+export type UsersRowInsert = typeof users.$inferInsert;
+
+export const categories = pgTable("categories", {
+    id: serial().primaryKey(),
+    name: text().unique().notNull(),
+    ...timestamps,
+}, (t) => [
+    check("content_not_blank", sql`length(trim(${t.name})) > 0`),
+
+    uniqueIndex().on(t.name),
+]);
+
+export type CategoryRow = typeof categories.$inferSelect;
+export type CategoryRowInsert = typeof categories.$inferInsert;
+
+export const posts = pgTable("posts", {
+    id: serial().primaryKey(),
+    authorId: integer().references(() => users.id, { onDelete: "set null" }),
+    coAuthorId: integer().references(() => users.id, { onDelete: "set null" }),
+    categoryId: integer().references(() => categories.id, { onDelete: "set null" }),
+    description: text(),
+    content: text().notNull(),
+    ...timestamps,
+}, (t) => [
+    check("content_not_blank", sql`length(trim(${t.content})) > 0`),
+
+    index().on(t.authorId),
+    index().on(t.coAuthorId),
+    index().on(t.categoryId),
+]);
+
+export type PostsRow = typeof posts.$inferSelect;
+export type PostsRowInsert = typeof posts.$inferInsert;
