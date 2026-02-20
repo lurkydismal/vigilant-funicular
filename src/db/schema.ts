@@ -26,9 +26,6 @@ export const follows = pgTable('follows', {
     index().on(t.following_id),
 ]);
 
-export type UsersRow = typeof users.$inferSelect;
-export type UsersRowInsert = typeof users.$inferInsert;
-
 export const categories = pgTable("categories", {
     id: serial().primaryKey(),
     name: varchar({ length: 50 }).unique().notNull(),
@@ -38,9 +35,6 @@ export const categories = pgTable("categories", {
 
     uniqueIndex().on(t.name),
 ]);
-
-export type CategoryRow = typeof categories.$inferSelect;
-export type CategoryRowInsert = typeof categories.$inferInsert;
 
 export const posts = pgTable("posts", {
     id: serial().primaryKey(),
@@ -62,6 +56,3 @@ export const posts = pgTable("posts", {
     index().on(t.co_author_id),
     index().on(t.category_id),
 ]);
-
-export type PostsRow = typeof posts.$inferSelect;
-export type PostsRowInsert = typeof posts.$inferInsert;

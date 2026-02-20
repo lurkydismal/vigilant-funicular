@@ -12,12 +12,7 @@ import {
     AvatarGroup,
 } from "@mui/material";
 import { linkSx } from "@/data/styles";
-
-export interface Author {
-    uid: string;
-    name: string;
-    avatar?: string;
-}
+import { UsersRow } from "@/db/types";
 
 const nameSx = {
     ...linkSx,
@@ -79,7 +74,7 @@ function AuthorInfo({
     avatarWidth = 24,
     avatarHeight = 24,
 }: {
-    author: Author;
+    author: UsersRow;
     variant?: TypographyVariant;
     avatarWidth?: number;
     avatarHeight?: number;
@@ -98,13 +93,14 @@ function AuthorInfo({
             }}
         >
             <Avatar
-                alt={author.name}
-                // src={author.avatar}
+                alt={author.username}
+                // src={author.avatar_url}
                 sx={{ width: avatarWidth, height: avatarHeight }}
             >
-                {author.avatar ? author.avatar[0].toUpperCase() : ""}
+                {author.username[0].toUpperCase()}
             </Avatar>
-            <Typography variant={variant}>{author.name}</Typography>
+
+            <Typography variant={variant}>{author.username}</Typography>
         </Box>
     );
 }
@@ -116,7 +112,7 @@ function AuthorsInfo({
     avatarWidth = 24,
     avatarHeight = 24,
 }: {
-    authors: Author[];
+    authors: UsersRow[];
     variant?: TypographyVariant;
     avatarWidth?: number;
     avatarHeight?: number;
@@ -137,17 +133,18 @@ function AuthorsInfo({
             <AvatarGroup max={3}>
                 {authors.map((author) => (
                     <Avatar
-                        key={author.uid}
-                        alt={author.name}
+                        key={author.id}
+                        alt={author.username}
                         // src={author.avatar}
                         sx={{ width: avatarWidth, height: avatarHeight }}
                     >
-                        {author.avatar ? author.avatar[0].toUpperCase() : ""}
+                        {author.username[0].toUpperCase()}
                     </Avatar>
                 ))}
             </AvatarGroup>
+
             <Typography variant={variant}>
-                {authors.map((author) => author.name).join(", ")}
+                {authors.map((author) => author.username).join(", ")}
             </Typography>
         </Box>
     );
@@ -161,7 +158,7 @@ export function Author({
     avatarWidth,
     avatarHeight,
 }: {
-    author: Author;
+    author: UsersRow;
     variant?: TypographyVariant;
     avatarWidth?: number;
     avatarHeight?: number;
@@ -188,7 +185,7 @@ export function Authors({
     avatarWidth,
     avatarHeight,
 }: {
-    authors: Author[];
+    authors: UsersRow[];
     variant?: TypographyVariant;
     avatarWidth?: number;
     avatarHeight?: number;
@@ -216,7 +213,7 @@ export function AuthorWithDate({
     avatarWidth,
     avatarHeight,
 }: {
-    author: Author;
+    author: UsersRow;
     date?: Date;
     variant?: TypographyVariant;
     avatarWidth?: number;
@@ -254,7 +251,7 @@ export function AuthorWithDateAndLink({
     avatarWidth,
     avatarHeight,
 }: {
-    author: Author;
+    author: UsersRow;
     date?: Date;
     variant?: TypographyVariant;
     avatarWidth?: number;
@@ -265,7 +262,7 @@ export function AuthorWithDateAndLink({
     return (
         <AuthorRow
             left={
-                <Link underline="none" href={`/profile/${author.uid}`}>
+                <Link underline="none" href={`/profile/${author.id}`}>
                     <AuthorInfo
                         author={author}
                         variant={variant}
@@ -294,7 +291,7 @@ export function AuthorsWithDateAndLink({
     avatarWidth,
     avatarHeight,
 }: {
-    authors: Author[];
+    authors: UsersRow[];
     date?: Date;
     variant?: TypographyVariant;
     avatarWidth?: number;
@@ -317,17 +314,15 @@ export function AuthorsWithDateAndLink({
                     <AvatarGroup max={3}>
                         {authors.map((author) => (
                             <Avatar
-                                key={author.uid}
-                                alt={author.name}
+                                key={author.id}
+                                alt={author.username}
                                 // src={author.avatar}
                                 sx={{
                                     width: avatarWidth,
                                     height: avatarHeight,
                                 }}
                             >
-                                {author.avatar
-                                    ? author.avatar[0].toUpperCase()
-                                    : ""}
+                                {author.username[0].toUpperCase()}
                             </Avatar>
                         ))}
                     </AvatarGroup>
@@ -335,14 +330,14 @@ export function AuthorsWithDateAndLink({
                     {/* List names separated by commas, each name wrapped in a Link */}
                     <Typography variant={variant}>
                         {authors.map((author, index) => (
-                            <Fragment key={author.uid}>
+                            <Fragment key={author.id}>
                                 <Link
                                     underline="none"
                                     variant="h4"
-                                    href={`/profile/${author.uid}`}
+                                    href={`/profile/${author.id}`}
                                     sx={nameSx}
                                 >
-                                    {author.name}
+                                    {author.username}
                                 </Link>
 
                                 {index < authors.length - 1 && ", "}
@@ -371,7 +366,7 @@ export function AuthorsWithDate({
     avatarWidth,
     avatarHeight,
 }: {
-    authors: Author[];
+    authors: UsersRow[];
     date?: Date;
     variant?: TypographyVariant;
     avatarWidth?: number;
@@ -410,7 +405,7 @@ export function AuthorWithFollow({
     doesFollow,
     needText,
 }: {
-    author: Author;
+    author: UsersRow;
     variant?: TypographyVariant;
     avatarWidth?: number;
     avatarHeight?: number;
@@ -431,7 +426,7 @@ export function AuthorWithFollow({
             }
             right={
                 <FollowButton
-                    uid={author.uid}
+                    uid={String(author.id)}
                     doesFollow={doesFollow}
                     size="large"
                     needText={needText}
@@ -449,7 +444,7 @@ export function AuthorWithFollowAndLink({
     doesFollow,
     needText,
 }: {
-    author: Author;
+    author: UsersRow;
     variant?: TypographyVariant;
     avatarWidth?: number;
     avatarHeight?: number;
@@ -463,7 +458,7 @@ export function AuthorWithFollowAndLink({
             left={
                 <Link
                     underline="none"
-                    href={`/profile/${author.uid}`}
+                    href={`/profile/${author.id}`}
                     sx={nameSx}
                 >
                     <AuthorInfo
@@ -476,7 +471,7 @@ export function AuthorWithFollowAndLink({
             }
             right={
                 <FollowButton
-                    uid={author.uid}
+                    uid={String(author.id)}
                     doesFollow={doesFollow}
                     size="large"
                     needText={needText}

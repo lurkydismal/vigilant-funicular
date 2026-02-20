@@ -13,7 +13,7 @@ import {
     CardMedia,
     Typography,
 } from "@mui/material";
-import { PostsRow } from "@/db/schema";
+import { PostsRowWithCategory } from "@/db/types";
 
 /* Card wrapper — lift + subtle shadow on hover/focus */
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -94,7 +94,7 @@ const StyledCardContent = styled(CardContent)(({ theme }) => ({
     },
 }));
 
-export default function Posts({ posts }: { posts: PostsRow[] }) {
+export default function Posts({ posts }: { posts: PostsRowWithCategory[] }) {
     const router = useRouter();
 
     const handleNavigate = (id: number) => {
@@ -161,7 +161,7 @@ export default function Posts({ posts }: { posts: PostsRow[] }) {
                                 variant="caption"
                                 color="text.secondary"
                             >
-                                {post.tag}
+                                {post.category.name}
                             </Typography>
 
                             <Typography variant="h6">
@@ -176,7 +176,7 @@ export default function Posts({ posts }: { posts: PostsRow[] }) {
                             </Truncated>
                         </StyledCardContent>
 
-                        <AuthorsWithDate authors={post.authors} />
+                        <AuthorsWithDate authors={post.author_id} />
                     </StyledCard>
                 </Grid>
             ))}

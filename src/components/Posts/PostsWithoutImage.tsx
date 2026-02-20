@@ -4,9 +4,9 @@ import { NavigateNextRounded } from "@mui/icons-material";
 import { AuthorsWithDate } from "@/components/Author";
 import MainFallback from "@/components/MainFallback";
 import { useRouter } from "next/navigation";
-import { Post } from "@/data/posts/types";
 import { Truncated } from "./styled";
 import { styled, Typography, Grid, Box } from "@mui/material";
+import { PostsRowWithCategory } from "@/db/types";
 
 const TitleTypography = styled(Typography)(({ theme }) => ({
     "&:hover": { cursor: "pointer" },
@@ -45,7 +45,7 @@ const TitleTypography = styled(Typography)(({ theme }) => ({
     },
 }));
 
-export default function PostsWithoutImage({ posts }: { posts: Post[] }) {
+export default function PostsWithoutImage({ posts }: { posts: PostsRowWithCategory[] }) {
     const router = useRouter();
 
     const handleNavigate = (id: number) => {
@@ -79,7 +79,7 @@ export default function PostsWithoutImage({ posts }: { posts: Post[] }) {
                                 variant="caption"
                                 component="div"
                             >
-                                {post.tag}
+                                {post.category.name}
                             </Typography>
 
                             <TitleTypography
