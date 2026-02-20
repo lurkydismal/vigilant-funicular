@@ -3,24 +3,33 @@ import * as schema from './schema';
 
 export const relations = defineRelations(schema, (r) => ({
     users: {
-        posts: r.many.posts(),
+        posts: r.many.posts({
+            alias: "author",
+        }),
+        coAuthoredPosts: r.many.posts({
+            alias: "coAuthor",
+        }),
     },
+
     categories: {
         posts: r.many.posts(),
     },
+
     posts: {
         author: r.one.users({
-            from: r.posts.authorId,
+            alias: "author",
+            from: r.posts.author_id,
             to: r.users.id,
             optional: false,
         }),
         coAuthor: r.one.users({
-            from: r.posts.coAuthorId,
+            alias: "coAuthor",
+            from: r.posts.co_author_id,
             to: r.users.id,
             optional: false,
         }),
         category: r.one.categories({
-            from: r.posts.categoryId,
+            from: r.posts.category_id,
             to: r.categories.id,
             optional: false,
         }),

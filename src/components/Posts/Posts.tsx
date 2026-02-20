@@ -2,9 +2,7 @@
 
 import { NavigateNextRounded } from "@mui/icons-material";
 import { AuthorsWithDate } from "@/components/Author";
-import MainFallback from "@/components/MainFallback";
 import { useRouter } from "next/navigation";
-import { Post } from "@/data/posts/types";
 import { Truncated } from "./styled";
 import {
     styled,
@@ -15,6 +13,7 @@ import {
     CardMedia,
     Typography,
 } from "@mui/material";
+import { PostsRow } from "@/db/schema";
 
 /* Card wrapper — lift + subtle shadow on hover/focus */
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -95,15 +94,15 @@ const StyledCardContent = styled(CardContent)(({ theme }) => ({
     },
 }));
 
-export default function Posts({ posts }: { posts: Post[] }) {
+export default function Posts({ posts }: { posts: PostsRow[] }) {
     const router = useRouter();
 
-    const handleNavigate = (id: string) => {
+    const handleNavigate = (id: number) => {
         router.push(`/post/${id}`);
     };
 
     // keyboard accessible navigation
-    const handleKey = (e: React.KeyboardEvent, id: string) => {
+    const handleKey = (e: React.KeyboardEvent, id: number) => {
         if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
             handleNavigate(id);
@@ -111,78 +110,76 @@ export default function Posts({ posts }: { posts: Post[] }) {
     };
 
     return (
-        <MainFallback itemsLength={posts.length}>
-            <Grid container spacing={2} columns={12}>
-                {posts.map((post, index) => (
-                    <Grid size={{ xs: 12, md: 4 }} key={post.id ?? index}>
-                        <StyledCard
-                            onClick={() => handleNavigate(post.id)}
-                            onKeyDown={(e) => handleKey(e, post.id)}
-                            tabIndex={0}
-                            role="link"
-                            aria-label={`${post.title} — ${post.tag}`}
-                            variant="outlined"
-                            sx={{
-                                // sync overlay + image transform via sx for hover state
-                                "&:hover .post-image": {
-                                    transform: "scale(1.06)",
-                                },
-                                "&:hover .post-overlay": {
-                                    opacity: 1,
-                                    transform: "translateY(0)",
-                                },
-                            }}
-                        >
-                            <MediaWrapper>
-                                <CardMedia
-                                    className="post-image"
-                                    component="img"
-                                    alt={post.title}
-                                    image={
-                                        post.imageUrl ??
-                                        `https://picsum.photos/800/450?random=${post.id ?? index}`
-                                    }
-                                    sx={{
-                                        aspectRatio: "16/9",
-                                        width: "100%",
-                                        height: "100%",
-                                        objectFit: "cover",
-                                    }}
-                                    loading="lazy"
-                                />
+        <Grid container spacing={2} columns={12}>
+            {posts.map((post, index) => (
+                <Grid size={{ xs: 12, md: 4 }} key={post.id ?? index}>
+                    <StyledCard
+                        onClick={() => handleNavigate(post.id)}
+                        onKeyDown={(e) => handleKey(e, post.id)}
+                        tabIndex={0}
+                        role="link"
+                        aria-label={`${post.title} — ${post.id}`}
+                        variant="outlined"
+                        sx={{
+                            // sync overlay + image transform via sx for hover state
+                            "&:hover .post-image": {
+                                transform: "scale(1.06)",
+                            },
+                            "&:hover .post-overlay": {
+                                opacity: 1,
+                                transform: "translateY(0)",
+                            },
+                        }}
+                    >
+                        <MediaWrapper>
+                            <CardMedia
+                                className="post-image"
+                                component="img"
+                                alt={post.title}
+                                image={
+                                    post.preview_url ??
+                                    `https://picsum.photos/800/450?random=${post.id ?? index}`
+                                }
+                                sx={{
+                                    aspectRatio: "16/9",
+                                    width: "100%",
+                                    height: "100%",
+                                    objectFit: "cover",
+                                }}
+                                loading="lazy"
+                            />
 
-                                <MediaOverlay className="post-overlay">
-                                    <Box className="arrowBox" aria-hidden>
-                                        <NavigateNextRounded />
-                                    </Box>
-                                </MediaOverlay>
-                            </MediaWrapper>
+                            <MediaOverlay className="post-overlay">
+                                <Box className="arrowBox" aria-hidden>
+                                    <NavigateNextRounded />
+                                </Box>
+                            </MediaOverlay>
+                        </MediaWrapper>
 
-                            <StyledCardContent>
-                                <Typography
-                                    variant="caption"
-                                    color="text.secondary"
-                                >
-                                    {post.tag}
-                                </Typography>
+                        <StyledCardContent>
+                            <Typography
+                                variant="caption"
+                                color="text.secondary"
+                            >
+                                {post.tag}
+                            </Typography>
 
-                                <Typography variant="h6">
-                                    {post.title}
-                                </Typography>
+                            <Typography variant="h6">
+                                {post.title}
+                            </Typography>
 
-                                <Truncated
-                                    variant="body2"
-                                    color="text.secondary"
-                                >
-                                    {post.description}
-                                </Truncated>
-                            </StyledCardContent>
+                            <Truncated
+                                variant="body2"
+                                color="text.secondary"
+                            >
+                                {post.description}
+                            </Truncated>
+                        </StyledCardContent>
 
-                            <AuthorsWithDate authors={post.authors} />
-                        </StyledCard>
-                    </Grid>
-                ))}
-            </Grid>
-        </MainFallback>
+                        <AuthorsWithDate authors={post.authors} />
+                    </StyledCard>
+                </Grid>
+            ))}
+        </Grid>
     );
 }

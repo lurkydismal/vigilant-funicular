@@ -2,11 +2,11 @@ import { Posts } from "@/components/Posts";
 import { SearchButton } from "@/components/SearchButton";
 import { TagsAndSearchMobile } from "@/components/Tags";
 import { Tag } from "@/data/posts";
-import { Post } from "@/data/posts/types";
+import { PostsRow } from "@/db/schema";
 import { paginate } from "@/utils/stdfunc";
 import { Box, Typography } from "@mui/material";
 
-export default function MainContent({ posts, tags }: { posts: Post[]; tags: Tag[] }) {
+export default function MainContent({ posts, tags }: { posts: PostsRow[]; tags: Tag[] }) {
     const perPage = 6;
     // const { id, username } = getCredentials();
 

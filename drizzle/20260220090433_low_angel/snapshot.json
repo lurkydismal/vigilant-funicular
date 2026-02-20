@@ -1,7 +1,7 @@
 {
   "version": "8",
   "dialect": "postgres",
-  "id": "6844774b-6dcc-4551-aee9-8bdca024b41b",
+  "id": "71145dd4-165f-4546-a571-675ea1b64027",
   "prevIds": [
     "00000000-0000-0000-0000-000000000000"
   ],
@@ -90,7 +90,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "followerId",
+      "name": "follower_id",
       "entityType": "columns",
       "schema": "public",
       "table": "follows"
@@ -103,7 +103,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "followingId",
+      "name": "following_id",
       "entityType": "columns",
       "schema": "public",
       "table": "follows"
@@ -142,7 +142,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "authorId",
+      "name": "author_id",
       "entityType": "columns",
       "schema": "public",
       "table": "posts"
@@ -155,7 +155,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "coAuthorId",
+      "name": "co_author_id",
       "entityType": "columns",
       "schema": "public",
       "table": "posts"
@@ -168,7 +168,33 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "categoryId",
+      "name": "category_id",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "posts"
+    },
+    {
+      "type": "varchar(255)",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "preview_url",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "posts"
+    },
+    {
+      "type": "varchar(50)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "title",
       "entityType": "columns",
       "schema": "public",
       "table": "posts"
@@ -259,7 +285,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "passwordHash",
+      "name": "password_hash",
       "entityType": "columns",
       "schema": "public",
       "table": "users"
@@ -272,7 +298,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "avatarUrl",
+      "name": "avatar_url",
       "entityType": "columns",
       "schema": "public",
       "table": "users"
@@ -328,7 +354,7 @@
       "nameExplicit": false,
       "columns": [
         {
-          "value": "followerId",
+          "value": "follower_id",
           "isExpression": false,
           "asc": true,
           "nullsFirst": false,
@@ -340,7 +366,7 @@
       "with": "",
       "method": "btree",
       "concurrently": false,
-      "name": "follows_followerId_index",
+      "name": "follows_follower_id_index",
       "entityType": "indexes",
       "schema": "public",
       "table": "follows"
@@ -349,7 +375,7 @@
       "nameExplicit": false,
       "columns": [
         {
-          "value": "followingId",
+          "value": "following_id",
           "isExpression": false,
           "asc": true,
           "nullsFirst": false,
@@ -361,7 +387,7 @@
       "with": "",
       "method": "btree",
       "concurrently": false,
-      "name": "follows_followingId_index",
+      "name": "follows_following_id_index",
       "entityType": "indexes",
       "schema": "public",
       "table": "follows"
@@ -370,7 +396,7 @@
       "nameExplicit": false,
       "columns": [
         {
-          "value": "authorId",
+          "value": "author_id",
           "isExpression": false,
           "asc": true,
           "nullsFirst": false,
@@ -382,7 +408,7 @@
       "with": "",
       "method": "btree",
       "concurrently": false,
-      "name": "posts_authorId_index",
+      "name": "posts_author_id_index",
       "entityType": "indexes",
       "schema": "public",
       "table": "posts"
@@ -391,7 +417,7 @@
       "nameExplicit": false,
       "columns": [
         {
-          "value": "coAuthorId",
+          "value": "co_author_id",
           "isExpression": false,
           "asc": true,
           "nullsFirst": false,
@@ -403,7 +429,7 @@
       "with": "",
       "method": "btree",
       "concurrently": false,
-      "name": "posts_coAuthorId_index",
+      "name": "posts_co_author_id_index",
       "entityType": "indexes",
       "schema": "public",
       "table": "posts"
@@ -412,7 +438,7 @@
       "nameExplicit": false,
       "columns": [
         {
-          "value": "categoryId",
+          "value": "category_id",
           "isExpression": false,
           "asc": true,
           "nullsFirst": false,
@@ -424,7 +450,7 @@
       "with": "",
       "method": "btree",
       "concurrently": false,
-      "name": "posts_categoryId_index",
+      "name": "posts_category_id_index",
       "entityType": "indexes",
       "schema": "public",
       "table": "posts"
@@ -453,7 +479,7 @@
     {
       "nameExplicit": false,
       "columns": [
-        "followerId"
+        "follower_id"
       ],
       "schemaTo": "public",
       "tableTo": "users",
@@ -462,7 +488,7 @@
       ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
-      "name": "follows_followerId_users_id_fkey",
+      "name": "follows_follower_id_users_id_fkey",
       "entityType": "fks",
       "schema": "public",
       "table": "follows"
@@ -470,7 +496,7 @@
     {
       "nameExplicit": false,
       "columns": [
-        "followingId"
+        "following_id"
       ],
       "schemaTo": "public",
       "tableTo": "users",
@@ -479,7 +505,7 @@
       ],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
-      "name": "follows_followingId_users_id_fkey",
+      "name": "follows_following_id_users_id_fkey",
       "entityType": "fks",
       "schema": "public",
       "table": "follows"
@@ -487,7 +513,7 @@
     {
       "nameExplicit": false,
       "columns": [
-        "authorId"
+        "author_id"
       ],
       "schemaTo": "public",
       "tableTo": "users",
@@ -496,7 +522,7 @@
       ],
       "onUpdate": "NO ACTION",
       "onDelete": "SET NULL",
-      "name": "posts_authorId_users_id_fkey",
+      "name": "posts_author_id_users_id_fkey",
       "entityType": "fks",
       "schema": "public",
       "table": "posts"
@@ -504,7 +530,7 @@
     {
       "nameExplicit": false,
       "columns": [
-        "coAuthorId"
+        "co_author_id"
       ],
       "schemaTo": "public",
       "tableTo": "users",
@@ -513,7 +539,7 @@
       ],
       "onUpdate": "NO ACTION",
       "onDelete": "SET NULL",
-      "name": "posts_coAuthorId_users_id_fkey",
+      "name": "posts_co_author_id_users_id_fkey",
       "entityType": "fks",
       "schema": "public",
       "table": "posts"
@@ -521,7 +547,7 @@
     {
       "nameExplicit": false,
       "columns": [
-        "categoryId"
+        "category_id"
       ],
       "schemaTo": "public",
       "tableTo": "categories",
@@ -530,15 +556,15 @@
       ],
       "onUpdate": "NO ACTION",
       "onDelete": "SET NULL",
-      "name": "posts_categoryId_categories_id_fkey",
+      "name": "posts_category_id_categories_id_fkey",
       "entityType": "fks",
       "schema": "public",
       "table": "posts"
     },
     {
       "columns": [
-        "followerId",
-        "followingId"
+        "follower_id",
+        "following_id"
       ],
       "nameExplicit": false,
       "name": "follows_pkey",
@@ -606,6 +632,13 @@
       "table": "categories"
     },
     {
+      "value": "\"preview_url\" IS NULL OR length(trim(\"preview_url\")) > 0",
+      "name": "preview_url_not_blank",
+      "entityType": "checks",
+      "schema": "public",
+      "table": "posts"
+    },
+    {
       "value": "\"description\" IS NULL OR length(trim(\"description\")) > 0",
       "name": "description_not_blank",
       "entityType": "checks",
@@ -620,6 +653,13 @@
       "table": "posts"
     },
     {
+      "value": "length(trim(\"title\")) > 0",
+      "name": "title_not_blank",
+      "entityType": "checks",
+      "schema": "public",
+      "table": "posts"
+    },
+    {
       "value": "length(trim(\"username\")) > 0",
       "name": "username_not_blank",
       "entityType": "checks",
@@ -627,7 +667,7 @@
       "table": "users"
     },
     {
-      "value": "\"avatarUrl\" IS NULL OR length(trim(\"avatarUrl\")) > 0",
+      "value": "\"avatar_url\" IS NULL OR length(trim(\"avatar_url\")) > 0",
       "name": "avatar_url_not_blank",
       "entityType": "checks",
       "schema": "public",

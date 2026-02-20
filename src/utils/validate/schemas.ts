@@ -185,3 +185,7 @@ export const categoryUpdateSchema = createUpdateSchema(categories);
 export const postSelectSchema = createSelectSchema(posts);
 export const postInsertSchema = createInsertSchema(posts);
 export const postUpdateSchema = createUpdateSchema(posts);
+
+export const postWithCategory = postSelectSchema.extend({
+    category: categorySelectSchema,
+});

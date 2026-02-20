@@ -1,25 +1,28 @@
 import { tags } from "@/data/posts";
-import { desc } from "drizzle-orm";
+import MainFallback from "@/components/MainFallback";
 import Latest from "@/components/posts/Latest";
 import MainContent from "@/components/posts/MainContent";
 import db from "@/db";
-import { posts } from "@/db/schema";
-import { postSelectSchema } from "@/utils/validate/schemas";
+import { postWithCategory } from "@/utils/validate/schemas";
 
 export default async function Posts() {
-    const postsData = await db
-        .select()
-        .from(posts)
-        .orderBy(desc(posts.created_at))
-        .execute();
+    const _posts = await db.query.posts.findMany({
+        orderBy: {
+            created_at: "desc",
+        },
 
-    const parsed = postSelectSchema.parse(postsData);
+        with: {
+            category: true,
+        },
+    });
+
+    const parsed = postWithCategory.array().parse(_posts);
 
     return (
-        <>
+        <MainFallback itemsLength={parsed.length}>
             <MainContent posts={parsed} tags={tags} />
 
             <Latest posts={parsed} />
-        </>
+        </MainFallback>
     );
 }
