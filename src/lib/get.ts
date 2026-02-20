@@ -7,7 +7,7 @@ import { DbTarget, parseRawTarget } from "@/lib/types";
 import { ActionResult } from "@/lib/types";
 
 // TODO: Validate what returns
-export async function getRows(rawTarget: DbTarget): Promise<ActionResult> {
+export async function getRows(rawTarget: DbTarget): Promise<ActionResult<unknown[]>> {
     try {
         const table = parseRawTarget(rawTarget);
 
@@ -16,7 +16,7 @@ export async function getRows(rawTarget: DbTarget): Promise<ActionResult> {
             data: await db
                 .select()
                 .from(table)
-                .orderBy(desc(table.id))
+                .orderBy(desc(table.created_at))
                 .execute(),
         };
     } catch (err) {

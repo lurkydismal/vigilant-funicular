@@ -2,12 +2,12 @@
 
 import PostsPagination from "@/components/Pagination";
 import { PostsWithoutImage } from "@/components/Posts";
-import { postsData } from "@/data/posts";
+import { Post } from "@/data/posts/types";
 import { paginate } from "@/utils/stdfunc";
 import { Typography } from "@mui/material";
 import { useState, ChangeEvent } from "react";
 
-export default function Latest() {
+export default function Latest({ posts }: { posts: Post[] }) {
     const [currentPage, setCurrentPage] = useState(1);
     const perPage = 12;
 
@@ -20,11 +20,13 @@ export default function Latest() {
             <Typography variant="h2" gutterBottom>
                 Latest
             </Typography>
+
             <PostsWithoutImage
-                posts={paginate(postsData, currentPage, perPage)}
+                posts={paginate(posts, currentPage, perPage)}
             ></PostsWithoutImage>
+
             <PostsPagination
-                total={postsData.length}
+                total={posts.length}
                 perPage={perPage}
                 onChange={onChange}
             ></PostsPagination>

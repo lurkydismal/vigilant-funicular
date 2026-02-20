@@ -1,8 +1,10 @@
 import { z } from "zod";
+import { createInsertSchema, createSelectSchema, createUpdateSchema } from 'drizzle-orm/zod';
 import { maxImageSize } from "@/utils/stdvar";
 import { sanitizeFilename } from "@/utils/stdfunc";
 import dayjs from "@/utils/dayjs";
 import { Dayjs } from "dayjs";
+import { categories, follows, posts, users } from "@/db/schema";
 
 /**
  * Check whether an ArrayBuffer represents a valid JPEG image.
@@ -164,14 +166,22 @@ export const uploadSchema = z.object({
     file: fileSchema,
 });
 
-// TODO: Document
-export const idSchema = z.number();
+/** [TODO:description] */
+export const userSelectSchema = createSelectSchema(users);
+export const userInsertSchema = createInsertSchema(users);
+export const userUpdateSchema = createUpdateSchema(users);
 
-// TODO: Document
-export const contentSchema = z.string();
+/** [TODO:description] */
+export const followSelectSchema = createSelectSchema(follows);
+export const followInsertSchema = createInsertSchema(follows);
+export const followUpdateSchema = createUpdateSchema(follows);
 
-// TODO: Document
-export const rowSchema = z.object({
-    id: idSchema.optional(),
-    content: contentSchema,
-});
+/** [TODO:description] */
+export const categorySelectSchema = createSelectSchema(categories);
+export const categoryInsertSchema = createInsertSchema(categories);
+export const categoryUpdateSchema = createUpdateSchema(categories);
+
+/** [TODO:description] */
+export const postSelectSchema = createSelectSchema(posts);
+export const postInsertSchema = createInsertSchema(posts);
+export const postUpdateSchema = createUpdateSchema(posts);

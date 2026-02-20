@@ -1,11 +1,12 @@
 import { Posts } from "@/components/Posts";
 import { SearchButton } from "@/components/SearchButton";
 import { TagsAndSearchMobile } from "@/components/Tags";
-import { postsData, tags } from "@/data/posts";
+import { Tag } from "@/data/posts";
+import { Post } from "@/data/posts/types";
 import { paginate } from "@/utils/stdfunc";
 import { Box, Typography } from "@mui/material";
 
-export default function MainContent() {
+export default function MainContent({ posts, tags }: { posts: Post[]; tags: Tag[] }) {
     const perPage = 6;
     // const { id, username } = getCredentials();
 
@@ -21,7 +22,7 @@ export default function MainContent() {
 
             <TagsAndSearchMobile tags={tags} />
 
-            <Posts posts={paginate(postsData, 1, perPage)} />
+            <Posts posts={paginate(posts, 1, perPage)} />
         </Box>
     );
 }

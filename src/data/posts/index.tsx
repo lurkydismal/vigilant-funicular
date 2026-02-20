@@ -978,7 +978,12 @@ export const postsData = postsDataTemp.map((post, index) => ({
     id: String(index),
 }));
 
-export const tags = [
+export interface Tag {
+    id: string;
+    name: string;
+}
+
+export const tags: Tag[] = [
     {
         id: "1",
         name: "Engineering",

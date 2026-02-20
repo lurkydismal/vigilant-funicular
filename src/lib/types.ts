@@ -1,8 +1,11 @@
 import z from "zod";
-import { table } from "@/db/schema";
+import { users, follows, categories, posts } from "@/db/schema";
 
 export const TABLES = {
-    table: table,
+    users: users,
+    follows: follows,
+    categories: categories,
+    posts: posts,
 } as const;
 
 export type DbTarget = keyof typeof TABLES;
@@ -21,7 +24,7 @@ export function parseRawTarget(rawTarget: DbTarget) {
     return table;
 }
 
-type SuccessResult<T> = { ok: true; data: T };
+type SuccessResult<T> = { ok: true; data?: T };
 type FailureResult = { ok: false; error: string };
 
 export type ActionResult<T> = SuccessResult<T> | FailureResult;
