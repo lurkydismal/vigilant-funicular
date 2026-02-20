@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
 
     images: {
         // Enable only if CPU does not support popcnt
-        // unoptimized: true,
+        unoptimized: true,
     },
 
     reactCompiler: true,
