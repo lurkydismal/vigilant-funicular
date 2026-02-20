@@ -1,6 +1,6 @@
 "use client";
 
-import { styled, Box, Typography } from "@mui/material";
+import { styled, Box, Typography, keyframes } from "@mui/material";
 import { ReactNode, Children } from "react";
 
 type Props = {
@@ -23,6 +23,16 @@ const Root = styled(Box)(({ theme }) => ({
     background: "transparent",
 }));
 
+const fadeInUp = keyframes`
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+`;
+
+const pulseGlow = keyframes`
+  0%,100% { text-shadow: 0 6px 18px rgba(255,255,255,0.06), 0 12px 40px rgba(0,0,0,0.6); }
+  50% { text-shadow: 0 10px 30px rgba(255,255,255,0.10), 0 18px 50px rgba(0,0,0,0.6); }
+`;
+
 const Fancy = styled(Typography)(({ theme }) => ({
     fontWeight: theme.typography.fontWeightMedium,
     fontSize: "clamp(20px, 6vw, 64px)",
@@ -40,23 +50,9 @@ const Fancy = styled(Typography)(({ theme }) => ({
     textShadow:
         "0 6px 18px rgba(255,255,255,0.06), 0 12px 40px rgba(0,0,0,0.6)",
     // small subtle animation
-    animation: "fadeInUp 600ms ease both, pulseGlow 2.8s ease-in-out infinite",
+    animation: `${fadeInUp} 600ms ease both, ${pulseGlow} 2.8s ease-in-out infinite`,
     // accessible wrap
     wordBreak: "break-word",
-    "@keyframes fadeInUp": {
-        from: { opacity: 0, transform: "translateY(8px)" },
-        to: { opacity: 1, transform: "translateY(0)" },
-    },
-    "@keyframes pulseGlow": {
-        "0%,100%": {
-            textShadow:
-                "0 6px 18px rgba(255,255,255,0.06), 0 12px 40px rgba(0,0,0,0.6)",
-        },
-        "50%": {
-            textShadow:
-                "0 10px 30px rgba(255,255,255,0.10), 0 18px 50px rgba(0,0,0,0.6)",
-        },
-    },
 }));
 
 function isEmptyNode(node?: ReactNode) {
