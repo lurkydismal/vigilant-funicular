@@ -1,6 +1,6 @@
 import { NavItem } from "@/data/navbat";
 import NextLink from "@/components/Link";
-import { Badge, Box, Button, Divider, SxProps } from "@mui/material";
+import { Badge, Box, Button, SxProps } from "@mui/material";
 import { usePathname } from "next/navigation";
 import { activeButtonSx, navButtonSx } from "./styles";
 
@@ -94,12 +94,6 @@ export default function DesktopNav({
                     />
                 ))}
             </Box>
-
-            <Divider
-                orientation="vertical"
-                flexItem
-                sx={{ mx: 2, display: { xs: "none", md: "block" } }}
-            />
 
             <Box
                 sx={{
