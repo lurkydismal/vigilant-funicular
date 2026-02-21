@@ -11,7 +11,7 @@ import { Box } from "@mui/material";
 import { useState, ChangeEvent, ComponentProps } from "react";
 
 // TODO: Fix avatar src
-export default function MainContent({ user, isMe, posts, tags }: { user: UsersRowPublic; isMe: boolean; posts: PostsRowFull[]; tags: CategoriesRowPublic[]; }) {
+export default function MainContent({ user, posts, tags, isMe = false }: { user: UsersRowPublic; posts: PostsRowFull[]; tags: CategoriesRowPublic[]; isMe?: boolean; }) {
     const [currentPage, setCurrentPage] = useState(1);
     const perPage = 6;
 

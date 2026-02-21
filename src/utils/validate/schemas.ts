@@ -174,16 +174,28 @@ export const uploadSchema = z.object({
 export const userSelectSchema = createSelectSchema(users);
 export const userInsertSchema = createInsertSchema(users);
 export const userUpdateSchema = createUpdateSchema(users);
+export const userSelectPublicSchema = userSelectSchema.omit({
+    id: true,
+    password_hash: true, created_at: true, updated_at: true,
+});
 
 /** [TODO:description] */
 export const followSelectSchema = createSelectSchema(follows);
 export const followInsertSchema = createInsertSchema(follows);
 export const followUpdateSchema = createUpdateSchema(follows);
+export const followSelectPublicSchema = followSelectSchema.omit({
+    created_at: true,
+});
 
 /** [TODO:description] */
 export const categorySelectSchema = createSelectSchema(categories);
 export const categoryInsertSchema = createInsertSchema(categories);
 export const categoryUpdateSchema = createUpdateSchema(categories);
+export const categorySelectPublicSchema = categorySelectSchema.omit({
+    id: true,
+    created_at: true,
+    updated_at: true,
+});
 
 /** [TODO:description] */
 export const postSelectSchema = createSelectSchema(posts);
@@ -191,7 +203,11 @@ export const postInsertSchema = createInsertSchema(posts);
 export const postUpdateSchema = createUpdateSchema(posts);
 
 export const postFullSchema = postSelectSchema.extend({
-    author: userSelectSchema,
-    coAuthor: userSelectSchema,
+    author: userSelectPublicSchema,
+    coAuthor: userSelectPublicSchema,
     category: categorySelectSchema,
+}).omit({
+    author_id: true,
+    co_author_id: true,
+    category_id: true,
 });
