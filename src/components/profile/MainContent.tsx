@@ -1,5 +1,6 @@
 "use client";
 
+import MainFallback from "@/components/MainFallback";
 import { Author, AuthorWithFollow } from "@/components/Author";
 import PostsPagination from "@/components/Pagination";
 import { Posts } from "@/components/Posts";
@@ -51,13 +52,15 @@ export default function MainContent({
 
             <TagsAndSearchMobile tags={tags} />
 
-            <Posts posts={paginate(posts, currentPage, perPage)} />
+            <MainFallback itemsLength={posts.length} >
+                <Posts posts={paginate(posts, currentPage, perPage)} />
 
-            <PostsPagination
-                total={posts.length}
-                perPage={perPage}
-                onChange={onChange}
-            />
+                <PostsPagination
+                    total={posts.length}
+                    perPage={perPage}
+                    onChange={onChange}
+                />
+            </MainFallback>
         </Box>
     );
 }

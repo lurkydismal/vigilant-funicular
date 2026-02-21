@@ -4,11 +4,13 @@ import PostsPagination from "@/components/Pagination";
 import { SearchButton } from "@/components/SearchButton";
 import { TagsAndSearchMobile } from "@/components/Tags";
 import { paginate } from "@/utils/stdfunc";
-import { Follows } from "./Follows";
+import { Follow, Follows } from "./Follows";
 import { useState, ChangeEvent } from "react";
 import { Box, Typography } from "@mui/material";
+import MainFallback from "../MainFallback";
+import { CategoriesRowPublic } from "@/db/types";
 
-export default function MainContent() {
+export default function MainContent({ follows, tags }: { follows: Follow[]; tags: CategoriesRowPublic[]; }) {
     const [currentPage, setCurrentPage] = useState(1);
     const perPage = 12;
 
@@ -26,13 +28,15 @@ export default function MainContent() {
 
             <TagsAndSearchMobile tags={tags} />
 
-            <Follows follows={paginate(follows, currentPage, perPage)} />
+            <MainFallback itemsLength={follows.length} >
+                <Follows follows={paginate(follows, currentPage, perPage)} />
 
-            <PostsPagination
-                total={follows.length}
-                perPage={perPage}
-                onChange={onChange}
-            />
+                <PostsPagination
+                    total={follows.length}
+                    perPage={perPage}
+                    onChange={onChange}
+                />
+            </MainFallback>
         </Box>
     );
 }

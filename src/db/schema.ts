@@ -99,5 +99,7 @@ export const posts = pgTable(
         index().on(t.author_id),
         index().on(t.co_author_id),
         index().on(t.category_id),
+
+        index().on(t.author_id, t.created_at.desc())
     ],
 );
