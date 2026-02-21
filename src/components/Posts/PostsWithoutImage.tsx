@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { Truncated } from "./styled";
 import { styled, Typography, Grid, Box } from "@mui/material";
 import { PostsRowFull } from "@/db/types";
-import { buildDate } from "@/utils/stdvar";
+import { concatenateAuthors } from "@/utils/stdfunc";
 
 const TitleTypography = styled(Typography)(({ theme }) => ({
     "&:hover": { cursor: "pointer" },
@@ -111,13 +111,7 @@ export default function PostsWithoutImage({
                             </Truncated>
 
                             <AuthorsWithDate
-                                authors={[
-                                    post.author ?? {
-                                        username: "Unknown",
-                                        avatar_url: null,
-                                    },
-                                    ...(post.coAuthor ? [post.coAuthor] : []),
-                                ]}
+                                authors={concatenateAuthors(post)}
                             />
                         </Box>
                     </Grid>

@@ -23,13 +23,13 @@ export default function Latest({ posts }: { posts: PostsRowFull[] }) {
 
             <PostsWithoutImage
                 posts={paginate(posts, currentPage, perPage)}
-            ></PostsWithoutImage>
+            />
 
             <PostsPagination
                 total={posts.length}
                 perPage={perPage}
                 onChange={onChange}
-            ></PostsPagination>
+            />
         </div>
     );
 }

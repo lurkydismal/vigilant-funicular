@@ -1,6 +1,5 @@
 "use client";
 
-import { ChevronLeftRounded, ChevronRightRounded } from "@mui/icons-material";
 import AddressForm from "./AddressForm";
 import PaymentForm from "./Attachments";
 import Review from "./Review";

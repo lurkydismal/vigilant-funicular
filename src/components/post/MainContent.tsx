@@ -1,10 +1,10 @@
 import { AuthorsWithDateAndLink } from "@/components/Author";
 import Markdown from "@/components/Markdown";
-import { postsData } from "@/data/post";
-import { Post } from "@/data/posts/types";
 import { Box, Typography, CardMedia } from "@mui/material";
 import { ComponentProps } from "react";
 import { linkSx } from "@/data/styles";
+import { PostsRowFull } from "@/db/types";
+import { concatenateAuthors } from "@/utils/stdfunc";
 
 const tagSx = {
     ...linkSx,
@@ -38,11 +38,9 @@ const tagSx = {
     },
 };
 
-export default function MainContent({ id }: { id: string }) {
-    const post: Post = postsData[id];
-
+export default function MainContent({ post }: { post: PostsRowFull }) {
     const properties = {
-        authors: post.authors,
+        authors: concatenateAuthors(post),
         variant: "h4",
         avatarWidth: 52,
         avatarHeight: 52,
@@ -58,7 +56,7 @@ export default function MainContent({ id }: { id: string }) {
                 width="fit-content"
                 sx={tagSx}
             >
-                {post.tag}
+                {post.category?.name ?? "Unknown"}
             </Typography>
 
             <Typography gutterBottom tabIndex={0} variant="h3">
@@ -69,7 +67,7 @@ export default function MainContent({ id }: { id: string }) {
                 alt="green iguana"
                 component="img"
                 image={
-                    post.imageUrl ??
+                    post.preview_url ??
                     `https://picsum.photos/2400/1800?random=${post.id}`
                 }
                 sx={{

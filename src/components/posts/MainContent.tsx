@@ -1,8 +1,7 @@
 import { Posts } from "@/components/Posts";
 import { SearchButton } from "@/components/SearchButton";
 import { TagsAndSearchMobile } from "@/components/Tags";
-import { Tag } from "@/data/posts";
-import { PostsRowFull } from "@/db/types";
+import { CategoriesRowPublic, PostsRowFull } from "@/db/types";
 import { paginate } from "@/utils/stdfunc";
 import { Box, Typography } from "@mui/material";
 
@@ -11,7 +10,7 @@ export default function MainContent({
     tags,
 }: {
     posts: PostsRowFull[];
-    tags: Tag[];
+    tags: CategoriesRowPublic[];
 }) {
     const perPage = 6;
     // const { id, username } = getCredentials();

@@ -1,16 +1,16 @@
 "use client";
 
 import { NavigateNextRounded } from "@mui/icons-material";
-import { Author, AuthorWithFollowAndLink } from "@/components/Author";
+import { AuthorWithFollowAndLink } from "@/components/Author";
 import MainFallback from "@/components/MainFallback";
 import { useState } from "react";
 import { redirect } from "next/navigation";
 import { styled, Typography, Grid, Box } from "@mui/material";
-import { Post } from "@/data/posts/types";
+import { PostsRowFull, UsersRowPublic } from "@/db/types";
 
 export interface Follow {
-    author: Author;
-    post: Post;
+    author: UsersRowPublic;
+    post: PostsRowFull;
 }
 
 const StyledTypography = styled(Typography)({
@@ -80,7 +80,7 @@ export function Follows({ follows }: { follows: Follow[] }) {
                     const user = follow.author;
 
                     return (
-                        <Grid key={user.uid} size={{ xs: 12, sm: 6 }}>
+                        <Grid key={user.username} size={{ xs: 12, sm: 6 }}>
                             <Box
                                 sx={{
                                     borderRadius: 1,

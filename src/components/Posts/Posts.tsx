@@ -14,7 +14,7 @@ import {
     Typography,
 } from "@mui/material";
 import { PostsRowFull } from "@/db/types";
-import { buildDate } from "@/utils/stdvar";
+import { concatenateAuthors } from "@/utils/stdfunc";
 
 /* Card wrapper — lift + subtle shadow on hover/focus */
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -172,15 +172,7 @@ export default function Posts({ posts }: { posts: PostsRowFull[] }) {
                             </Truncated>
                         </StyledCardContent>
 
-                        <AuthorsWithDate
-                            authors={[
-                                post.author ?? {
-                                    username: "Unknown",
-                                    avatar_url: null,
-                                },
-                                ...(post.coAuthor ? [post.coAuthor] : []),
-                            ]}
-                        />
+                        <AuthorsWithDate authors={concatenateAuthors(post)} />
                     </StyledCard>
                 </Grid>
             ))}

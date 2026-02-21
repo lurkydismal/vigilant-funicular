@@ -1,3 +1,4 @@
+import { PostsRowFull } from "@/db/types";
 import log from "./stdlog";
 
 /**
@@ -173,4 +174,14 @@ export function paginate<T>(
     const end = start + perPage;
 
     return items.slice(start, end);
+}
+
+export function concatenateAuthors(post: PostsRowFull) {
+    return [
+        post.author ?? {
+            username: "Unknown",
+            avatar_url: null,
+        },
+        ...(post.coAuthor ? [post.coAuthor] : []),
+    ];
 }

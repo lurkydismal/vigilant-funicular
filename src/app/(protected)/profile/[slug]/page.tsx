@@ -1,4 +1,5 @@
 import MainContent from "@/components/profile/MainContent";
+import z from "zod";
 
 export default async function Page({
     params,
@@ -13,5 +14,7 @@ export default async function Page({
 }) {
     const { slug } = await params;
 
-    return <MainContent id={slug} />;
+    const parsed = z.string().nonempty().parse(slug);
+
+    return <MainContent id={parsed} />;
 }

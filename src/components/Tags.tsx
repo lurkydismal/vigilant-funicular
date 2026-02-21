@@ -1,12 +1,8 @@
 "use client";
 
 import { Box, Chip } from "@mui/material";
-import { SearchButtonMobile } from "./SearchButton";
-
-interface Tag {
-    id: string;
-    name: string;
-}
+import { SearchButtonMobile } from "@/components/SearchButton";
+import { CategoriesRowPublic } from "@/db/types";
 
 // TODO: Implement
 const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -16,7 +12,7 @@ const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     );
 };
 
-export function Tags({ tags }: { tags: Tag[] }) {
+export function Tags({ tags }: { tags: CategoriesRowPublic[] }) {
     return (
         <Box
             sx={{
@@ -27,6 +23,7 @@ export function Tags({ tags }: { tags: Tag[] }) {
             }}
         >
             <Chip onClick={handleClick} size="medium" label="All categories" />
+
             {tags.map((tag, index) => (
                 <Chip
                     label={tag.name}
@@ -43,7 +40,7 @@ export function Tags({ tags }: { tags: Tag[] }) {
     );
 }
 
-export function TagsAndSearchMobile({ tags }: { tags: Tag[] }) {
+export function TagsAndSearchMobile({ tags }: { tags: CategoriesRowPublic[] }) {
     return (
         <Box
             sx={{
@@ -56,9 +53,9 @@ export function TagsAndSearchMobile({ tags }: { tags: Tag[] }) {
                 width: "100%",
             }}
         >
-            <Tags tags={tags}></Tags>
+            <Tags tags={tags} />
 
-            <SearchButtonMobile></SearchButtonMobile>
+            <SearchButtonMobile />
         </Box>
     );
 }

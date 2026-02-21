@@ -30,7 +30,7 @@ function GitHubLink({ href, ...props }: Readonly<GitHubLinkProps>) {
                     textDecoration: "underline",
                 },
             }}
-        ></Link>
+        />
     );
 }
 

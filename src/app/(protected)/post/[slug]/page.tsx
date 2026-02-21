@@ -1,4 +1,7 @@
 import MainContent from "@/components/post/MainContent";
+import db from "@/db";
+import { postFullSchema } from "@/utils/validate/schemas";
+import z from "zod";
 
 export default async function Page({
     params,
@@ -13,5 +16,20 @@ export default async function Page({
 }) {
     const { slug } = await params;
 
-    return <MainContent id={slug} />;
+    const id = z.number().parse(slug);
+
+    const _posts = await db.query.posts.findFirst({
+        where: {
+            id,
+        },
+        with: {
+            author: true,
+            coAuthor: true,
+            category: true,
+        },
+    });
+
+    const parsed = postFullSchema.parse(_posts);
+
+    return <MainContent post={parsed} />;
 }

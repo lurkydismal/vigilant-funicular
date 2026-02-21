@@ -3,7 +3,6 @@
 import PostsPagination from "@/components/Pagination";
 import { SearchButton } from "@/components/SearchButton";
 import { TagsAndSearchMobile } from "@/components/Tags";
-import { follows, tags } from "@/data/follows";
 import { paginate } from "@/utils/stdfunc";
 import { Follows } from "./Follows";
 import { useState, ChangeEvent } from "react";
@@ -33,7 +32,7 @@ export default function MainContent() {
                 total={follows.length}
                 perPage={perPage}
                 onChange={onChange}
-            ></PostsPagination>
+            />
         </Box>
     );
 }

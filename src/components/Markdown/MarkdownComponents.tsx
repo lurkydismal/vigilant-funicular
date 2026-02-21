@@ -167,7 +167,7 @@ const MarkdownComponents: Components = {
         ...props
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }: HTMLAttributes<HTMLModElement> & { node?: any }) => (
-        <del {...props}></del>
+        <del {...props} />
     ),
 };
 
