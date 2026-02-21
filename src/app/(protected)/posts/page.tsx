@@ -19,10 +19,16 @@ export default async function Posts() {
         },
     });
 
-    const _categories = db.select().from(categories).orderBy(desc(categories.name)).execute();
+    const _categories = db
+        .select()
+        .from(categories)
+        .orderBy(desc(categories.name))
+        .execute();
 
     const parsedPosts = postFullSchema.array().parse(await _posts);
-    const parsedCategories = categorySelectSchema.array().parse(await _categories);
+    const parsedCategories = categorySelectSchema
+        .array()
+        .parse(await _categories);
 
     return (
         <MainFallback itemsLength={parsedPosts.length}>

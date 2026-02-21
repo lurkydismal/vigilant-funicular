@@ -176,7 +176,9 @@ export const userInsertSchema = createInsertSchema(users);
 export const userUpdateSchema = createUpdateSchema(users);
 export const userSelectPublicSchema = userSelectSchema.omit({
     id: true,
-    password_hash: true, created_at: true, updated_at: true,
+    password_hash: true,
+    created_at: true,
+    updated_at: true,
 });
 
 /** [TODO:description] */
@@ -202,12 +204,14 @@ export const postSelectSchema = createSelectSchema(posts);
 export const postInsertSchema = createInsertSchema(posts);
 export const postUpdateSchema = createUpdateSchema(posts);
 
-export const postFullSchema = postSelectSchema.extend({
-    author: userSelectPublicSchema,
-    coAuthor: userSelectPublicSchema,
-    category: categorySelectSchema,
-}).omit({
-    author_id: true,
-    co_author_id: true,
-    category_id: true,
-});
+export const postFullSchema = postSelectSchema
+    .extend({
+        author: userSelectPublicSchema,
+        coAuthor: userSelectPublicSchema,
+        category: categorySelectSchema,
+    })
+    .omit({
+        author_id: true,
+        co_author_id: true,
+        category_id: true,
+    });

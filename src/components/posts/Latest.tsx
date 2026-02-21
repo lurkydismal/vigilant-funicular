@@ -21,9 +21,7 @@ export default function Latest({ posts }: { posts: PostsRowFull[] }) {
                 Latest
             </Typography>
 
-            <PostsWithoutImage
-                posts={paginate(posts, currentPage, perPage)}
-            />
+            <PostsWithoutImage posts={paginate(posts, currentPage, perPage)} />
 
             <PostsPagination
                 total={posts.length}
