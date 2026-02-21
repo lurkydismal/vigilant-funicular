@@ -25,6 +25,7 @@
         "@mui/x-date-pickers": "^8.27.2",
         "@reactour/tour": "^3.8.0",
         "argon2": "^0.44.0",
+        "cookie": "^1.1.1",
         "dayjs": "^1.11.19",
         "dotenv": "^17.3.1",
         "drizzle-orm": "beta",
@@ -50,6 +51,7 @@
     "devDependencies": {
         "@tailwindcss/postcss": "^4",
         "@trivago/prettier-plugin-sort-imports": "^6.0.2",
+        "@types/jsonwebtoken": "^9.0.10",
         "@types/node": "^25",
         "@types/pg": "^8.16.0",
         "@types/react": "^19",
