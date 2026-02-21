@@ -165,25 +165,22 @@ export default function Posts({ posts }: { posts: PostsRowFull[] }) {
                                 {post.category?.name ?? "Unknown"}
                             </Typography>
 
-                            <Typography variant="h6">
-                                {post.title}
-                            </Typography>
+                            <Typography variant="h6">{post.title}</Typography>
 
-                            <Truncated
-                                variant="body2"
-                                color="text.secondary"
-                            >
+                            <Truncated variant="body2" color="text.secondary">
                                 {post.description}
                             </Truncated>
                         </StyledCardContent>
 
-                        <AuthorsWithDate authors={[
-                            (post.author ?? {
-                                username: "Unknown",
-                                avatar_url: null,
-                            }),
-                            ...(post.coAuthor ? [post.coAuthor] : []),
-                        ]} />
+                        <AuthorsWithDate
+                            authors={[
+                                post.author ?? {
+                                    username: "Unknown",
+                                    avatar_url: null,
+                                },
+                                ...(post.coAuthor ? [post.coAuthor] : []),
+                            ]}
+                        />
                     </StyledCard>
                 </Grid>
             ))}

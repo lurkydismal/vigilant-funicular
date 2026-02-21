@@ -42,7 +42,8 @@ const Fancy = styled(Typography)(({ theme }) => ({
     letterSpacing: "0.12em",
     textAlign: "center",
     color: "#fff",
-    background: "linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(250,250,250,0.98) 50%, rgba(245,245,245,0.96) 100%)",
+    background:
+        "linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(250,250,250,0.98) 50%, rgba(245,245,245,0.96) 100%)",
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
     animation: `${fadeInUp} 600ms ease both, ${pulseGlow} 2.8s ease-in-out infinite`,

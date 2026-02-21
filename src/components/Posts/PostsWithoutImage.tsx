@@ -46,7 +46,11 @@ const TitleTypography = styled(Typography)(({ theme }) => ({
     },
 }));
 
-export default function PostsWithoutImage({ posts }: { posts: PostsRowFull[] }) {
+export default function PostsWithoutImage({
+    posts,
+}: {
+    posts: PostsRowFull[];
+}) {
     const router = useRouter();
 
     const handleNavigate = (id: number) => {
@@ -106,13 +110,15 @@ export default function PostsWithoutImage({ posts }: { posts: PostsRowFull[] }) 
                                 {post.description}
                             </Truncated>
 
-                            <AuthorsWithDate authors={[
-                                (post.author ?? {
-                                    username: "Unknown",
-                                    avatar_url: null,
-                                }),
-                                ...(post.coAuthor ? [post.coAuthor] : []),
-                            ]} />
+                            <AuthorsWithDate
+                                authors={[
+                                    post.author ?? {
+                                        username: "Unknown",
+                                        avatar_url: null,
+                                    },
+                                    ...(post.coAuthor ? [post.coAuthor] : []),
+                                ]}
+                            />
                         </Box>
                     </Grid>
                 ))}

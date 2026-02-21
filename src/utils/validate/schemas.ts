@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { createInsertSchema, createSelectSchema, createUpdateSchema } from 'drizzle-orm/zod';
+import {
+    createInsertSchema,
+    createSelectSchema,
+    createUpdateSchema,
+} from "drizzle-orm/zod";
 import { maxImageSize } from "@/utils/stdvar";
 import { sanitizeFilename } from "@/utils/stdfunc";
 import dayjs from "@/utils/dayjs";

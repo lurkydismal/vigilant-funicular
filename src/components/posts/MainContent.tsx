@@ -6,7 +6,13 @@ import { PostsRowFull } from "@/db/types";
 import { paginate } from "@/utils/stdfunc";
 import { Box, Typography } from "@mui/material";
 
-export default function MainContent({ posts, tags }: { posts: PostsRowFull[]; tags: Tag[] }) {
+export default function MainContent({
+    posts,
+    tags,
+}: {
+    posts: PostsRowFull[];
+    tags: Tag[];
+}) {
     const perPage = 6;
     // const { id, username } = getCredentials();
 

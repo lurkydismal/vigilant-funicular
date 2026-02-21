@@ -7,7 +7,9 @@ import { DbTarget, parseRawTarget } from "@/lib/types";
 import { ActionResult } from "@/lib/types";
 
 // TODO: Validate what returns
-export async function getRows(rawTarget: DbTarget): Promise<ActionResult<unknown[]>> {
+export async function getRows(
+    rawTarget: DbTarget,
+): Promise<ActionResult<unknown[]>> {
     try {
         const table = parseRawTarget(rawTarget);
 
