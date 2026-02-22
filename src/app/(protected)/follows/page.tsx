@@ -9,7 +9,7 @@ import {
 } from "@/db/types";
 import { getSessionData } from "@/lib/auth";
 import { normalizeArrayOrValue } from "@/utils/stdfunc";
-import { and, eq, sql } from "drizzle-orm";
+import { and, eq, sql, desc } from "drizzle-orm";
 
 /** Result types */
 export type FollowedUserWithLatestPost = {
@@ -62,11 +62,14 @@ export async function getFollowedUsersWithLatestPost(
         .leftJoin(latestPerAuthor, eq(latestPerAuthor.author_id, users.id))
         // join posts to pick the row that matches (author_id, created_at = latest_created_at)
         .leftJoin(
-            posts,
-            and(
-                eq(posts.author_id, latestPerAuthor.author_id),
-                eq(posts.created_at, latestPerAuthor.latest_created_at),
-            ),
+            db
+                .select()
+                .from(posts)
+                .where(eq(posts.author_id, users.id))
+                .orderBy(desc(posts.created_at))
+                .limit(1)
+                .as("latest_post"),
+            sql`true`
         )
         .leftJoin(categories, eq(categories.id, posts.category_id))
         .orderBy(users.username)
