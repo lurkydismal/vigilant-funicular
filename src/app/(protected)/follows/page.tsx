@@ -32,16 +32,6 @@ export type FollowedUserWithLatestPost = {
 export async function getFollowedUsersWithLatestPost(
     userId: number,
 ): Promise<FollowedUserWithLatestPost[]> {
-    // Subquery: latest created_at per author_id
-    const latestPerAuthor = db
-        .select({
-            author_id: posts.author_id,
-            latest_created_at: sql`max(${posts.created_at})`.as("latest_created_at"),
-        })
-        .from(posts)
-        .groupBy(posts.author_id)
-        .as("latest_per_author");
-
     const latestPost = db
         .select({
             id: posts.id,
@@ -73,11 +63,9 @@ export async function getFollowedUsersWithLatestPost(
         .from(follows)
         .where(eq(follows.follower_id, userId))
         .innerJoin(users, eq(users.id, follows.following_id))
-        // join to subquery that holds (author_id, latest_created_at)
-        .leftJoin(latestPerAuthor, eq(latestPerAuthor.author_id, users.id))
         // join posts to pick the row that matches (author_id, created_at = latest_created_at)
         .leftJoin(latestPost, sql`true`)
-        .leftJoin(categories, eq(categories.id, posts.category_id))
+        .leftJoin(categories, eq(categories.id, latestPost.category_id))
         .orderBy(users.username)
         .execute();
 
