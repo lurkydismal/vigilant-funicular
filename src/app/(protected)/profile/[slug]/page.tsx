@@ -22,7 +22,7 @@ export default async function Page({
 }) {
     const { slug } = await params;
 
-    const parsedUsername = z.string().nonempty().parse(slug);
+    const parsedUsername = z.string().trim().min(1).parse(slug);
 
     const _user = db
         .select()

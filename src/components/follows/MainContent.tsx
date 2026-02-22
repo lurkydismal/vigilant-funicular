@@ -10,7 +10,13 @@ import { Box, Typography } from "@mui/material";
 import MainFallback from "../MainFallback";
 import { CategoriesRowPublic } from "@/db/types";
 
-export default function MainContent({ follows, tags }: { follows: Follow[]; tags: CategoriesRowPublic[]; }) {
+export default function MainContent({
+    follows,
+    tags,
+}: {
+    follows: Follow[];
+    tags: CategoriesRowPublic[];
+}) {
     const [currentPage, setCurrentPage] = useState(1);
     const perPage = 12;
 
@@ -28,7 +34,7 @@ export default function MainContent({ follows, tags }: { follows: Follow[]; tags
 
             <TagsAndSearchMobile tags={tags} />
 
-            <MainFallback itemsLength={follows.length} >
+            <MainFallback itemsLength={follows.length}>
                 <Follows follows={paginate(follows, currentPage, perPage)} />
 
                 <PostsPagination

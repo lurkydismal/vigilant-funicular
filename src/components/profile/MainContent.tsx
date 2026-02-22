@@ -52,7 +52,7 @@ export default function MainContent({
 
             <TagsAndSearchMobile tags={tags} />
 
-            <MainFallback itemsLength={posts.length} >
+            <MainFallback itemsLength={posts.length}>
                 <Posts posts={paginate(posts, currentPage, perPage)} />
 
                 <PostsPagination

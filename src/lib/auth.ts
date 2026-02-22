@@ -1,82 +1,205 @@
+"use server";
+
+import type { StringValue } from "ms";
 import argon2 from "argon2";
-import jwt from "jsonwebtoken";
-import { serialize } from "cookie";
-import type { NextRequest } from "next/server";
+import jwt, { JwtPayload } from "jsonwebtoken";
+import { cookies } from "next/headers";
+import db from "@/db";
+import { eq } from "drizzle-orm";
+import { users } from "@/db/schema";
+import { UsersRowPublic } from "@/db/types";
+import { getEnv } from "@/utils/stdfunc";
+import { userSelectPublicSchema } from "@/utils/validate/schemas";
+import z from "zod";
+import ms from "ms";
 
-const JWT_SECRET = process.env.JWT_SECRET!;
-const JWT_EXPIRES_IN: string = process.env.JWT_EXPIRES_IN ?? "15m";
-const COOKIE_NAME = process.env.COOKIE_NAME ?? "session";
-const COOKIE_SECURE = (process.env.COOKIE_SECURE ?? "true") === "true";
+const JWT_SECRET = getEnv("JWT_SECRET");
+const JWT_EXPIRES_IN = getEnv('JWT_EXPIRES_IN') as StringValue; // e.g. "15m" or "7d"
+const COOKIE_NAME = getEnv('COOKIE_NAME');
+const COOKIE_SECURE = getEnv('COOKIE_SECURE') === "true";
 
-// minimal payload type
-export type JwtPayload = { sub: number; username: string };
-
-export async function hashPassword(password: string) {
-    return argon2.hash(password);
+async function hashPassword(password: string) {
+    return await argon2.hash(password);
 }
 
-export async function verifyPassword(hash: string, password: string) {
+function signJwt(payload: Partial<UsersRowPublic> | { username: string }) {
+    return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+}
+
+export async function verifyJwt(token: string): Promise<null | JwtPayload> {
     try {
-        return await argon2.verify(hash, password);
+        const payload = jwt.verify(token, JWT_SECRET) as JwtPayload;
+
+        if (typeof payload === "string") throw new Error("TODO: WRITE JWT PAYLOAD VERIFY");
+
+        return payload;
+    } catch {
+        return null;
+    }
+}
+
+/**
+ * Accept a cookie store returned from `await cookies()`:
+ * use a local, safe type so we don't import internal Next types.
+ */
+type CookieStore = Awaited<ReturnType<typeof cookies>>;
+
+export async function cookieForToken(cookieStore: CookieStore, token: string, remember: boolean) {
+    const maxAge = Math.floor(ms(remember ? "100d" : JWT_EXPIRES_IN));
+
+    cookieStore.set({
+        name: COOKIE_NAME,
+        value: token,
+        httpOnly: true,
+        secure: COOKIE_SECURE,
+        sameSite: "strict",
+        path: "/",
+        maxAge,
+    });
+}
+
+/** Clear cookie header */
+export async function clearAuthCookie(cookieStore: CookieStore) {
+    return cookieStore.set({
+        name: COOKIE_NAME,
+        value: "",
+        httpOnly: true,
+        secure: COOKIE_SECURE,
+        sameSite: "strict",
+        path: "/",
+        expires: new Date(0),
+    });
+}
+
+/** Register: hash password, insert into DB, issue JWT, set cookie */
+export async function register(user: { username: string; password: string; avatar_url?: string; }) {
+    const parsed = userSelectPublicSchema.extend({
+        password: z.string().trim().min(1),
+    }).parse(user);
+
+    const hash = await hashPassword(parsed.password);
+
+    const inserted = await db.insert(users).values({
+        username: parsed.username,
+        password_hash: hash,
+        avatar_url: parsed.avatar_url ?? null,
+    }).returning({
+        username: users.username,
+        avatar_url: users.avatar_url,
+    }).execute();
+
+    // Normalize
+    const created = Array.isArray(inserted) ? inserted[0] : inserted;
+
+    // Create minimal payload for token
+    const payload = {
+        username: created.username,
+        avatar_url: parsed.avatar_url ?? null,
+    };
+
+    const token = signJwt(payload);
+
+    const cookieStore = await cookies();
+    cookieForToken(cookieStore, token, false);
+
+    // Return safe public user object (for immediate response)
+    const publicUser: UsersRowPublic = {
+        username: created.username,
+        avatar_url: created.avatar_url ?? null,
+    };
+
+    return publicUser;
+}
+
+async function verifyPassword(user: { username: string; password: string; }) {
+    const parsed = userSelectPublicSchema.omit({
+        avatar_url: true,
+    }).extend({
+        password: z.string().trim().min(1),
+    }).parse(user);
+
+    const selected = (
+        await db
+            .select({ hash: users.password_hash })
+            .from(users)
+            .where(eq(users.username, parsed.username))
+            .limit(1)
+            .execute()
+    );
+
+    // Normalize
+    const hash = (Array.isArray(selected) ? selected[0] : selected).hash;
+
+    try {
+        return await argon2.verify(hash, parsed.password);
     } catch {
         return false;
     }
 }
 
-export function signJwt(payload: JwtPayload) {
-    // FIX: TLS
-    return jwt.sign(payload, JWT_SECRET, { expiresIn: "15m" });
+export async function login(credentials: {
+    username: string;
+    password: string;
+    remember?: boolean;
+}): Promise<UsersRowPublic> {
+    // parse -> validate
+    const parsed = userSelectPublicSchema
+        .omit({ avatar_url: true }) // only need username for auth
+        .extend({
+            password: z.string().trim().min(1),
+            remember: z.boolean().optional(),
+        })
+        .parse(credentials);
+
+    // verify password
+    const ok = await verifyPassword({ username: parsed.username, password: parsed.password });
+    if (!ok) throw new Error("Invalid credentials");
+
+    // fetch public user from DB
+    const selected = await db
+        .select({
+            username: users.username,
+            avatar_url: users.avatar_url,
+        })
+        .from(users)
+        .where(eq(users.username, parsed.username))
+        .limit(1)
+        .execute();
+
+    const found = Array.isArray(selected) ? selected[0] : selected;
+    if (!found || !found.username) throw new Error("Invalid credentials");
+
+    // prepare payload and token
+    const payload = {
+        username: found.username,
+        avatar_url: found.avatar_url ?? null,
+    };
+
+    const token = signJwt(payload);
+
+    // set cookie
+    const cookieStore = await cookies();
+    await cookieForToken(cookieStore, token, Boolean(parsed.remember));
+
+    // return safe public user
+    const publicUser: UsersRowPublic = {
+        username: found.username,
+        avatar_url: found.avatar_url ?? null,
+    };
+
+    return publicUser;
 }
 
-export function verifyJwt(token: string): string | jwt.JwtPayload {
-    try {
-        return jwt.verify(token, JWT_SECRET);
-    } catch {
-        return ""
-    }
-}
+/** getSessionData: read cookie, verify token, return payload or null */
+export async function getSessionData(): Promise<null | UsersRowPublic> {
+    const cookieStore = await cookies();
+    const token = cookieStore.get(COOKIE_NAME)?.value;
+    if (!token) throw new Error("No token");
 
-/**
- * Create Set-Cookie header value for the access token (httpOnly).
- * Use this header in the NextResponse or API response.
- */
-export function cookieForToken(token: string) {
-    return serialize(COOKIE_NAME, token, {
-        httpOnly: true,
-        secure: COOKIE_SECURE,
-        path: "/",
-        sameSite: "lax",
-        maxAge: Math.floor(parseExpireToSeconds(JWT_EXPIRES_IN)),
-    });
-}
+    const payload = await verifyJwt(token);
+    if (!payload || typeof payload === "string") return null;
 
-/** Clear cookie header */
-export function clearAuthCookie() {
-    return serialize(COOKIE_NAME, "", {
-        httpOnly: true,
-        secure: COOKIE_SECURE,
-        path: "/",
-        sameSite: "lax",
-        expires: new Date(0),
-    });
-}
+    const parsed: UsersRowPublic = userSelectPublicSchema.parse(payload);
 
-/** Extract token from cookies in a NextRequest */
-export function getTokenFromRequest(req: NextRequest): string | null {
-    const cookie = req.cookies.get(COOKIE_NAME)?.value ?? null;
-    return cookie;
-}
-
-/** Helper: parse strings like "15m", "7d" into seconds (simple) */
-function parseExpireToSeconds(s: string) {
-    const m = s.match(/^(\d+)([smhd])$/);
-    if (!m) return 0;
-    const v = Number(m[1]);
-    switch (m[2]) {
-        case "s": return v;
-        case "m": return v * 60;
-        case "h": return v * 3600;
-        case "d": return v * 3600 * 24;
-        default: return v;
-    }
+    return parsed;
 }

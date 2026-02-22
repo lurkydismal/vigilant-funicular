@@ -2,10 +2,15 @@ import MainContent from "@/components/follows/MainContent";
 import db from "@/db";
 import { categories, follows, posts, users } from "@/db/schema";
 import { CategoriesRow, CategoriesRowPublic } from "@/db/types";
-import { eq, desc, sql } from 'drizzle-orm';
+import { eq, desc, sql } from "drizzle-orm";
 
 export default async function Follows() {
-    const userId = db.select({ users.id }).from(users).where(eq(users.username, "ASD")).limit(1).execute();
+    const userId = db
+        .select({ id: users.id })
+        .from(users)
+        .where(eq(users.username, "ASD"))
+        .limit(1)
+        .execute();
 
     const latestPost = db
         .select()
@@ -36,10 +41,7 @@ export default async function Follows() {
         .from(follows)
         .innerJoin(users, eq(users.id, follows.following_id))
         .leftJoinLateral(latestPost, sql`true`)
-        .leftJoin(
-            postCategories,
-            eq(postCategories.post_id, latestPost.id)
-        )
+        .leftJoin(postCategories, eq(postCategories.post_id, latestPost.id))
         .where(eq(follows.follower_id, userId));
 
     const tagsMap = new Map<number, CategoriesRow>();

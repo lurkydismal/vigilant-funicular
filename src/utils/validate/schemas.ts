@@ -179,6 +179,9 @@ export const userSelectPublicSchema = userSelectSchema.omit({
     password_hash: true,
     created_at: true,
     updated_at: true,
+}).extend({
+    username: z.string().trim().min(1),
+    avatar_url: z.string().trim().min(1).nullable(),
 });
 
 /** [TODO:description] */
@@ -197,6 +200,8 @@ export const categorySelectPublicSchema = categorySelectSchema.omit({
     id: true,
     created_at: true,
     updated_at: true,
+}).extend({
+    name: z.string().trim().min(1),
 });
 
 /** [TODO:description] */
