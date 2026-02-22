@@ -27,4 +27,4 @@ export function parseRawTarget(rawTarget: DbTarget) {
 type SuccessResult<T> = { ok: true; data?: T };
 type FailureResult = { ok: false; error: string };
 
-export type ActionResult<T> = SuccessResult<T> | FailureResult;
+export type ActionResult<T = void> = SuccessResult<T> | FailureResult;

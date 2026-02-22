@@ -51,7 +51,7 @@ import log from "@/utils/stdlog";
  * if you want stronger guarantees.
  */
 const jwtSecret = getEnv("JWT_SECRET");
-const jwtExpiresIn = getEnv("jwtExpiresIn") as StringValue; // e.g. "15m" or "7d"
+const jwtExpiresIn = getEnv("JWT_EXPIRES_IN") as StringValue; // e.g. "15m" or "7d"
 const cookieSecure = getEnv("COOKIE_SECURE") === "true";
 
 /**

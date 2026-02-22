@@ -1,6 +1,7 @@
 "use client";
 
-import log, { LogFn } from "@/utils/stdlog";
+import log from "@/utils/stdlog";
+import { LogFn } from "@/utils/stdlog/types";
 import {
     NotificationsNone as DefaultIcon,
     CheckCircleOutlined as SuccessIcon,
