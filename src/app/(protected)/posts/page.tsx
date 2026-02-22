@@ -6,7 +6,7 @@ import { categories, posts, follows, users } from "@/db/schema";
 import { getSessionData } from "@/lib/auth";
 import { normalizeArrayOrValue } from "@/utils/stdfunc";
 import { categorySelectSchema, postFullSchema } from "@/utils/validate/schemas";
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, inArray, or } from "drizzle-orm";
 import { unauthorized } from "next/navigation";
 
 export default async function Posts() {
@@ -14,7 +14,6 @@ export default async function Posts() {
         orderBy: {
             created_at: "desc",
         },
-
         with: {
             author: true,
             coAuthor: true,
@@ -38,22 +37,33 @@ export default async function Posts() {
         .where(eq(follows.follower_id, userId.id))
         .execute();
 
-    const _featuredPosts = db.query.posts.findMany({
-        where: {
-            author_id: userId.id,
-            co_author_id: userId.id,
-        },
+    const followingIds = (_followingIds || []).map((r) => r.id).filter(Boolean);
 
-        orderBy: {
-            created_at: "desc",
-        },
-
-        with: {
-            author: true,
-            coAuthor: true,
-            category: true,
-        },
-    });
+    const _featuredPosts =
+        followingIds.length
+            ? await db
+                .select({
+                    id: posts.id,
+                    author_id: posts.author_id,
+                    co_author_id: posts.co_author_id,
+                    category_id: posts.category_id,
+                    preview_url: posts.preview_url,
+                    title: posts.title,
+                    description: posts.description,
+                    content: posts.content,
+                    created_at: posts.created_at,
+                    updated_at: posts.updated_at,
+                })
+                .from(posts)
+                .where(() =>
+                    or(
+                        inArray(posts.author_id, followingIds),
+                        inArray(posts.co_author_id, followingIds)
+                    )
+                )
+                .orderBy(desc(posts.created_at))
+                .execute()
+            : [];
 
     const _categories = db
         .select()
@@ -64,7 +74,7 @@ export default async function Posts() {
     const parsedPosts = postFullSchema.array().parse(await _posts);
     const parsedFeaturedPosts = postFullSchema
         .array()
-        .parse(await _featuredPosts);
+        .parse(_featuredPosts);
     const parsedCategories = categorySelectSchema
         .array()
         .parse(await _categories);
