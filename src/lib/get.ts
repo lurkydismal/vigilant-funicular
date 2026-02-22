@@ -6,7 +6,6 @@ import { desc } from "drizzle-orm";
 import { DbTarget, parseRawTarget } from "@/lib/types";
 import { ActionResult } from "@/lib/types";
 
-// TODO: Validate what returns
 export async function getRows(
     rawTarget: DbTarget,
 ): Promise<ActionResult<unknown[]>> {

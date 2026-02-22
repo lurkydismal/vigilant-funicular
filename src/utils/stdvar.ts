@@ -1,3 +1,5 @@
+import { getEnv } from "./stdfunc";
+
 /**
  * Flag indicating whether detailed trace logging should be enabled.
  * - `true` forces verbose logging regardless of environment.
@@ -10,21 +12,21 @@ export const needTrace = false;
  * - Determined by the `NODE_ENV` environment variable.
  * - `true` if `process.env.NODE_ENV === "development"`.
  */
-export const isDev = process.env.NODE_ENV === "development";
+export const isDev = getEnv('NODE_ENV') === "development";
 
 /**
  * Flag indicating if the current environment is production.
  * - True when `process.env.NODE_ENV === "production"`.
  * - Useful for conditional logic that should only run in production.
  */
-export const isProd = process.env.NODE_ENV === "production";
+export const isProd = getEnv('NODE_ENV') === "production";
 
 /**
  * Flag indicating if the current environment is a test environment.
  * - True when `process.env.NODE_ENV === "test"`.
  * - Useful for skipping certain behaviors or using mock data in tests.
  */
-export const isTest = process.env.NODE_ENV === "test";
+export const isTest = getEnv('NODE_ENV') === "test";
 
 /**
  * Flag indicating if the code is running in a browser environment.
@@ -41,17 +43,9 @@ export const isBrowser = typeof window !== "undefined";
 export const isServer = typeof window === "undefined";
 
 /**
- * Base URL for API calls.
- * - Reads from the environment variable `NEXT_PUBLIC_API_URL`.
- * - Defaults to `"/api"` if not set.
- * - Useful for constructing HTTP requests to the backend.
- */
-export const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL ?? "/api";
-
-/**
  * [TODO:Document]
  */
-export const githubUrl = process.env.GITHUB_LINK ?? "#";
+export const githubUrl = getEnv('GITHUB_LINK', '#');
 
 /**
  * [TODO:Document]
@@ -81,7 +75,7 @@ export const appVersion = "0.1.0";
  * - Fetched from environment variable `NEXT_PUBLIC_BASE_PATH`.
  * - Defaults to empty string if not set.
  */
-export const appBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+export const appBasePath = getEnv('NEXT_PUBLIC_BASE_PATH', "");
 
 /**
  * Asset prefix for static assets.
@@ -89,7 +83,7 @@ export const appBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
  * - Fetched from environment variable `NEXT_PUBLIC_ASSET_PREFIX`.
  * - Defaults to empty string if not set.
  */
-export const assetPrefix = process.env.NEXT_PUBLIC_ASSET_PREFIX ?? "";
+export const assetPrefix = getEnv('NEXT_PUBLIC_ASSET_PREFIX', "");
 
 /**
  * Default date/time format used throughout the application.
@@ -147,4 +141,4 @@ export const maxRetries = 3;
  * Keys used for localStorage or sessionStorage.
  * - Example: storing auth tokens, theme preferences, etc.
  */
-export const storageKeys = { authToken: "authToken" };
+export const storageKeys = { accessToken: getEnv('COOKIE_NAME') };

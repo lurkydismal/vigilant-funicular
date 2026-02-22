@@ -6,19 +6,26 @@ import { PostsRowFull } from "@/db/types";
 import log from "./stdlog";
 
 /**
- * Get an environment variable or throw if missing.
+ * Get an environment variable or return a default if missing.
  *
  * @param key - Environment variable name
- * @returns Value of the environment variable
- * @throws Error if the variable is missing
+ * @param defaultValue - Optional default value to use if the env var is missing
+ * @returns Value of the environment variable, or the default if provided
+ * @throws Error if the variable is missing and no default is provided
  */
-export function getEnv(key: string): string {
+export function getEnv(key: string, defaultValue?: string): string {
     const value = process.env[key];
-    if (!value) {
-        console.error(`Environment variable "${key}" is not set`);
-        throw new Error(`Missing environment variable: ${key}`);
+
+    if (value !== undefined) {
+        return value;
     }
-    return value;
+
+    if (defaultValue !== undefined) {
+        return defaultValue;
+    }
+
+    console.error(`Environment variable "${key}" is not set`);
+    throw new Error(`Missing environment variable: ${key}`);
 }
 
 /**

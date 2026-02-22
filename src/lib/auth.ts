@@ -10,7 +10,7 @@
  *
  * Notes / responsibilities:
  * - This file runs on the Node server (not Edge runtime).
- * - Keep secrets (JWT_SECRET) only in env; never return them.
+ * - Keep secrets (jwtSecret) only in env; never return them.
  * - HttpOnly cookie is the authority for auth — client JS cannot read it.
  * - JWT payloads will include `iat`/`exp` fields added by jsonwebtoken.
  *   If you validate the payload with a strict Zod schema, account for those extra fields.
@@ -40,18 +40,18 @@ import { getEnv } from "@/utils/stdfunc";
 import { userSelectPublicSchema } from "@/utils/validate/schemas";
 import z from "zod";
 import ms from "ms";
+import { storageKeys } from "@/utils/stdvar";
 
 /*
  * Environment-configured values.
  *
- * JWT_EXPIRES_IN is narrowed to `StringValue` (ms-style string) so TypeScript
+ * jwtExpiresIn is narrowed to `StringValue` (ms-style string) so TypeScript
  * accepts it in jsonwebtoken's `expiresIn` option. Validate this env at app start
  * if you want stronger guarantees.
  */
-const JWT_SECRET = getEnv("JWT_SECRET");
-const JWT_EXPIRES_IN = getEnv("JWT_EXPIRES_IN") as StringValue; // e.g. "15m" or "7d"
-const COOKIE_NAME = getEnv("COOKIE_NAME");
-const COOKIE_SECURE = getEnv("COOKIE_SECURE") === "true";
+const jwtSecret = getEnv("JWT_SECRET");
+const jwtExpiresIn = getEnv("jwtExpiresIn") as StringValue; // e.g. "15m" or "7d"
+const cookieSecure = getEnv("COOKIE_SECURE") === "true";
 
 /**
  * In-process login attempt tracker (best-effort).
@@ -125,9 +125,9 @@ async function hashPassword(password: string) {
  * NOTE: ms() returns milliseconds; cookie maxAge expects seconds.
  */
 function signJwt(payload: Partial<UsersRowPublic> | { username: string }, remember: boolean) {
-    const expiresIn = Math.floor(ms(remember ? "100d" : JWT_EXPIRES_IN) / 1000);
+    const expiresIn = Math.floor(ms(remember ? "100d" : jwtExpiresIn) / 1000);
 
-    return jwt.sign(payload, JWT_SECRET, {
+    return jwt.sign(payload, jwtSecret, {
         algorithm: "HS256",
         expiresIn,
     });
@@ -144,7 +144,7 @@ function signJwt(payload: Partial<UsersRowPublic> | { username: string }, rememb
 export async function verifyJwt(token: string): Promise<null | UsersRowPublic> {
     try {
         // verify signature + expiry and restrict algorithm to HS256
-        const verified = jwt.verify(token, JWT_SECRET, {
+        const verified = jwt.verify(token, jwtSecret, {
             algorithms: ["HS256"],
         });
 
@@ -186,7 +186,7 @@ type CookieStore = Awaited<ReturnType<typeof cookies>>;
 /**
  * Write an HttpOnly cookie that stores the access token.
  * - `remember` controls cookie lifetime (longer maxAge when true).
- * - maxAge is computed using `ms()`. `JWT_EXPIRES_IN` must be a parsable ms string.
+ * - maxAge is computed using `ms()`. `jwtExpiresIn` must be a parsable ms string.
  * - Cookie attributes:
  *   - httpOnly: true (not accessible to client JS)
  *   - secure: controlled by COOKIE_SECURE (true in prod over HTTPS)
@@ -203,13 +203,13 @@ export async function cookieForToken(
     token: string,
     remember: boolean,
 ) {
-    const maxAge = Math.floor(ms(remember ? "100d" : JWT_EXPIRES_IN) / 1000);
+    const maxAge = Math.floor(ms(remember ? "100d" : jwtExpiresIn) / 1000);
 
     cookieStore.set({
-        name: COOKIE_NAME,
+        name: storageKeys.accessToken,
         value: token,
         httpOnly: true,
-        secure: COOKIE_SECURE,
+        secure: cookieSecure,
         sameSite: "strict",
         path: "/",
         maxAge,
@@ -222,10 +222,10 @@ export async function cookieForToken(
  */
 export async function clearAuthCookie(cookieStore: CookieStore) {
     return cookieStore.set({
-        name: COOKIE_NAME,
+        name: storageKeys.accessToken,
         value: "",
         httpOnly: true,
-        secure: COOKIE_SECURE,
+        secure: cookieSecure,
         sameSite: "strict",
         path: "/",
         expires: new Date(0),
@@ -464,7 +464,7 @@ export async function login(credentials: {
  */
 export async function getSessionData(): Promise<null | UsersRowPublic> {
     const cookieStore = await cookies();
-    const token = cookieStore.get(COOKIE_NAME)?.value;
+    const token = cookieStore.get(storageKeys.accessToken)?.value;
     if (!token) throw new Error("No token");
 
     const payload = await verifyJwt(token);
