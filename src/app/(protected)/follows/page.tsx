@@ -3,11 +3,7 @@ import MainContent from "@/components/follows/MainContent";
 import MainFallback from "@/components/MainFallback";
 import db from "@/db";
 import { categories, follows, posts, users } from "@/db/schema";
-import {
-    CategoriesRowPublic,
-    PostsRow,
-    UsersRowPublic,
-} from "@/db/types";
+import { CategoriesRowPublic, PostsRow, UsersRowPublic } from "@/db/types";
 import { getSessionData } from "@/lib/auth";
 import { normalizeArrayOrValue } from "@/utils/stdfunc";
 import { and, eq, sql, desc } from "drizzle-orm";
@@ -96,7 +92,9 @@ export async function getCategoriesOfFollowedUsersLatestPosts(
     const latestPerAuthor = db
         .select({
             author_id: posts.author_id,
-            latest_created_at: sql`max(${posts.created_at})`.as("latest_created_at"),
+            latest_created_at: sql`max(${posts.created_at})`.as(
+                "latest_created_at",
+            ),
         })
         .from(posts)
         .groupBy(posts.author_id)

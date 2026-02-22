@@ -136,7 +136,7 @@ export const storageKeys = {
 
     server: isServer
         ? {
-            accessToken: getEnv("COOKIE_NAME"),
-        }
+              accessToken: getEnv("COOKIE_NAME"),
+          }
         : null,
 };
