@@ -5,13 +5,15 @@ import AuthForm from "@/components/auth/AuthForm";
 import { Link } from "@/components/Link";
 import { CopyrightAligned as Copyright } from "@/components/Copyright";
 import log from "@/utils/stdlog";
-import { isDev } from "@/utils/stdvar";
 import { useRouter } from "next/navigation";
 import { Typography } from "@mui/material";
 import { useEffect } from "react";
+import { register } from "@/lib/auth";
+import { useAuth } from "@/providers/auth";
 
 export default function SignUpPage() {
     const router = useRouter();
+    const auth = useAuth();
 
     useEffect(() => {
         log.trace("SignUp component mounted");
@@ -27,12 +29,9 @@ export default function SignUpPage() {
         log.trace(`onSubmit called: '${JSON.stringify(data)}'`);
 
         try {
-            // network/storage removed per request.
-            if (!isDev) {
-                // intentionally left blank — no sendRequest/storeCredentials here
-            }
+            const user = await register({ ...data });
 
-            log.trace("onSubmit finished");
+            auth.setUser(user);
 
             router.push("/posts");
         } catch (err) {
