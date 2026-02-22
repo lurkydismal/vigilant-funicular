@@ -210,7 +210,7 @@ export async function cookieForToken(
     const maxAge = Math.floor(ms(remember ? "100d" : jwtExpiresIn) / 1000);
 
     cookieStore.set({
-        name: storageKeys.accessToken,
+        name: storageKeys.server!.accessToken,
         value: token,
         httpOnly: true,
         secure: cookieSecure,
@@ -226,7 +226,7 @@ export async function cookieForToken(
  */
 export async function clearAuthCookie(cookieStore: CookieStore) {
     return cookieStore.set({
-        name: storageKeys.accessToken,
+        name: storageKeys.server!.accessToken,
         value: "",
         httpOnly: true,
         secure: cookieSecure,
@@ -468,7 +468,7 @@ export async function login(credentials: {
  */
 export async function getSessionData(): Promise<null | UsersRowPublic> {
     const cookieStore = await cookies();
-    const token = cookieStore.get(storageKeys.accessToken)?.value;
+    const token = cookieStore.get(storageKeys.server!.accessToken)?.value;
     if (!token) throw new Error("No token");
 
     const payload = await verifyJwt(token);
