@@ -7,10 +7,7 @@ import log from "@/utils/stdlog";
 
 const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     // TODO: Implement
-    log.info(
-        "You clicked the filter chip. ",
-        event.currentTarget.textContent,
-    );
+    log.info("You clicked the filter chip. ", event.currentTarget.textContent);
 };
 
 export function Tags({ tags }: { tags: CategoriesRowPublic[] }) {

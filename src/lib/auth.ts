@@ -36,7 +36,7 @@ import db from "@/db";
 import { eq } from "drizzle-orm";
 import { users } from "@/db/schema";
 import { UsersRowPublic } from "@/db/types";
-import { getEnv } from "@/utils/stdfunc";
+import { getEnv, normalizeArrayOrValue } from "@/utils/stdfunc";
 import { userSelectPublicSchema } from "@/utils/validate/schemas";
 import z from "zod";
 import ms from "ms";
@@ -283,7 +283,7 @@ export async function register(user: {
             .execute();
 
         // Normalize
-        const created = Array.isArray(inserted) ? inserted[0] : inserted;
+        const created = normalizeArrayOrValue(inserted);
 
         // Create minimal payload for token
         const payload = {
@@ -340,7 +340,7 @@ async function verifyPassword(user: { username: string; password: string }) {
         .execute();
 
     // If no user found, return false early
-    const row = Array.isArray(selected) ? selected[0] : selected;
+    const row = normalizeArrayOrValue(selected);
     if (!row || !row.hash) return false;
 
     try {
@@ -414,7 +414,7 @@ export async function login(credentials: {
             .limit(1)
             .execute();
 
-        const found = Array.isArray(selected) ? selected[0] : selected;
+        const found = normalizeArrayOrValue(selected);
         if (!found || !found.username) {
             // Should be impossible if verifyPassword returned true, but guard anyway
             recordFailedLoginAttempt(normalizedUsername);

@@ -185,3 +185,12 @@ export function concatenateAuthors(post: PostsRowFull) {
         ...(post.coAuthor ? [post.coAuthor] : []),
     ];
 }
+
+/**
+ * @template T - [TODO:type]
+ * @param item - [TODO:description]
+ * @returns [TODO:return]
+ */
+export function normalizeArrayOrValue<T>(item: T | T[]): T {
+    return Array.isArray(item) ? item[0] : item;
+}

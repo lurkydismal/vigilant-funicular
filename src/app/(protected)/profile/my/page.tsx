@@ -7,8 +7,14 @@ import {
 } from "@/utils/validate/schemas";
 import { desc, eq } from "drizzle-orm";
 import MainContent from "@/components/profile/MainContent";
+import z from "zod";
+import { getSessionData } from "@/lib/auth";
 
 export default async function Page() {
+    const user = await getSessionData();
+
+    const parsedUsername = z.string().trim().min(1).parse(user?.username);
+
     const _user = db
         .select()
         .from(users)

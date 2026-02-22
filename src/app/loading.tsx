@@ -6,7 +6,7 @@ export default function Loading() {
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
-        let id = setInterval(() => {
+        const id = setInterval(() => {
             setProgress((p) => Math.min(p + Math.random() * 10, 95));
         }, 300);
 
@@ -28,7 +28,15 @@ export default function Loading() {
                         className="w-10 h-10 text-indigo-600 animate-spin"
                         viewBox="0 0 24 24"
                     >
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                        <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                            fill="none"
+                        />
                         <path
                             className="opacity-75"
                             fill="currentColor"
@@ -36,8 +44,12 @@ export default function Loading() {
                         />
                     </svg>
                     <div>
-                        <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">Loading content</p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">Preparing your view…</p>
+                        <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                            Loading content
+                        </p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                            Preparing your view…
+                        </p>
                     </div>
                     <span className="sr-only">Loading</span>
                 </div>
@@ -67,7 +79,9 @@ export default function Loading() {
                                 aria-hidden
                             />
                         </div>
-                        <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">Loading resources — this usually takes a second.</div>
+                        <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                            Loading resources — this usually takes a second.
+                        </div>
                     </div>
 
                     <div className="hidden sm:flex items-center gap-2">
