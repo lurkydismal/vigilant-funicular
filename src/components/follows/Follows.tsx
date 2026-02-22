@@ -5,11 +5,11 @@ import { AuthorWithFollowAndLink } from "@/components/Author";
 import MainFallback from "@/components/MainFallback";
 import { redirect } from "next/navigation";
 import { styled, Typography, Grid, Box } from "@mui/material";
-import { PostsRowFull, UsersRowPublic } from "@/db/types";
+import { PostsRow, PostsRowFull, UsersRowPublic } from "@/db/types";
 
 export interface Follow {
     author: UsersRowPublic;
-    post: PostsRowFull;
+    post: PostsRow | PostsRowFull;
 }
 
 const StyledTypography = styled(Typography)({

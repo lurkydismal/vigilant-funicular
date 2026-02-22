@@ -1,7 +1,13 @@
+import { Follow } from "@/components/follows/Follows";
 import MainContent from "@/components/follows/MainContent";
 import db from "@/db";
 import { categories, follows, posts, users } from "@/db/schema";
-import { CategoriesRow, CategoriesRowPublic } from "@/db/types";
+import {
+    CategoriesRowPublic,
+    PostsRow,
+    PostsRowFull,
+    UsersRowPublic,
+} from "@/db/types";
 import { getSessionData } from "@/lib/auth";
 import { normalizeArrayOrValue } from "@/utils/stdfunc";
 import { and, eq, sql, desc } from "drizzle-orm";
@@ -25,7 +31,7 @@ export type FollowedUserWithLatestPost = {
  * Each row contains the user + their latest post (if any) + that post's category.
  */
 export async function getFollowedUsersWithLatestPost(
-    userId: number
+    userId: number,
 ): Promise<FollowedUserWithLatestPost[]> {
     // Subquery: latest created_at per author_id
     const latestPerAuthor = db
@@ -60,8 +66,8 @@ export async function getFollowedUsersWithLatestPost(
             posts,
             and(
                 eq(posts.author_id, latestPerAuthor.author_id),
-                eq(posts.created_at, latestPerAuthor.latest_created_at)
-            )
+                eq(posts.created_at, latestPerAuthor.latest_created_at),
+            ),
         )
         .leftJoin(categories, eq(categories.id, posts.category_id))
         .orderBy(users.username)
@@ -87,7 +93,7 @@ export async function getFollowedUsersWithLatestPost(
  * (only includes followed users who have at least one post with non-null category).
  */
 export async function getCategoriesOfFollowedUsersLatestPosts(
-    userId: number
+    userId: number,
 ): Promise<string[]> {
     // same latest-per-author subquery
     const latestPerAuthor = db
@@ -104,13 +110,16 @@ export async function getCategoriesOfFollowedUsersLatestPosts(
         .from(follows)
         .where(eq(follows.follower_id, userId))
         // match subquery by followed user id
-        .innerJoin(latestPerAuthor, eq(latestPerAuthor.author_id, follows.following_id))
+        .innerJoin(
+            latestPerAuthor,
+            eq(latestPerAuthor.author_id, follows.following_id),
+        )
         .innerJoin(
             posts,
             and(
                 eq(posts.author_id, latestPerAuthor.author_id),
-                eq(posts.created_at, latestPerAuthor.latest_created_at)
-            )
+                eq(posts.created_at, latestPerAuthor.latest_created_at),
+            ),
         )
         .innerJoin(categories, eq(categories.id, posts.category_id))
         // distinct names: groupBy or use .distinct() if available in your drizzle version
@@ -123,9 +132,7 @@ export async function getCategoriesOfFollowedUsersLatestPosts(
 /**
  * Convenience function returning both results in one call.
  */
-export async function getFollowedUsersAndCategories(
-    userId: number
-) {
+export async function getFollowedUsersAndCategories(userId: number) {
     const [usersList, categoriesList] = await Promise.all([
         getFollowedUsersWithLatestPost(userId),
         getCategoriesOfFollowedUsersLatestPosts(userId),
@@ -146,7 +153,38 @@ export default async function Follows() {
     const userId = normalizeArrayOrValue(_userId);
     if (!userId || !userId.id) return false;
 
-    const { users: _users, categories } = await getFollowedUsersAndCategories(userId.id);
+    const { users: _users, categories } = await getFollowedUsersAndCategories(
+        userId.id,
+    );
+
+    const feed: Follow[] = _users
+        .filter((u) => u.post_id !== null) // drop users without posts (Follow.post is required)
+        .map((u) => {
+            const author: UsersRowPublic = {
+                // minimal public user shape based on what you selected earlier
+                // add/adjust fields if your UsersRowPublic requires more properties
+                id: u.user_id,
+                username: u.username,
+                avatar_url: u.avatar_url ?? null,
+            } as UsersRowPublic;
+
+            const post: PostsRow = {
+                // minimal post shape using fields returned by your query.
+                // expand/adjust as needed to match PostsRowFull in your project.
+                id: u.post_id as number,
+                author_id: u.user_id,
+                co_author_id: null,
+                category_id: u.category_id ?? null,
+                preview_url: null,
+                title: u.post_title ?? "",
+                description: u.post_description ?? null,
+                content: u.post_content ?? "",
+                created_at: u.post_created_at ?? new Date(0),
+                updated_at: u.post_created_at ?? new Date(0),
+            };
+
+            return { author, post } as Follow;
+        });
 
     const tags: CategoriesRowPublic[] = categories.map((value) => ({
         name: value,
