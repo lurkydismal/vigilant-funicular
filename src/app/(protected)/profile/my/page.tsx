@@ -9,6 +9,7 @@ import { desc, eq } from "drizzle-orm";
 import MainContent from "@/components/profile/MainContent";
 import z from "zod";
 import { getSessionData } from "@/lib/auth";
+import { normalizeArrayOrValue } from "@/utils/stdfunc";
 
 export default async function Page() {
     const user = await getSessionData();
@@ -32,7 +33,8 @@ export default async function Page() {
         .orderBy(desc(categories.name))
         .execute();
 
-    const parsedUser = userSelectPublicSchema.parse(await _user);
+    const __user = normalizeArrayOrValue(await _user);
+    const parsedUser = userSelectPublicSchema.parse(__user);
     const parsedPosts = postFullSchema.array().parse(await _posts);
     const parsedCategories = categorySelectPublicSchema
         .array()
