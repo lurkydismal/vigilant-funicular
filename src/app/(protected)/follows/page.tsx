@@ -1,5 +1,6 @@
 import { Follow } from "@/components/follows/Follows";
 import MainContent from "@/components/follows/MainContent";
+import MainFallback from "@/components/MainFallback";
 import db from "@/db";
 import { categories, follows, posts, users } from "@/db/schema";
 import {
@@ -186,5 +187,9 @@ export default async function Follows() {
         name: value,
     }));
 
-    return <MainContent follows={feed} tags={tags} />;
+    return (
+        <MainFallback itemsLength={feed.length}>
+            <MainContent follows={feed} tags={tags} />
+        </MainFallback>
+    );
 }

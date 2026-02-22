@@ -7,7 +7,6 @@ import { paginate } from "@/utils/stdfunc";
 import { Follow, Follows } from "./Follows";
 import { useState, ChangeEvent } from "react";
 import { Box, Typography } from "@mui/material";
-import MainFallback from "../MainFallback";
 import { CategoriesRowPublic } from "@/db/types";
 
 export default function MainContent({
@@ -34,15 +33,13 @@ export default function MainContent({
 
             <TagsAndSearchMobile tags={tags} />
 
-            <MainFallback itemsLength={follows.length}>
-                <Follows follows={paginate(follows, currentPage, perPage)} />
+            <Follows follows={paginate(follows, currentPage, perPage)} />
 
-                <PostsPagination
-                    total={follows.length}
-                    perPage={perPage}
-                    onChange={onChange}
-                />
-            </MainFallback>
+            <PostsPagination
+                total={follows.length}
+                perPage={perPage}
+                onChange={onChange}
+            />
         </Box>
     );
 }
