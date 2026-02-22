@@ -41,6 +41,7 @@ const tagSx = {
 export default function MainContent({ post }: { post: PostsRowFull }) {
     const properties = {
         authors: concatenateAuthors(post),
+        date: post.created_at,
         variant: "h4",
         avatarWidth: 52,
         avatarHeight: 52,

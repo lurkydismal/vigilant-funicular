@@ -112,6 +112,7 @@ export default function PostsWithoutImage({
 
                             <AuthorsWithDate
                                 authors={concatenateAuthors(post)}
+                                date={post.created_at}
                             />
                         </Box>
                     </Grid>

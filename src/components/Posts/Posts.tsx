@@ -172,7 +172,10 @@ export default function Posts({ posts }: { posts: PostsRowFull[] }) {
                             </Truncated>
                         </StyledCardContent>
 
-                        <AuthorsWithDate authors={concatenateAuthors(post)} />
+                        <AuthorsWithDate
+                            authors={concatenateAuthors(post)}
+                            date={post.created_at}
+                        />
                     </StyledCard>
                 </Grid>
             ))}

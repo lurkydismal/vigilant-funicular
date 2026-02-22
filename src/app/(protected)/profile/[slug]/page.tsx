@@ -23,7 +23,11 @@ export default async function Page({
 }) {
     const { slug } = await params;
 
-    const parsedUsername = z.string().trim().min(1).parse(decodeURIComponent(slug));
+    const parsedUsername = z
+        .string()
+        .trim()
+        .min(1)
+        .parse(decodeURIComponent(slug));
 
     const _user = db
         .select()
@@ -42,7 +46,9 @@ export default async function Page({
         .orderBy(desc(categories.name))
         .execute();
 
-    const parsedUser = userSelectPublicSchema.parse(normalizeArrayOrValue(await _user));
+    const parsedUser = userSelectPublicSchema.parse(
+        normalizeArrayOrValue(await _user),
+    );
     const parsedPosts = postFullSchema.array().parse(await _posts);
     const parsedCategories = categorySelectPublicSchema
         .array()
