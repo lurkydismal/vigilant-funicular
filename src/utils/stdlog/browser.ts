@@ -1,21 +1,7 @@
 "use client";
 
 import { isDev, needTrace } from "@/utils/stdvar";
-
-export type LogFn = (...args: unknown[]) => void;
-
-/**
- * Common logger shape used by both browser and server implementations.
- * Each property is a logging function that accepts any arguments.
- */
-type CommonLogger = {
-    trace: LogFn;
-    debug: LogFn;
-    info: LogFn;
-    warn: LogFn;
-    error: LogFn;
-    fatal: LogFn;
-};
+import { CommonLogger, LogFn } from "./types";
 
 /**
  * Create a browser-friendly logger that:
@@ -80,8 +66,8 @@ function makeBrowserLogger(): CommonLogger {
     };
 
     return {
-        trace: needTrace ? makeLevel("TRACE") : () => {},
-        debug: isDev ? makeLevel("DEBUG") : () => {},
+        trace: needTrace ? makeLevel("TRACE") : () => { },
+        debug: isDev ? makeLevel("DEBUG") : () => { },
         info: makeLevel("INFO"),
         warn: makeLevel("WARN"),
         error: makeLevel("ERROR"),

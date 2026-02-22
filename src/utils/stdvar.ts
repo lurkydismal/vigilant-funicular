@@ -12,21 +12,21 @@ export const needTrace = false;
  * - Determined by the `NODE_ENV` environment variable.
  * - `true` if `process.env.NODE_ENV === "development"`.
  */
-export const isDev = getEnv("NODE_ENV") === "development";
+export const isDev = getEnv("NODE_ENV", "development") === "development";
 
 /**
  * Flag indicating if the current environment is production.
  * - `true` if `process.env.NODE_ENV === "production"`.
  * - Useful for conditional logic that should only run in production.
  */
-export const isProd = getEnv("NODE_ENV") === "production";
+export const isProd = getEnv("NODE_ENV", "development") === "production";
 
 /**
  * Flag indicating if the current environment is a test environment.
  * - `true` if `process.env.NODE_ENV === "test"`.
  * - Useful for skipping certain behaviors or using mock data in tests.
  */
-export const isTest = getEnv("NODE_ENV") === "test";
+export const isTest = getEnv("NODE_ENV", "development") === "test";
 
 /**
  * Flag indicating if the code is running in a browser environment.
@@ -131,4 +131,11 @@ export const maxRetries = 3;
  * Keys used for localStorage, sessionStorage or cookies.
  * - Example: storing auth tokens, theme preferences, etc.
  */
-export const storageKeys = { accessToken: getEnv("COOKIE_NAME") };
+export const storageKeys = {
+    client: isBrowser ? {
+    } : null,
+
+    server: isServer ? {
+        accessToken: getEnv("COOKIE_NAME"),
+    } : null,
+};

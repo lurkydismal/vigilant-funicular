@@ -2,7 +2,7 @@ import Footer from "@/components/Footer";
 import NavBar from "@/components/NavBar";
 import { getSessionData } from "@/lib/auth";
 import { Box, Container } from "@mui/material";
-import { redirect } from "next/navigation";
+import { unauthorized } from "next/navigation";
 
 export default async function ProtectedLayout({
     children,
@@ -12,8 +12,7 @@ export default async function ProtectedLayout({
     const user = await getSessionData();
 
     if (!user) {
-        // redirect to login if not authenticated
-        redirect("/login");
+        unauthorized();
     }
 
     return (

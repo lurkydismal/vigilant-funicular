@@ -3,7 +3,6 @@
  */
 
 import { PostsRowFull } from "@/db/types";
-import log from "./stdlog";
 
 /**
  * Get an environment variable or return a default if missing.
@@ -168,8 +167,6 @@ export function paginate<T>(
     currentPage: number,
     perPage: number,
 ): T[] {
-    log.trace(`Paginate page=${currentPage} size=${perPage}`);
-
     const start = (currentPage - 1) * perPage;
     const end = start + perPage;
 

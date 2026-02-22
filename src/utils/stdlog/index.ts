@@ -1,6 +1,7 @@
 import { Logger } from "tslog";
 import { isBrowser, isDev, needTrace } from "@/utils/stdvar";
 import { browserLogger } from "./browser";
+import { CommonLogger } from "./types";
 
 /**
  * Determine minimum server log level:
@@ -11,21 +12,6 @@ import { browserLogger } from "./browser";
  * These numeric levels are passed to `tslog` as `minLevel`.
  */
 const logLevel = needTrace ? 1 : isDev ? 2 : 3;
-
-export type LogFn = (...args: unknown[]) => void;
-
-/**
- * Common logger shape used by both browser and server implementations.
- * Each property is a logging function that accepts any arguments.
- */
-type CommonLogger = {
-    trace: LogFn;
-    debug: LogFn;
-    info: LogFn;
-    warn: LogFn;
-    error: LogFn;
-    fatal: LogFn;
-};
 
 /**
  * `serverLogger` - `tslog`-based logger configured for server/node environments.

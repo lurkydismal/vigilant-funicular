@@ -3,10 +3,11 @@
 import { Box, Chip } from "@mui/material";
 import { SearchButtonMobile } from "@/components/SearchButton";
 import { CategoriesRowPublic } from "@/db/types";
+import log from "@/utils/stdlog";
 
-// TODO: Implement
 const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    console.info(
+    // TODO: Implement
+    log.info(
         "You clicked the filter chip. ",
         event.currentTarget.textContent,
     );

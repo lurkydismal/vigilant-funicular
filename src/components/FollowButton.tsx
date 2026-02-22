@@ -1,3 +1,4 @@
+import log from "@/utils/stdlog";
 import {
     PersonRemove as UnfollowIcon,
     PersonAdd as FollowIcon,
@@ -25,7 +26,8 @@ function FollowBase({ uid, doesFollow, size, needText = false }: Props) {
     const color = doesFollow ? "error" : "success";
     const icon = doesFollow ? <UnfollowIcon /> : <FollowIcon />;
     const handleClick = () => {
-        console.log("Follow: ", uid);
+        // TODO: Implement
+        log.info("Follow: ", uid);
     };
 
     return needText ? (

@@ -41,6 +41,7 @@ import { userSelectPublicSchema } from "@/utils/validate/schemas";
 import z from "zod";
 import ms from "ms";
 import { storageKeys } from "@/utils/stdvar";
+import log from "@/utils/stdlog";
 
 /*
  * Environment-configured values.
@@ -304,7 +305,7 @@ export async function register(user: {
         return publicUser;
     } catch (err) {
         // Audit log: capture username and the error message, but do NOT log sensitive data.
-        console.error("register failed", {
+        log.error("register failed", {
             username: normalizedUsername,
             error: err instanceof Error ? err.message : String(err),
         });
@@ -383,7 +384,7 @@ export async function login(credentials: {
     // Rate-limit check (best-effort)
     if (isLoginBlocked(normalizedUsername)) {
         // Log the blocked attempt for auditing
-        console.warn("login blocked due to too many attempts", {
+        log.warn("login blocked due to too many attempts", {
             username: normalizedUsername,
         });
         throw new Error("Too many login attempts. Try again later.");
@@ -444,7 +445,7 @@ export async function login(credentials: {
         return publicUser;
     } catch (err) {
         // Audit log: capture username and a safe error description (no secrets)
-        console.error("login failed", {
+        log.error("login failed", {
             username: normalizedUsername,
             error: err instanceof Error ? err.message : String(err),
         });
