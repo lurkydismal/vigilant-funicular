@@ -1,7 +1,7 @@
-import Forbidden from "../fprbidden";
+import Loading from "../loading";
 
 export default async function Page() {
     return (
-        <Forbidden />
+        <Loading />
     );
 }

@@ -1,4 +1,22 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 export default function Loading() {
+    const [progress, setProgress] = useState(0);
+
+    useEffect(() => {
+        let id = setInterval(() => {
+            setProgress((p) => Math.min(p + Math.random() * 10, 95));
+        }, 300);
+
+        // when component unmounts (Suspense resolved), jump to 100%
+        return () => {
+            clearInterval(id);
+            setProgress(100);
+        };
+    }, []);
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
             <main className="w-full max-w-3xl p-6 space-y-6">
@@ -45,7 +63,7 @@ export default function Loading() {
                         <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2 overflow-hidden">
                             <div
                                 className="h-2 bg-indigo-600/80 rounded-full transition-all"
-                                style={{ width: '42%' }}
+                                style={{ width: `${progress}%` }}
                                 aria-hidden
                             />
                         </div>
