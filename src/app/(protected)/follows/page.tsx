@@ -5,12 +5,11 @@ import { categories, follows, posts, users } from "@/db/schema";
 import {
     CategoriesRowPublic,
     PostsRow,
-    PostsRowFull,
     UsersRowPublic,
 } from "@/db/types";
 import { getSessionData } from "@/lib/auth";
 import { normalizeArrayOrValue } from "@/utils/stdfunc";
-import { and, eq, sql, desc } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 
 /** Result types */
 export type FollowedUserWithLatestPost = {
