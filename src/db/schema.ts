@@ -25,7 +25,7 @@ export const users = pgTable(
     (t) => [
         check("username_not_blank", sql`length(trim(${t.username})) > 0`),
         check(
-            "username_not_blank",
+            "username_normalized_not_blank",
             sql`length(trim(${t.username_normalized})) > 0`,
         ),
         check(
