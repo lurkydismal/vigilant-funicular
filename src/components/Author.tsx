@@ -50,7 +50,13 @@ const dateSx = {
  * @param left - left-side node (required)
  * @param right - right-side node (optional)
  */
-function AuthorRow({ left, right }: { left: React.ReactNode; right?: React.ReactNode }) {
+function AuthorRow({
+    left,
+    right,
+}: {
+    left: React.ReactNode;
+    right?: React.ReactNode;
+}) {
     log.trace("AuthorRow render");
 
     return (
@@ -91,10 +97,20 @@ function AuthorInfo({
 }) {
     log.trace("AuthorInfo render", { username: author?.username });
 
-    const initial = (author?.username && author.username[0]) ? author.username[0].toUpperCase() : "?";
+    const initial =
+        author?.username && author.username[0]
+            ? author.username[0].toUpperCase()
+            : "?";
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}>
+        <Box
+            sx={{
+                display: "flex",
+                flexDirection: "row",
+                gap: 1,
+                alignItems: "center",
+            }}
+        >
             <Avatar
                 alt={author.username ?? "author"}
                 src={author.avatar_url ?? undefined}
@@ -130,7 +146,14 @@ function AuthorsInfo({
     log.trace("AuthorsInfo render", { count: authors?.length ?? 0 });
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}>
+        <Box
+            sx={{
+                display: "flex",
+                flexDirection: "row",
+                gap: 1,
+                alignItems: "center",
+            }}
+        >
             <AvatarGroup max={3}>
                 {authors.map((a) => (
                     <Avatar
@@ -139,7 +162,9 @@ function AuthorsInfo({
                         src={a.avatar_url ?? undefined}
                         sx={{ width: avatarWidth, height: avatarHeight }}
                     >
-                        {(a.username && a.username[0]) ? a.username[0].toUpperCase() : "?"}
+                        {a.username && a.username[0]
+                            ? a.username[0].toUpperCase()
+                            : "?"}
                     </Avatar>
                 ))}
             </AvatarGroup>
@@ -243,7 +268,11 @@ export function AuthorWithDate({
             }
             right={
                 <Typography variant={variant ?? "caption"}>
-                    {d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+                    {d.toLocaleDateString("en-US", {
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric",
+                    })}
                 </Typography>
             }
         />
@@ -275,7 +304,11 @@ export function AuthorWithDateAndLink({
     return (
         <AuthorRow
             left={
-                <Link underline="none" href={href} sx={{ display: "inline-flex", alignItems: "center" }}>
+                <Link
+                    underline="none"
+                    href={href}
+                    sx={{ display: "inline-flex", alignItems: "center" }}
+                >
                     <AuthorInfo
                         author={author}
                         variant={variant}
@@ -286,7 +319,11 @@ export function AuthorWithDateAndLink({
             }
             right={
                 <Typography variant={variant ?? "caption"}>
-                    {d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+                    {d.toLocaleDateString("en-US", {
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric",
+                    })}
                 </Typography>
             }
         />
@@ -317,21 +354,36 @@ export function AuthorsWithDateAndLink({
     return (
         <AuthorRow
             left={
-                <Box sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}>
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: 1,
+                        alignItems: "center",
+                    }}
+                >
                     <AvatarGroup max={3}>
                         {authors.map((a) => (
                             <Link
                                 key={a.username + "-avatar"}
                                 href={`/profile/${encodeURIComponent(a.username)}`}
                                 underline="none"
-                                sx={{ display: "inline-flex", alignItems: "center" }}
+                                sx={{
+                                    display: "inline-flex",
+                                    alignItems: "center",
+                                }}
                             >
                                 <Avatar
                                     alt={a.username}
                                     src={a.avatar_url ?? undefined}
-                                    sx={{ width: avatarWidth, height: avatarHeight }}
+                                    sx={{
+                                        width: avatarWidth,
+                                        height: avatarHeight,
+                                    }}
                                 >
-                                    {(a.username && a.username[0]) ? a.username[0].toUpperCase() : "?"}
+                                    {a.username && a.username[0]
+                                        ? a.username[0].toUpperCase()
+                                        : "?"}
                                 </Avatar>
                             </Link>
                         ))}
@@ -356,7 +408,11 @@ export function AuthorsWithDateAndLink({
             }
             right={
                 <Typography variant={variant ?? "caption"} sx={dateSx}>
-                    {d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+                    {d.toLocaleDateString("en-US", {
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric",
+                    })}
                 </Typography>
             }
         />
@@ -395,7 +451,11 @@ export function AuthorsWithDate({
             }
             right={
                 <Typography variant={variant ?? "caption"}>
-                    {d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+                    {d.toLocaleDateString("en-US", {
+                        month: "long",
+                        day: "numeric",
+                        year: "numeric",
+                    })}
                 </Typography>
             }
         />
@@ -421,7 +481,10 @@ export function AuthorWithFollow({
     doesFollow: boolean;
     needText?: boolean;
 }) {
-    log.trace("AuthorWithFollow render", { username: author?.username, doesFollow });
+    log.trace("AuthorWithFollow render", {
+        username: author?.username,
+        doesFollow,
+    });
 
     return (
         <AuthorRow
@@ -464,7 +527,10 @@ export function AuthorWithFollowAndLink({
     doesFollow: boolean;
     needText?: boolean;
 }) {
-    log.trace("AuthorWithFollowAndLink render", { username: author?.username, doesFollow });
+    log.trace("AuthorWithFollowAndLink render", {
+        username: author?.username,
+        doesFollow,
+    });
 
     const href = `/profile/${encodeURIComponent(author.username)}`;
 
