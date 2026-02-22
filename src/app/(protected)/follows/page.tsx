@@ -36,7 +36,7 @@ export async function getFollowedUsersWithLatestPost(
     const latestPerAuthor = db
         .select({
             author_id: posts.author_id,
-            latest_created_at: sql`max(${posts.created_at})`,
+            latest_created_at: sql`max(${posts.created_at})`.as("latest_created_at"),
         })
         .from(posts)
         .groupBy(posts.author_id)
