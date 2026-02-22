@@ -468,7 +468,10 @@ export async function login(credentials: {
  */
 export async function getSessionData(): Promise<null | UsersRowPublic> {
     const cookieStore = await cookies();
+    log.debug({ accessToken: storageKeys.server!.accessToken });
+
     const token = cookieStore.get(storageKeys.server!.accessToken)?.value;
+    log.debug({ token });
     if (!token) throw new Error("No token");
 
     const payload = await verifyJwt(token);
