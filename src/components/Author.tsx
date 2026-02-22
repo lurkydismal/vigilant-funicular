@@ -1,9 +1,7 @@
 import { Link } from "@/components/Link";
 import FollowButton from "@/components/FollowButton";
 import log from "@/utils/stdlog";
-import { ReactNode } from "react";
-import { Fragment } from "react/jsx-runtime";
-import { buildDate } from "@/utils/stdvar";
+import { Fragment } from "react";
 import {
     Box,
     TypographyVariant,
@@ -14,21 +12,22 @@ import {
 import { linkSx } from "@/data/styles";
 import { UsersRowPublic } from "@/db/types";
 
+/**
+ * Styles used for author name links.
+ * Keeps the visual behaviour from your original file.
+ */
 const nameSx = {
     ...linkSx,
     px: 1,
     py: 0.75,
-
     "&::after": {
         transformOrigin: "left",
         bottom: 2,
     },
-
     "&:hover": {
         backgroundColor: "action.hover",
         transform: "translateY(-2px)",
     },
-
     "&:active": {
         transform: "translateY(0px)",
     },
@@ -37,7 +36,6 @@ const nameSx = {
 const dateSx = {
     ...linkSx,
     px: 2.5,
-
     "&::after": {
         ...linkSx["&::after"],
         left: 16,
@@ -46,9 +44,14 @@ const dateSx = {
     },
 };
 
-// Helper: base container for an author row.
-function AuthorRow({ left, right }: { left: ReactNode; right?: ReactNode }) {
-    log.trace(`Rendering AuthorRow: ${{ left, right }}`);
+/**
+ * Small wrapper used for rows with left and optional right content.
+ *
+ * @param left - left-side node (required)
+ * @param right - right-side node (optional)
+ */
+function AuthorRow({ left, right }: { left: React.ReactNode; right?: React.ReactNode }) {
+    log.trace("AuthorRow render");
 
     return (
         <Box
@@ -62,12 +65,19 @@ function AuthorRow({ left, right }: { left: ReactNode; right?: ReactNode }) {
             }}
         >
             {left}
-            {right && right}
+            {right ?? null}
         </Box>
     );
 }
 
-// Helper: single author avatar + name.
+/**
+ * Render single avatar + username.
+ *
+ * @param author - public user record
+ * @param variant - MUI Typography variant
+ * @param avatarWidth - avatar width in px
+ * @param avatarHeight - avatar height in px
+ */
 function AuthorInfo({
     author,
     variant = "caption",
@@ -79,25 +89,18 @@ function AuthorInfo({
     avatarWidth?: number;
     avatarHeight?: number;
 }) {
-    log.trace(
-        `Rendering AuthorInfo: ${{ author, variant, avatarWidth, avatarHeight }}`,
-    );
+    log.trace("AuthorInfo render", { username: author?.username });
+
+    const initial = (author?.username && author.username[0]) ? author.username[0].toUpperCase() : "?";
 
     return (
-        <Box
-            sx={{
-                display: "flex",
-                flexDirection: "row",
-                gap: 1,
-                alignItems: "center",
-            }}
-        >
+        <Box sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}>
             <Avatar
-                alt={author.username}
-                // src={author.avatar_url}
+                alt={author.username ?? "author"}
+                src={author.avatar_url ?? undefined}
                 sx={{ width: avatarWidth, height: avatarHeight }}
             >
-                {author.username[0].toUpperCase()}
+                {initial}
             </Avatar>
 
             <Typography variant={variant}>{author.username}</Typography>
@@ -105,7 +108,14 @@ function AuthorInfo({
     );
 }
 
-// Helper: multiple authors (AvatarGroup + names).
+/**
+ * Render multiple avatars (AvatarGroup) and a comma-separated names list.
+ *
+ * @param authors - array of public user records
+ * @param variant - typography variant
+ * @param avatarWidth - avatar width in px
+ * @param avatarHeight - avatar height in px
+ */
 function AuthorsInfo({
     authors,
     variant = "caption",
@@ -117,41 +127,33 @@ function AuthorsInfo({
     avatarWidth?: number;
     avatarHeight?: number;
 }) {
-    log.trace(
-        `Rendering AuthorsInfo: ${{ authors, variant, avatarWidth, avatarHeight }}`,
-    );
+    log.trace("AuthorsInfo render", { count: authors?.length ?? 0 });
 
     return (
-        <Box
-            sx={{
-                display: "flex",
-                flexDirection: "row",
-                gap: 1,
-                alignItems: "center",
-            }}
-        >
+        <Box sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}>
             <AvatarGroup max={3}>
-                {authors.map((author) => (
+                {authors.map((a) => (
                     <Avatar
-                        key={author.username}
-                        alt={author.username}
-                        // src={author.avatar}
+                        key={a.username}
+                        alt={a.username}
+                        src={a.avatar_url ?? undefined}
                         sx={{ width: avatarWidth, height: avatarHeight }}
                     >
-                        {author.username[0].toUpperCase()}
+                        {(a.username && a.username[0]) ? a.username[0].toUpperCase() : "?"}
                     </Avatar>
                 ))}
             </AvatarGroup>
 
             <Typography variant={variant}>
-                {authors.map((author) => author.username).join(", ")}
+                {authors.map((a) => a.username).join(", ")}
             </Typography>
         </Box>
     );
 }
 
-// Refactored components using the helpers:
-
+/**
+ * Single author row (avatar + name).
+ */
 export function Author({
     author,
     variant,
@@ -163,7 +165,7 @@ export function Author({
     avatarWidth?: number;
     avatarHeight?: number;
 }) {
-    log.trace(`Rendering Author component: ${{ author }}`);
+    log.trace("Author render", { username: author?.username });
 
     return (
         <AuthorRow
@@ -179,6 +181,9 @@ export function Author({
     );
 }
 
+/**
+ * Multiple authors row (avatars + names).
+ */
 export function Authors({
     authors,
     variant,
@@ -190,7 +195,7 @@ export function Authors({
     avatarWidth?: number;
     avatarHeight?: number;
 }) {
-    log.trace(`Rendering Authors component: ${{ authors }}`);
+    log.trace("Authors render", { count: authors?.length ?? 0 });
 
     return (
         <AuthorRow
@@ -206,20 +211,25 @@ export function Authors({
     );
 }
 
+/**
+ * Single author with date on the right.
+ * Accepts `date` as Date | string; strings are converted with `new Date(...)`.
+ */
 export function AuthorWithDate({
     author,
-    date = buildDate,
+    date,
     variant,
     avatarWidth,
     avatarHeight,
 }: {
     author: UsersRowPublic;
-    date?: Date;
+    date: Date | string;
     variant?: TypographyVariant;
     avatarWidth?: number;
     avatarHeight?: number;
 }) {
-    log.trace(`Rendering AuthorWithDate: ${{ author, date }}`);
+    log.trace("AuthorWithDate render", { username: author?.username });
+    const d = new Date(date);
 
     return (
         <AuthorRow
@@ -233,37 +243,39 @@ export function AuthorWithDate({
             }
             right={
                 <Typography variant={variant ?? "caption"}>
-                    {date.toLocaleDateString("en-US", {
-                        month: "long",
-                        day: "numeric",
-                        year: "numeric",
-                    })}
+                    {d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
                 </Typography>
             }
         />
     );
 }
 
+/**
+ * Single author whose name/avatar link to the author's profile.
+ * Profile URL uses encoded username in the path; the profile page should decode the slug.
+ */
 export function AuthorWithDateAndLink({
     author,
-    date = buildDate,
+    date,
     variant,
     avatarWidth,
     avatarHeight,
 }: {
     author: UsersRowPublic;
-    date?: Date;
+    date: Date | string;
     variant?: TypographyVariant;
     avatarWidth?: number;
     avatarHeight?: number;
 }) {
-    log.trace(`Rendering AuthorWithDateAndLink: ${{ author, date }}`);
+    log.trace("AuthorWithDateAndLink render", { username: author?.username });
 
-    // FIX: Encode username
+    const d = new Date(date);
+    const href = `/profile/${encodeURIComponent(author.username)}`;
+
     return (
         <AuthorRow
             left={
-                <Link underline="none" href={`/profile/${author.username}`}>
+                <Link underline="none" href={href} sx={{ display: "inline-flex", alignItems: "center" }}>
                     <AuthorInfo
                         author={author}
                         variant={variant}
@@ -274,75 +286,69 @@ export function AuthorWithDateAndLink({
             }
             right={
                 <Typography variant={variant ?? "caption"}>
-                    {date.toLocaleDateString("en-US", {
-                        month: "long",
-                        day: "numeric",
-                        year: "numeric",
-                    })}
+                    {d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
                 </Typography>
             }
         />
     );
 }
 
+/**
+ * Multiple authors with links for each name (and avatars shown in an AvatarGroup).
+ * Each author's name links to `/profile/<encoded-username>`.
+ */
 export function AuthorsWithDateAndLink({
     authors,
-    date = buildDate,
+    date,
     variant,
     avatarWidth,
     avatarHeight,
 }: {
     authors: UsersRowPublic[];
-    date?: Date;
+    date: Date | string;
     variant?: TypographyVariant;
     avatarWidth?: number;
     avatarHeight?: number;
 }) {
-    log.trace(`Rendering AuthorsWithDateAndLink: ${{ authors, date }}`);
+    log.trace("AuthorsWithDateAndLink render", { count: authors?.length ?? 0 });
 
-    // FIX: Encode username
+    const d = new Date(date);
+
     return (
         <AuthorRow
             left={
-                <Box
-                    sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                        gap: 1,
-                        alignItems: "center",
-                    }}
-                >
-                    {/* Stack avatars, each wrapped in a Link */}
+                <Box sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}>
                     <AvatarGroup max={3}>
-                        {authors.map((author) => (
-                            <Avatar
-                                key={author.username}
-                                alt={author.username}
-                                // src={author.avatar}
-                                sx={{
-                                    width: avatarWidth,
-                                    height: avatarHeight,
-                                }}
+                        {authors.map((a) => (
+                            <Link
+                                key={a.username + "-avatar"}
+                                href={`/profile/${encodeURIComponent(a.username)}`}
+                                underline="none"
+                                sx={{ display: "inline-flex", alignItems: "center" }}
                             >
-                                {author.username[0].toUpperCase()}
-                            </Avatar>
+                                <Avatar
+                                    alt={a.username}
+                                    src={a.avatar_url ?? undefined}
+                                    sx={{ width: avatarWidth, height: avatarHeight }}
+                                >
+                                    {(a.username && a.username[0]) ? a.username[0].toUpperCase() : "?"}
+                                </Avatar>
+                            </Link>
                         ))}
                     </AvatarGroup>
 
-                    {/* List names separated by commas, each name wrapped in a Link */}
                     <Typography variant={variant}>
-                        {authors.map((author, index) => (
-                            <Fragment key={author.username}>
+                        {authors.map((a, i) => (
+                            <Fragment key={a.username}>
                                 <Link
                                     underline="none"
                                     variant="h4"
-                                    href={`/profile/${author.username}`}
+                                    href={`/profile/${encodeURIComponent(a.username)}`}
                                     sx={nameSx}
                                 >
-                                    {author.username}
+                                    {a.username}
                                 </Link>
-
-                                {index < authors.length - 1 && ", "}
+                                {i < authors.length - 1 && ", "}
                             </Fragment>
                         ))}
                     </Typography>
@@ -350,31 +356,32 @@ export function AuthorsWithDateAndLink({
             }
             right={
                 <Typography variant={variant ?? "caption"} sx={dateSx}>
-                    {date.toLocaleDateString("en-US", {
-                        month: "long",
-                        day: "numeric",
-                        year: "numeric",
-                    })}
+                    {d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
                 </Typography>
             }
         />
     );
 }
 
+/**
+ * Multiple authors + date (no links).
+ */
 export function AuthorsWithDate({
     authors,
-    date = buildDate,
+    date,
     variant,
     avatarWidth,
     avatarHeight,
 }: {
     authors: UsersRowPublic[];
-    date?: Date;
+    date: Date | string;
     variant?: TypographyVariant;
     avatarWidth?: number;
     avatarHeight?: number;
 }) {
-    log.trace(`Rendering AuthorsWithDate: ${{ authors, date }}`);
+    log.trace("AuthorsWithDate render", { count: authors?.length ?? 0 });
+
+    const d = new Date(date);
 
     return (
         <AuthorRow
@@ -388,17 +395,17 @@ export function AuthorsWithDate({
             }
             right={
                 <Typography variant={variant ?? "caption"}>
-                    {date.toLocaleDateString("en-US", {
-                        month: "long",
-                        day: "numeric",
-                        year: "numeric",
-                    })}
+                    {d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
                 </Typography>
             }
         />
     );
 }
 
+/**
+ * Author row with a Follow button on the right.
+ * `uid` passed to FollowButton is the raw username (not URL-encoded).
+ */
 export function AuthorWithFollow({
     author,
     variant,
@@ -414,7 +421,7 @@ export function AuthorWithFollow({
     doesFollow: boolean;
     needText?: boolean;
 }) {
-    log.trace(`Rendering AuthorWithFollow: ${{ author, doesFollow }}`);
+    log.trace("AuthorWithFollow render", { username: author?.username, doesFollow });
 
     return (
         <AuthorRow
@@ -428,7 +435,7 @@ export function AuthorWithFollow({
             }
             right={
                 <FollowButton
-                    uid={author.username} // FIX: Encode
+                    uid={author.username}
                     doesFollow={doesFollow}
                     size="large"
                     needText={needText}
@@ -438,6 +445,10 @@ export function AuthorWithFollow({
     );
 }
 
+/**
+ * Author row with link to profile and a Follow button.
+ * Link targets use encoded username; FollowButton receives the raw username.
+ */
 export function AuthorWithFollowAndLink({
     author,
     variant,
@@ -453,16 +464,14 @@ export function AuthorWithFollowAndLink({
     doesFollow: boolean;
     needText?: boolean;
 }) {
-    log.trace(`Rendering AuthorWithFollowAndLink: ${{ author, doesFollow }}`);
+    log.trace("AuthorWithFollowAndLink render", { username: author?.username, doesFollow });
+
+    const href = `/profile/${encodeURIComponent(author.username)}`;
 
     return (
         <AuthorRow
             left={
-                <Link
-                    underline="none"
-                    href={`/profile/${author.username}`} // FIX: Encode
-                    sx={nameSx}
-                >
+                <Link underline="none" href={href} sx={nameSx}>
                     <AuthorInfo
                         author={author}
                         variant={variant}
