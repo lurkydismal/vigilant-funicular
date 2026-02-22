@@ -174,15 +174,17 @@ export const uploadSchema = z.object({
 export const userSelectSchema = createSelectSchema(users);
 export const userInsertSchema = createInsertSchema(users);
 export const userUpdateSchema = createUpdateSchema(users);
-export const userSelectPublicSchema = userSelectSchema.omit({
-    id: true,
-    password_hash: true,
-    created_at: true,
-    updated_at: true,
-}).extend({
-    username: z.string().trim().min(1),
-    avatar_url: z.string().trim().min(1).nullable(),
-});
+export const userSelectPublicSchema = userSelectSchema
+    .omit({
+        id: true,
+        password_hash: true,
+        created_at: true,
+        updated_at: true,
+    })
+    .extend({
+        username: z.string().trim().min(1),
+        avatar_url: z.string().trim().min(1).nullable(),
+    });
 
 /** [TODO:description] */
 export const followSelectSchema = createSelectSchema(follows);
@@ -196,19 +198,18 @@ export const followSelectPublicSchema = followSelectSchema.omit({
 export const categorySelectSchema = createSelectSchema(categories);
 export const categoryInsertSchema = createInsertSchema(categories);
 export const categoryUpdateSchema = createUpdateSchema(categories);
-export const categorySelectPublicSchema = categorySelectSchema.omit({
-    id: true,
-    created_at: true,
-    updated_at: true,
-}).extend({
-    name: z.string().trim().min(1),
-});
+export const categorySelectPublicSchema = categorySelectSchema
+    .pick({
+        name: true,
+    })
+    .extend({
+        name: z.string().trim().min(1),
+    });
 
 /** [TODO:description] */
 export const postSelectSchema = createSelectSchema(posts);
 export const postInsertSchema = createInsertSchema(posts);
 export const postUpdateSchema = createUpdateSchema(posts);
-
 export const postFullSchema = postSelectSchema
     .extend({
         author: userSelectPublicSchema,
