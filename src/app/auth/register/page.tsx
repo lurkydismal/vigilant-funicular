@@ -29,7 +29,7 @@ export default function SignUpPage() {
         log.trace(`onSubmit called: '${JSON.stringify(data)}'`);
 
         try {
-            const user = await register({ ...data });
+            const user = await register({ ...data, avatar_url: null });
 
             auth.setUser(user);
 

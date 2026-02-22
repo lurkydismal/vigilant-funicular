@@ -253,7 +253,7 @@ export async function clearAuthCookie(cookieStore: CookieStore) {
 export async function register(user: {
     username: string;
     password: string;
-    avatar_url?: string;
+    avatar_url: string | null;
 }) {
     // parse + validate input; throws on invalid input
     const parsed = userSelectPublicSchema
