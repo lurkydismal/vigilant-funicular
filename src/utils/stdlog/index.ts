@@ -53,8 +53,16 @@ const log: CommonLogger = isBrowser
 
 export default log;
 
-// TODO: Document
-export function logVar<T extends Record<string, any>>(obj: T) {
+/**
+ * Logs the properties of an object along with their types.
+ *
+ * Each key-value pair of the input object is logged using `log.trace`.
+ * The output format is: `<key>: <value> (type: <type of value>)`.
+ *
+ * @template T - The type of object to log. Can be any object with string keys.
+ * @param {T} obj - The object whose properties will be logged.
+ */
+export function logVar<T extends Record<string, unknown>>(obj: T) {
     for (const [key, value] of Object.entries(obj)) {
         log.trace(`${key}:`, value, `(type: ${typeof value})`);
     }
