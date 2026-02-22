@@ -235,9 +235,7 @@ export async function register(user: {
  */
 async function verifyPassword(user: { username: string; password: string }) {
     const parsed = userSelectPublicSchema
-        .omit({
-            avatar_url: true,
-        })
+        .omit({ avatar_url: true })
         .extend({
             password: z.string().trim().min(1),
         })
@@ -250,11 +248,12 @@ async function verifyPassword(user: { username: string; password: string }) {
         .limit(1)
         .execute();
 
-    // Normalize
-    const hash = (Array.isArray(selected) ? selected[0] : selected).hash;
+    // If no user found, return false early
+    const row = Array.isArray(selected) ? selected[0] : selected;
+    if (!row || !row.hash) return false;
 
     try {
-        return await argon2.verify(hash, parsed.password);
+        return await argon2.verify(row.hash, parsed.password);
     } catch {
         return false;
     }
