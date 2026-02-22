@@ -64,7 +64,7 @@ export async function getFollowedUsersWithLatestPost(
         .where(eq(follows.follower_id, userId))
         .innerJoin(users, eq(users.id, follows.following_id))
         // join posts to pick the row that matches (author_id, created_at = latest_created_at)
-        .leftJoin(latestPost, sql`true`)
+        .leftJoinLateral(latestPost, sql`true`)
         .leftJoin(categories, eq(categories.id, latestPost.category_id))
         .orderBy(users.username)
         .execute();
