@@ -177,6 +177,7 @@ export const userUpdateSchema = createUpdateSchema(users);
 export const userSelectPublicSchema = userSelectSchema
     .omit({
         id: true,
+        username_normalized: true,
         password_hash: true,
         created_at: true,
         updated_at: true,

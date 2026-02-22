@@ -17,18 +17,19 @@ export const users = pgTable(
     {
         id: serial().primaryKey(),
         username: varchar({ length: 32 }).unique().notNull(),
+        username_normalized: varchar({ length: 32 }).unique().notNull(),
         password_hash: text().notNull(),
         avatar_url: varchar({ length: 255 }),
         ...timestamps,
     },
     (t) => [
         check("username_not_blank", sql`length(trim(${t.username})) > 0`),
+        check("username_not_blank", sql`length(trim(${t.username_normalized})) > 0`),
+        check("username_normalized_lowercase", sql`${t.username_normalized} = lower(${t.username_normalized})`),
         check(
             "avatar_url_not_blank",
             sql`${t.avatar_url} IS NULL OR length(trim(${t.avatar_url})) > 0`,
         ),
-
-        uniqueIndex().on(t.username),
     ],
 );
 

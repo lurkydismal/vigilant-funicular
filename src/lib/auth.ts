@@ -121,6 +121,8 @@ async function hashPassword(password: string) {
  * - Payload here is a minimal partial of UsersRowPublic or an object containing username.
  * - jsonwebtoken will append `iat` and (because of expiresIn) `exp`.
  * - Keep the payload small to avoid large cookies and to reduce attack surface.
+ *
+ * NOTE: ms() returns milliseconds; cookie maxAge expects seconds.
  */
 function signJwt(payload: Partial<UsersRowPublic> | { username: string }, remember: boolean) {
     const expiresIn = Math.floor(ms(remember ? "100d" : JWT_EXPIRES_IN) / 1000);
@@ -265,7 +267,8 @@ export async function register(user: {
         const inserted = await db
             .insert(users)
             .values({
-                username: normalizedUsername,
+                username: parsed.username.trim(),
+                username_normalized: normalizedUsername,
                 password_hash: hash,
                 avatar_url: parsed.avatar_url ?? null,
             })
@@ -328,7 +331,7 @@ async function verifyPassword(user: { username: string; password: string }) {
     const selected = await db
         .select({ hash: users.password_hash })
         .from(users)
-        .where(eq(users.username, parsed.username))
+        .where(eq(users.username_normalized, parsed.username))
         .limit(1)
         .execute();
 
@@ -403,7 +406,7 @@ export async function login(credentials: {
                 avatar_url: users.avatar_url,
             })
             .from(users)
-            .where(eq(users.username, normalizedUsername))
+            .where(eq(users.username_normalized, normalizedUsername))
             .limit(1)
             .execute();
 
