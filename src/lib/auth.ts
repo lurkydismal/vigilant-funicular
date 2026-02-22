@@ -21,18 +21,18 @@
  * - `SameSite: "strict"` blocks some cross-site flows — confirm it matches your needs.
  */
 
-import type { StringValue } from "ms";
-import argon2 from "argon2";
-import jwt from "jsonwebtoken";
-import { cookies } from "next/headers";
 import db from "@/db";
-import { eq } from "drizzle-orm";
 import { users } from "@/db/schema";
 import { UsersRowPublic } from "@/db/types";
 import { getEnv } from "@/utils/stdfunc";
 import { userSelectPublicSchema } from "@/utils/validate/schemas";
-import z from "zod";
+import argon2 from "argon2";
+import { eq } from "drizzle-orm";
+import jwt from "jsonwebtoken";
+import type { StringValue } from "ms";
 import ms from "ms";
+import { cookies } from "next/headers";
+import z from "zod";
 
 /*
  * Environment-configured values.
@@ -61,10 +61,12 @@ async function hashPassword(password: string) {
  * - jsonwebtoken will append `iat` and (because of expiresIn) `exp`.
  * - Keep the payload small to avoid large cookies and to reduce attack surface.
  */
-function signJwt(payload: Partial<UsersRowPublic> | { username: string }) {
+function signJwt(payload: Partial<UsersRowPublic> | { username: string }, remember: boolean) {
+    const expiresIn = Math.floor(ms(remember ? "100d" : JWT_EXPIRES_IN) / 1000);
+
     return jwt.sign(payload, JWT_SECRET, {
         algorithm: "HS256",
-        expiresIn: JWT_EXPIRES_IN,
+        expiresIn,
     });
 }
 
@@ -133,7 +135,7 @@ export async function cookieForToken(
     token: string,
     remember: boolean,
 ) {
-    const maxAge = Math.floor(ms(remember ? "100d" : JWT_EXPIRES_IN));
+    const maxAge = Math.floor(ms(remember ? "100d" : JWT_EXPIRES_IN) / 1000);
 
     cookieStore.set({
         name: COOKIE_NAME,
@@ -209,7 +211,7 @@ export async function register(user: {
         avatar_url: parsed.avatar_url ?? null,
     };
 
-    const token = signJwt(payload);
+    const token = signJwt(payload, false);
 
     const cookieStore = await cookies();
     cookieForToken(cookieStore, token, false);
@@ -313,7 +315,7 @@ export async function login(credentials: {
         avatar_url: found.avatar_url ?? null,
     };
 
-    const token = signJwt(payload);
+    const token = signJwt(payload, Boolean(parsed.remember));
 
     // set cookie
     const cookieStore = await cookies();
@@ -343,7 +345,7 @@ export async function login(credentials: {
 export async function getSessionData(): Promise<null | UsersRowPublic> {
     const cookieStore = await cookies();
     const token = cookieStore.get(COOKIE_NAME)?.value;
-    if (!token) throw new Error("No token");
+    if (!token) return null;
 
     const payload = await verifyJwt(token);
     if (!payload || typeof payload === "string") return null;
