@@ -19,20 +19,27 @@
  * - Use short-lived access tokens (or implement refresh tokens) for long sessions.
  * - Avoid storing sensitive user data in JWTs; prefer minimal claims (id, username, role).
  * - `SameSite: "strict"` blocks some cross-site flows — confirm it matches your needs.
+ *
+ * Added protections in this file:
+ * - Normalizes usernames (trim + lowercase) to avoid duplicates / casing issues.
+ * - Basic in-process rate limiting per username for login attempts (best-effort; not suitable
+ *   as the sole protection in a distributed environment — use Redis or another central store
+ *   for production).
+ * - try/catch with explicit logging in register and login for auditing (does not log secrets).
  */
 
+import type { StringValue } from "ms";
+import argon2 from "argon2";
+import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
 import db from "@/db";
+import { eq } from "drizzle-orm";
 import { users } from "@/db/schema";
 import { UsersRowPublic } from "@/db/types";
 import { getEnv } from "@/utils/stdfunc";
 import { userSelectPublicSchema } from "@/utils/validate/schemas";
-import argon2 from "argon2";
-import { eq } from "drizzle-orm";
-import jwt from "jsonwebtoken";
-import type { StringValue } from "ms";
-import ms from "ms";
-import { cookies } from "next/headers";
 import z from "zod";
+import ms from "ms";
 
 /*
  * Environment-configured values.
@@ -45,6 +52,60 @@ const JWT_SECRET = getEnv("JWT_SECRET");
 const JWT_EXPIRES_IN = getEnv("JWT_EXPIRES_IN") as StringValue; // e.g. "15m" or "7d"
 const COOKIE_NAME = getEnv("COOKIE_NAME");
 const COOKIE_SECURE = getEnv("COOKIE_SECURE") === "true";
+
+/**
+ * In-process login attempt tracker (best-effort).
+ * - Keyed by normalized username.
+ * - Resets after WINDOW_MS.
+ *
+ * NOTE: This is stored in-memory and will not work across multiple server instances
+ * or function cold starts. For robust protection use a centralized store (Redis).
+ */
+const LOGIN_ATTEMPTS = new Map<
+    string,
+    { count: number; firstAttemptTs: number }
+>();
+const MAX_LOGIN_ATTEMPTS = 5;
+const LOGIN_WINDOW_MS = 15 * 60 * 1000; // 15 minutes
+
+function recordFailedLoginAttempt(normalizedUsername: string) {
+    const now = Date.now();
+    const record = LOGIN_ATTEMPTS.get(normalizedUsername);
+    if (!record) {
+        LOGIN_ATTEMPTS.set(normalizedUsername, {
+            count: 1,
+            firstAttemptTs: now,
+        });
+        return;
+    }
+    // if window expired, reset
+    if (now - record.firstAttemptTs > LOGIN_WINDOW_MS) {
+        LOGIN_ATTEMPTS.set(normalizedUsername, {
+            count: 1,
+            firstAttemptTs: now,
+        });
+        return;
+    }
+    record.count += 1;
+    // update map (object is mutated but re-set to be explicit)
+    LOGIN_ATTEMPTS.set(normalizedUsername, record);
+}
+
+function isLoginBlocked(normalizedUsername: string) {
+    const now = Date.now();
+    const record = LOGIN_ATTEMPTS.get(normalizedUsername);
+    if (!record) return false;
+    if (now - record.firstAttemptTs > LOGIN_WINDOW_MS) {
+        // expired window -> reset
+        LOGIN_ATTEMPTS.delete(normalizedUsername);
+        return false;
+    }
+    return record.count >= MAX_LOGIN_ATTEMPTS;
+}
+
+function resetLoginAttempts(normalizedUsername: string) {
+    LOGIN_ATTEMPTS.delete(normalizedUsername);
+}
 
 /**
  * Small wrapper for argon2.hash.
@@ -73,7 +134,10 @@ function signJwt(payload: Partial<UsersRowPublic> | { username: string }, rememb
 /**
  * Verify a token and return the decoded JwtPayload or null on failure.
  * - Uses jsonwebtoken.verify which checks signature and expiration.
- * - Returns `null` for any verification error.
+ * - Returns `null` for any verification/validation error.
+ *
+ * The function validates only the expected public fields (username, avatar_url)
+ * using your existing userSelectPublicSchema to avoid iat/exp causing downstream failures.
  */
 export async function verifyJwt(token: string): Promise<null | UsersRowPublic> {
     try {
@@ -129,6 +193,8 @@ type CookieStore = Awaited<ReturnType<typeof cookies>>;
  *
  * Important: cookieStore.set() is synchronous for the API surface here, but the cookie
  * takes effect in the response for the current request.
+ *
+ * NOTE: ms() returns milliseconds; cookie maxAge expects seconds.
  */
 export async function cookieForToken(
     cookieStore: CookieStore,
@@ -175,54 +241,70 @@ export async function clearAuthCookie(cookieStore: CookieStore) {
  * - You already planned to add validation and additional DB checks (unique username, etc).
  * - DB `returning()` behavior can vary depending on dialect/driver; `created` normalization handles array vs single-result.
  * - The JWT contains the public fields you selected — keep that minimal to avoid stale data and large token size.
+ *
+ * This implementation normalizes username and logs errors (without secrets) for auditing.
  */
 export async function register(user: {
     username: string;
     password: string;
     avatar_url?: string;
 }) {
+    // parse + validate input; throws on invalid input
     const parsed = userSelectPublicSchema
         .extend({
             password: z.string().trim().min(1),
         })
         .parse(user);
 
-    const hash = await hashPassword(parsed.password);
+    // normalize username (trim + lowercase) to avoid duplicates/casing issues
+    const normalizedUsername = parsed.username.trim().toLowerCase();
 
-    const inserted = await db
-        .insert(users)
-        .values({
-            username: parsed.username,
-            password_hash: hash,
+    try {
+        const hash = await hashPassword(parsed.password);
+
+        const inserted = await db
+            .insert(users)
+            .values({
+                username: normalizedUsername,
+                password_hash: hash,
+                avatar_url: parsed.avatar_url ?? null,
+            })
+            .returning({
+                username: users.username,
+                avatar_url: users.avatar_url,
+            })
+            .execute();
+
+        // Normalize
+        const created = Array.isArray(inserted) ? inserted[0] : inserted;
+
+        // Create minimal payload for token
+        const payload = {
+            username: created.username,
             avatar_url: parsed.avatar_url ?? null,
-        })
-        .returning({
-            username: users.username,
-            avatar_url: users.avatar_url,
-        })
-        .execute();
+        };
 
-    // Normalize
-    const created = Array.isArray(inserted) ? inserted[0] : inserted;
+        const token = signJwt(payload, false);
 
-    // Create minimal payload for token
-    const payload = {
-        username: created.username,
-        avatar_url: parsed.avatar_url ?? null,
-    };
+        const cookieStore = await cookies();
+        cookieForToken(cookieStore, token, false);
 
-    const token = signJwt(payload, false);
+        // Return safe public user object (for immediate response)
+        const publicUser: UsersRowPublic = {
+            username: created.username,
+            avatar_url: created.avatar_url ?? null,
+        };
 
-    const cookieStore = await cookies();
-    cookieForToken(cookieStore, token, false);
-
-    // Return safe public user object (for immediate response)
-    const publicUser: UsersRowPublic = {
-        username: created.username,
-        avatar_url: created.avatar_url ?? null,
-    };
-
-    return publicUser;
+        return publicUser;
+    } catch (err) {
+        // Audit log: capture username and the error message, but do NOT log sensitive data.
+        console.error("register failed", {
+            username: normalizedUsername,
+            error: err instanceof Error ? err.message : String(err),
+        });
+        // Re-throw to let caller handle the error (keep message generic at higher level)
+        throw err;
+    }
 }
 
 /**
@@ -235,7 +317,9 @@ export async function register(user: {
  */
 async function verifyPassword(user: { username: string; password: string }) {
     const parsed = userSelectPublicSchema
-        .omit({ avatar_url: true })
+        .omit({
+            avatar_url: true,
+        })
         .extend({
             password: z.string().trim().min(1),
         })
@@ -266,19 +350,19 @@ async function verifyPassword(user: { username: string; password: string }) {
  *
  * Behavior details:
  * - Throws "Invalid credentials" for both not-found and bad-password cases to avoid user enumeration.
+ * - Applies a basic in-process rate limit per normalized username.
  * - Returns UsersRowPublic so callers (client code) can update UI immediately without a second request.
  *
  * Potential improvements:
- * - Rate-limit login attempts per IP or username.
- * - Audit/log failed attempts to monitoring (do not log passwords).
- * - Consider returning a union with an error type instead of throwing to allow structured error handling.
+ * - Replace in-memory rate limiter with Redis or other central store for production.
+ * - Rate-limit by IP as well as by username.
  */
 export async function login(credentials: {
     username: string;
     password: string;
     remember?: boolean;
 }): Promise<UsersRowPublic> {
-    // parse -> validate
+    // parse -> validate (this will throw on invalid shape)
     const parsed = userSelectPublicSchema
         .omit({ avatar_url: true }) // only need username for auth
         .extend({
@@ -287,46 +371,80 @@ export async function login(credentials: {
         })
         .parse(credentials);
 
-    // verify password
-    const ok = await verifyPassword({
-        username: parsed.username,
-        password: parsed.password,
-    });
-    if (!ok) throw new Error("Invalid credentials");
+    // normalize username (trim + lowercase)
+    const normalizedUsername = parsed.username.trim().toLowerCase();
 
-    // fetch public user from DB
-    const selected = await db
-        .select({
-            username: users.username,
-            avatar_url: users.avatar_url,
-        })
-        .from(users)
-        .where(eq(users.username, parsed.username))
-        .limit(1)
-        .execute();
+    // Rate-limit check (best-effort)
+    if (isLoginBlocked(normalizedUsername)) {
+        // Log the blocked attempt for auditing
+        console.warn("login blocked due to too many attempts", {
+            username: normalizedUsername,
+        });
+        throw new Error("Too many login attempts. Try again later.");
+    }
 
-    const found = Array.isArray(selected) ? selected[0] : selected;
-    if (!found || !found.username) throw new Error("Invalid credentials");
+    try {
+        // verify password (pass normalized username)
+        const ok = await verifyPassword({
+            username: normalizedUsername,
+            password: parsed.password,
+        });
 
-    // prepare payload and token
-    const payload = {
-        username: found.username,
-        avatar_url: found.avatar_url ?? null,
-    };
+        if (!ok) {
+            // record failed attempt and return generic error
+            recordFailedLoginAttempt(normalizedUsername);
+            throw new Error("Invalid credentials");
+        }
 
-    const token = signJwt(payload, Boolean(parsed.remember));
+        // fetch public user from DB
+        const selected = await db
+            .select({
+                username: users.username,
+                avatar_url: users.avatar_url,
+            })
+            .from(users)
+            .where(eq(users.username, normalizedUsername))
+            .limit(1)
+            .execute();
 
-    // set cookie
-    const cookieStore = await cookies();
-    await cookieForToken(cookieStore, token, Boolean(parsed.remember));
+        const found = Array.isArray(selected) ? selected[0] : selected;
+        if (!found || !found.username) {
+            // Should be impossible if verifyPassword returned true, but guard anyway
+            recordFailedLoginAttempt(normalizedUsername);
+            throw new Error("Invalid credentials");
+        }
 
-    // return safe public user
-    const publicUser: UsersRowPublic = {
-        username: found.username,
-        avatar_url: found.avatar_url ?? null,
-    };
+        // prepare payload and token
+        const payload = {
+            username: found.username,
+            avatar_url: found.avatar_url ?? null,
+        };
 
-    return publicUser;
+        const token = signJwt(payload, Boolean(parsed.remember));
+
+        // set cookie
+        const cookieStore = await cookies();
+        await cookieForToken(cookieStore, token, Boolean(parsed.remember));
+
+        // reset attempts after successful login
+        resetLoginAttempts(normalizedUsername);
+
+        // return safe public user
+        const publicUser: UsersRowPublic = {
+            username: found.username,
+            avatar_url: found.avatar_url ?? null,
+        };
+
+        return publicUser;
+    } catch (err) {
+        // Audit log: capture username and a safe error description (no secrets)
+        console.error("login failed", {
+            username: normalizedUsername,
+            error: err instanceof Error ? err.message : String(err),
+        });
+        // Re-throw so upstream can map to proper HTTP response codes
+        throw err;
+    }
 }
 
 /**
@@ -344,7 +462,7 @@ export async function login(credentials: {
 export async function getSessionData(): Promise<null | UsersRowPublic> {
     const cookieStore = await cookies();
     const token = cookieStore.get(COOKIE_NAME)?.value;
-    if (!token) return null;
+    if (!token) throw new Error("No token");
 
     const payload = await verifyJwt(token);
     if (!payload || typeof payload === "string") return null;
