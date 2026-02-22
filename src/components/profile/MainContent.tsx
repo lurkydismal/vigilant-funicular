@@ -11,7 +11,6 @@ import { paginate } from "@/utils/stdfunc";
 import { Box } from "@mui/material";
 import { useState, ChangeEvent, ComponentProps } from "react";
 
-// TODO: Fix avatar src
 export default function MainContent({
     user,
     posts,
@@ -26,10 +25,7 @@ export default function MainContent({
     const [currentPage, setCurrentPage] = useState(1);
     const perPage = 6;
 
-    // TODO: Implement
     const onChange = (_: ChangeEvent<unknown>, page: number) => {
-        console.info("You clicked the pagination. ", page);
-
         setCurrentPage(page);
     };
 

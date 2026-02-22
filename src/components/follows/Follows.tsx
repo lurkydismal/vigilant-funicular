@@ -3,7 +3,6 @@
 import { NavigateNextRounded } from "@mui/icons-material";
 import { AuthorWithFollowAndLink } from "@/components/Author";
 import MainFallback from "@/components/MainFallback";
-import { useState } from "react";
 import { redirect } from "next/navigation";
 import { styled, Typography, Grid, Box } from "@mui/material";
 import { PostsRowFull, UsersRowPublic } from "@/db/types";
@@ -59,19 +58,6 @@ const TitleTypography = styled(Typography)(({ theme }) => ({
 }));
 
 export function Follows({ follows }: { follows: Follow[] }) {
-    const [focusedCardIndex, setFocusedCardIndex] = useState<number | null>(
-        null,
-    );
-
-    const handleFocus = (index: number) => {
-        setFocusedCardIndex(index);
-    };
-
-    const handleBlur = () => {
-        setFocusedCardIndex(null);
-    };
-
-    // NOTE: Maybe tab index is needed in title
     return (
         <MainFallback itemsLength={follows.length}>
             <Grid container spacing={8} columns={12} sx={{ my: 4 }}>
@@ -106,14 +92,7 @@ export function Follows({ follows }: { follows: Follow[] }) {
                                     onClick={() => {
                                         redirect(`/post/${post.id}`);
                                     }}
-                                    className={
-                                        focusedCardIndex === index
-                                            ? "Mui-focused"
-                                            : ""
-                                    }
                                     gutterBottom
-                                    onBlur={handleBlur}
-                                    onFocus={() => handleFocus(index)}
                                     variant="h6"
                                 >
                                     {post.title}
