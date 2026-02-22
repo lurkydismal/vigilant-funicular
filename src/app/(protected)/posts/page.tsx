@@ -23,11 +23,20 @@ export default async function Posts() {
     });
 
     const user = await getSessionData();
-    const _userId = await db.select({ id: users.id }).from(users).where(eq(users.username, user!.username)).limit(1).execute();
+    const _userId = await db
+        .select({ id: users.id })
+        .from(users)
+        .where(eq(users.username, user!.username))
+        .limit(1)
+        .execute();
     const userId = normalizeArrayOrValue(_userId);
     if (!userId || !userId.id) return unauthorized();
 
-    const _followingIds = await db.select({ id: follows.following_id }).from(follows).where(eq(follows.follower_id, userId.id)).execute();
+    const _followingIds = await db
+        .select({ id: follows.following_id })
+        .from(follows)
+        .where(eq(follows.follower_id, userId.id))
+        .execute();
 
     const _featuredPosts = db.query.posts.findMany({
         where: {
@@ -53,14 +62,21 @@ export default async function Posts() {
         .execute();
 
     const parsedPosts = postFullSchema.array().parse(await _posts);
-    const parsedFeaturedPosts = postFullSchema.array().parse(await _featuredPosts);
+    const parsedFeaturedPosts = postFullSchema
+        .array()
+        .parse(await _featuredPosts);
     const parsedCategories = categorySelectSchema
         .array()
         .parse(await _categories);
 
     return (
         <MainFallback itemsLength={parsedPosts.length}>
-            {parsedFeaturedPosts.length && <MainContent posts={parsedFeaturedPosts} tags={parsedCategories} />}
+            {parsedFeaturedPosts.length && (
+                <MainContent
+                    posts={parsedFeaturedPosts}
+                    tags={parsedCategories}
+                />
+            )}
 
             <Latest posts={parsedPosts} />
         </MainFallback>
