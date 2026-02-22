@@ -1,5 +1,5 @@
 import { styled, Stack, Divider, Box, Card as MuiCard } from "@mui/material";
-import React from "react";
+import { ReactNode } from "react";
 
 export const Card = styled(MuiCard)(({ theme }) => ({
     display: "flex",
@@ -45,8 +45,8 @@ export const AuthContainer = styled(Stack)(({ theme }) => ({
 }));
 
 type Props = {
-    children: React.ReactNode;
-    footer?: React.ReactNode;
+    children: ReactNode;
+    footer?: ReactNode;
     variant?: "outlined" | "elevation";
 };
 
