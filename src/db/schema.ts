@@ -24,8 +24,14 @@ export const users = pgTable(
     },
     (t) => [
         check("username_not_blank", sql`length(trim(${t.username})) > 0`),
-        check("username_not_blank", sql`length(trim(${t.username_normalized})) > 0`),
-        check("username_normalized_lowercase", sql`${t.username_normalized} = lower(${t.username_normalized})`),
+        check(
+            "username_not_blank",
+            sql`length(trim(${t.username_normalized})) > 0`,
+        ),
+        check(
+            "username_normalized_lowercase",
+            sql`${t.username_normalized} = lower(${t.username_normalized})`,
+        ),
         check(
             "avatar_url_not_blank",
             sql`${t.avatar_url} IS NULL OR length(trim(${t.avatar_url})) > 0`,

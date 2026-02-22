@@ -124,7 +124,10 @@ async function hashPassword(password: string) {
  *
  * NOTE: ms() returns milliseconds; cookie maxAge expects seconds.
  */
-function signJwt(payload: Partial<UsersRowPublic> | { username: string }, remember: boolean) {
+function signJwt(
+    payload: Partial<UsersRowPublic> | { username: string },
+    remember: boolean,
+) {
     const expiresIn = Math.floor(ms(remember ? "100d" : jwtExpiresIn) / 1000);
 
     return jwt.sign(payload, jwtSecret, {

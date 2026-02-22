@@ -128,7 +128,7 @@ export const allowedImageTypes = ["image/jpeg"];
 export const maxRetries = 3;
 
 /**
- * Keys used for localStorage or sessionStorage.
+ * Keys used for localStorage, sessionStorage or cookies.
  * - Example: storing auth tokens, theme preferences, etc.
  */
 export const storageKeys = { accessToken: getEnv("COOKIE_NAME") };
