@@ -214,7 +214,7 @@ export async function cookieForToken(
         value: token,
         httpOnly: true,
         secure: cookieSecure,
-        sameSite: "strict",
+        sameSite: "lax",
         path: "/",
         maxAge,
     });
@@ -230,7 +230,7 @@ export async function clearAuthCookie(cookieStore: CookieStore) {
         value: "",
         httpOnly: true,
         secure: cookieSecure,
-        sameSite: "strict",
+        sameSite: "lax",
         path: "/",
         expires: new Date(0),
     });
@@ -469,6 +469,8 @@ export async function login(credentials: {
 export async function getSessionData(): Promise<null | UsersRowPublic> {
     const cookieStore = await cookies();
     log.debug({ accessToken: storageKeys.server!.accessToken });
+
+    log.debug(cookieStore.getAll());
 
     const token = cookieStore.get(storageKeys.server!.accessToken)?.value;
     log.debug({ token });
