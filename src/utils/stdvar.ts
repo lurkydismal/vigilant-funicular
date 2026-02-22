@@ -46,7 +46,7 @@ export const isServer = !isBrowser;
  * URL for the GitHub repository or project link.
  * - Defaults to `"#"` if the environment variable `GITHUB_LINK` is not set.
  */
-export const githubUrl = getEnv("GITHUB_LINK", "#");
+export const githubUrl = getEnv("NEXT_PUBLIC_GITHUB_LINK", "#");
 
 /**
  * Build timestamp for the current application run.
@@ -136,7 +136,7 @@ export const storageKeys = {
 
     server: isServer
         ? {
-              accessToken: getEnv("COOKIE_NAME"),
-          }
+            accessToken: getEnv("COOKIE_NAME"),
+        }
         : null,
 };
