@@ -42,17 +42,32 @@ export async function getFollowedUsersWithLatestPost(
         .groupBy(posts.author_id)
         .as("latest_per_author");
 
+    const latestPost = db
+        .select({
+            id: posts.id,
+            title: posts.title,
+            description: posts.description,
+            content: posts.content,
+            created_at: posts.created_at,
+            category_id: posts.category_id,
+        })
+        .from(posts)
+        .where(eq(posts.author_id, users.id))
+        .orderBy(desc(posts.created_at))
+        .limit(1)
+        .as("latest_post");
+
     const rows = await db
         .select({
             user_id: users.id,
             username: users.username,
             avatar_url: users.avatar_url,
-            post_id: posts.id,
-            post_title: posts.title,
-            post_description: posts.description,
-            post_content: posts.content,
-            post_created_at: posts.created_at,
-            category_id: categories.id,
+            post_id: latestPost.id,
+            post_title: latestPost.title,
+            post_description: latestPost.description,
+            post_content: latestPost.content,
+            post_created_at: latestPost.created_at,
+            category_id: latestPost.category_id,
             category_name: categories.name,
         })
         .from(follows)
@@ -61,16 +76,7 @@ export async function getFollowedUsersWithLatestPost(
         // join to subquery that holds (author_id, latest_created_at)
         .leftJoin(latestPerAuthor, eq(latestPerAuthor.author_id, users.id))
         // join posts to pick the row that matches (author_id, created_at = latest_created_at)
-        .leftJoin(
-            db
-                .select()
-                .from(posts)
-                .where(eq(posts.author_id, users.id))
-                .orderBy(desc(posts.created_at))
-                .limit(1)
-                .as("latest_post"),
-            sql`true`
-        )
+        .leftJoin(latestPost, sql`true`)
         .leftJoin(categories, eq(categories.id, posts.category_id))
         .orderBy(users.username)
         .execute();
