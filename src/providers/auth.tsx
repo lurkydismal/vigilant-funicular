@@ -13,7 +13,12 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<UsersRowPublic | null>(null);
 
-    return <AuthContext.Provider value={{ user, setUser }}> {children} </AuthContext.Provider>;
+    return (
+        <AuthContext.Provider value={{ user, setUser }}>
+            {" "}
+            {children}{" "}
+        </AuthContext.Provider>
+    );
 }
 
 export function useAuth() {

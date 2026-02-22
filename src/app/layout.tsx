@@ -75,9 +75,7 @@ export default function RootLayout({
                         {/* Suspense boundary for async content */}
                         <Suspense>
                             <SnackbarProvider>
-                                <AuthProvider>
-                                    {children}
-                                </AuthProvider>
+                                <AuthProvider>{children}</AuthProvider>
                             </SnackbarProvider>
                         </Suspense>
                     </MuiLayout>

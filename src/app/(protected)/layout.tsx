@@ -4,7 +4,9 @@ import { getSessionData } from "@/lib/auth";
 import { Box, Container } from "@mui/material";
 import { redirect } from "next/navigation";
 
-export default async function ProtectedLayout({ children }: Readonly<{
+export default async function ProtectedLayout({
+    children,
+}: Readonly<{
     children: React.ReactNode;
 }>) {
     const user = await getSessionData();
