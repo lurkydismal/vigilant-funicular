@@ -12,13 +12,19 @@ import { desc, eq, and } from "drizzle-orm";
 import { unauthorized } from "next/navigation";
 import z from "zod";
 
-async function doesUserFollow(followerId: number, followingId: number): Promise<boolean> {
-    const followRecord = await db.select()
+async function doesUserFollow(
+    followerId: number,
+    followingId: number,
+): Promise<boolean> {
+    const followRecord = await db
+        .select()
         .from(follows)
-        .where(and(
-            eq(follows.follower_id, followerId),
-            eq(follows.following_id, followingId),
-        ))
+        .where(
+            and(
+                eq(follows.follower_id, followerId),
+                eq(follows.following_id, followingId),
+            ),
+        )
         .limit(1);
 
     return followRecord.length > 0;
@@ -37,62 +43,73 @@ export default async function Page({
 }) {
     const { slug } = await params;
 
-    const user = await getSessionData();
-    if (!user) return unauthorized();
+    const session = await getSessionData();
+    if (!session) return unauthorized();
 
-    const parsedUsername = z
-        .string()
-        .trim()
-        .min(1)
-        .parse(decodeURIComponent(slug));
+    const getInfoFromSession = async (
+        session: Awaited<ReturnType<typeof getSessionData>>,
+    ) => {
+        "use cache";
 
-    const _user = db
-        .select()
-        .from(users)
-        .where(eq(users.username, parsedUsername))
-        .limit(1)
-        .execute();
-    const _posts = db
-        .select()
-        .from(posts)
-        .orderBy(desc(posts.created_at))
-        .execute();
-    const _categories = db
-        .select()
-        .from(categories)
-        .orderBy(desc(categories.name))
-        .execute();
+        const parsedUsername = z
+            .string()
+            .trim()
+            .min(1)
+            .parse(decodeURIComponent(slug));
 
-    const _userId = db
-        .select({ id: users.id })
-        .from(users)
-        .where(eq(users.username, user.username))
-        .limit(1)
-        .execute();
+        const _user = db
+            .select()
+            .from(users)
+            .where(eq(users.username, parsedUsername))
+            .limit(1)
+            .execute();
+        const _posts = db
+            .select()
+            .from(posts)
+            .orderBy(desc(posts.created_at))
+            .execute();
+        const _categories = db
+            .select()
+            .from(categories)
+            .orderBy(desc(categories.name))
+            .execute();
 
-    const _profileId = db
-        .select({ id: users.id })
-        .from(users)
-        .where(eq(users.username, parsedUsername))
-        .limit(1)
-        .execute();
+        const _userId = db
+            .select({ id: users.id })
+            .from(users)
+            .where(eq(users.username, session!.username))
+            .limit(1)
+            .execute();
 
-    const userId = normalizeArrayOrValue(await _userId);
-    if (!userId || !userId.id) return unauthorized();
+        const _profileId = db
+            .select({ id: users.id })
+            .from(users)
+            .where(eq(users.username, parsedUsername))
+            .limit(1)
+            .execute();
 
-    const profileId = normalizeArrayOrValue(await _profileId);
-    if (!profileId || !profileId.id) return unauthorized();
+        const userId = normalizeArrayOrValue(await _userId);
+        if (!userId || !userId.id) return unauthorized();
 
-    const _doesFollow = doesUserFollow(userId.id, profileId.id);
-    const parsedDoesFollow = z.boolean().parse(await _doesFollow);
+        const profileId = normalizeArrayOrValue(await _profileId);
+        if (!profileId || !profileId.id) return unauthorized();
 
-    const parsedUser = userSelectPublicSchema.parse(
-        normalizeArrayOrValue(await _user),
-    );
-    const parsedPosts = postFullSchema.array().parse(await _posts);
-    const parsedCategories = categorySelectPublicSchema
-        .array()
-        .parse(await _categories);
+        const _doesFollow = doesUserFollow(userId.id, profileId.id);
+        const parsedDoesFollow = z.boolean().parse(await _doesFollow);
+
+        const parsedUser = userSelectPublicSchema.parse(
+            normalizeArrayOrValue(await _user),
+        );
+        const parsedPosts = postFullSchema.array().parse(await _posts);
+        const parsedCategories = categorySelectPublicSchema
+            .array()
+            .parse(await _categories);
+
+        return { parsedUser, parsedPosts, parsedCategories, parsedDoesFollow };
+    };
+
+    const { parsedUser, parsedPosts, parsedCategories, parsedDoesFollow } =
+        await getInfoFromSession(session);
 
     return (
         <MainContent

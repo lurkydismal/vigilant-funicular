@@ -45,11 +45,22 @@ export default function MainContent({
             {isMe ? (
                 <Author {...properties} />
             ) : (
-                <AuthorWithFollow {...properties} doesFollow={doesFollow} needText />
+                <AuthorWithFollow
+                    {...properties}
+                    doesFollow={doesFollow}
+                    needText
+                />
             )}
 
             {/* TODO: IMPROVE */}
-            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "67dvh" }}>
+            <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    minHeight: "67dvh",
+                }}
+            >
                 <MainFallback itemsLength={posts.length}>
                     <SearchButton />
 
