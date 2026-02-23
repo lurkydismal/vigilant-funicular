@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useSnackbar } from "@/components/SnackbarProvider";
+import { useSnackbar } from "@/providers/snackbar";
 
 function ErrorIcon() {
     return (

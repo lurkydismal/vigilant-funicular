@@ -14,7 +14,7 @@ import Mermaid from "@/components/Mermaid";
 import { gray } from "@/theme/themePrimitives";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Box, IconButton, Tooltip, Typography } from "@mui/material";
-import { useSnackbar } from "@/components/SnackbarProvider";
+import { useSnackbar } from "@/providers/snackbar";
 
 /**
  * CodeBlock component

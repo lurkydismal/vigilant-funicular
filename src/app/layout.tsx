@@ -27,7 +27,7 @@ import log from "@/utils/stdlog";
 import { isDev, appName, appVersion } from "@/utils/stdvar";
 import MuiLayout from "@/components/MuiLayout";
 import { Suspense } from "react";
-import SnackbarProvider from "@/components/SnackbarProvider";
+import SnackbarProvider from "@/providers/snackbar";
 import { AuthProvider } from "@/providers/auth";
 
 // Configure Geist Mono font with CSS variable for global usage

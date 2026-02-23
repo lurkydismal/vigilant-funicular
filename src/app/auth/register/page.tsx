@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { Typography } from "@mui/material";
 import { useEffect } from "react";
 import { register } from "@/lib/auth";
-import { useSnackbar } from "@/components/SnackbarProvider";
+import { useSnackbar } from "@/providers/snackbar";
 import { useAuth } from "@/providers/auth";
 
 export default function SignUpPage() {

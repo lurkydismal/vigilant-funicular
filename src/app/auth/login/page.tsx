@@ -10,7 +10,7 @@ import { Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useAuth } from "@/providers/auth";
 import { login } from "@/lib/auth";
-import { useSnackbar } from "@/components/SnackbarProvider";
+import { useSnackbar } from "@/providers/snackbar";
 
 export default function SignInPage() {
     const router = useRouter();
