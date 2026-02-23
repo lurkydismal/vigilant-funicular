@@ -1,7 +1,7 @@
 "use client";
 
-import log from "@/utils/stdlog";
 import { useEffect } from "react";
+import { useSnackbar } from "@/components/SnackbarProvider";
 
 function ErrorIcon() {
     return (
@@ -33,8 +33,10 @@ export default function ErrorPage({
     error: Error & { digest?: string };
     reset: () => void;
 }) {
+    const { showError } = useSnackbar();
+
     useEffect(() => {
-        log.error(error);
+        showError(error);
     }, [error]);
 
     return (

@@ -9,11 +9,13 @@ import { useRouter } from "next/navigation";
 import { Typography } from "@mui/material";
 import { useEffect } from "react";
 import { register } from "@/lib/auth";
+import { useSnackbar } from "@/components/SnackbarProvider";
 import { useAuth } from "@/providers/auth";
 
 export default function SignUpPage() {
     const router = useRouter();
     const auth = useAuth();
+    const { showError } = useSnackbar();
 
     useEffect(() => {
         log.trace("SignUp component mounted");
@@ -35,7 +37,7 @@ export default function SignUpPage() {
 
             router.push("/posts");
         } catch (err) {
-            log.error(`onSubmit error: '${String(err)}'`);
+            showError(err);
         }
     };
 

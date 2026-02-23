@@ -183,13 +183,13 @@ export const userUpdateSchema = createUpdateSchema(users);
 export const userSelectPublicSchema = userSelectSchema
     .omit({
         id: true,
-        username_normalized: true,
         password_hash: true,
         created_at: true,
         updated_at: true,
     })
     .extend({
         username: z.string().trim().min(1),
+        username_normalized: z.string().trim().min(1).lowercase(),
         avatar_url: z.string().trim().min(1).nullable(),
     });
 

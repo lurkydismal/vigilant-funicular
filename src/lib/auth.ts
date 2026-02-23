@@ -162,12 +162,14 @@ export async function verifyJwt(token: string): Promise<null | UsersRowPublic> {
         // this prevents `iat/exp` or other JWT metadata from breaking your schema.
         const publicSchema = userSelectPublicSchema.pick({
             username: true,
+            username_normalized: true,
             avatar_url: true,
         });
 
         // build a minimal object and validate it with Zod
         const parsed = publicSchema.parse({
             username: payload.username,
+            username_normalized: payload.username_normalized,
             // keep explicit null handling for avatar_url
             avatar_url: payload.avatar_url ?? null,
         });
@@ -278,6 +280,7 @@ export async function register(user: {
             })
             .returning({
                 username: users.username,
+                username_normalized: users.username_normalized,
                 avatar_url: users.avatar_url,
             })
             .execute();
@@ -288,6 +291,7 @@ export async function register(user: {
         // Create minimal payload for token
         const payload = {
             username: created.username,
+            username_normalized: created.username_normalized,
             avatar_url: parsed.avatar_url ?? null,
         };
 
@@ -299,6 +303,7 @@ export async function register(user: {
         // Return safe public user object (for immediate response)
         const publicUser: UsersRowPublic = {
             username: created.username,
+            username_normalized: created.username_normalized,
             avatar_url: created.avatar_url ?? null,
         };
 
@@ -325,6 +330,7 @@ export async function register(user: {
 async function verifyPassword(user: { username: string; password: string }) {
     const parsed = userSelectPublicSchema
         .omit({
+            username_normalized: true,
             avatar_url: true,
         })
         .extend({
@@ -371,7 +377,7 @@ export async function login(credentials: {
 }): Promise<UsersRowPublic> {
     // parse -> validate (this will throw on invalid shape)
     const parsed = userSelectPublicSchema
-        .omit({ avatar_url: true }) // only need username for auth
+        .omit({ username_normalized: true, avatar_url: true }) // only need username for auth
         .extend({
             password: z.string().trim().min(1),
             remember: z.boolean().optional(),
@@ -407,6 +413,7 @@ export async function login(credentials: {
         const selected = await db
             .select({
                 username: users.username,
+                username_normalized: users.username_normalized,
                 avatar_url: users.avatar_url,
             })
             .from(users)
@@ -424,6 +431,7 @@ export async function login(credentials: {
         // prepare payload and token
         const payload = {
             username: found.username,
+            username_normalized: found.username_normalized,
             avatar_url: found.avatar_url ?? null,
         };
 
@@ -439,6 +447,7 @@ export async function login(credentials: {
         // return safe public user
         const publicUser: UsersRowPublic = {
             username: found.username,
+            username_normalized: found.username_normalized,
             avatar_url: found.avatar_url ?? null,
         };
 

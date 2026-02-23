@@ -10,10 +10,12 @@ import { Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useAuth } from "@/providers/auth";
 import { login } from "@/lib/auth";
+import { useSnackbar } from "@/components/SnackbarProvider";
 
 export default function SignInPage() {
     const router = useRouter();
     const auth = useAuth();
+    const { showError } = useSnackbar();
 
     useEffect(() => {
         log.trace("SignIn component mounted");
@@ -36,7 +38,7 @@ export default function SignInPage() {
 
             router.push("/posts");
         } catch (err) {
-            log.error(`onSubmit error: '${String(err)}'`);
+            showError(err);
         }
     };
 
