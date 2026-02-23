@@ -9,7 +9,7 @@ import {
     userSelectPublicSchema,
 } from "@/utils/validate/schemas";
 import { desc, eq, and } from "drizzle-orm";
-import { unauthorized } from "next/navigation";
+import { redirect, unauthorized } from "next/navigation";
 import z from "zod";
 
 async function doesUserFollow(
@@ -46,16 +46,38 @@ export default async function Page({
     const session = await getSessionData();
     if (!session) return unauthorized();
 
+    const _userId = db
+        .select({ id: users.id })
+        .from(users)
+        .where(eq(users.username, session!.username))
+        .limit(1)
+        .execute();
+
+    const parsedUsername = z
+        .string()
+        .trim()
+        .min(1)
+        .parse(decodeURIComponent(slug));
+
+    const _profileId = db
+        .select({ id: users.id })
+        .from(users)
+        .where(eq(users.username, parsedUsername))
+        .limit(1)
+        .execute();
+
+    const userId = normalizeArrayOrValue(await _userId);
+    if (!userId || !userId.id) return unauthorized();
+
+    const profileId = normalizeArrayOrValue(await _profileId);
+    if (!profileId || !profileId.id) return unauthorized();
+
+    if (userId.id === profileId.id) redirect("/profile/my");
+
     const getInfoFromSession = async (
         session: Awaited<ReturnType<typeof getSessionData>>,
     ) => {
         "use cache";
-
-        const parsedUsername = z
-            .string()
-            .trim()
-            .min(1)
-            .parse(decodeURIComponent(slug));
 
         const _user = db
             .select()
@@ -73,26 +95,6 @@ export default async function Page({
             .from(categories)
             .orderBy(desc(categories.name))
             .execute();
-
-        const _userId = db
-            .select({ id: users.id })
-            .from(users)
-            .where(eq(users.username, session!.username))
-            .limit(1)
-            .execute();
-
-        const _profileId = db
-            .select({ id: users.id })
-            .from(users)
-            .where(eq(users.username, parsedUsername))
-            .limit(1)
-            .execute();
-
-        const userId = normalizeArrayOrValue(await _userId);
-        if (!userId || !userId.id) return unauthorized();
-
-        const profileId = normalizeArrayOrValue(await _profileId);
-        if (!profileId || !profileId.id) return unauthorized();
 
         const _doesFollow = doesUserFollow(userId.id, profileId.id);
         const parsedDoesFollow = z.boolean().parse(await _doesFollow);
