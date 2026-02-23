@@ -15,13 +15,17 @@ export default function MainContent({
     user,
     posts,
     tags,
+    doesFollow = false,
     isMe = false,
 }: {
     user: UsersRowPublic;
     posts: PostsRowFull[];
     tags: CategoriesRowPublic[];
+    doesFollow?: boolean;
     isMe?: boolean;
 }) {
+    doesFollow = isMe ? false : doesFollow;
+
     const [currentPage, setCurrentPage] = useState(1);
     const perPage = 6;
 
@@ -41,11 +45,11 @@ export default function MainContent({
             {isMe ? (
                 <Author {...properties} />
             ) : (
-                <AuthorWithFollow {...properties} doesFollow={false} needText />
+                <AuthorWithFollow {...properties} doesFollow={doesFollow} needText />
             )}
 
             {/* TODO: IMPROVE */}
-            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "50dvh" }}>
+            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "67dvh" }}>
                 <MainFallback itemsLength={posts.length}>
                     <SearchButton />
 

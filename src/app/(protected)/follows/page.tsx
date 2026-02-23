@@ -7,6 +7,7 @@ import { CategoriesRowPublic, PostsRow, UsersRowPublic } from "@/db/types";
 import { getSessionData } from "@/lib/auth";
 import { normalizeArrayOrValue } from "@/utils/stdfunc";
 import { and, eq, sql, desc } from "drizzle-orm";
+import { unauthorized } from "next/navigation";
 
 /** Result types */
 export type FollowedUserWithLatestPost = {
@@ -137,11 +138,12 @@ export async function getFollowedUsersAndCategories(userId: number) {
 
 export default async function Follows() {
     const user = await getSessionData();
+    if (!user) return unauthorized();
 
     const _userId = await db
         .select({ id: users.id })
         .from(users)
-        .where(eq(users.username, user!.username))
+        .where(eq(users.username, user.username))
         .limit(1)
         .execute();
 

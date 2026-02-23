@@ -10,11 +10,13 @@ import MainContent from "@/components/profile/MainContent";
 import z from "zod";
 import { getSessionData } from "@/lib/auth";
 import { normalizeArrayOrValue } from "@/utils/stdfunc";
+import { unauthorized } from "next/navigation";
 
 export default async function Page() {
     const user = await getSessionData();
+    if (!user) return unauthorized();
 
-    const parsedUsername = z.string().trim().min(1).parse(user?.username);
+    const parsedUsername = z.string().trim().min(1).parse(user.username);
 
     const _user = db
         .select()

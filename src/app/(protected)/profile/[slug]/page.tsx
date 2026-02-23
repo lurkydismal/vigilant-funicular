@@ -1,14 +1,28 @@
 import MainContent from "@/components/profile/MainContent";
 import db from "@/db";
-import { categories, posts, users } from "@/db/schema";
+import { categories, follows, posts, users } from "@/db/schema";
+import { getSessionData } from "@/lib/auth";
 import { normalizeArrayOrValue } from "@/utils/stdfunc";
 import {
     categorySelectPublicSchema,
     postFullSchema,
     userSelectPublicSchema,
 } from "@/utils/validate/schemas";
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, and } from "drizzle-orm";
+import { unauthorized } from "next/navigation";
 import z from "zod";
+
+async function doesUserFollow(followerId: number, followingId: number): Promise<boolean> {
+    const followRecord = await db.select()
+        .from(follows)
+        .where(and(
+            eq(follows.follower_id, followerId),
+            eq(follows.following_id, followingId),
+        ))
+        .limit(1);
+
+    return followRecord.length > 0;
+}
 
 export default async function Page({
     params,
@@ -22,6 +36,9 @@ export default async function Page({
     params: Promise<{ slug: string }>;
 }) {
     const { slug } = await params;
+
+    const user = await getSessionData();
+    if (!user) return unauthorized();
 
     const parsedUsername = z
         .string()
@@ -46,6 +63,29 @@ export default async function Page({
         .orderBy(desc(categories.name))
         .execute();
 
+    const _userId = db
+        .select({ id: users.id })
+        .from(users)
+        .where(eq(users.username, user.username))
+        .limit(1)
+        .execute();
+
+    const _profileId = db
+        .select({ id: users.id })
+        .from(users)
+        .where(eq(users.username, parsedUsername))
+        .limit(1)
+        .execute();
+
+    const userId = normalizeArrayOrValue(await _userId);
+    if (!userId || !userId.id) return unauthorized();
+
+    const profileId = normalizeArrayOrValue(await _profileId);
+    if (!profileId || !profileId.id) return unauthorized();
+
+    const _doesFollow = doesUserFollow(userId.id, profileId.id);
+    const parsedDoesFollow = z.boolean().parse(await _doesFollow);
+
     const parsedUser = userSelectPublicSchema.parse(
         normalizeArrayOrValue(await _user),
     );
@@ -59,6 +99,7 @@ export default async function Page({
             user={parsedUser}
             posts={parsedPosts}
             tags={parsedCategories}
+            doesFollow={parsedDoesFollow}
         />
     );
 }
