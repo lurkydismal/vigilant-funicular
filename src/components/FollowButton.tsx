@@ -30,7 +30,7 @@ function FollowBase({ uid, doesFollow, size, needText = false }: Props) {
 
     const handleClick = () => {
         startTransition(async () => {
-            await follow(uid);
+            await follow({ username: uid });
         });
     };
 

@@ -145,7 +145,7 @@ function signJwt(
  * The function validates only the expected public fields (username, avatar_url)
  * using your existing userSelectPublicSchema to avoid iat/exp causing downstream failures.
  */
-export async function verifyJwt(token: string): Promise<null | UsersRowPublic> {
+async function verifyJwt(token: string): Promise<null | UsersRowPublic> {
     try {
         // verify signature + expiry and restrict algorithm to HS256
         const verified = jwt.verify(token, jwtSecret, {
@@ -204,7 +204,7 @@ type CookieStore = Awaited<ReturnType<typeof cookies>>;
  *
  * NOTE: ms() returns milliseconds; cookie maxAge expects seconds.
  */
-export async function cookieForToken(
+async function cookieForToken(
     cookieStore: CookieStore,
     token: string,
     remember: boolean,
@@ -227,14 +227,12 @@ export async function cookieForToken(
  * - Setting `expires: new Date(0)` causes the browser to remove the cookie.
  */
 export async function clearAuthCookie(cookieStore: CookieStore) {
-    return cookieStore.set({
+    return cookieStore.delete({
         name: storageKeys.server!.accessToken,
-        value: "",
         httpOnly: true,
         secure: cookieSecure,
         sameSite: "lax",
         path: "/",
-        expires: new Date(0),
     });
 }
 
@@ -252,11 +250,7 @@ export async function clearAuthCookie(cookieStore: CookieStore) {
  *
  * This implementation normalizes username and logs errors (without secrets) for auditing.
  */
-export async function register(user: {
-    username: string;
-    password: string;
-    avatar_url: string | null;
-}) {
+export async function register(user: UsersRowPublic) {
     // parse + validate input; throws on invalid input
     const parsed = userSelectPublicSchema
         .extend({

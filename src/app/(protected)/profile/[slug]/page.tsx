@@ -55,6 +55,7 @@ export default async function Page({
             .string()
             .trim()
             .min(1)
+            .lowercase()
             .parse(decodeURIComponent(slug));
 
         if (session!.username_normalized === parsedUsername)

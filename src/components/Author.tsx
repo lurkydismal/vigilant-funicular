@@ -44,6 +44,10 @@ const dateSx = {
     },
 };
 
+function profileHref(author: UsersRowPublic) {
+    return `/profile/${encodeURIComponent(author.username_normalized)}`;
+}
+
 /**
  * Small wrapper used for rows with left and optional right content.
  *
@@ -299,14 +303,13 @@ export function AuthorWithDateAndLink({
     log.trace("AuthorWithDateAndLink render", { username: author?.username });
 
     const d = new Date(date);
-    const href = `/profile/${encodeURIComponent(author.username)}`;
 
     return (
         <AuthorRow
             left={
                 <Link
                     underline="none"
-                    href={href}
+                    href={profileHref(author)}
                     sx={{ display: "inline-flex", alignItems: "center" }}
                 >
                     <AuthorInfo
@@ -366,7 +369,7 @@ export function AuthorsWithDateAndLink({
                         {authors.map((a) => (
                             <Link
                                 key={a.username + "-avatar"}
-                                href={`/profile/${encodeURIComponent(a.username)}`}
+                                href={profileHref(a)}
                                 underline="none"
                                 sx={{
                                     display: "inline-flex",
@@ -395,7 +398,7 @@ export function AuthorsWithDateAndLink({
                                 <Link
                                     underline="none"
                                     variant="h4"
-                                    href={`/profile/${encodeURIComponent(a.username)}`}
+                                    href={profileHref(a)}
                                     sx={nameSx}
                                 >
                                     {a.username}
@@ -532,12 +535,10 @@ export function AuthorWithFollowAndLink({
         doesFollow,
     });
 
-    const href = `/profile/${encodeURIComponent(author.username)}`;
-
     return (
         <AuthorRow
             left={
-                <Link underline="none" href={href} sx={nameSx}>
+                <Link underline="none" href={profileHref(author)} sx={nameSx}>
                     <AuthorInfo
                         author={author}
                         variant={variant}
