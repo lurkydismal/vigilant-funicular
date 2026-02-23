@@ -1,5 +1,6 @@
 "use client";
 
+import MainFallback from "@/components/MainFallback";
 import { Author, AuthorWithFollow } from "@/components/Author";
 import PostsPagination from "@/components/Pagination";
 import { Posts } from "@/components/Posts";
@@ -43,17 +44,22 @@ export default function MainContent({
                 <AuthorWithFollow {...properties} doesFollow={false} needText />
             )}
 
-            <SearchButton />
+            {/* TODO: IMPROVE */}
+            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "50dvh" }}>
+                <MainFallback itemsLength={posts.length}>
+                    <SearchButton />
 
-            <TagsAndSearchMobile tags={tags} />
+                    <TagsAndSearchMobile tags={tags} />
 
-            <Posts posts={paginate(posts, currentPage, perPage)} />
+                    <Posts posts={paginate(posts, currentPage, perPage)} />
 
-            <PostsPagination
-                total={posts.length}
-                perPage={perPage}
-                onChange={onChange}
-            />
+                    <PostsPagination
+                        total={posts.length}
+                        perPage={perPage}
+                        onChange={onChange}
+                    />
+                </MainFallback>
+            </Box>
         </Box>
     );
 }

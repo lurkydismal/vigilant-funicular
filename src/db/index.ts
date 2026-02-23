@@ -16,7 +16,7 @@ import { relations } from "./relations";
 // All log messages from Drizzle will be routed through this writer
 class MyLogWriter implements LogWriter {
     write(message: string) {
-        log.info(message);
+        log.debug(message);
     }
 }
 

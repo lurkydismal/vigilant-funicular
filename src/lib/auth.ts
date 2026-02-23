@@ -469,7 +469,7 @@ export async function login(credentials: {
 export async function getSessionData(): Promise<null | UsersRowPublic> {
     const cookieStore = await cookies();
     const token = cookieStore.get(storageKeys.server!.accessToken)?.value;
-    if (!token) throw new Error("No token");
+    if (!token) return null;
 
     const payload = await verifyJwt(token);
     if (!payload || typeof payload === "string") return null;

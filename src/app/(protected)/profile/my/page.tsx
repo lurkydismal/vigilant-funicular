@@ -1,4 +1,3 @@
-import MainFallback from "@/components/MainFallback";
 import db from "@/db";
 import { categories, posts, users } from "@/db/schema";
 import {
@@ -42,12 +41,11 @@ export default async function Page() {
         .parse(await _categories);
 
     return (
-        <MainFallback itemsLength={parsedPosts.length}>
-            <MainContent
-                user={parsedUser}
-                posts={parsedPosts}
-                tags={parsedCategories}
-            />
-        </MainFallback>
+        <MainContent
+            user={parsedUser}
+            posts={parsedPosts}
+            tags={parsedCategories}
+            isMe
+        />
     );
 }

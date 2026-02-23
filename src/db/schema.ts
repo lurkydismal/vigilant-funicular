@@ -53,6 +53,8 @@ export const follows = pgTable(
     (t) => [
         primaryKey({ columns: [t.follower_id, t.following_id] }),
 
+        check('follower_cannot_follow_themselves', sql`follower_id != following_id`),
+
         index().on(t.follower_id),
         index().on(t.following_id),
     ],

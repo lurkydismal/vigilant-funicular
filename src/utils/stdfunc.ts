@@ -187,9 +187,21 @@ export function concatenateAuthors(post: PostsRowFull) {
 }
 
 /**
- * @template T - [TODO:type]
- * @param item - [TODO:description]
- * @returns [TODO:return]
+ * A utility function that normalizes a value or the first element of an array.
+ * 
+ * This function checks if the input `item` is an array. If it is, the function returns the first element of the array. 
+ * If the input is a single value (not an array), the function returns the value itself.
+ * 
+ * @template T - The type of the value that is passed in. This can be any type, and it can also be an array of that type.
+ * @param item - The value to be normalized. It can either be a single value of type `T` or an array of values of type `T[]`.
+ * @returns The normalized value: if `item` is an array, it returns the first element (`item[0]`), otherwise it returns `item` itself.
+ * 
+ * @example
+ * // If the input is an array, return the first element.
+ * normalizeArrayOrValue([1, 2, 3]); // Returns: 1
+ * 
+ * // If the input is a single value, return the value itself.
+ * normalizeArrayOrValue(5); // Returns: 5
  */
 export function normalizeArrayOrValue<T>(item: T | T[]): T {
     return Array.isArray(item) ? item[0] : item;
