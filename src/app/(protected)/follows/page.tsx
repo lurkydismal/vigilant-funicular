@@ -13,6 +13,7 @@ import { unauthorized } from "next/navigation";
 export type FollowedUserWithLatestPost = {
     user_id: number;
     username: string;
+    username_normalized: string;
     avatar_url: string | null;
     post_id: number | null;
     post_title: string | null;
@@ -49,6 +50,7 @@ export async function getFollowedUsersWithLatestPost(
         .select({
             user_id: users.id,
             username: users.username,
+            username_normalized: users.username_normalized,
             avatar_url: users.avatar_url,
             post_id: latestPost.id,
             post_title: latestPost.title,
@@ -64,13 +66,14 @@ export async function getFollowedUsersWithLatestPost(
         // join posts to pick the row that matches (author_id, created_at = latest_created_at)
         .leftJoinLateral(latestPost, sql`true`)
         .leftJoin(categories, eq(categories.id, latestPost.category_id))
-        .orderBy(users.username)
+        .orderBy(users.username_normalized)
         .execute();
 
     // Drizzle returns typed rows; map to the lightweight result type
     return rows.map((r) => ({
         user_id: r.user_id,
         username: r.username,
+        username_normalized: r.username_normalized,
         avatar_url: r.avatar_url,
         post_id: r.post_id ?? null,
         post_title: r.post_title ?? null,
@@ -159,30 +162,33 @@ export default async function Follows() {
             await getFollowedUsersAndCategories(userId.id);
 
         const feed: Follow[] = _users
-            .filter((u) => u.post_id !== null) // drop users without posts (Follow.post is required)
+            // .filter((u) => u.post_id !== null) // drop users without posts (Follow.post is required)
             .map((u) => {
                 const author: UsersRowPublic = {
                     // minimal public user shape based on what you selected earlier
                     // add/adjust fields if your UsersRowPublic requires more properties
                     id: u.user_id,
                     username: u.username,
+                    username_normalized: u.username_normalized,
                     avatar_url: u.avatar_url ?? null,
                 } as UsersRowPublic;
 
-                const post: PostsRow = {
-                    // minimal post shape using fields returned by your query.
-                    // expand/adjust as needed to match PostsRowFull in your project.
-                    id: u.post_id as number,
-                    author_id: u.user_id,
-                    co_author_id: null,
-                    category_id: u.category_id ?? null,
-                    preview_url: null,
-                    title: u.post_title ?? "",
-                    description: u.post_description ?? null,
-                    content: u.post_content ?? "",
-                    created_at: u.post_created_at ?? new Date(0),
-                    updated_at: u.post_created_at ?? new Date(0),
-                };
+                const post: PostsRow | null = u.post_id
+                    ? {
+                          // minimal post shape using fields returned by your query.
+                          // expand/adjust as needed to match PostsRowFull in your project.
+                          id: u.post_id as number,
+                          author_id: u.user_id,
+                          co_author_id: null,
+                          category_id: u.category_id ?? null,
+                          preview_url: null,
+                          title: u.post_title ?? "",
+                          description: u.post_description ?? null,
+                          content: u.post_content ?? "",
+                          created_at: u.post_created_at ?? new Date(0),
+                          updated_at: u.post_created_at ?? new Date(0),
+                      }
+                    : null;
 
                 return { author, post } as Follow;
             });

@@ -1,5 +1,4 @@
 import { follow } from "@/lib/follow";
-import log from "@/utils/stdlog";
 import {
     PersonRemove as UnfollowIcon,
     PersonAdd as FollowIcon,

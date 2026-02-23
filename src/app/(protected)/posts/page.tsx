@@ -1,4 +1,6 @@
 import MainFallback from "@/components/MainFallback";
+import { SearchButton } from "@/components/SearchButton";
+import { TagsAndSearchMobile } from "@/components/Tags";
 import Latest from "@/components/posts/Latest";
 import MainContent from "@/components/posts/MainContent";
 import db from "@/db";
@@ -110,11 +112,16 @@ export default async function Posts() {
 
     return (
         <MainFallback itemsLength={parsedPosts.length}>
+            {parsedCategories.length && (
+                <>
+                    <SearchButton />
+
+                    <TagsAndSearchMobile tags={parsedCategories} />
+                </>
+            )}
+
             {parsedFeaturedPosts.length && (
-                <MainContent
-                    posts={parsedFeaturedPosts}
-                    tags={parsedCategories}
-                />
+                <MainContent posts={parsedFeaturedPosts} />
             )}
 
             <Latest posts={parsedPosts} />

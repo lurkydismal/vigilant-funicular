@@ -9,7 +9,7 @@ import { PostsRow, PostsRowFull, UsersRowPublic } from "@/db/types";
 
 export interface Follow {
     author: UsersRowPublic;
-    post: PostsRow | PostsRowFull;
+    post: PostsRow | PostsRowFull | null;
 }
 
 const StyledTypography = styled(Typography)({
@@ -88,28 +88,32 @@ export function Follows({ follows }: { follows: Follow[] }) {
                                     doesFollow={index % 5 !== 2}
                                 />
 
-                                <TitleTypography
-                                    onClick={() => {
-                                        redirect(`/post/${post.id}`);
-                                    }}
-                                    gutterBottom
-                                    variant="h6"
-                                >
-                                    {post.title}
+                                {post && (
+                                    <>
+                                        <TitleTypography
+                                            onClick={() => {
+                                                redirect(`/post/${post.id}`);
+                                            }}
+                                            gutterBottom
+                                            variant="h6"
+                                        >
+                                            {post.title}
 
-                                    <NavigateNextRounded
-                                        className="arrow"
-                                        sx={{ fontSize: "1rem" }}
-                                    />
-                                </TitleTypography>
+                                            <NavigateNextRounded
+                                                className="arrow"
+                                                sx={{ fontSize: "1rem" }}
+                                            />
+                                        </TitleTypography>
 
-                                <StyledTypography
-                                    variant="body2"
-                                    color="text.secondary"
-                                    gutterBottom
-                                >
-                                    {post.description}
-                                </StyledTypography>
+                                        <StyledTypography
+                                            variant="body2"
+                                            color="text.secondary"
+                                            gutterBottom
+                                        >
+                                            {post.description}
+                                        </StyledTypography>
+                                    </>
+                                )}
                             </Box>
                         </Grid>
                     );
