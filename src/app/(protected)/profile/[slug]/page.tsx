@@ -3,12 +3,14 @@ import db from "@/db";
 import { categories, follows, posts, users } from "@/db/schema";
 import { getSessionData } from "@/lib/auth";
 import { normalizeArrayOrValue } from "@/utils/stdfunc";
+import { logVar } from "@/utils/stdlog";
 import {
     categorySelectPublicSchema,
     postFullSchema,
     userSelectPublicSchema,
 } from "@/utils/validate/schemas";
 import { desc, eq, and } from "drizzle-orm";
+import { cacheTag } from "next/cache";
 import { redirect, unauthorized } from "next/navigation";
 import z from "zod";
 
@@ -50,6 +52,7 @@ export default async function Page({
         session: Awaited<ReturnType<typeof getSessionData>>,
     ) => {
         "use cache";
+        cacheTag("follows");
 
         const parsedUsername = z
             .string()
@@ -100,8 +103,9 @@ export default async function Page({
             .orderBy(desc(categories.name))
             .execute();
 
-        const _doesFollow = doesUserFollow(userId.id, profileId.id);
-        const parsedDoesFollow = z.boolean().parse(await _doesFollow);
+        const _doesFollow = await doesUserFollow(userId.id, profileId.id);
+        logVar({ _doesFollow });
+        const parsedDoesFollow = z.boolean().parse(_doesFollow);
 
         const parsedUser = userSelectPublicSchema.parse(
             normalizeArrayOrValue(await _user),

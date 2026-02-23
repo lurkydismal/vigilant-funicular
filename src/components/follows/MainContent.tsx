@@ -6,7 +6,7 @@ import { TagsAndSearchMobile } from "@/components/Tags";
 import { paginate } from "@/utils/stdfunc";
 import { Follow, Follows } from "./Follows";
 import { useState, ChangeEvent } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import { CategoriesRowPublic } from "@/db/types";
 
 export default function MainContent({
@@ -23,17 +23,26 @@ export default function MainContent({
         setCurrentPage(page);
     };
 
+    // FIX: Text at the top, Pagination at the bottom
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-            <Typography variant="h2" gutterBottom>
-                Follows
-            </Typography>
+            <Box>
+                <Typography variant="h2" gutterBottom>
+                    Follows
+                </Typography>
 
-            <SearchButton />
+                <SearchButton />
 
-            <TagsAndSearchMobile tags={tags} />
+                <TagsAndSearchMobile tags={tags} />
+            </Box>
 
-            <Follows follows={paginate(follows, currentPage, perPage)} />
+            <Container
+                sx={{
+                    flexGrow: 1,
+                }}
+            >
+                <Follows follows={paginate(follows, currentPage, perPage)} />
+            </Container>
 
             <PostsPagination
                 total={follows.length}

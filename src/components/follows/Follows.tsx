@@ -61,7 +61,7 @@ export function Follows({ follows }: { follows: Follow[] }) {
     return (
         <MainFallback itemsLength={follows.length}>
             <Grid container spacing={8} columns={12} sx={{ my: 4 }}>
-                {follows.map((follow, index) => {
+                {follows.map((follow) => {
                     const post = follow.post;
                     const user = follow.author;
 
@@ -85,7 +85,7 @@ export function Follows({ follows }: { follows: Follow[] }) {
                                 <AuthorWithFollowAndLink
                                     author={follow.author}
                                     variant="h6"
-                                    doesFollow={index % 5 !== 2}
+                                    doesFollow={true}
                                 />
 
                                 {post && (

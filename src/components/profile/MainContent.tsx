@@ -53,28 +53,19 @@ export default function MainContent({
             )}
 
             {/* TODO: IMPROVE */}
-            <Box
-                sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    minHeight: "67dvh",
-                }}
-            >
-                <MainFallback itemsLength={posts.length}>
-                    <SearchButton />
+            <MainFallback itemsLength={posts.length}>
+                <SearchButton />
 
-                    <TagsAndSearchMobile tags={tags} />
+                <TagsAndSearchMobile tags={tags} />
 
-                    <Posts posts={paginate(posts, currentPage, perPage)} />
+                <Posts posts={paginate(posts, currentPage, perPage)} />
 
-                    <PostsPagination
-                        total={posts.length}
-                        perPage={perPage}
-                        onChange={onChange}
-                    />
-                </MainFallback>
-            </Box>
+                <PostsPagination
+                    total={posts.length}
+                    perPage={perPage}
+                    onChange={onChange}
+                />
+            </MainFallback>
         </Box>
     );
 }

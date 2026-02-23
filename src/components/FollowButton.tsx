@@ -1,4 +1,4 @@
-import { follow } from "@/lib/follow";
+import { follow, unfollow } from "@/lib/follow";
 import {
     PersonRemove as UnfollowIcon,
     PersonAdd as FollowIcon,
@@ -30,7 +30,11 @@ function FollowBase({ uid, doesFollow, size, needText = false }: Props) {
 
     const handleClick = () => {
         startTransition(async () => {
-            await follow({ username: uid });
+            if (doesFollow) {
+                await unfollow({ username: uid });
+            } else {
+                await follow({ username: uid });
+            }
         });
     };
 

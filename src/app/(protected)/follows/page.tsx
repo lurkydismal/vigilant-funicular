@@ -7,6 +7,7 @@ import { CategoriesRowPublic, PostsRow, UsersRowPublic } from "@/db/types";
 import { getSessionData } from "@/lib/auth";
 import { normalizeArrayOrValue } from "@/utils/stdfunc";
 import { and, eq, sql, desc } from "drizzle-orm";
+import { cacheTag } from "next/cache";
 import { unauthorized } from "next/navigation";
 
 /** Result types */
@@ -147,6 +148,7 @@ export default async function Follows() {
         session: Awaited<ReturnType<typeof getSessionData>>,
     ) => {
         "use cache";
+        cacheTag("follows");
 
         const _userId = await db
             .select({ id: users.id })
