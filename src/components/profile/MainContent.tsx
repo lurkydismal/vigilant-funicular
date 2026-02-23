@@ -36,8 +36,8 @@ export default function MainContent({
     const properties = {
         author: user,
         variant: "h2",
-        avatarWidth: 48,
-        avatarHeight: 48,
+        avatarWidth: 76,
+        avatarHeight: 76,
     } satisfies ComponentProps<typeof Author>;
 
     return (

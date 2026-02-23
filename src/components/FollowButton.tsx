@@ -1,3 +1,4 @@
+import { follow } from "@/lib/follow";
 import log from "@/utils/stdlog";
 import {
     PersonRemove as UnfollowIcon,
@@ -12,6 +13,7 @@ import {
 } from "@mui/material";
 
 import { Button } from "@mui/material";
+import { useTransition } from "react";
 
 type Props = ButtonProps & {
     uid: string;
@@ -25,9 +27,12 @@ function FollowBase({ uid, doesFollow, size, needText = false }: Props) {
     const text = doesFollow ? "Unfollow" : "Follow";
     const color = doesFollow ? "error" : "success";
     const icon = doesFollow ? <UnfollowIcon /> : <FollowIcon />;
+    const [pending, startTransition] = useTransition();
+
     const handleClick = () => {
-        // TODO: Implement
-        log.info("Follow: ", uid);
+        startTransition(async () => {
+            await follow(uid);
+        });
     };
 
     return needText ? (
@@ -37,6 +42,7 @@ function FollowBase({ uid, doesFollow, size, needText = false }: Props) {
             color={color}
             variant="contained"
             startIcon={icon}
+            loading={pending}
         >
             {text}
         </Button>
@@ -46,6 +52,7 @@ function FollowBase({ uid, doesFollow, size, needText = false }: Props) {
                 size={size ?? "medium"}
                 onClick={handleClick}
                 color={color}
+                loading={pending}
             >
                 {icon}
             </IconButton>

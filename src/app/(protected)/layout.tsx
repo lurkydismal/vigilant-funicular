@@ -1,20 +1,12 @@
 import Footer from "@/components/Footer";
 import NavBar from "@/components/NavBar";
-import { getSessionData } from "@/lib/auth";
 import { Box, Container } from "@mui/material";
-import { unauthorized } from "next/navigation";
 
-export default async function ProtectedLayout({
+export default async function Layout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const user = await getSessionData();
-
-    if (!user) {
-        unauthorized();
-    }
-
     return (
         <Box
             sx={{
