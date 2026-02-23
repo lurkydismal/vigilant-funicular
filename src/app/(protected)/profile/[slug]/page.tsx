@@ -57,7 +57,8 @@ export default async function Page({
             .min(1)
             .parse(decodeURIComponent(slug));
 
-        if (session!.username_normalized === parsedUsername) redirect("/profile/my");
+        if (session!.username_normalized === parsedUsername)
+            redirect("/profile/my");
 
         const _userId = db
             .select({ id: users.id })
