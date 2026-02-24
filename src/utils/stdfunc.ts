@@ -222,15 +222,15 @@ type AwaitedObject<T extends Record<PropertyKey, any>> = {
  * [TODO:class]
  */
 export async function awaitObject<T extends Record<PropertyKey, any>>(
-    _obj: T,
+    obj: T,
 ): Promise<AwaitedObject<T>> {
-    const l_entries = Object.entries(_obj);
+    const entries = Object.entries(obj);
 
-    const l_resolved = await Promise.all(
-        l_entries.map(async ([_key, _value]) => {
-            return [_key, await _value] as const;
+    const resolved = await Promise.all(
+        entries.map(async ([key, value]) => {
+            return [key, await value] as const;
         }),
     );
 
-    return Object.fromEntries(l_resolved) as AwaitedObject<T>;
+    return Object.fromEntries(resolved) as AwaitedObject<T>;
 }

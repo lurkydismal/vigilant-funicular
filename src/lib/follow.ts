@@ -5,9 +5,8 @@ import { getSessionData } from "@/lib/auth";
 import { unauthorized } from "next/navigation";
 import { userSelectPublicSchema } from "@/utils/validate/schemas";
 import db from "@/db";
-import { follows, users } from "@/db/schema";
+import { follows } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
-import { normalizeArrayOrValue } from "@/utils/stdfunc";
 import { cacheTag, revalidateTag } from "next/cache";
 import { getUserId, requestUserId } from "./user";
 
