@@ -12,7 +12,7 @@ const FormGrid = styled(Grid)(() => ({
     flexDirection: "column",
 }));
 
-export default function AddressForm() {
+export default function InfoForm() {
     return (
         <Grid container spacing={3}>
             <FormGrid size={{ xs: 12, md: 6 }}>

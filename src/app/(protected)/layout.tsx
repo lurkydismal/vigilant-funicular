@@ -18,7 +18,6 @@ export default async function Layout({
             <NavBar />
 
             <Container
-                component="main"
                 maxWidth="xl"
                 sx={{
                     flexGrow: 1,

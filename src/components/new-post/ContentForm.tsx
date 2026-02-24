@@ -4,7 +4,7 @@ import { CreditCardRounded } from "@mui/icons-material";
 import { Stack, Box, Card, OutlinedInput, InputAdornment } from "@mui/material";
 import { useState } from "react";
 
-export default function Attachments() {
+export default function ContentForm() {
     const [cardNumber, setCardNumber] = useState("");
 
     const handleCardNumberChange = (event: { target: { value: string } }) => {
