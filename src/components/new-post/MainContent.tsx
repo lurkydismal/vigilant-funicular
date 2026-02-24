@@ -19,11 +19,23 @@ export default function MainContent() {
         setActiveStep(activeStep + 1);
     };
 
-    const steps: StepType[] = useMemo(() => ([
-        { title: "Fill information", item: <InfoForm moveNext={moveNext} /> },
-        { title: "Write content", item: <ContentForm moveNext={moveNext} /> },
-        { title: "Preview your content", item: <PreviewForm moveNext={moveNext} /> },
-    ]), []);
+    const steps: StepType[] = useMemo(
+        () => [
+            {
+                title: "Fill information",
+                item: <InfoForm moveNext={moveNext} />,
+            },
+            {
+                title: "Write content",
+                item: <ContentForm moveNext={moveNext} />,
+            },
+            {
+                title: "Preview your content",
+                item: <PreviewForm moveNext={moveNext} />,
+            },
+        ],
+        [],
+    );
 
     return (
         <Box

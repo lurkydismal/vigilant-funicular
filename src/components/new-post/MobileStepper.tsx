@@ -23,7 +23,11 @@ export default function MobileStepper({
                 return (
                     <Step key={step.title}>
                         <StepLabel
-                            onClick={isActive ? () => setActiveStep(index) : undefined}
+                            onClick={
+                                isActive
+                                    ? () => setActiveStep(index)
+                                    : undefined
+                            }
                             sx={{
                                 ".MuiStepLabel-labelContainer": {
                                     maxWidth: "70px",

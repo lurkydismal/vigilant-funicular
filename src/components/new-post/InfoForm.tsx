@@ -30,13 +30,16 @@ export default function InfoForm({ moveNext }: FormProps) {
     });
 
     // Update state on input change
-    const handleChange = (field: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-        setFormValues((prev) => ({ ...prev, [field]: event.target.value }));
-        log.debug({ formValues });
-    };
+    const handleChange =
+        (field: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+            setFormValues((prev) => ({ ...prev, [field]: event.target.value }));
+            log.debug({ formValues });
+        };
 
     // Check if all required fields are filled
-    const isFormValid = Object.values(formValues).every((val) => val.trim() !== "");
+    const isFormValid = Object.values(formValues).every(
+        (val) => val.trim() !== "",
+    );
 
     // Auto-move to next step when valid
     useEffect(() => {

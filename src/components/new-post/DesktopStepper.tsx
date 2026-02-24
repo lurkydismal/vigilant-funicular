@@ -18,13 +18,17 @@ export default function DesktopStepper({
                     const isActive = activeStep >= index;
 
                     return (
-                        <Step
-                            key={step.title}
-                        >
+                        <Step key={step.title}>
                             <StepLabel
-                                onClick={isActive ? () => setActiveStep(index) : undefined}
+                                onClick={
+                                    isActive
+                                        ? () => setActiveStep(index)
+                                        : undefined
+                                }
                                 sx={isActive ? stepSx : undefined}
-                            >{step.title}</StepLabel>
+                            >
+                                {step.title}
+                            </StepLabel>
                         </Step>
                     );
                 })}

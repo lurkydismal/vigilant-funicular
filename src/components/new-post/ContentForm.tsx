@@ -35,7 +35,9 @@ export default function ContentForm({ moveNext }: FormProps) {
                         }}
                     >
                         <OutlinedInput
-                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            onChange={(
+                                event: React.ChangeEvent<HTMLInputElement>,
+                            ) => {
                                 setValue(event.target.value);
                                 log.debug({ value });
                             }}
