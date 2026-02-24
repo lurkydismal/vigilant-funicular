@@ -1,6 +1,7 @@
 import MainContent from "@/components/post/MainContent";
-import db from "@/db";
-import { postFullSchema } from "@/utils/validate/schemas";
+import { getSessionData } from "@/lib/auth";
+import { getPostFull, requestPostFull } from "@/lib/post";
+import { unauthorized } from "next/navigation";
 import z from "zod";
 
 export default async function Page({
@@ -16,20 +17,12 @@ export default async function Page({
 }) {
     const { slug } = await params;
 
+    const session = await getSessionData();
+    if (!session) return unauthorized();
+
     const id = z.number().parse(slug);
 
-    const _posts = await db.query.posts.findFirst({
-        where: {
-            id,
-        },
-        with: {
-            author: true,
-            coAuthor: true,
-            category: true,
-        },
-    });
+    const posts = await getPostFull(requestPostFull({ id }));
 
-    const parsed = postFullSchema.parse(_posts);
-
-    return <MainContent post={parsed} />;
+    return <MainContent post={posts} />;
 }

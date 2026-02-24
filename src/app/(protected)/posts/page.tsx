@@ -16,7 +16,7 @@ export default async function Posts() {
     if (!session) return unauthorized();
 
     const getInfoFromSession = async (
-        session: Awaited<ReturnType<typeof getSessionData>>,
+        session: NonNullable<Awaited<ReturnType<typeof getSessionData>>>,
     ) => {
         "use cache";
 
@@ -34,7 +34,7 @@ export default async function Posts() {
         const _userId = await db
             .select({ id: users.id })
             .from(users)
-            .where(eq(users.username, session!.username))
+            .where(eq(users.username, session.username))
             .limit(1)
             .execute();
         const userId = normalizeArrayOrValue(_userId);
@@ -52,42 +52,42 @@ export default async function Posts() {
 
         const _featuredPosts = followingIds.length
             ? await db
-                  .select({
-                      id: posts.id,
-                      title: posts.title,
-                      description: posts.description,
-                      content: posts.content,
-                      preview_url: posts.preview_url,
-                      created_at: posts.created_at,
-                      updated_at: posts.updated_at,
+                .select({
+                    id: posts.id,
+                    title: posts.title,
+                    description: posts.description,
+                    content: posts.content,
+                    preview_url: posts.preview_url,
+                    created_at: posts.created_at,
+                    updated_at: posts.updated_at,
 
-                      author: {
-                          id: users.id,
-                          username: users.username,
-                          avatar_url: users.avatar_url,
-                      },
-                      coAuthor: {
-                          id: users.id,
-                          username: users.username,
-                          avatar_url: users.avatar_url,
-                      },
-                      category: {
-                          id: categories.id,
-                          name: categories.name,
-                      },
-                  })
-                  .from(posts)
-                  .leftJoin(users, eq(users.id, posts.author_id)) // join author
-                  .leftJoin(users, eq(users.id, posts.co_author_id)) // join coAuthor
-                  .leftJoin(categories, eq(categories.id, posts.category_id)) // join category
-                  .where(() =>
-                      or(
-                          inArray(posts.author_id, followingIds),
-                          inArray(posts.co_author_id, followingIds),
-                      ),
-                  )
-                  .orderBy(desc(posts.created_at))
-                  .execute()
+                    author: {
+                        id: users.id,
+                        username: users.username,
+                        avatar_url: users.avatar_url,
+                    },
+                    coAuthor: {
+                        id: users.id,
+                        username: users.username,
+                        avatar_url: users.avatar_url,
+                    },
+                    category: {
+                        id: categories.id,
+                        name: categories.name,
+                    },
+                })
+                .from(posts)
+                .leftJoin(users, eq(users.id, posts.author_id)) // join author
+                .leftJoin(users, eq(users.id, posts.co_author_id)) // join coAuthor
+                .leftJoin(categories, eq(categories.id, posts.category_id)) // join category
+                .where(() =>
+                    or(
+                        inArray(posts.author_id, followingIds),
+                        inArray(posts.co_author_id, followingIds),
+                    ),
+                )
+                .orderBy(desc(posts.created_at))
+                .execute()
             : [];
 
         const _categories = db

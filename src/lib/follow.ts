@@ -8,7 +8,7 @@ import db from "@/db";
 import { follows, users } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
 import { normalizeArrayOrValue } from "@/utils/stdfunc";
-import { revalidateTag } from "next/cache";
+import { cacheTag, revalidateTag } from "next/cache";
 import { getUserId, requestUserId } from "./user";
 
 export async function follow(username: string) {
@@ -101,6 +101,9 @@ export async function requestCheckUserFollow(
     followerId: number,
     followingId: number,
 ): Promise<boolean> {
+    "use cache";
+    cacheTag("follows", "follow");
+
     const followRecord = await db
         .select()
         .from(follows)

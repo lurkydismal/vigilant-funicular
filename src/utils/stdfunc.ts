@@ -206,3 +206,27 @@ export function concatenateAuthors(post: PostsRowFull): UsersRowPublic[] {
 export function normalizeArrayOrValue<T>(item: T | T[]): T {
     return Array.isArray(item) ? item[0] : item;
 }
+
+/**
+ * [TODO:description]
+ */
+type AwaitedObject<T extends Record<PropertyKey, any>> = {
+    [K in keyof T]: Awaited<T[K]>;
+};
+
+/**
+ * [TODO:class]
+ */
+export async function awaitObject<T extends Record<PropertyKey, any>>(
+    _obj: T
+): Promise<AwaitedObject<T>> {
+    const l_entries = Object.entries(_obj);
+
+    const l_resolved = await Promise.all(
+        l_entries.map(async ([_key, _value]) => {
+            return [_key, await _value] as const;
+        })
+    );
+
+    return Object.fromEntries(l_resolved) as AwaitedObject<T>;
+}

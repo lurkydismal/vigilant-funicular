@@ -1,19 +1,10 @@
 import MainContent from "@/components/profile/MainContent";
-import db from "@/db";
-import { categories, follows, posts, users } from "@/db/schema";
 import { getSessionData } from "@/lib/auth";
-import { requestAllCategories } from "@/lib/category";
+import { getAllCategories, requestAllCategories } from "@/lib/category";
 import { requestCheckUserFollow } from "@/lib/follow";
-import { requestAllPosts } from "@/lib/post";
-import { getUserId, requestUser, requestUserId } from "@/lib/user";
-import { normalizeArrayOrValue } from "@/utils/stdfunc";
-import { logVar } from "@/utils/stdlog";
-import {
-    categorySelectPublicSchema,
-    postFullSchema,
-    userSelectPublicSchema,
-} from "@/utils/validate/schemas";
-import { desc, eq, and } from "drizzle-orm";
+import { getAllPosts, requestAllPosts } from "@/lib/post";
+import { getUser, getUserId, requestUser, requestUserId } from "@/lib/user";
+import { awaitObject } from "@/utils/stdfunc";
 import { cacheTag } from "next/cache";
 import { redirect, unauthorized } from "next/navigation";
 import z from "zod";
@@ -41,17 +32,17 @@ export default async function Page({
         .lowercase()
         .parse(decodeURIComponent(slug));
 
-    if (session!.username_normalized === parsedUsername)
+    if (session.username_normalized === parsedUsername)
         redirect("/profile/my");
 
     const getInfoFromSession = async (
-        session: Awaited<ReturnType<typeof getSessionData>>,
+        session: NonNullable<Awaited<ReturnType<typeof getSessionData>>>,
         parsedUsername: string,
     ) => {
         "use cache";
         cacheTag("follows");
 
-        const userId = await getUserId(requestUserId(session!.username_normalized));
+        const userId = await getUserId(requestUserId(session.username_normalized));
         const profileId = await getUserId(requestUserId(parsedUsername));
 
         if (!userId || !profileId) return unauthorized();
@@ -60,21 +51,16 @@ export default async function Page({
         const _user = requestUser(userId);
         const _posts = requestAllPosts();
         const _categories = requestAllCategories();
-
         const doesFollow = requestCheckUserFollow(userId, profileId);
 
-        const parsedUser = userSelectPublicSchema.parse(
-            normalizeArrayOrValue(await _user),
-        );
-        const parsedPosts = postFullSchema.array().parse(await _posts);
-        const parsedCategories = categorySelectPublicSchema
-            .array()
-            .parse(await _categories);
+        const user = getUser(_user);
+        const posts = getAllPosts(_posts);
+        const categories = getAllCategories(_categories);
 
-        return { parsedUser, parsedPosts, parsedCategories, doesFollow: await doesFollow };
+        return await awaitObject({ user, posts, categories, doesFollow });
     };
 
-    const { parsedUser, parsedPosts, parsedCategories, doesFollow } =
+    const { user: parsedUser, posts: parsedPosts, categories: parsedCategories, doesFollow } =
         await getInfoFromSession(session, parsedUsername);
 
     return (

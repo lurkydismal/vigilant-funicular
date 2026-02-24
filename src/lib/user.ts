@@ -1,6 +1,7 @@
 import db from "@/db";
 import { users } from "@/db/schema";
 import { normalizeArrayOrValue } from "@/utils/stdfunc";
+import { userSelectPublicSchema } from "@/utils/validate/schemas";
 import { eq } from 'drizzle-orm';
 
 export async function requestUserId(usernameNormalized: string) {
@@ -35,5 +36,13 @@ export async function requestUser(uid: string | number) {
             .where(eq(field, uid))
             .limit(1)
             .execute()
+    );
+}
+
+export async function getUser(request: ReturnType<typeof requestUser>) {
+    return (
+        userSelectPublicSchema.parse(
+            normalizeArrayOrValue(await request)
+        )
     );
 }
