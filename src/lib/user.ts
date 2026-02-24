@@ -2,19 +2,17 @@ import db from "@/db";
 import { users } from "@/db/schema";
 import { normalizeArrayOrValue } from "@/utils/stdfunc";
 import { userSelectPublicSchema } from "@/utils/validate/schemas";
-import { eq } from 'drizzle-orm';
+import { eq } from "drizzle-orm";
 
 export async function requestUserId(usernameNormalized: string) {
     "use cache";
 
-    return (
-        db
-            .select({ id: users.id })
-            .from(users)
-            .where(eq(users.username_normalized, usernameNormalized))
-            .limit(1)
-            .execute()
-    );
+    return db
+        .select({ id: users.id })
+        .from(users)
+        .where(eq(users.username_normalized, usernameNormalized))
+        .limit(1)
+        .execute();
 }
 
 export async function getUserId(request: ReturnType<typeof requestUserId>) {
@@ -27,22 +25,17 @@ export async function getUserId(request: ReturnType<typeof requestUserId>) {
 export async function requestUser(uid: string | number) {
     "use cache";
 
-    const field = typeof uid === 'string' ? users.username_normalized : users.id;
+    const field =
+        typeof uid === "string" ? users.username_normalized : users.id;
 
-    return (
-        db
-            .select({ id: users.id })
-            .from(users)
-            .where(eq(field, uid))
-            .limit(1)
-            .execute()
-    );
+    return db
+        .select({ id: users.id })
+        .from(users)
+        .where(eq(field, uid))
+        .limit(1)
+        .execute();
 }
 
 export async function getUser(request: ReturnType<typeof requestUser>) {
-    return (
-        userSelectPublicSchema.parse(
-            normalizeArrayOrValue(await request)
-        )
-    );
+    return userSelectPublicSchema.parse(normalizeArrayOrValue(await request));
 }

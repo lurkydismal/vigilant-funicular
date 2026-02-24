@@ -33,15 +33,7 @@ export default async function Page() {
         return await awaitObject({ user, posts, categories });
     };
 
-    const { user, posts, categories } =
-        await getInfoFromSession(session);
+    const { user, posts, categories } = await getInfoFromSession(session);
 
-    return (
-        <MainContent
-            user={user}
-            posts={posts}
-            tags={categories}
-            isMe
-        />
-    );
+    return <MainContent user={user} posts={posts} tags={categories} isMe />;
 }

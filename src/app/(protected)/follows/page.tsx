@@ -155,7 +155,8 @@ export default async function Follows() {
         const userId = await getUserId(_userId);
         if (!userId) return unauthorized();
 
-        const { users: _users, categories } = await getFollowedUsersAndCategories(userId);
+        const { users: _users, categories } =
+            await getFollowedUsersAndCategories(userId);
 
         const feed: Follow[] = _users
             // .filter((u) => u.post_id !== null) // drop users without posts (Follow.post is required)
@@ -171,19 +172,19 @@ export default async function Follows() {
 
                 const post: PostsRow | null = u.post_id
                     ? {
-                        // minimal post shape using fields returned by your query.
-                        // expand/adjust as needed to match PostsRowFull in your project.
-                        id: u.post_id as number,
-                        author_id: u.user_id,
-                        co_author_id: null,
-                        category_id: u.category_id ?? null,
-                        preview_url: null,
-                        title: u.post_title ?? "",
-                        description: u.post_description ?? null,
-                        content: u.post_content ?? "",
-                        created_at: u.post_created_at ?? new Date(0),
-                        updated_at: u.post_created_at ?? new Date(0),
-                    }
+                          // minimal post shape using fields returned by your query.
+                          // expand/adjust as needed to match PostsRowFull in your project.
+                          id: u.post_id as number,
+                          author_id: u.user_id,
+                          co_author_id: null,
+                          category_id: u.category_id ?? null,
+                          preview_url: null,
+                          title: u.post_title ?? "",
+                          description: u.post_description ?? null,
+                          content: u.post_content ?? "",
+                          created_at: u.post_created_at ?? new Date(0),
+                          updated_at: u.post_created_at ?? new Date(0),
+                      }
                     : null;
 
                 return { author, post } as Follow;

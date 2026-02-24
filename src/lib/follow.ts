@@ -28,7 +28,9 @@ export async function follow(username: string) {
     const normalizedUsername = parsed.username.trim().toLowerCase();
 
     try {
-        const followerId = await getUserId(requestUserId(session.username_normalized));
+        const followerId = await getUserId(
+            requestUserId(session.username_normalized),
+        );
         const followingId = await getUserId(requestUserId(normalizedUsername));
 
         if (!followerId || !followingId) return unauthorized();
@@ -70,7 +72,9 @@ export async function unfollow(username: string) {
     const normalizedUsername = parsed.username.trim().toLowerCase();
 
     try {
-        const followerId = await getUserId(requestUserId(session.username_normalized));
+        const followerId = await getUserId(
+            requestUserId(session.username_normalized),
+        );
         const followingId = await getUserId(requestUserId(normalizedUsername));
 
         if (!followerId || !followingId) return unauthorized();

@@ -1,6 +1,6 @@
 import db from "@/db";
 import { categories } from "@/db/schema";
-import { desc } from 'drizzle-orm';
+import { desc } from "drizzle-orm";
 import { cacheTag } from "next/cache";
 import { unauthorized } from "next/navigation";
 import { getSessionData } from "./auth";
@@ -13,17 +13,15 @@ export async function requestAllCategories() {
     const session = await getSessionData();
     if (!session) return unauthorized();
 
-    return (
-        db
-            .select()
-            .from(categories)
-            .orderBy(desc(categories.name))
-            .execute()
-    );
+    return db
+        .select()
+        .from(categories)
+        .orderBy(desc(categories.name))
+        .execute();
 }
 
-export async function getAllCategories(request: ReturnType<typeof requestAllCategories>) {
-    return (
-        categorySelectPublicSchema.array().parse(await request)
-    );
+export async function getAllCategories(
+    request: ReturnType<typeof requestAllCategories>,
+) {
+    return categorySelectPublicSchema.array().parse(await request);
 }

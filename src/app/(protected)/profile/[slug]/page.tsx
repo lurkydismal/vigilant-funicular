@@ -32,8 +32,7 @@ export default async function Page({
         .lowercase()
         .parse(decodeURIComponent(slug));
 
-    if (session.username_normalized === parsedUsername)
-        redirect("/profile/my");
+    if (session.username_normalized === parsedUsername) redirect("/profile/my");
 
     const getInfoFromSession = async (
         session: NonNullable<Awaited<ReturnType<typeof getSessionData>>>,
@@ -42,7 +41,9 @@ export default async function Page({
         "use cache";
         cacheTag("follows");
 
-        const userId = await getUserId(requestUserId(session.username_normalized));
+        const userId = await getUserId(
+            requestUserId(session.username_normalized),
+        );
         const profileId = await getUserId(requestUserId(parsedUsername));
 
         if (!userId || !profileId) return unauthorized();
@@ -60,8 +61,12 @@ export default async function Page({
         return await awaitObject({ user, posts, categories, doesFollow });
     };
 
-    const { user: parsedUser, posts: parsedPosts, categories: parsedCategories, doesFollow } =
-        await getInfoFromSession(session, parsedUsername);
+    const {
+        user: parsedUser,
+        posts: parsedPosts,
+        categories: parsedCategories,
+        doesFollow,
+    } = await getInfoFromSession(session, parsedUsername);
 
     return (
         <MainContent
