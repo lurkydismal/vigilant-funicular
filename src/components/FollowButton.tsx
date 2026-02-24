@@ -1,3 +1,5 @@
+"use client";
+
 import { follow, unfollow } from "@/lib/follow";
 import {
     PersonRemove as UnfollowIcon,
@@ -12,7 +14,7 @@ import {
 } from "@mui/material";
 
 import { Button } from "@mui/material";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 
 type Props = ButtonProps & {
     uid: string;
@@ -23,18 +25,22 @@ type Props = ButtonProps & {
 };
 
 function FollowBase({ uid, doesFollow, size, needText = false }: Props) {
-    const text = doesFollow ? "Unfollow" : "Follow";
-    const color = doesFollow ? "error" : "success";
-    const icon = doesFollow ? <UnfollowIcon /> : <FollowIcon />;
+    const [_doesFollow, setDoesFollow] = useState(doesFollow);
+
+    const text = _doesFollow ? "Unfollow" : "Follow";
+    const color = _doesFollow ? "error" : "success";
+    const icon = _doesFollow ? <UnfollowIcon /> : <FollowIcon />;
     const [pending, startTransition] = useTransition();
 
     const handleClick = () => {
         startTransition(async () => {
-            if (doesFollow) {
-                await unfollow({ username: uid });
+            if (_doesFollow) {
+                await unfollow(uid);
             } else {
-                await follow({ username: uid });
+                await follow(uid);
             }
+
+            setDoesFollow(!_doesFollow);
         });
     };
 

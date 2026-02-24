@@ -8,54 +8,40 @@ import db from "@/db";
 import { follows, users } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
 import { normalizeArrayOrValue } from "@/utils/stdfunc";
-import { updateTag } from "next/cache";
+import { revalidateTag } from "next/cache";
+import { getUserId, requestUserId } from "./user";
 
-export async function follow(user: { username: string }) {
+export async function follow(username: string) {
     // parse + validate input; throws on invalid input
     const parsed = userSelectPublicSchema
         .pick({
             username: true,
         })
-        .parse(user);
+        .parse({ username });
 
     const session = await getSessionData();
     if (!session) return unauthorized();
 
-    log.debug(`Follow: ${parsed.username} as ${session}`);
+    log.trace(`Follow: ${parsed.username} as ${session}`);
 
     // normalize username (trim + lowercase) to avoid duplicates/casing issues
     const normalizedUsername = parsed.username.trim().toLowerCase();
 
     try {
-        const _followerId = db
-            .select({ id: users.id })
-            .from(users)
-            .where(eq(users.username_normalized, session.username_normalized))
-            .limit(1)
-            .execute();
+        const followerId = await getUserId(requestUserId(session.username_normalized));
+        const followingId = await getUserId(requestUserId(normalizedUsername));
 
-        const _followingId = db
-            .select({ id: users.id })
-            .from(users)
-            .where(eq(users.username_normalized, normalizedUsername))
-            .limit(1)
-            .execute();
-
-        const followerId = normalizeArrayOrValue(await _followerId);
-        if (!followerId || !followerId.id) return unauthorized();
-
-        const followingId = normalizeArrayOrValue(await _followingId);
-        if (!followingId || !followingId.id) return unauthorized();
+        if (!followerId || !followingId) return unauthorized();
 
         await db
             .insert(follows)
             .values({
-                follower_id: followerId.id,
-                following_id: followingId.id,
+                follower_id: followerId,
+                following_id: followingId,
             })
             .execute();
 
-        updateTag("follows");
+        revalidateTag("follows", "max");
     } catch (err) {
         // Audit log: capture username and the error message, but do NOT log sensitive data.
         log.error("follow failed", {
@@ -67,54 +53,39 @@ export async function follow(user: { username: string }) {
     }
 }
 
-export async function unfollow(user: { username: string }) {
+export async function unfollow(username: string) {
     // parse + validate input; throws on invalid input
     const parsed = userSelectPublicSchema
         .pick({
             username: true,
         })
-        .parse(user);
+        .parse({ username });
 
     const session = await getSessionData();
     if (!session) return unauthorized();
 
-    log.debug(`Follow: ${parsed.username} as ${session}`);
+    log.trace(`Follow: ${parsed.username} as ${session}`);
 
     // normalize username (trim + lowercase) to avoid duplicates/casing issues
     const normalizedUsername = parsed.username.trim().toLowerCase();
 
     try {
-        const _followerId = db
-            .select({ id: users.id })
-            .from(users)
-            .where(eq(users.username_normalized, session.username_normalized))
-            .limit(1)
-            .execute();
+        const followerId = await getUserId(requestUserId(session.username_normalized));
+        const followingId = await getUserId(requestUserId(normalizedUsername));
 
-        const _followingId = db
-            .select({ id: users.id })
-            .from(users)
-            .where(eq(users.username_normalized, normalizedUsername))
-            .limit(1)
-            .execute();
-
-        const followerId = normalizeArrayOrValue(await _followerId);
-        if (!followerId || !followerId.id) return unauthorized();
-
-        const followingId = normalizeArrayOrValue(await _followingId);
-        if (!followingId || !followingId.id) return unauthorized();
+        if (!followerId || !followingId) return unauthorized();
 
         await db
             .delete(follows)
             .where(
                 and(
-                    eq(follows.follower_id, followerId.id),
-                    eq(follows.following_id, followingId.id),
+                    eq(follows.follower_id, followerId),
+                    eq(follows.following_id, followingId),
                 ),
             )
             .execute();
 
-        updateTag("follows");
+        revalidateTag("follows", "max");
     } catch (err) {
         // Audit log: capture username and the error message, but do NOT log sensitive data.
         log.error("follow failed", {
@@ -124,4 +95,22 @@ export async function unfollow(user: { username: string }) {
         // Re-throw to let caller handle the error (keep message generic at higher level)
         throw err;
     }
+}
+
+export async function requestCheckUserFollow(
+    followerId: number,
+    followingId: number,
+): Promise<boolean> {
+    const followRecord = await db
+        .select()
+        .from(follows)
+        .where(
+            and(
+                eq(follows.follower_id, followerId),
+                eq(follows.following_id, followingId),
+            ),
+        )
+        .limit(1);
+
+    return followRecord.length > 0;
 }

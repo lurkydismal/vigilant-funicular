@@ -2,6 +2,10 @@ import MainContent from "@/components/profile/MainContent";
 import db from "@/db";
 import { categories, follows, posts, users } from "@/db/schema";
 import { getSessionData } from "@/lib/auth";
+import { requestAllCategories } from "@/lib/category";
+import { requestCheckUserFollow } from "@/lib/follow";
+import { requestAllPosts } from "@/lib/post";
+import { getUserId, requestUser, requestUserId } from "@/lib/user";
 import { normalizeArrayOrValue } from "@/utils/stdfunc";
 import { logVar } from "@/utils/stdlog";
 import {
@@ -13,24 +17,6 @@ import { desc, eq, and } from "drizzle-orm";
 import { cacheTag } from "next/cache";
 import { redirect, unauthorized } from "next/navigation";
 import z from "zod";
-
-async function doesUserFollow(
-    followerId: number,
-    followingId: number,
-): Promise<boolean> {
-    const followRecord = await db
-        .select()
-        .from(follows)
-        .where(
-            and(
-                eq(follows.follower_id, followerId),
-                eq(follows.following_id, followingId),
-            ),
-        )
-        .limit(1);
-
-    return followRecord.length > 0;
-}
 
 export default async function Page({
     params,
@@ -48,64 +34,34 @@ export default async function Page({
     const session = await getSessionData();
     if (!session) return unauthorized();
 
+    const parsedUsername = z
+        .string()
+        .trim()
+        .min(1)
+        .lowercase()
+        .parse(decodeURIComponent(slug));
+
+    if (session!.username_normalized === parsedUsername)
+        redirect("/profile/my");
+
     const getInfoFromSession = async (
         session: Awaited<ReturnType<typeof getSessionData>>,
+        parsedUsername: string,
     ) => {
         "use cache";
         cacheTag("follows");
 
-        const parsedUsername = z
-            .string()
-            .trim()
-            .min(1)
-            .lowercase()
-            .parse(decodeURIComponent(slug));
+        const userId = await getUserId(requestUserId(session!.username_normalized));
+        const profileId = await getUserId(requestUserId(parsedUsername));
 
-        if (session!.username_normalized === parsedUsername)
-            redirect("/profile/my");
+        if (!userId || !profileId) return unauthorized();
+        if (userId === profileId) redirect("/profile/my");
 
-        const _userId = db
-            .select({ id: users.id })
-            .from(users)
-            .where(eq(users.username, session!.username))
-            .limit(1)
-            .execute();
+        const _user = requestUser(userId);
+        const _posts = requestAllPosts();
+        const _categories = requestAllCategories();
 
-        const _profileId = db
-            .select({ id: users.id })
-            .from(users)
-            .where(eq(users.username, parsedUsername))
-            .limit(1)
-            .execute();
-
-        const userId = normalizeArrayOrValue(await _userId);
-        if (!userId || !userId.id) return unauthorized();
-
-        const profileId = normalizeArrayOrValue(await _profileId);
-        if (!profileId || !profileId.id) return unauthorized();
-
-        if (userId.id === profileId.id) redirect("/profile/my");
-
-        const _user = db
-            .select()
-            .from(users)
-            .where(eq(users.username, parsedUsername))
-            .limit(1)
-            .execute();
-        const _posts = db
-            .select()
-            .from(posts)
-            .orderBy(desc(posts.created_at))
-            .execute();
-        const _categories = db
-            .select()
-            .from(categories)
-            .orderBy(desc(categories.name))
-            .execute();
-
-        const _doesFollow = await doesUserFollow(userId.id, profileId.id);
-        logVar({ _doesFollow });
-        const parsedDoesFollow = z.boolean().parse(_doesFollow);
+        const doesFollow = requestCheckUserFollow(userId, profileId);
 
         const parsedUser = userSelectPublicSchema.parse(
             normalizeArrayOrValue(await _user),
@@ -115,18 +71,18 @@ export default async function Page({
             .array()
             .parse(await _categories);
 
-        return { parsedUser, parsedPosts, parsedCategories, parsedDoesFollow };
+        return { parsedUser, parsedPosts, parsedCategories, doesFollow: await doesFollow };
     };
 
-    const { parsedUser, parsedPosts, parsedCategories, parsedDoesFollow } =
-        await getInfoFromSession(session);
+    const { parsedUser, parsedPosts, parsedCategories, doesFollow } =
+        await getInfoFromSession(session, parsedUsername);
 
     return (
         <MainContent
             user={parsedUser}
             posts={parsedPosts}
             tags={parsedCategories}
-            doesFollow={parsedDoesFollow}
+            doesFollow={doesFollow}
         />
     );
 }
