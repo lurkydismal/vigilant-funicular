@@ -3,21 +3,25 @@
 import InfoForm from "./InfoForm";
 import ContentForm from "./ContentForm";
 import PreviewForm from "./PreviewForm";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Box } from "@mui/material";
 import FinalStep from "./FinalStep";
 import MobileStepper from "./MobileStepper";
 import { Step as StepType } from "./types";
 import DesktopStepper from "./DesktopStepper";
 
-const steps: StepType[] = [
-    { title: "Fill information", item: <InfoForm /> },
-    { title: "Write content", item: <ContentForm /> },
-    { title: "Preview your content", item: <PreviewForm /> },
-];
-
 export default function MainContent() {
     const [activeStep, setActiveStep] = useState(0);
+
+    const moveNext = () => {
+        setActiveStep(activeStep + 1);
+    };
+
+    const steps: StepType[] = useMemo(() => ([
+        { title: "Fill information", item: <InfoForm moveNext={moveNext} /> },
+        { title: "Write content", item: <ContentForm moveNext={moveNext} /> },
+        { title: "Preview your content", item: <PreviewForm moveNext={moveNext} /> },
+    ]), []);
 
     return (
         <Box

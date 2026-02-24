@@ -2,18 +2,21 @@
 
 import { CreditCardRounded } from "@mui/icons-material";
 import { Stack, Box, Card, OutlinedInput, InputAdornment } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { FormProps } from "./types";
 
-export default function ContentForm() {
-    const [cardNumber, setCardNumber] = useState("");
+export default function ContentForm({ moveNext }: FormProps) {
+    const [value, setValue] = useState("");
 
-    const handleCardNumberChange = (event: { target: { value: string } }) => {
-        const value = event.target.value.replace(/\D/g, "");
-        const formattedValue = value.replace(/(\d{4})(?=\d)/g, "$1 ");
-        if (value.length <= 16) {
-            setCardNumber(formattedValue);
+    // Detect when the form is complete
+    const isFormValid = value.replace(/\s/g, "").length === 16;
+
+    // Automatically move to the next step when valid
+    useEffect(() => {
+        if (isFormValid) {
+            moveNext();
         }
-    };
+    }, [isFormValid, moveNext]);
 
     return (
         <Stack spacing={{ xs: 3, sm: 6 }} useFlexGap>
@@ -30,10 +33,10 @@ export default function ContentForm() {
                         }}
                     >
                         <OutlinedInput
-                            onChange={handleCardNumberChange}
+                            onChange={(event: { target: { value: string } }) => setValue(event.target.value)}
                             placeholder="Image"
                             size="small"
-                            value={cardNumber}
+                            value={value}
                             endAdornment={
                                 <InputAdornment position="start">
                                     <CreditCardRounded />
