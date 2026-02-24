@@ -5,13 +5,13 @@ import db from "@/db";
 import { categories, follows, posts, users } from "@/db/schema";
 import { CategoriesRowPublic, PostsRow, UsersRowPublic } from "@/db/types";
 import { getSessionData } from "@/lib/auth";
-import { normalizeArrayOrValue } from "@/utils/stdfunc";
+import { getUserId, requestUserId } from "@/lib/user";
 import { and, eq, sql, desc } from "drizzle-orm";
 import { cacheTag } from "next/cache";
 import { unauthorized } from "next/navigation";
 
 /** Result types */
-export type FollowedUserWithLatestPost = {
+type FollowedUserWithLatestPost = {
     user_id: number;
     username: string;
     username_normalized: string;
@@ -29,7 +29,7 @@ export type FollowedUserWithLatestPost = {
  * Returns one row per user that `userId` follows.
  * Each row contains the user + their latest post (if any) + that post's category.
  */
-export async function getFollowedUsersWithLatestPost(
+async function getFollowedUsersWithLatestPost(
     userId: number,
 ): Promise<FollowedUserWithLatestPost[]> {
     const latestPost = db
@@ -90,7 +90,7 @@ export async function getFollowedUsersWithLatestPost(
  * Returns the distinct set (array) of category names used by those latest posts
  * (only includes followed users who have at least one post with non-null category).
  */
-export async function getCategoriesOfFollowedUsersLatestPosts(
+async function getCategoriesOfFollowedUsersLatestPosts(
     userId: number,
 ): Promise<string[]> {
     // same latest-per-author subquery
@@ -132,7 +132,7 @@ export async function getCategoriesOfFollowedUsersLatestPosts(
 /**
  * Convenience function returning both results in one call.
  */
-export async function getFollowedUsersAndCategories(userId: number) {
+async function getFollowedUsersAndCategories(userId: number) {
     const [usersList, categoriesList] = await Promise.all([
         getFollowedUsersWithLatestPost(userId),
         getCategoriesOfFollowedUsersLatestPosts(userId),
@@ -148,20 +148,14 @@ export default async function Follows() {
         session: NonNullable<Awaited<ReturnType<typeof getSessionData>>>,
     ) => {
         "use cache";
-        cacheTag("follows");
+        cacheTag("follows", "follow");
 
-        const _userId = await db
-            .select({ id: users.id })
-            .from(users)
-            .where(eq(users.username, session.username))
-            .limit(1)
-            .execute();
+        const _userId = requestUserId(session.username_normalized);
 
-        const userId = normalizeArrayOrValue(_userId);
-        if (!userId || !userId.id) return unauthorized();
+        const userId = await getUserId(_userId);
+        if (!userId) return unauthorized();
 
-        const { users: _users, categories } =
-            await getFollowedUsersAndCategories(userId.id);
+        const { users: _users, categories } = await getFollowedUsersAndCategories(userId);
 
         const feed: Follow[] = _users
             // .filter((u) => u.post_id !== null) // drop users without posts (Follow.post is required)
