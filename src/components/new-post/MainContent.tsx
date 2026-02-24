@@ -9,11 +9,13 @@ import FinalStep from "./FinalStep";
 import MobileStepper from "./MobileStepper";
 import { Step as StepType } from "./types";
 import DesktopStepper from "./DesktopStepper";
+import log from "@/utils/stdlog";
 
 export default function MainContent() {
     const [activeStep, setActiveStep] = useState(0);
 
     const moveNext = () => {
+        log.debug(`Current: ${activeStep}`);
         setActiveStep(activeStep + 1);
     };
 

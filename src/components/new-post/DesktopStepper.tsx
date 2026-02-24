@@ -1,26 +1,6 @@
 import { Box, Step, StepLabel, Stepper } from "@mui/material";
-import { Step as StepType } from "./types";
-import { linkSx } from "@/data/styles";
-import log from "@/utils/stdlog";
+import { stepSx, Step as StepType } from "./types";
 import { Dispatch, SetStateAction } from "react";
-
-const stepSx = {
-    ...linkSx,
-
-    px: 1,
-    py: 0.75,
-    "&::after": {
-        transformOrigin: "left",
-        bottom: 2,
-    },
-    "&:hover": {
-        backgroundColor: "action.hover",
-        transform: "translateY(-2px)",
-    },
-    "&:active": {
-        transform: "translateY(0px)",
-    },
-};
 
 export default function DesktopStepper({
     activeStep,

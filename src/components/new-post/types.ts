@@ -1,4 +1,23 @@
+import { linkSx } from "@/data/styles";
 import { ReactElement } from "react";
+
+export const stepSx = {
+    ...linkSx,
+
+    px: 1,
+    py: 0.75,
+    "&::after": {
+        transformOrigin: "left",
+        bottom: 2,
+    },
+    "&:hover": {
+        backgroundColor: "action.hover",
+        transform: "translateY(-2px)",
+    },
+    "&:active": {
+        transform: "translateY(0px)",
+    },
+};
 
 export interface Step {
     title: string;
