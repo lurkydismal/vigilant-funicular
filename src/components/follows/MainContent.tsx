@@ -23,7 +23,6 @@ export default function MainContent({
         setCurrentPage(page);
     };
 
-    // FIX: Text at the top, Pagination at the bottom
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
             <Box>

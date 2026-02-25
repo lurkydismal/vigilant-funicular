@@ -6,6 +6,7 @@ import {
     PersonAdd as FollowIcon,
 } from "@mui/icons-material";
 import {
+    Box,
     ButtonProps,
     IconButton,
     SxProps,
@@ -57,14 +58,16 @@ function FollowBase({ uid, doesFollow, size, needText = false }: Props) {
         </Button>
     ) : (
         <Tooltip title={text} placement="top" arrow>
-            <IconButton
-                size={size ?? "medium"}
-                onClick={handleClick}
-                color={color}
-                loading={pending}
-            >
-                {icon}
-            </IconButton>
+            <Box>
+                <IconButton
+                    size={size ?? "medium"}
+                    onClick={handleClick}
+                    color={color}
+                    loading={pending}
+                >
+                    {icon}
+                </IconButton>
+            </Box>
         </Tooltip>
     );
 }
