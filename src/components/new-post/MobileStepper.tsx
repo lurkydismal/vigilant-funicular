@@ -1,6 +1,8 @@
+"use client";
+
 import { Step, StepLabel, Stepper } from "@mui/material";
 import { Step as StepType } from "./types";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 export default function MobileStepper({
     activeStep,
@@ -11,9 +13,17 @@ export default function MobileStepper({
     steps: StepType[];
     setActiveStep: Dispatch<SetStateAction<number>>;
 }) {
+    const [maxVisitedStep, setMaxVisitedStep] = useState(activeStep);
+
+    useEffect(() => {
+        if (activeStep > maxVisitedStep) {
+            setMaxVisitedStep(activeStep);
+        }
+    }, [activeStep, maxVisitedStep]);
+
     return (
         <Stepper
-            activeStep={activeStep}
+            activeStep={maxVisitedStep}
             alternativeLabel
             sx={{ display: { sm: "flex", md: "none" } }}
         >

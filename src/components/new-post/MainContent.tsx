@@ -3,7 +3,7 @@
 import InfoForm from "./InfoForm";
 import ContentForm from "./ContentForm";
 import PreviewForm from "./PreviewForm";
-import { useState } from "react";
+import { Activity, useState } from "react";
 import { Box } from "@mui/material";
 import FinalStep from "./FinalStep";
 import MobileStepper from "./MobileStepper";
@@ -29,7 +29,7 @@ export default function MainContent() {
             item: <ContentForm moveNext={moveNext} />,
         },
         {
-            title: "Preview your content",
+            title: "Preview content",
             item: <PreviewForm moveNext={moveNext} />,
         },
     ];
@@ -71,11 +71,20 @@ export default function MainContent() {
                 />
 
                 {/* Current step content */}
-                {activeStep === steps.length ? (
+                {steps.map((item, index) => (
+                    <Activity
+                        key={`${item.title}-${index}`}
+                        mode={index === activeStep ? "visible" : "hidden"}
+                    >
+                        {item.item}
+                    </Activity>
+                ))}
+
+                <Activity
+                    mode={activeStep === steps.length ? "visible" : "hidden"}
+                >
                     <FinalStep />
-                ) : (
-                    steps[activeStep].item
-                )}
+                </Activity>
             </Box>
         </Box>
     );

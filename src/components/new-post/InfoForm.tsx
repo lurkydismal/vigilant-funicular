@@ -21,12 +21,6 @@ export default function InfoForm({ moveNext }: FormProps) {
     // State for all required fields
     const [formValues, setFormValues] = useState({
         firstName: "",
-        lastName: "",
-        address1: "",
-        city: "",
-        state: "",
-        zip: "",
-        country: "",
     });
 
     // Update state on input change
@@ -64,116 +58,6 @@ export default function InfoForm({ moveNext }: FormProps) {
                     size="small"
                     type="name"
                     onChange={handleChange("firstName")}
-                />
-            </FormGrid>
-
-            <FormGrid size={{ xs: 12, md: 6 }}>
-                <FormLabel htmlFor="last-name" required>
-                    Last name
-                </FormLabel>
-
-                <OutlinedInput
-                    autoComplete="last name"
-                    name="last-name"
-                    placeholder="Snow"
-                    required
-                    size="small"
-                    type="last-name"
-                    onChange={handleChange("lastName")}
-                />
-            </FormGrid>
-
-            <FormGrid size={{ xs: 12 }}>
-                <FormLabel htmlFor="address1" required>
-                    Address line 1
-                </FormLabel>
-
-                <OutlinedInput
-                    autoComplete="shipping address-line1"
-                    name="address1"
-                    placeholder="Street name and number"
-                    required
-                    size="small"
-                    type="address1"
-                    onChange={handleChange("address1")}
-                />
-            </FormGrid>
-
-            <FormGrid size={{ xs: 12 }}>
-                <FormLabel htmlFor="address2">Address line 2</FormLabel>
-
-                <OutlinedInput
-                    autoComplete="shipping address-line2"
-                    name="address2"
-                    placeholder="Apartment, suite, unit, etc. (optional)"
-                    required
-                    size="small"
-                    type="address2"
-                    onChange={handleChange("address2")}
-                />
-            </FormGrid>
-
-            <FormGrid size={{ xs: 6 }}>
-                <FormLabel htmlFor="city" required>
-                    City
-                </FormLabel>
-
-                <OutlinedInput
-                    autoComplete="City"
-                    name="city"
-                    placeholder="New York"
-                    required
-                    size="small"
-                    type="city"
-                    onChange={handleChange("city")}
-                />
-            </FormGrid>
-
-            <FormGrid size={{ xs: 6 }}>
-                <FormLabel htmlFor="state" required>
-                    State
-                </FormLabel>
-
-                <OutlinedInput
-                    autoComplete="State"
-                    name="state"
-                    placeholder="NY"
-                    required
-                    size="small"
-                    type="state"
-                    onChange={handleChange("state")}
-                />
-            </FormGrid>
-
-            <FormGrid size={{ xs: 6 }}>
-                <FormLabel htmlFor="zip" required>
-                    Zip / Postal code
-                </FormLabel>
-
-                <OutlinedInput
-                    autoComplete="shipping postal-code"
-                    name="zip"
-                    placeholder="12345"
-                    required
-                    size="small"
-                    type="zip"
-                    onChange={handleChange("zip")}
-                />
-            </FormGrid>
-
-            <FormGrid size={{ xs: 6 }}>
-                <FormLabel htmlFor="country" required>
-                    Country
-                </FormLabel>
-
-                <OutlinedInput
-                    autoComplete="shipping country"
-                    name="country"
-                    placeholder="United States"
-                    required
-                    size="small"
-                    type="country"
-                    onChange={handleChange("country")}
                 />
             </FormGrid>
 
