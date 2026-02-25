@@ -6,7 +6,7 @@ export default function NewPost() {
         <Container
             maxWidth="xl"
             sx={{
-                pt: "3%",
+                pt: "1%",
             }}
         >
             <MainContent />
