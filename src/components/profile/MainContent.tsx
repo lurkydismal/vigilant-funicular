@@ -41,7 +41,7 @@ export default function MainContent({
     } satisfies ComponentProps<typeof Author>;
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "column", gap: 2 }}>
             {isMe ? (
                 <Author {...properties} />
             ) : (
@@ -52,7 +52,6 @@ export default function MainContent({
                 />
             )}
 
-            {/* TODO: IMPROVE */}
             <MainFallback itemsLength={posts.length}>
                 <SearchButton />
 

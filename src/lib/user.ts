@@ -28,12 +28,7 @@ export async function requestUser(uid: string | number) {
     const field =
         typeof uid === "string" ? users.username_normalized : users.id;
 
-    return db
-        .select()
-        .from(users)
-        .where(eq(field, uid))
-        .limit(1)
-        .execute();
+    return db.select().from(users).where(eq(field, uid)).limit(1).execute();
 }
 
 export async function getUser(request: ReturnType<typeof requestUser>) {
