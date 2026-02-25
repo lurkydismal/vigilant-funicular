@@ -5,14 +5,11 @@ import {
     Grid,
     FormLabel,
     OutlinedInput,
-    FormControlLabel,
-    Checkbox,
     Card,
     Box,
 } from "@mui/material";
 import { FormProps } from "./types";
-import { useState, useEffect } from "react";
-import log from "@/utils/stdlog";
+import { useId, useState } from "react";
 import MarkdownEditor from "./MarkdownEditor";
 import Markdown from "../Markdown";
 
@@ -22,33 +19,42 @@ const FormGrid = styled(Grid)(() => ({
 }));
 
 export default function InfoForm({ moveNext }: FormProps) {
+    const titleId = useId();
+    const descId = useId();
     const [text, setText] = useState("");
 
     return (
         <>
             <Grid container spacing={3}>
                 <FormGrid size={{ xs: 12, md: 6 }}>
-                    <FormLabel htmlFor="first-name" required>
+                    <FormLabel htmlFor={titleId} required>
                         First name
                     </FormLabel>
 
                     <OutlinedInput
-                        autoComplete="first name"
-                        name="first-name"
-                        placeholder="John"
+                        autoComplete="title"
+                        name={titleId}
+                        placeholder="Title"
                         required
                         size="small"
-                        type="name"
+                        type="title"
                     />
                 </FormGrid>
 
-                <FormGrid size={{ xs: 12 }}>
-                    <FormControlLabel
-                        control={<Checkbox name="saveAddress" value="yes" />}
-                        label="Use this address for payment details"
+                <FormGrid size={{ xs: 12, md: 6 }}>
+                    <FormLabel htmlFor={descId} required>
+                        First name
+                    </FormLabel>
+
+                    <OutlinedInput
+                        autoComplete="description"
+                        name={descId}
+                        placeholder="Description"
+                        required
+                        size="small"
+                        type="description"
                     />
                 </FormGrid>
-
             </Grid>
             <Card>
                 <Box
