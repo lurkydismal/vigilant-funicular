@@ -25,29 +25,31 @@ export default function InfoForm({ moveNext }: FormProps) {
     const [text, setText] = useState("");
 
     return (
-        <Grid container spacing={3}>
-            <FormGrid size={{ xs: 12, md: 6 }}>
-                <FormLabel htmlFor="first-name" required>
-                    First name
-                </FormLabel>
+        <>
+            <Grid container spacing={3}>
+                <FormGrid size={{ xs: 12, md: 6 }}>
+                    <FormLabel htmlFor="first-name" required>
+                        First name
+                    </FormLabel>
 
-                <OutlinedInput
-                    autoComplete="first name"
-                    name="first-name"
-                    placeholder="John"
-                    required
-                    size="small"
-                    type="name"
-                />
-            </FormGrid>
+                    <OutlinedInput
+                        autoComplete="first name"
+                        name="first-name"
+                        placeholder="John"
+                        required
+                        size="small"
+                        type="name"
+                    />
+                </FormGrid>
 
-            <FormGrid size={{ xs: 12 }}>
-                <FormControlLabel
-                    control={<Checkbox name="saveAddress" value="yes" />}
-                    label="Use this address for payment details"
-                />
-            </FormGrid>
+                <FormGrid size={{ xs: 12 }}>
+                    <FormControlLabel
+                        control={<Checkbox name="saveAddress" value="yes" />}
+                        label="Use this address for payment details"
+                    />
+                </FormGrid>
 
+            </Grid>
             <Card>
                 <Box
                     sx={{
@@ -61,6 +63,6 @@ export default function InfoForm({ moveNext }: FormProps) {
                     </Box>
                 </Box>
             </Card>
-        </Grid>
+        </>
     );
 }
