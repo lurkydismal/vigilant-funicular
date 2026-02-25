@@ -28,7 +28,7 @@ export default function InfoForm({ moveNext }: FormProps) {
             <Grid container spacing={3}>
                 <FormGrid size={{ xs: 12, md: 6 }}>
                     <FormLabel htmlFor={titleId} required>
-                        First name
+                        Title
                     </FormLabel>
 
                     <OutlinedInput
@@ -43,7 +43,7 @@ export default function InfoForm({ moveNext }: FormProps) {
 
                 <FormGrid size={{ xs: 12, md: 6 }}>
                     <FormLabel htmlFor={descId} required>
-                        First name
+                        Description
                     </FormLabel>
 
                     <OutlinedInput
@@ -64,7 +64,7 @@ export default function InfoForm({ moveNext }: FormProps) {
                     }}
                 >
                     <MarkdownEditor value={text} onChange={setText} />
-                    <Box sx={{ flex: 1, overflow: 'auto', p: 2 }}>
+                    <Box sx={{ flex: 1, overflow: 'auto' }}>
                         <Markdown>{text}</Markdown>
                     </Box>
                 </Box>
