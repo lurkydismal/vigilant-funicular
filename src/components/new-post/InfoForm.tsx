@@ -7,10 +7,14 @@ import {
     OutlinedInput,
     FormControlLabel,
     Checkbox,
+    Card,
+    Box,
 } from "@mui/material";
 import { FormProps } from "./types";
 import { useState, useEffect } from "react";
 import log from "@/utils/stdlog";
+import MarkdownEditor from "./MarkdownEditor";
+import Markdown from "../Markdown";
 
 const FormGrid = styled(Grid)(() => ({
     display: "flex",
@@ -18,30 +22,7 @@ const FormGrid = styled(Grid)(() => ({
 }));
 
 export default function InfoForm({ moveNext }: FormProps) {
-    // State for all required fields
-    const [formValues, setFormValues] = useState({
-        firstName: "",
-    });
-
-    // Update state on input change
-    const handleChange =
-        (field: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-            setFormValues((prev) => ({ ...prev, [field]: event.target.value }));
-            log.debug({ formValues });
-        };
-
-    // Check if all required fields are filled
-    const isFormValid = Object.values(formValues).every(
-        (val) => val.trim() !== "",
-    );
-
-    // Auto-move to next step when valid
-    useEffect(() => {
-        log.debug({ isFormValid });
-        if (isFormValid) {
-            moveNext();
-        }
-    }, [isFormValid, moveNext]);
+    const [text, setText] = useState("");
 
     return (
         <Grid container spacing={3}>
@@ -57,7 +38,6 @@ export default function InfoForm({ moveNext }: FormProps) {
                     required
                     size="small"
                     type="name"
-                    onChange={handleChange("firstName")}
                 />
             </FormGrid>
 
@@ -67,6 +47,20 @@ export default function InfoForm({ moveNext }: FormProps) {
                     label="Use this address for payment details"
                 />
             </FormGrid>
+
+            <Card>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        height: '100vh',
+                    }}
+                >
+                    <MarkdownEditor value={text} onChange={setText} />
+                    <Box sx={{ flex: 1, overflow: 'auto', p: 2 }}>
+                        <Markdown>{text}</Markdown>
+                    </Box>
+                </Box>
+            </Card>
         </Grid>
     );
 }
