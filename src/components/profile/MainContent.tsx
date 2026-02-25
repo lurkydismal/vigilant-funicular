@@ -41,7 +41,14 @@ export default function MainContent({
     } satisfies ComponentProps<typeof Author>;
 
     return (
-        <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "column", gap: 2 }}>
+        <Box
+            sx={{
+                flexGrow: 1,
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+            }}
+        >
             {isMe ? (
                 <Author {...properties} />
             ) : (

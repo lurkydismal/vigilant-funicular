@@ -8,7 +8,7 @@ import { categories, posts, follows, users } from "@/db/schema";
 import { getSessionData } from "@/lib/auth";
 import { normalizeArrayOrValue } from "@/utils/stdfunc";
 import { categorySelectSchema, postFullSchema } from "@/utils/validate/schemas";
-import { desc, eq, inArray, or } from "drizzle-orm";
+import { desc, eq, inArray, or, aliasedTable } from "drizzle-orm";
 import { unauthorized } from "next/navigation";
 
 export default async function Posts() {
@@ -50,6 +50,9 @@ export default async function Posts() {
             .map((r) => r.id)
             .filter(Boolean);
 
+        const authors = aliasedTable(users, "authors");
+        const coAuthors = aliasedTable(users, "co_authors");
+
         const _featuredPosts = followingIds.length
             ? await db
                   .select({
@@ -62,14 +65,14 @@ export default async function Posts() {
                       updated_at: posts.updated_at,
 
                       author: {
-                          id: users.id,
-                          username: users.username,
-                          avatar_url: users.avatar_url,
+                          id: authors.id,
+                          username: authors.username,
+                          avatar_url: authors.avatar_url,
                       },
                       coAuthor: {
-                          id: users.id,
-                          username: users.username,
-                          avatar_url: users.avatar_url,
+                          id: coAuthors.id,
+                          username: coAuthors.username,
+                          avatar_url: coAuthors.avatar_url,
                       },
                       category: {
                           id: categories.id,
@@ -77,8 +80,8 @@ export default async function Posts() {
                       },
                   })
                   .from(posts)
-                  .leftJoin(users, eq(users.id, posts.author_id)) // join author
-                  .leftJoin(users, eq(users.id, posts.co_author_id)) // join coAuthor
+                  .leftJoin(authors, eq(authors.id, posts.author_id)) // join author
+                  .leftJoin(coAuthors, eq(coAuthors.id, posts.co_author_id)) // join coAuthor
                   .leftJoin(categories, eq(categories.id, posts.category_id)) // join category
                   .where(() =>
                       or(

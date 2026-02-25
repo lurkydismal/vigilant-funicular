@@ -24,16 +24,21 @@ export default function MainContent({
     };
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-            <Box>
-                <Typography variant="h2" gutterBottom>
-                    Follows
-                </Typography>
+        <Box
+            sx={{
+                flexGrow: 1,
+                display: "flex",
+                flexDirection: "column",
+                gap: 1,
+            }}
+        >
+            <Typography variant="h2" gutterBottom>
+                Follows
+            </Typography>
 
-                <SearchButton />
+            <SearchButton />
 
-                <TagsAndSearchMobile tags={tags} />
-            </Box>
+            <TagsAndSearchMobile tags={tags} />
 
             <Container
                 sx={{
