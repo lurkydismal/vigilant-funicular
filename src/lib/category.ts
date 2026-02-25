@@ -2,16 +2,11 @@ import db from "@/db";
 import { categories } from "@/db/schema";
 import { desc } from "drizzle-orm";
 import { cacheTag } from "next/cache";
-import { unauthorized } from "next/navigation";
-import { getSessionData } from "./auth";
 import { categorySelectPublicSchema } from "@/utils/validate/schemas";
 
 export async function requestAllCategories() {
     "use cache";
     cacheTag("categories", "category");
-
-    const session = await getSessionData();
-    if (!session) return unauthorized();
 
     return db
         .select()

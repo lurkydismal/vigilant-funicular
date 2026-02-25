@@ -6,7 +6,7 @@ import { getAllPosts, requestAllPosts } from "@/lib/post";
 import { getUser, getUserId, requestUser, requestUserId } from "@/lib/user";
 import { awaitObject } from "@/utils/stdfunc";
 import { cacheTag } from "next/cache";
-import { redirect, unauthorized } from "next/navigation";
+import { forbidden, redirect, unauthorized } from "next/navigation";
 import z from "zod";
 
 export default async function Page({
@@ -46,10 +46,11 @@ export default async function Page({
         );
         const profileId = await getUserId(requestUserId(parsedUsername));
 
-        if (!userId || !profileId) return unauthorized();
+        if (!userId) return unauthorized();
+        if (!profileId) return forbidden();
         if (userId === profileId) redirect("/profile/my");
 
-        const _user = requestUser(userId);
+        const _user = requestUser(profileId);
         const _posts = requestAllPosts();
         const _categories = requestAllCategories();
         const doesFollow = requestCheckUserFollow(userId, profileId);

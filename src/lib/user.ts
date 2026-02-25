@@ -29,7 +29,7 @@ export async function requestUser(uid: string | number) {
         typeof uid === "string" ? users.username_normalized : users.id;
 
     return db
-        .select({ id: users.id })
+        .select()
         .from(users)
         .where(eq(field, uid))
         .limit(1)
