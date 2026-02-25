@@ -48,7 +48,6 @@ export default function MainContent() {
             <DesktopStepper
                 activeStep={activeStep}
                 steps={steps}
-                setActiveStep={setActiveStep}
             />
 
             {/* Main content area - grows and scrolls if necessary */}
@@ -67,7 +66,6 @@ export default function MainContent() {
                 <MobileStepper
                     activeStep={activeStep}
                     steps={steps}
-                    setActiveStep={setActiveStep}
                 />
 
                 {/* Current step content */}
