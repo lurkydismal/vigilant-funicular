@@ -64,7 +64,7 @@ export default function InfoForm({ moveNext }: FormProps) {
                     }}
                 >
                     <MarkdownEditor value={text} onChange={setText} />
-                    <Box sx={{ flex: 1, overflow: 'auto' }}>
+                    <Box sx={{ flex: 1, overflow: 'auto', p: 2 }}>
                         <Markdown>{text}</Markdown>
                     </Box>
                 </Box>
