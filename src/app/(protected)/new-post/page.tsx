@@ -7,6 +7,11 @@ export default function NewPost() {
             maxWidth="xl"
             sx={{
                 pt: "1%",
+                display: 'flex',
+                flexDirection: 'column',
+                flexGrow: 1,
+                alignItems: "center",
+                justifyContent: "center",
             }}
         >
             <MainContent />
