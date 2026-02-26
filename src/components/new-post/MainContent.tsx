@@ -10,6 +10,7 @@ import FinalStep from "./FinalStep";
 import MobileStepper from "./MobileStepper";
 import { Step as StepType } from "./types";
 import DesktopStepper from "./DesktopStepper";
+import CardForm from "./CardForm";
 
 export default function MainContent() {
     const [activeStep, setActiveStep] = useState(0);
@@ -26,6 +27,10 @@ export default function MainContent() {
         {
             title: "Organization",
             item: <OrganizationForm />,
+        },
+        {
+            title: "Card",
+            item: <CardForm />,
         },
         {
             title: "Preview content",

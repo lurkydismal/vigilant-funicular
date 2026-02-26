@@ -4,7 +4,7 @@ import { FormGrid } from "./types";
 import { getAllCategories, requestAllCategories } from "@/lib/category";
 import AutocompleteWithHighlight from "../Autocomplete";
 
-export default async function SettingsForm() {
+export default async function OrganizationForm() {
     const categoryId = useId();
 
     const _categories = await getAllCategories(requestAllCategories());
