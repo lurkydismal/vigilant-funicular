@@ -148,7 +148,6 @@ export default async function Follows() {
         session: NonNullable<Awaited<ReturnType<typeof getSessionData>>>,
     ) => {
         "use cache";
-        cacheTag("follows", "follow");
 
         const _userId = requestUserId(session.username_normalized);
 
@@ -172,19 +171,19 @@ export default async function Follows() {
 
                 const post: PostsRow | null = u.post_id
                     ? {
-                          // minimal post shape using fields returned by your query.
-                          // expand/adjust as needed to match PostsRowFull in your project.
-                          id: u.post_id as number,
-                          author_id: u.user_id,
-                          co_author_id: null,
-                          category_id: u.category_id ?? null,
-                          preview_url: null,
-                          title: u.post_title ?? "",
-                          description: u.post_description ?? null,
-                          content: u.post_content ?? "",
-                          created_at: u.post_created_at ?? new Date(0),
-                          updated_at: u.post_created_at ?? new Date(0),
-                      }
+                        // minimal post shape using fields returned by your query.
+                        // expand/adjust as needed to match PostsRowFull in your project.
+                        id: u.post_id as number,
+                        author_id: u.user_id,
+                        co_author_id: null,
+                        category_id: u.category_id ?? null,
+                        preview_url: null,
+                        title: u.post_title ?? "",
+                        description: u.post_description ?? null,
+                        content: u.post_content ?? "",
+                        created_at: u.post_created_at ?? new Date(0),
+                        updated_at: u.post_created_at ?? new Date(0),
+                    }
                     : null;
 
                 return { author, post } as Follow;

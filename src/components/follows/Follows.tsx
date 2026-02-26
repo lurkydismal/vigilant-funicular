@@ -6,7 +6,6 @@ import MainFallback from "@/components/MainFallback";
 import { redirect } from "next/navigation";
 import { styled, Typography, Grid, Box } from "@mui/material";
 import { PostsRow, PostsRowFull, UsersRowPublic } from "@/db/types";
-import { useRef } from "react";
 
 export interface Follow {
     author: UsersRowPublic;
@@ -59,12 +58,10 @@ const TitleTypography = styled(Typography)(({ theme }) => ({
 }));
 
 export function Follows({ follows }: { follows: Follow[] }) {
-    const _follows = useRef(follows);
-
     return (
-        <MainFallback itemsLength={_follows.current.length}>
+        <MainFallback itemsLength={follows.length}>
             <Grid container spacing={8} columns={12} sx={{ my: 4 }}>
-                {_follows.current.map((follow) => {
+                {follows.map((follow) => {
                     const post = follow.post;
                     const user = follow.author;
 

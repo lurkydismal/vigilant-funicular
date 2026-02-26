@@ -87,8 +87,25 @@ export default function MainFallback({
 
     if (!showFallback) {
         return (
-            <Root className={className}>
-                <Box sx={{ width: "100%" }}>{children}</Box>
+            <Root
+                className={className}
+                sx={{
+                    width: "100%",
+                    flexGrow: 1,
+                    display: "flex",
+                    flexDirection: "column",
+                }}
+            >
+                <Box
+                    sx={{
+                        width: "100%",
+                        flexGrow: 1,
+                        display: "flex",
+                        flexDirection: "column",
+                    }}
+                >
+                    {children}
+                </Box>
             </Root>
         );
     }
