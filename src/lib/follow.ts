@@ -10,7 +10,7 @@ import { eq, and } from "drizzle-orm";
 import { cacheTag, revalidateTag } from "next/cache";
 import { getUserId, requestUserId } from "./user";
 
-export async function follow(username: string) {
+export async function followAction(username: string) {
     // parse + validate input; throws on invalid input
     const parsed = userSelectPublicSchema
         .pick({
@@ -54,7 +54,7 @@ export async function follow(username: string) {
     }
 }
 
-export async function unfollow(username: string) {
+export async function unfollowAction(username: string) {
     // parse + validate input; throws on invalid input
     const parsed = userSelectPublicSchema
         .pick({
@@ -100,7 +100,7 @@ export async function unfollow(username: string) {
     }
 }
 
-export async function requestCheckUserFollow(
+export async function requestCheckUserFollowAction(
     followerId: number,
     followingId: number,
 ): Promise<boolean> {

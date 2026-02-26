@@ -1,6 +1,6 @@
 "use client";
 
-import { follow, unfollow } from "@/lib/follow";
+import { followAction, unfollowAction } from "@/lib/follow";
 import {
     PersonRemove as UnfollowIcon,
     PersonAdd as FollowIcon,
@@ -23,9 +23,11 @@ type Props = ButtonProps & {
     size?: "small" | "medium" | "large";
     needText?: boolean;
     sx?: SxProps<Theme>;
+    followCallback?: (usernameNormalized: string) => void;
+    unfollowCallback?: (usernameNormalized: string) => void;
 };
 
-function FollowBase({ uid, doesFollow, size, needText = false }: Props) {
+function FollowBase({ uid, doesFollow, size, needText = false, sx, followCallback, unfollowCallback }: Props) {
     const [_doesFollow, setDoesFollow] = useState(doesFollow);
 
     const text = _doesFollow ? "Unfollow" : "Follow";
@@ -36,9 +38,13 @@ function FollowBase({ uid, doesFollow, size, needText = false }: Props) {
     const handleClick = () => {
         startTransition(async () => {
             if (_doesFollow) {
-                await unfollow(uid);
+                unfollowCallback?.(uid);
+
+                await unfollowAction(uid);
             } else {
-                await follow(uid);
+                followCallback?.(uid);
+
+                await followAction(uid);
             }
 
             setDoesFollow(!_doesFollow);
@@ -53,6 +59,7 @@ function FollowBase({ uid, doesFollow, size, needText = false }: Props) {
             variant="contained"
             startIcon={icon}
             loading={pending}
+            sx={sx}
         >
             {text}
         </Button>
@@ -64,6 +71,7 @@ function FollowBase({ uid, doesFollow, size, needText = false }: Props) {
                     onClick={handleClick}
                     color={color}
                     loading={pending}
+                    sx={sx}
                 >
                     {icon}
                 </IconButton>

@@ -1,3 +1,5 @@
+"use server";
+
 import db from "@/db";
 import { cacheTag } from "next/cache";
 import { posts } from "@/db/schema";

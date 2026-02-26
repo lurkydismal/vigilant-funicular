@@ -1,7 +1,7 @@
 import MainContent from "@/components/profile/MainContent";
 import { getSessionData } from "@/lib/auth";
 import { getAllCategories, requestAllCategories } from "@/lib/category";
-import { requestCheckUserFollow } from "@/lib/follow";
+import { requestCheckUserFollowAction } from "@/lib/follow";
 import { getAllPosts, requestAllPosts } from "@/lib/post";
 import { getUser, getUserId, requestUser, requestUserId } from "@/lib/user";
 import { awaitObject } from "@/utils/stdfunc";
@@ -53,7 +53,7 @@ export default async function Page({
         const _user = requestUser(profileId);
         const _posts = requestAllPosts();
         const _categories = requestAllCategories();
-        const doesFollow = requestCheckUserFollow(userId, profileId);
+        const doesFollow = requestCheckUserFollowAction(userId, profileId);
 
         const user = getUser(_user);
         const posts = getAllPosts(_posts);

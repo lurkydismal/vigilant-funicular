@@ -1,5 +1,4 @@
 import { Link } from "@/components/Link";
-import FollowButton from "@/components/FollowButton";
 import log from "@/utils/stdlog";
 import { Fragment } from "react";
 import {
@@ -11,174 +10,26 @@ import {
 } from "@mui/material";
 import { linkSx } from "@/data/styles";
 import { UsersRowPublic } from "@/db/types";
+import { AuthorInfo, AuthorRow, AuthorsInfo, nameSx, profileHref } from "./base";
+
+export { AuthorWithFollow, AuthorWithFollowAndLink } from './WithFollow';
 
 /**
- * Styles used for author name links.
- * Keeps the visual behaviour from your original file.
+ * Styles used for author date links.
  */
-const nameSx = {
-    ...linkSx,
-    px: 1,
-    py: 0.75,
-    "&::after": {
-        transformOrigin: "left",
-        bottom: 2,
-    },
-    "&:hover": {
-        backgroundColor: "action.hover",
-        transform: "translateY(-2px)",
-    },
-    "&:active": {
-        transform: "translateY(0px)",
-    },
-};
-
 const dateSx = {
     ...linkSx,
+
     px: 2.5,
+
     "&::after": {
         ...linkSx["&::after"],
+
         left: 16,
         right: 16,
         bottom: 2,
     },
 };
-
-function profileHref(author: UsersRowPublic) {
-    return `/profile/${encodeURIComponent(author.username_normalized)}`;
-}
-
-/**
- * Small wrapper used for rows with left and optional right content.
- *
- * @param left - left-side node (required)
- * @param right - right-side node (optional)
- */
-function AuthorRow({
-    left,
-    right,
-}: {
-    left: React.ReactNode;
-    right?: React.ReactNode;
-}) {
-    log.trace("AuthorRow render");
-
-    return (
-        <Box
-            sx={{
-                alignItems: "center",
-                display: "flex",
-                flexDirection: "row",
-                gap: 2,
-                justifyContent: "space-between",
-                padding: "16px",
-            }}
-        >
-            {left}
-            {right ?? null}
-        </Box>
-    );
-}
-
-/**
- * Render single avatar + username.
- *
- * @param author - public user record
- * @param variant - MUI Typography variant
- * @param avatarWidth - avatar width in px
- * @param avatarHeight - avatar height in px
- */
-function AuthorInfo({
-    author,
-    variant = "caption",
-    avatarWidth = 24,
-    avatarHeight = 24,
-}: {
-    author: UsersRowPublic;
-    variant?: TypographyVariant;
-    avatarWidth?: number;
-    avatarHeight?: number;
-}) {
-    log.trace("AuthorInfo render", { username: author?.username });
-
-    const initial =
-        author?.username && author.username[0]
-            ? author.username[0].toUpperCase()
-            : "?";
-
-    return (
-        <Box
-            sx={{
-                display: "flex",
-                flexDirection: "row",
-                gap: 1,
-                alignItems: "center",
-            }}
-        >
-            <Avatar
-                alt={author.username ?? "author"}
-                src={author.avatar_url ?? undefined}
-                sx={{ width: avatarWidth, height: avatarHeight }}
-            >
-                {initial}
-            </Avatar>
-
-            <Typography variant={variant}>{author.username}</Typography>
-        </Box>
-    );
-}
-
-/**
- * Render multiple avatars (AvatarGroup) and a comma-separated names list.
- *
- * @param authors - array of public user records
- * @param variant - typography variant
- * @param avatarWidth - avatar width in px
- * @param avatarHeight - avatar height in px
- */
-function AuthorsInfo({
-    authors,
-    variant = "caption",
-    avatarWidth = 24,
-    avatarHeight = 24,
-}: {
-    authors: UsersRowPublic[];
-    variant?: TypographyVariant;
-    avatarWidth?: number;
-    avatarHeight?: number;
-}) {
-    log.trace("AuthorsInfo render", { count: authors?.length ?? 0 });
-
-    return (
-        <Box
-            sx={{
-                display: "flex",
-                flexDirection: "row",
-                gap: 1,
-                alignItems: "center",
-            }}
-        >
-            <AvatarGroup max={3}>
-                {authors.map((a) => (
-                    <Avatar
-                        key={a.username}
-                        alt={a.username}
-                        src={a.avatar_url ?? undefined}
-                        sx={{ width: avatarWidth, height: avatarHeight }}
-                    >
-                        {a.username && a.username[0]
-                            ? a.username[0].toUpperCase()
-                            : "?"}
-                    </Avatar>
-                ))}
-            </AvatarGroup>
-
-            <Typography variant={variant}>
-                {authors.map((a) => a.username).join(", ")}
-            </Typography>
-        </Box>
-    );
-}
 
 /**
  * Single author row (avatar + name).
@@ -460,100 +311,6 @@ export function AuthorsWithDate({
                         year: "numeric",
                     })}
                 </Typography>
-            }
-        />
-    );
-}
-
-/**
- * Author row with a Follow button on the right.
- * `uid` passed to FollowButton is the raw username (not URL-encoded).
- */
-export function AuthorWithFollow({
-    author,
-    variant,
-    avatarWidth,
-    avatarHeight,
-    doesFollow,
-    needText,
-}: {
-    author: UsersRowPublic;
-    variant?: TypographyVariant;
-    avatarWidth?: number;
-    avatarHeight?: number;
-    doesFollow: boolean;
-    needText?: boolean;
-}) {
-    log.trace("AuthorWithFollow render", {
-        username: author?.username,
-        doesFollow,
-    });
-
-    return (
-        <AuthorRow
-            left={
-                <AuthorInfo
-                    author={author}
-                    variant={variant}
-                    avatarWidth={avatarWidth}
-                    avatarHeight={avatarHeight}
-                />
-            }
-            right={
-                <FollowButton
-                    uid={author.username}
-                    doesFollow={doesFollow}
-                    size="large"
-                    needText={needText}
-                />
-            }
-        />
-    );
-}
-
-/**
- * Author row with link to profile and a Follow button.
- * Link targets use encoded username; FollowButton receives the raw username.
- */
-export function AuthorWithFollowAndLink({
-    author,
-    variant,
-    avatarWidth,
-    avatarHeight,
-    doesFollow,
-    needText,
-}: {
-    author: UsersRowPublic;
-    variant?: TypographyVariant;
-    avatarWidth?: number;
-    avatarHeight?: number;
-    doesFollow: boolean;
-    needText?: boolean;
-}) {
-    log.trace("AuthorWithFollowAndLink render", {
-        username: author?.username,
-        doesFollow,
-    });
-
-    return (
-        <AuthorRow
-            left={
-                <Link underline="none" href={profileHref(author)} sx={nameSx}>
-                    <AuthorInfo
-                        author={author}
-                        variant={variant}
-                        avatarWidth={avatarWidth}
-                        avatarHeight={avatarHeight}
-                    />
-                </Link>
-            }
-            right={
-                <FollowButton
-                    uid={author.username}
-                    doesFollow={doesFollow}
-                    size="large"
-                    needText={needText}
-                />
             }
         />
     );
