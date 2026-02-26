@@ -270,7 +270,7 @@ export function getAccurateWordCount(text: string): number {
  */
 export function calculateReadingTime(
     wordCount: number,
-    wordsPerMinute: number = 225
+    wordsPerMinute: number = 225,
 ): number {
     if (!wordCount) return 0;
 
@@ -315,11 +315,7 @@ export function formatReadingTime(minutes: number): string {
         return `${hours} ${hourLabel}`;
     }
 
-    const minuteLabel = pluralize(
-        remainingMinutes,
-        "minute",
-        "minutes"
-    );
+    const minuteLabel = pluralize(remainingMinutes, "minute", "minutes");
 
     return `${hours} ${hourLabel} ${remainingMinutes} ${minuteLabel}`;
 }

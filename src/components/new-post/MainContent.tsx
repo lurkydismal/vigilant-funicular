@@ -58,10 +58,7 @@ export default function MainContent() {
                         "calc(100dvh - var(--template-frame-height, 0px) - 220px)", // optional safeguard
                 }}
             >
-                <MobileStepper
-                    activeStep={activeStep}
-                    steps={steps}
-                />
+                <MobileStepper activeStep={activeStep} steps={steps} />
 
                 {/* Current step content */}
                 {steps.map((item, index) => (

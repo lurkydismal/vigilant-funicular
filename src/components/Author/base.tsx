@@ -1,7 +1,13 @@
 import { linkSx } from "@/data/styles";
 import { UsersRowPublic } from "@/db/types";
 import log from "@/utils/stdlog";
-import { Avatar, AvatarGroup, Box, Typography, TypographyVariant } from "@mui/material";
+import {
+    Avatar,
+    AvatarGroup,
+    Box,
+    Typography,
+    TypographyVariant,
+} from "@mui/material";
 
 /**
  * Styles used for author name links.

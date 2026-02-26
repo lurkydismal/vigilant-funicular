@@ -10,9 +10,15 @@ import {
 } from "@mui/material";
 import { linkSx } from "@/data/styles";
 import { UsersRowPublic } from "@/db/types";
-import { AuthorInfo, AuthorRow, AuthorsInfo, nameSx, profileHref } from "./base";
+import {
+    AuthorInfo,
+    AuthorRow,
+    AuthorsInfo,
+    nameSx,
+    profileHref,
+} from "./base";
 
-export { AuthorWithFollow, AuthorWithFollowAndLink } from './WithFollow';
+export { AuthorWithFollow, AuthorWithFollowAndLink } from "./WithFollow";
 
 /**
  * Styles used for author date links.

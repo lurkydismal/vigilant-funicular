@@ -1,7 +1,6 @@
 "use client";
 
 import {
-    styled,
     Grid,
     FormLabel,
     OutlinedInput,
@@ -10,17 +9,15 @@ import {
     List,
     ListItem,
     ListItemText,
+    FormControlLabel,
+    Checkbox,
 } from "@mui/material";
 import { useId, useRef, useState } from "react";
 import MarkdownEditor from "./MarkdownEditor";
 import Markdown from "../Markdown";
 import { useWordStats } from "@/utils/stdhook";
 import { formatReadingTime } from "@/utils/stdfunc";
-
-const FormGrid = styled(Grid)(() => ({
-    display: "flex",
-    flexDirection: "column",
-}));
+import { FormGrid } from "./types";
 
 export default function WriteForm() {
     const titleId = useId();
@@ -52,97 +49,101 @@ export default function WriteForm() {
     };
 
     return (
-        <>
-            <Grid container spacing={2}>
-                <FormGrid size={{ xs: 12, md: 12 }}>
-                    <FormLabel htmlFor={titleId} required>
-                        Title
-                    </FormLabel>
+        <Grid container spacing={2}>
+            <FormGrid size={{ xs: 12, md: 12 }}>
+                <FormLabel htmlFor={titleId} required>
+                    Title
+                </FormLabel>
 
-                    <OutlinedInput
-                        autoComplete="title"
-                        name={titleId}
-                        placeholder="Title"
-                        required
-                        size="small"
-                        type="title"
-                    />
-                </FormGrid>
+                <OutlinedInput
+                    autoComplete="title"
+                    name={titleId}
+                    placeholder="Title"
+                    required
+                    size="small"
+                    type="title"
+                />
+            </FormGrid>
 
-                <FormGrid size={{ xs: 12, md: 12 }}>
-                    <FormLabel htmlFor={descId} required>
-                        Description
-                    </FormLabel>
+            <FormGrid size={{ xs: 12, md: 12 }}>
+                <FormLabel htmlFor={descId} required>
+                    Description
+                </FormLabel>
 
-                    <OutlinedInput
-                        autoComplete="description"
-                        name={descId}
-                        placeholder="Description"
-                        required
-                        size="small"
-                        type="description"
-                    />
-                </FormGrid>
+                <OutlinedInput
+                    autoComplete="description"
+                    name={descId}
+                    placeholder="Description"
+                    required
+                    size="small"
+                    type="description"
+                />
+            </FormGrid>
 
-                <Grid size={{ xs: 12, md: 12 }}>
-                    <Card>
+            <Grid size={{ xs: 12, md: 12 }}>
+                <Card>
+                    <Box
+                        ref={containerRef}
+                        sx={{
+                            display: "flex",
+                            height: "80vh",
+                            position: "relative",
+                            overflow: "hidden",
+                        }}
+                    >
+                        {/* LEFT SIDE */}
                         <Box
-                            ref={containerRef}
                             sx={{
-                                display: 'flex',
-                                height: '80vh',
-                                position: "relative",
-                                overflow: "hidden",
+                                width: `${leftWidth}%`,
+                                overflow: "auto",
+                                display: "flex",
                             }}
                         >
-                            {/* LEFT SIDE */}
-                            <Box
-                                sx={{
-                                    width: `${leftWidth}%`,
-                                    overflow: "auto",
-                                    display: 'flex',
-                                }}
-                            >
-                                <MarkdownEditor value={text} onChange={setText} />
-                            </Box>
-
-                            {/* DRAG HANDLE */}
-                            <Box
-                                onMouseDown={handleMouseDown}
-                                sx={{
-                                    width: "6px",
-                                    cursor: "col-resize",
-                                    backgroundColor: "divider",
-                                    "&:hover": {
-                                        backgroundColor: "primary.main",
-                                    },
-                                }}
-                            />
-
-                            {/* RIGHT SIDE */}
-                            <Box
-                                sx={{
-                                    width: `${100 - leftWidth}%`,
-                                    overflow: "auto",
-                                    p: 2,
-                                }}
-                            >
-                                <Markdown>{text}</Markdown>
-                            </Box>
+                            <MarkdownEditor value={text} onChange={setText} />
                         </Box>
-                    </Card>
-                </Grid>
 
-                <Grid size={{ xs: 12, md: 12 }}>
-                    <List disablePadding>
-                        <ListItem>
-                            <ListItemText primary="Reading time" secondary={formatReadingTime(readingTime)} />
+                        {/* DRAG HANDLE */}
+                        <Box
+                            onMouseDown={handleMouseDown}
+                            sx={{
+                                width: "6px",
+                                cursor: "col-resize",
+                                backgroundColor: "divider",
+                                "&:hover": {
+                                    backgroundColor: "primary.main",
+                                },
+                            }}
+                        />
 
-                            <ListItemText primary="Word count" secondary={wordCount} />
-                        </ListItem>
-                    </List>
-                </Grid>
+                        {/* RIGHT SIDE */}
+                        <Box
+                            sx={{
+                                width: `${100 - leftWidth}%`,
+                                overflow: "auto",
+                                p: 2,
+                            }}
+                        >
+                            <Markdown>{text}</Markdown>
+                        </Box>
+                    </Box>
+                </Card>
             </Grid>
-        </>
+
+            <Grid size={{ xs: 12, md: 12 }}>
+                <List disablePadding>
+                    <ListItem>
+                        <ListItemText
+                            primary="Reading time"
+                            secondary={formatReadingTime(readingTime)}
+                        />
+
+                        <ListItemText
+                            primary="Word count"
+                            secondary={wordCount}
+                        />
+                    </ListItem>
+                </List>
+            </Grid>
+        </Grid>
     );
 }

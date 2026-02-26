@@ -18,9 +18,7 @@ export default function DesktopStepper({
             <Stepper nonLinear activeStep={activeStep} sx={{ px: 0 }}>
                 {steps.map((step, index) => {
                     return (
-                        <Step
-                            key={step.title}
-                        >
+                        <Step key={step.title}>
                             <StepLabel
                                 sx={stepSx}
                                 onClick={() => setActiveStep(index)}

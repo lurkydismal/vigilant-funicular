@@ -27,7 +27,15 @@ type Props = ButtonProps & {
     unfollowCallback?: (usernameNormalized: string) => void;
 };
 
-function FollowBase({ uid, doesFollow, size, needText = false, sx, followCallback, unfollowCallback }: Props) {
+function FollowBase({
+    uid,
+    doesFollow,
+    size,
+    needText = false,
+    sx,
+    followCallback,
+    unfollowCallback,
+}: Props) {
     const [_doesFollow, setDoesFollow] = useState(doesFollow);
 
     const text = _doesFollow ? "Unfollow" : "Follow";

@@ -1,4 +1,7 @@
+"use client";
+
 import { linkSx } from "@/data/styles";
+import { Grid, styled } from "@mui/material";
 import { ReactElement } from "react";
 
 export const stepSx = {
@@ -25,3 +28,8 @@ export interface Step {
 }
 
 export type MoveNext = () => void;
+
+export const FormGrid = styled(Grid)(() => ({
+    display: "flex",
+    flexDirection: "column",
+}));
