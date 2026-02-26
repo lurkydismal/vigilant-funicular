@@ -8,7 +8,6 @@ import {
     Grid,
 } from "@mui/material";
 import { Fragment } from "react";
-import { FormProps } from "./types";
 
 const addresses = ["1 MUI Drive", "Reactville", "Anytown", "99999", "USA"];
 const payments = [
@@ -18,7 +17,7 @@ const payments = [
     { name: "Expiry date:", detail: "04/2024" },
 ];
 
-export default function PreviewForm({ moveNext }: FormProps) {
+export default function PreviewForm() {
     return (
         <Stack spacing={2}>
             <List disablePadding>

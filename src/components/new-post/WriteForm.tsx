@@ -9,11 +9,8 @@ import {
     Box,
     List,
     ListItem,
-    Stack,
     ListItemText,
-    Typography,
 } from "@mui/material";
-import { FormProps } from "./types";
 import { useId, useRef, useState } from "react";
 import MarkdownEditor from "./MarkdownEditor";
 import Markdown from "../Markdown";
@@ -25,7 +22,7 @@ const FormGrid = styled(Grid)(() => ({
     flexDirection: "column",
 }));
 
-export default function InfoForm({ moveNext }: FormProps) {
+export default function WriteForm() {
     const titleId = useId();
     const descId = useId();
     const [text, setText] = useState("");

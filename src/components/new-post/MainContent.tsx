@@ -1,7 +1,7 @@
 "use client";
 
-import InfoForm from "./InfoForm";
-import ContentForm from "./ContentForm";
+import WriteForm from "./WriteForm";
+import SettionsForm from "./SettingsForm";
 import PreviewForm from "./PreviewForm";
 import { Activity, useState } from "react";
 import { Box } from "@mui/material";
@@ -9,28 +9,22 @@ import FinalStep from "./FinalStep";
 import MobileStepper from "./MobileStepper";
 import { Step as StepType } from "./types";
 import DesktopStepper from "./DesktopStepper";
-import log from "@/utils/stdlog";
 
 export default function MainContent() {
     const [activeStep, setActiveStep] = useState(0);
 
-    const moveNext = () => {
-        log.debug(`Current: ${activeStep}`);
-        setActiveStep(activeStep + 1);
-    };
-
     const steps: StepType[] = [
         {
-            title: "Fill information",
-            item: <InfoForm moveNext={moveNext} />,
+            title: "Write",
+            item: <WriteForm />,
         },
         {
-            title: "Write content",
-            item: <ContentForm moveNext={moveNext} />,
+            title: "Settings",
+            item: <SettionsForm />,
         },
         {
             title: "Preview content",
-            item: <PreviewForm moveNext={moveNext} />,
+            item: <PreviewForm />,
         },
     ];
 

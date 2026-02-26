@@ -25,7 +25,3 @@ export interface Step {
 }
 
 export type MoveNext = () => void;
-
-export interface FormProps {
-    moveNext: MoveNext;
-}

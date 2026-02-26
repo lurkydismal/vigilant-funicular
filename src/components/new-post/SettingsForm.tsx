@@ -3,12 +3,11 @@
 import MarkdownEditor from './MarkdownEditor';
 import { Stack, Box, Card, OutlinedInput, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
-import { FormProps } from "./types";
 import log from "@/utils/stdlog";
 import MarkdownPreview from './MarkdownPreview';
 import Markdown from '../Markdown';
 
-export default function ContentForm({ moveNext }: FormProps) {
+export default function SettingsForm() {
     const [text, setText] = useState("");
 
     return (
