@@ -10,7 +10,6 @@ const nextConfig: NextConfig = {
         cssChunking: true,
         browserDebugInfoInTerminal: true,
         authInterrupts: true,
-        viewTransition: true,
     },
 
     images: {

@@ -25,8 +25,8 @@ export default function InfoForm({ moveNext }: FormProps) {
 
     return (
         <>
-            <Grid container spacing={3}>
-                <FormGrid size={{ xs: 12, md: 6 }}>
+            <Grid container spacing={2}>
+                <FormGrid size={{ xs: 12, md: 12 }}>
                     <FormLabel htmlFor={titleId} required>
                         Title
                     </FormLabel>
@@ -41,7 +41,7 @@ export default function InfoForm({ moveNext }: FormProps) {
                     />
                 </FormGrid>
 
-                <FormGrid size={{ xs: 12, md: 6 }}>
+                <FormGrid size={{ xs: 12, md: 12 }}>
                     <FormLabel htmlFor={descId} required>
                         Description
                     </FormLabel>
@@ -55,20 +55,24 @@ export default function InfoForm({ moveNext }: FormProps) {
                         type="description"
                     />
                 </FormGrid>
+
+                <Grid size={{ xs: 12, md: 12 }}>
+                    <Card>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                height: '80vh',
+                            }}
+                        >
+                            <MarkdownEditor value={text} onChange={setText} />
+                            <Box sx={{ flex: 1, overflow: 'auto', p: 2 }}>
+                                <Markdown>{text}</Markdown>
+                            </Box>
+                        </Box>
+                    </Card>
+
+                </Grid>
             </Grid>
-            <Card>
-                <Box
-                    sx={{
-                        display: 'flex',
-                        height: '100vh',
-                    }}
-                >
-                    <MarkdownEditor value={text} onChange={setText} />
-                    <Box sx={{ flex: 1, overflow: 'auto', p: 2 }}>
-                        <Markdown>{text}</Markdown>
-                    </Box>
-                </Box>
-            </Card>
         </>
     );
 }
