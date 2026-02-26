@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, ChangeEvent, DragEvent } from 'react';
-import { TextField, Box, Typography } from '@mui/material';
+import { useState, useEffect, ChangeEvent, DragEvent } from "react";
+import { TextField, Box, Typography } from "@mui/material";
 
 export default function ImageInput({ acceptedFileTypes = "image/*" }) {
     const [urlInput, setUrlInput] = useState("");
@@ -80,19 +80,19 @@ export default function ImageInput({ acceptedFileTypes = "image/*" }) {
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
                 sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
                     p: 2,
-                    border: '2px dashed',
-                    borderColor: isDragging ? 'primary.main' : 'text.secondary',
+                    border: "2px dashed",
+                    borderColor: isDragging ? "primary.main" : "text.secondary",
                     borderRadius: 1,
-                    bgcolor: isDragging ? 'grey.100' : 'background.paper',
-                    color: 'text.secondary',
-                    cursor: 'pointer',
+                    bgcolor: isDragging ? "grey.100" : "background.paper",
+                    color: "text.secondary",
+                    cursor: "pointer",
                     height: 150,
-                    '&:hover': { bgcolor: 'grey.50' },
+                    "&:hover": { bgcolor: "grey.50" },
                 }}
             >
                 <input
@@ -120,7 +120,7 @@ export default function ImageInput({ acceptedFileTypes = "image/*" }) {
                         component="img"
                         src={preview}
                         alt="Image preview"
-                        sx={{ maxWidth: '100%', maxHeight: 300, mt: 1 }}
+                        sx={{ maxWidth: "100%", maxHeight: 300, mt: 1 }}
                     />
                 </Box>
             )}
