@@ -1,96 +1,52 @@
-"use client";
-
-import MarkdownEditor from "./MarkdownEditor";
 import {
-    Stack,
-    Box,
-    Card,
-    OutlinedInput,
-    TextField,
     Checkbox,
     FormControlLabel,
     FormLabel,
     Grid,
-    List,
-    ListItem,
-    ListItemText,
     RadioGroup,
     Radio,
+    Divider,
 } from "@mui/material";
-import { useEffect, useId, useState } from "react";
-import log from "@/utils/stdlog";
-import MarkdownPreview from "./MarkdownPreview";
-import Markdown from "../Markdown";
-import { formatReadingTime } from "@/utils/stdfunc";
+import { useId } from "react";
+import { toPascalCase } from "@/utils/stdfunc";
 import { FormGrid } from "./types";
 
 export default function SettingsForm() {
-    const titleId = useId();
-    const descId = useId();
+    const visibilityId = useId();
+
+    const visibilityOptions = ["public", "followers", "unlisted", "private"];
 
     return (
         <Grid container spacing={2}>
             <FormGrid size={{ xs: 12, md: 12 }}>
-                <FormLabel htmlFor={titleId} required>
-                    Title
+                <FormLabel id={visibilityId}>
+                    Visibility
                 </FormLabel>
 
                 <RadioGroup
                     row
-                    aria-labelledby="demo-radio-buttons-group-label"
-                    defaultValue="female"
-                    name="radio-buttons-group"
+                    aria-labelledby={visibilityId}
+                    defaultValue="public"
+                    name="visibility"
                 >
-                    <FormControlLabel
-                        value="female"
-                        control={<Radio />}
-                        label="Female"
-                    />
-                    <FormControlLabel
-                        value="male"
-                        control={<Radio />}
-                        label="Male"
-                    />
-                    <FormControlLabel
-                        value="other"
-                        control={<Radio />}
-                        label="Other"
-                    />
+                    {visibilityOptions.map((item) => (
+                        <FormControlLabel
+                            value={item}
+                            control={<Radio />}
+                            label={toPascalCase(item)}
+                        />
+                    ))}
                 </RadioGroup>
             </FormGrid>
 
-            <FormGrid size={{ xs: 12, md: 12 }}>
-                <FormLabel htmlFor={descId} required>
-                    Description
-                </FormLabel>
-
-                <OutlinedInput
-                    autoComplete="description"
-                    name={descId}
-                    placeholder="Description"
-                    required
-                    size="small"
-                    type="description"
-                />
+            <FormGrid size={{ xs: 12 }}>
+                <Divider />
             </FormGrid>
-
-            <Grid size={{ xs: 12, md: 12 }}>
-                <List disablePadding>
-                    <ListItem>
-                        <ListItemText
-                            primary="Reading time"
-                            secondary={formatReadingTime(159)}
-                        />
-
-                        <ListItemText primary="Word count" secondary={159} />
-                    </ListItem>
-                </List>
-            </Grid>
 
             <FormGrid size={{ xs: 12 }}>
                 <FormControlLabel
-                    control={<Checkbox name="saveAddress" value="yes" />}
-                    label="Use this address for payment details"
+                    control={<Checkbox name="contentWarning" value="off" />}
+                    label="Content warning"
                 />
             </FormGrid>
         </Grid>

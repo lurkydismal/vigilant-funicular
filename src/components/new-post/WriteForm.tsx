@@ -9,10 +9,8 @@ import {
     List,
     ListItem,
     ListItemText,
-    FormControlLabel,
-    Checkbox,
 } from "@mui/material";
-import { useId, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import MarkdownEditor from "./MarkdownEditor";
 import Markdown from "../Markdown";
 import { useWordStats } from "@/utils/stdhook";
@@ -20,8 +18,6 @@ import { formatReadingTime } from "@/utils/stdfunc";
 import { FormGrid } from "./types";
 
 export default function WriteForm() {
-    const titleId = useId();
-    const descId = useId();
     const [text, setText] = useState("");
     const { wordCount, readingTime } = useWordStats(text);
     const containerRef = useRef<HTMLDivElement | null>(null);
@@ -51,13 +47,13 @@ export default function WriteForm() {
     return (
         <Grid container spacing={2}>
             <FormGrid size={{ xs: 12, md: 12 }}>
-                <FormLabel htmlFor={titleId} required>
+                <FormLabel htmlFor="title" required>
                     Title
                 </FormLabel>
 
                 <OutlinedInput
                     autoComplete="title"
-                    name={titleId}
+                    name="title"
                     placeholder="Title"
                     required
                     size="small"
@@ -66,13 +62,13 @@ export default function WriteForm() {
             </FormGrid>
 
             <FormGrid size={{ xs: 12, md: 12 }}>
-                <FormLabel htmlFor={descId} required>
+                <FormLabel htmlFor="description">
                     Description
                 </FormLabel>
 
                 <OutlinedInput
                     autoComplete="description"
-                    name={descId}
+                    name="description"
                     placeholder="Description"
                     required
                     size="small"

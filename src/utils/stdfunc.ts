@@ -74,12 +74,46 @@ export function sanitizeFilename(raw: unknown): string | null {
  * - Removes special characters except spaces
  * - Converts words after spaces to uppercase
  */
-export function toCamelCase(header: string): string {
-    return header
+export function toCamelCase(text: string): string {
+    return text
         .trim()
         .toLowerCase()
         .replace(/[^a-z0-9 ]+/g, "")
         .replace(/\s+([a-z0-9])/g, (_, c) => c.toUpperCase());
+}
+
+/**
+ * Convert a string to PascalCase.
+ *
+ * Rules:
+ * - Trims whitespace
+ * - Removes special characters except letters and numbers
+ * - Splits on spaces, hyphens, and underscores
+ * - Capitalizes the first letter of each word
+ *
+ * Examples:
+ * "hello world"     → "HelloWorld"
+ * "  user_name  "   → "UserName"
+ * "foo-bar-baz"     → "FooBarBaz"
+ * "FOO 2 bar!"      → "Foo2Bar"
+ *
+ * @param text - The input string
+ * @returns PascalCase version of the string
+ */
+export function toPascalCase(text: string): string {
+    if (!text) return "";
+
+    return text
+        .trim()
+        .toLowerCase()
+        // Replace any non-alphanumeric separator with a single space
+        .replace(/[\s-_]+/g, " ")
+        // Remove any remaining non-alphanumeric characters
+        .replace(/[^a-z0-9 ]+/g, "")
+        // Split by spaces, capitalize each word, join
+        .split(" ")
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join("");
 }
 
 /**

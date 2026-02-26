@@ -1,6 +1,7 @@
 "use client";
 
 import WriteForm from "./WriteForm";
+import OrganizationForm from "./OrganizationForm";
 import SettionsForm from "./SettingsForm";
 import PreviewForm from "./PreviewForm";
 import { Activity, useState } from "react";
@@ -21,6 +22,10 @@ export default function MainContent() {
         {
             title: "Settings",
             item: <SettionsForm />,
+        },
+        {
+            title: "Organization",
+            item: <OrganizationForm />,
         },
         {
             title: "Preview content",
