@@ -103,17 +103,19 @@ export function toCamelCase(text: string): string {
 export function toPascalCase(text: string): string {
     if (!text) return "";
 
-    return text
-        .trim()
-        .toLowerCase()
-        // Replace any non-alphanumeric separator with a single space
-        .replace(/[\s-_]+/g, " ")
-        // Remove any remaining non-alphanumeric characters
-        .replace(/[^a-z0-9 ]+/g, "")
-        // Split by spaces, capitalize each word, join
-        .split(" ")
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join("");
+    return (
+        text
+            .trim()
+            .toLowerCase()
+            // Replace any non-alphanumeric separator with a single space
+            .replace(/[\s-_]+/g, " ")
+            // Remove any remaining non-alphanumeric characters
+            .replace(/[^a-z0-9 ]+/g, "")
+            // Split by spaces, capitalize each word, join
+            .split(" ")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join("")
+    );
 }
 
 /**

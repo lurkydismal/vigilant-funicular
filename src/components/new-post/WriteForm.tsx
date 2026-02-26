@@ -62,9 +62,7 @@ export default function WriteForm() {
             </FormGrid>
 
             <FormGrid size={{ xs: 12, md: 12 }}>
-                <FormLabel htmlFor="description">
-                    Description
-                </FormLabel>
+                <FormLabel htmlFor="description">Description</FormLabel>
 
                 <OutlinedInput
                     autoComplete="description"

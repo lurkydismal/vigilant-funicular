@@ -19,9 +19,7 @@ export default function SettingsForm() {
     return (
         <Grid container spacing={2}>
             <FormGrid size={{ xs: 12, md: 12 }}>
-                <FormLabel id={visibilityId}>
-                    Visibility
-                </FormLabel>
+                <FormLabel id={visibilityId}>Visibility</FormLabel>
 
                 <RadioGroup
                     row
