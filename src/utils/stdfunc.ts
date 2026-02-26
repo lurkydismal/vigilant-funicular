@@ -234,3 +234,73 @@ export async function awaitObject<T extends Record<PropertyKey, any>>(
 
     return Object.fromEntries(resolved) as AwaitedObject<T>;
 }
+
+/**
+ * Counts words in a string using a Unicode-aware regular expression.
+ *
+ * Rules:
+ * - Supports all languages via Unicode property escapes.
+ * - Treats punctuation (.,!? etc.) as separators.
+ * - Keeps contractions like "don't" as one word.
+ * - Treats "one,two" as two words.
+ *
+ * @param text - The input text to analyze
+ * @returns The number of detected words
+ */
+export function getAccurateWordCount(text: string): number {
+    if (!text) return 0;
+
+    const words = text.match(/\b[\p{L}\p{N}']+\b/gu);
+
+    return words ? words.length : 0;
+}
+
+/**
+ * Calculates estimated reading time in minutes.
+ *
+ * Industry standard average reading speed:
+ * - 200–250 words per minute
+ * - Default used here: 225 wpm
+ *
+ * Always returns at least 1 minute for non-empty content.
+ *
+ * @param wordCount - Total number of words
+ * @param wordsPerMinute - Optional reading speed override
+ * @returns Estimated reading time in minutes
+ */
+export function calculateReadingTime(
+    wordCount: number,
+    wordsPerMinute: number = 225
+): number {
+    if (!wordCount) return 0;
+
+    return Math.max(1, Math.ceil(wordCount / wordsPerMinute));
+}
+
+/**
+ * Formats reading time (in minutes) into a human-friendly string.
+ *
+ * Rules:
+ * - Under 60 minutes → "X min read"
+ * - 60+ minutes → "X hr Y min read"
+ * - 0 minutes → "0 min"
+ *
+ * @param minutes - Total reading time in minutes
+ * @returns Formatted reading time string
+ */
+export function formatReadingTime(minutes: number): string {
+    if (!minutes) return "0 min";
+
+    if (minutes < 60) {
+        return `${minutes} min read`;
+    }
+
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
+
+    if (remainingMinutes === 0) {
+        return `${hours} hr read`;
+    }
+
+    return `${hours} hr ${remainingMinutes} min read`;
+}
