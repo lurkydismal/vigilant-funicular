@@ -278,29 +278,48 @@ export function calculateReadingTime(
 }
 
 /**
- * Formats reading time (in minutes) into a human-friendly string.
+ * Formats reading time (in minutes) into a human-friendly string
+ * with proper English pluralization.
  *
  * Rules:
- * - Under 60 minutes → "X min read"
- * - 60+ minutes → "X hr Y min read"
- * - 0 minutes → "0 min"
+ * - 0 minutes → "0 minutes"
+ * - Under 60 minutes → "X minute(s)"
+ * - 60+ minutes → "X hour(s) Y minute(s)"
+ *
+ * Examples:
+ * - 1   → "1 minute"
+ * - 15  → "15 minutes"
+ * - 60  → "1 hour"
+ * - 75  → "1 hour 15 minutes"
+ * - 120 → "2 hours"
  *
  * @param minutes - Total reading time in minutes
  * @returns Formatted reading time string
  */
 export function formatReadingTime(minutes: number): string {
-    if (!minutes) return "0 min";
+    if (minutes <= 0) return "0 minutes";
+
+    const pluralize = (value: number, singular: string, plural: string) =>
+        value === 1 ? singular : plural;
 
     if (minutes < 60) {
-        return `${minutes} min read`;
+        return `${minutes} ${pluralize(minutes, "minute", "minutes")}`;
     }
 
     const hours = Math.floor(minutes / 60);
     const remainingMinutes = minutes % 60;
 
+    const hourLabel = pluralize(hours, "hour", "hours");
+
     if (remainingMinutes === 0) {
-        return `${hours} hr read`;
+        return `${hours} ${hourLabel}`;
     }
 
-    return `${hours} hr ${remainingMinutes} min read`;
+    const minuteLabel = pluralize(
+        remainingMinutes,
+        "minute",
+        "minutes"
+    );
+
+    return `${hours} ${hourLabel} ${remainingMinutes} ${minuteLabel}`;
 }
