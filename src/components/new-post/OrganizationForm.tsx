@@ -1,14 +1,32 @@
-import { TextField, FormLabel, Grid } from "@mui/material";
-import { use, useId } from "react";
+"use client";
+
+import { TextField, FormLabel, Grid, CircularProgress } from "@mui/material";
+import { useTransition, useId, useState } from "react";
 import { FormGrid } from "./types";
 import { getAllCategories, requestAllCategories } from "@/lib/category";
-import AutocompleteWithHighlight from "../Autocomplete";
+import AutocompleteWithHighlight from "@/components/Autocomplete";
 
 export default function OrganizationForm() {
     const categoryId = useId();
+    const [categories, setCategories] = useState<readonly string[]>([]);
+    const [open, setOpen] = useState(false);
+    const [pending, startTransition] = useTransition();
 
-    const _categories = use(getAllCategories(requestAllCategories()));
-    const categories = _categories.map((item) => item.name);
+    const handleOpen = () => {
+        setOpen(true);
+
+        if (!categories) {
+            startTransition(async () => {
+                const _categories = await getAllCategories(requestAllCategories());
+
+                setCategories(_categories.map((item) => item.name));
+            });
+        }
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     return (
         <Grid container spacing={2}>
@@ -16,9 +34,28 @@ export default function OrganizationForm() {
                 <FormLabel id={categoryId}>Category</FormLabel>
 
                 <AutocompleteWithHighlight
+                    open={open}
+                    onOpen={handleOpen}
+                    onClose={handleClose}
+                    loading={pending}
                     options={categories}
                     renderInput={(params) => (
-                        <TextField placeholder="Category" {...params} />
+                        <TextField
+                            {...params}
+
+                            placeholder="Category"
+                            slotProps={{
+                                input: {
+                                    ...params.InputProps,
+                                    endAdornment: (
+                                        <>
+                                            {pending ? <CircularProgress color="inherit" size={20} /> : null}
+                                            {params.InputProps.endAdornment}
+                                        </>
+                                    ),
+                                },
+                            }}
+                        />
                     )}
                 />
             </FormGrid>

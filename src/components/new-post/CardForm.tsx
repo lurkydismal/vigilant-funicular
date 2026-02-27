@@ -1,7 +1,7 @@
 import { TextField, FormLabel, Grid, OutlinedInput } from "@mui/material";
 import { FormGrid } from "./types";
 
-export default async function CardForm() {
+export default function CardForm() {
     return (
         <Grid container spacing={2}>
             <FormGrid size={{ xs: 12, md: 12 }}>
