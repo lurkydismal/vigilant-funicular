@@ -1,13 +1,13 @@
 import { TextField, FormLabel, Grid } from "@mui/material";
-import { useId } from "react";
+import { use, useId } from "react";
 import { FormGrid } from "./types";
 import { getAllCategories, requestAllCategories } from "@/lib/category";
 import AutocompleteWithHighlight from "../Autocomplete";
 
-export default async function OrganizationForm() {
+export default function OrganizationForm() {
     const categoryId = useId();
 
-    const _categories = await getAllCategories(requestAllCategories());
+    const _categories = use(getAllCategories(requestAllCategories()));
     const categories = _categories.map((item) => item.name);
 
     return (

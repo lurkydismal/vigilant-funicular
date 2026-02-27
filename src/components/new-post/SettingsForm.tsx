@@ -29,6 +29,7 @@ export default function SettingsForm() {
                 >
                     {visibilityOptions.map((item) => (
                         <FormControlLabel
+                            key={item}
                             value={item}
                             control={<Radio />}
                             label={toPascalCase(item)}
