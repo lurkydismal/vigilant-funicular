@@ -11,6 +11,7 @@ import MobileStepper from "./MobileStepper";
 import { Step as StepType } from "./types";
 import DesktopStepper from "./DesktopStepper";
 import CardForm from "./CardForm";
+import PublishForm from "./PublishForm";
 
 export default function MainContent() {
     const [activeStep, setActiveStep] = useState(0);
@@ -31,6 +32,10 @@ export default function MainContent() {
         {
             title: "Card",
             item: <CardForm />,
+        },
+        {
+            title: "Publish",
+            item: <PublishForm />,
         },
         {
             title: "Preview content",

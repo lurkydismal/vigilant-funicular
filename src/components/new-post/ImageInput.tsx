@@ -88,11 +88,11 @@ export default function ImageInput({ acceptedFileTypes = "image/*" }) {
                     border: "2px dashed",
                     borderColor: isDragging ? "primary.main" : "text.secondary",
                     borderRadius: 1,
-                    bgcolor: isDragging ? "grey.100" : "background.paper",
+                    bgcolor: isDragging ? "grey.900" : "background.paper",
                     color: "text.secondary",
                     cursor: "pointer",
                     height: 150,
-                    "&:hover": { bgcolor: "grey.50" },
+                    "&:hover": { bgcolor: "grey.900" },
                 }}
             >
                 <input
