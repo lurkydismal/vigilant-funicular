@@ -19,6 +19,7 @@ import { getAllCategories, requestAllCategories } from "@/lib/category";
 import AutocompleteWithHighlight from "@/components/Autocomplete";
 import ImageInput from "./ImageInput";
 import { getAllUsers, requestAllUsers } from "@/lib/user";
+import { useAuth } from "@/providers/auth";
 
 function VisibilityForm() {
     const visibilityId = useId();
@@ -159,6 +160,7 @@ function PublishForm() {
 }
 
 function CollaborationForm() {
+    const session = useAuth();
     const coAuthorId = useId();
     const attributionNoteId = useId();
     const [cuAuthors, setCoAuthorss] = useState<readonly string[]>([]);
@@ -174,7 +176,7 @@ function CollaborationForm() {
                     requestAllUsers(),
                 );
 
-                setCoAuthorss(_coAuthors.map((item) => item.username));
+                setCoAuthorss(_coAuthors.map((item) => item.username).filter(username => username !== session.user?.username));
             });
         }
     };
