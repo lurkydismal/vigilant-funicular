@@ -161,6 +161,7 @@ function PublishForm() {
 }
 
 function CollaborationForm() {
+    const { user } = useAuth();
     const coAuthorId = useId();
     const attributionNoteId = useId();
     const [cuAuthors, setCoAuthorss] = useState<readonly string[]>([]);
@@ -175,8 +176,6 @@ function CollaborationForm() {
                 const _coAuthors = await getAllUsers(
                     requestAllUsers(),
                 );
-
-                const { user } = useAuth();
 
                 log.debug(`User: ${user}`);
                 log.debug("Username: ", user?.username);
