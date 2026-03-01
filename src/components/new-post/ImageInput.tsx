@@ -2,7 +2,6 @@
 
 import { useState, useEffect, ChangeEvent, DragEvent } from "react";
 import { TextField, Box, Typography } from "@mui/material";
-import Image from "next/image";
 
 export default function ImageInput({ acceptedFileTypes = "image/*" }) {
     const [urlInput, setUrlInput] = useState("");
@@ -116,7 +115,7 @@ export default function ImageInput({ acceptedFileTypes = "image/*" }) {
 
                 {preview ? (
                     <Box
-                        component={Image}
+                        component="img"
                         src={preview}
                         alt="Image preview"
                         onError={() => {
