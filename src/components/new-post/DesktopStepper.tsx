@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Step, StepLabel, Stepper } from "@mui/material";
+import { Box, Step, StepLabel, Stepper, Tooltip } from "@mui/material";
 import { stepSx, Step as StepType } from "./types";
 import { Dispatch, SetStateAction } from "react";
 
@@ -19,12 +19,14 @@ export default function DesktopStepper({
                 {steps.map((step, index) => {
                     return (
                         <Step key={step.title}>
-                            <StepLabel
-                                sx={stepSx}
-                                onClick={() => setActiveStep(index)}
-                            >
-                                {step.title}
-                            </StepLabel>
+                            <Tooltip title="Test">
+                                <StepLabel
+                                    sx={stepSx}
+                                    onClick={() => setActiveStep(index)}
+                                >
+                                    {step.title}
+                                </StepLabel>
+                            </Tooltip>
                         </Step>
                     );
                 })}
