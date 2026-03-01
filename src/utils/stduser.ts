@@ -6,8 +6,6 @@ export function setUser(user: UsersRowPublic | null) {
 
     const storageKey = storageKeys.client.authStorageKey;
 
-    setUser(user);
-
     if (user) localStorage.setItem(storageKey, JSON.stringify(user));
     else localStorage.removeItem(storageKey);
 }
