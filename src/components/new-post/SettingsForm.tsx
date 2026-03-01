@@ -85,6 +85,10 @@ export default function SettingsForm() {
                 />
             </FormGrid>
 
+            <FormGrid size={{ xs: 12 }}>
+                <Divider />
+            </FormGrid>
+
             {/* Organization */}
             <FormGrid size={{ xs: 12, md: 12 }}>
                 <FormLabel id={categoryId}>Category</FormLabel>
@@ -120,9 +124,17 @@ export default function SettingsForm() {
                 />
             </FormGrid>
 
+            <FormGrid size={{ xs: 12 }}>
+                <Divider />
+            </FormGrid>
+
             {/* Preview */}
             <FormGrid size={{ xs: 12, md: 12 }}>
                 <ImageInput />
+            </FormGrid>
+
+            <FormGrid size={{ xs: 12 }}>
+                <Divider />
             </FormGrid>
 
             {/* Publish */}
