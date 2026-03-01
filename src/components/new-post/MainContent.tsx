@@ -10,7 +10,6 @@ import { Step as StepType } from "./types";
 import DesktopStepper from "./DesktopStepper";
 
 export default function MainContent() {
-    const [remountKey, setRemountKey] = useState(0);
     const [activeStep, setActiveStep] = useState(0);
     const [completedSteps, setCompletedSteps] = useState<number[]>([]);
     const [completed, setCompleted] = useState(false);
@@ -26,7 +25,7 @@ export default function MainContent() {
         },
     ];
 
-    const handleReset = () => setRemountKey(k => k + 1);
+    const handleReset = () => { };
 
     const addCompletedStep = (index: number) => {
         setCompletedSteps((prev) => [
@@ -55,14 +54,12 @@ export default function MainContent() {
             setActiveStep(steps.length);
 
             setCompleted(true);
-
             handleReset();
         }
     }, [completedSteps, steps, activeStep, setActiveStep]);
 
     return (
         <Box
-            key={remountKey}
             sx={{
                 display: "flex",
                 flexDirection: "column",
@@ -93,7 +90,13 @@ export default function MainContent() {
                         "calc(100dvh - var(--template-frame-height, 0px) - 220px)", // optional safeguard
                 }}
             >
-                <MobileStepper activeStep={activeStep} steps={steps} />
+                <MobileStepper
+                    activeStep={activeStep}
+                    completedSteps={completedSteps}
+                    steps={steps}
+                    completed={completed}
+                    onClick={handleClick}
+                />
 
                 {/* Current step content */}
                 {steps.map((item, index) => (
@@ -106,7 +109,7 @@ export default function MainContent() {
                 ))}
 
                 <Activity
-                    mode={activeStep === steps.length ? "visible" : "hidden"}
+                    mode={completed ? "visible" : "hidden"}
                 >
                     <FinalStep />
                 </Activity>
