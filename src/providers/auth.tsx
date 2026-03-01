@@ -13,6 +13,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<UsersRowPublic | null>(null);
+    const [version, setVersion] = useState(0);
 
     const _setUser = (u: UsersRowPublic | null) => {
         log.debug(`User before: ${user}`);
@@ -20,10 +21,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         log.debug(`Passed user: ${u}`);
 
         setUser(u);
+
+        setVersion(v => v + 1);
     };
 
     useEffect(() => {
-        log.debug(`User now: ${user}`);
+        log.debug(`User now: ${user}, version: ${version}`);
     }, [user]);
 
     return (
