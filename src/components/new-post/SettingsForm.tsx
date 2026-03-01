@@ -18,7 +18,6 @@ import { FormGrid } from "./types";
 import { getAllCategories, requestAllCategories } from "@/lib/category";
 import AutocompleteWithHighlight from "@/components/Autocomplete";
 import ImageInput from "./ImageInput";
-import log from "@/utils/stdlog";
 
 function VisibilityForm() {
     const visibilityId = useId();
