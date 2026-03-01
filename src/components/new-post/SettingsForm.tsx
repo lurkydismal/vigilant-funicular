@@ -123,17 +123,17 @@ function OrganizationForm() {
     );
 }
 
-function PreviewForm() {
-    return (
-        <FormGrid size={{ xs: 12, md: 12 }}>
-            <ImageInput />
-        </FormGrid>
-    );
-}
+// function PreviewForm() {
+//     return (
+//         <FormGrid size={{ xs: 12, md: 12 }}>
+//             <ImageInput />
+//         </FormGrid>
+//     );
+// }
 
 function PublishForm() {
     const publishId = useId();
-    const publishOptions = ["now", "scheduled", "draft"];
+    const publishOptions = ["now", "scheduled"];
 
     return (
         <FormGrid size={{ xs: 12, md: 12 }}>
