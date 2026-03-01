@@ -20,6 +20,7 @@ import AutocompleteWithHighlight from "@/components/Autocomplete";
 import ImageInput from "./ImageInput";
 import { getAllUsers, requestAllUsers } from "@/lib/user";
 import { useAuth } from "@/providers/auth";
+import log from "@/utils/stdlog";
 
 function VisibilityForm() {
     const visibilityId = useId();
@@ -176,7 +177,13 @@ function CollaborationForm() {
                     requestAllUsers(),
                 );
 
-                setCoAuthorss(_coAuthors.map((item) => item.username).filter(username => username !== session.user?.username));
+                log.debug("Username: ", session.user?.username);
+
+                setCoAuthorss(
+                    _coAuthors.map(
+                        (item) => item.username
+                    )
+                        .filter(username => username !== session.user?.username));
             });
         }
     };
