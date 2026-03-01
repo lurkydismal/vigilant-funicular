@@ -161,7 +161,6 @@ function PublishForm() {
 }
 
 function CollaborationForm() {
-    const session = useAuth();
     const coAuthorId = useId();
     const attributionNoteId = useId();
     const [cuAuthors, setCoAuthorss] = useState<readonly string[]>([]);
@@ -177,14 +176,16 @@ function CollaborationForm() {
                     requestAllUsers(),
                 );
 
-                log.debug(`User: ${session.user}`);
-                log.debug("Username: ", session.user?.username);
+                const { user } = useAuth();
+
+                log.debug(`User: ${user}`);
+                log.debug("Username: ", user?.username);
 
                 setCoAuthorss(
                     _coAuthors.map(
                         (item) => item.username
                     )
-                        .filter(username => username !== session.user?.username));
+                        .filter(username => username !== user?.username));
             });
         }
     };
