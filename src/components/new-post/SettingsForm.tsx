@@ -88,7 +88,7 @@ function OrganizationForm() {
 
     return (
         <FormGrid size={{ xs: 12, md: 12 }}>
-            <FormLabel id={categoryId}>Category</FormLabel>
+            <FormLabel id={categoryId} required>Category</FormLabel>
 
             <AutocompleteWithHighlight
                 open={open}
