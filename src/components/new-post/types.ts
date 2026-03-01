@@ -12,7 +12,7 @@ export const stepSx = {
     userSelect: 'none',
 
     border: "1px solid",
-    borderColor: "background.paper",
+    borderColor: "divider",
 
     "&::after": {
         transformOrigin: "left",
