@@ -1,17 +1,13 @@
 "use client";
 
 import WriteForm from "./WriteForm";
-import OrganizationForm from "./OrganizationForm";
 import SettionsForm from "./SettingsForm";
-import PreviewForm from "./PreviewForm";
 import { Activity, useState } from "react";
 import { Box } from "@mui/material";
 import FinalStep from "./FinalStep";
 import MobileStepper from "./MobileStepper";
 import { Step as StepType } from "./types";
 import DesktopStepper from "./DesktopStepper";
-import CardForm from "./CardForm";
-import PublishForm from "./PublishForm";
 
 export default function MainContent() {
     const [activeStep, setActiveStep] = useState(0);
@@ -24,22 +20,6 @@ export default function MainContent() {
         {
             title: "Settings",
             item: <SettionsForm />,
-        },
-        {
-            title: "Organization",
-            item: <OrganizationForm />,
-        },
-        {
-            title: "Card",
-            item: <CardForm />,
-        },
-        {
-            title: "Publish",
-            item: <PublishForm />,
-        },
-        {
-            title: "Preview content",
-            item: <PreviewForm />,
         },
     ];
 

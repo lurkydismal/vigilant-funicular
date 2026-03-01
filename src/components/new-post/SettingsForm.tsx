@@ -1,3 +1,5 @@
+"use client";
+
 import {
     Checkbox,
     FormControlLabel,
@@ -6,18 +8,52 @@ import {
     RadioGroup,
     Radio,
     Divider,
+    TextField,
+    CircularProgress,
 } from "@mui/material";
-import { useId } from "react";
+import { useId, useState, useTransition } from "react";
 import { toPascalCase } from "@/utils/stdfunc";
 import { FormGrid } from "./types";
+import { getAllCategories, requestAllCategories } from "@/lib/category";
+import AutocompleteWithHighlight from "@/components/Autocomplete";
+import ImageInput from "./ImageInput";
 
 export default function SettingsForm() {
+    // Visibility
     const visibilityId = useId();
-
     const visibilityOptions = ["public", "followers", "unlisted", "private"];
+
+    // Organization
+    const categoryId = useId();
+    const [categories, setCategories] = useState<readonly string[]>([]);
+    const [open, setOpen] = useState(false);
+    const [pending, startTransition] = useTransition();
+
+    const handleOpen = () => {
+        setOpen(true);
+
+        if (!categories) {
+            startTransition(async () => {
+                const _categories = await getAllCategories(
+                    requestAllCategories(),
+                );
+
+                setCategories(_categories.map((item) => item.name));
+            });
+        }
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    // Publish
+    const publishId = useId();
+    const publishOptions = ["now", "scheduled", "draft"];
 
     return (
         <Grid container spacing={2}>
+            {/* Visibility */}
             <FormGrid size={{ xs: 12, md: 12 }}>
                 <FormLabel id={visibilityId}>Visibility</FormLabel>
 
@@ -47,6 +83,69 @@ export default function SettingsForm() {
                     control={<Checkbox name="contentWarning" value="off" />}
                     label="Content warning"
                 />
+            </FormGrid>
+
+            {/* Organization */}
+            <FormGrid size={{ xs: 12, md: 12 }}>
+                <FormLabel id={categoryId}>Category</FormLabel>
+
+                <AutocompleteWithHighlight
+                    open={open}
+                    onOpen={handleOpen}
+                    onClose={handleClose}
+                    loading={pending}
+                    options={categories}
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            placeholder="Category"
+                            slotProps={{
+                                input: {
+                                    ...params.InputProps,
+                                    endAdornment: (
+                                        <>
+                                            {pending ? (
+                                                <CircularProgress
+                                                    color="inherit"
+                                                    size={20}
+                                                />
+                                            ) : null}
+                                            {params.InputProps.endAdornment}
+                                        </>
+                                    ),
+                                },
+                            }}
+                        />
+                    )}
+                />
+            </FormGrid>
+
+            {/* Preview */}
+            <FormGrid size={{ xs: 12, md: 12 }}>
+                <ImageInput />
+            </FormGrid>
+
+            {/* Publish */}
+            <FormGrid size={{ xs: 12, md: 12 }}>
+                <FormLabel id={publishId} required>
+                    Publish
+                </FormLabel>
+
+                <RadioGroup
+                    row
+                    aria-labelledby={publishId}
+                    defaultValue="public"
+                    name="publish"
+                >
+                    {publishOptions.map((item) => (
+                        <FormControlLabel
+                            key={item}
+                            value={item}
+                            control={<Radio />}
+                            label={toPascalCase(item)}
+                        />
+                    ))}
+                </RadioGroup>
             </FormGrid>
         </Grid>
     );

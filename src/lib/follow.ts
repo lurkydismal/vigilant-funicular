@@ -7,7 +7,7 @@ import { userSelectPublicSchema } from "@/utils/validate/schemas";
 import db from "@/db";
 import { follows } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
-import { cacheTag, revalidateTag } from "next/cache";
+import { cacheTag, updateTag } from "next/cache";
 import { getUserId, requestUserId } from "./user";
 
 export async function followAction(username: string) {
@@ -42,7 +42,7 @@ export async function followAction(username: string) {
             })
             .execute();
 
-        revalidateTag("follows", "max");
+        updateTag("follows");
     } catch (err) {
         // Audit log: capture username and the error message, but do NOT log sensitive data.
         log.error("follow failed", {
@@ -88,7 +88,7 @@ export async function unfollowAction(username: string) {
             )
             .execute();
 
-        revalidateTag("follows", "max");
+        updateTag("follows");
     } catch (err) {
         // Audit log: capture username and the error message, but do NOT log sensitive data.
         log.error("follow failed", {

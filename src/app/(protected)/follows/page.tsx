@@ -147,8 +147,6 @@ export default async function Follows() {
     const getInfoFromSession = async (
         session: NonNullable<Awaited<ReturnType<typeof getSessionData>>>,
     ) => {
-        "use cache";
-
         const _userId = requestUserId(session.username_normalized);
 
         const userId = await getUserId(_userId);

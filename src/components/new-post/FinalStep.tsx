@@ -1,20 +1,26 @@
 import { Button, Stack, Typography } from "@mui/material";
+import NextLink from "@/components/Link";
 
 export default function FinalStep() {
+    const id = 0;
+
     return (
         <Stack spacing={2} useFlexGap>
             <Typography variant="h1">📦</Typography>
 
-            <Typography variant="h5">Thank you for your order!</Typography>
+            <Typography variant="h5">Thank you for contribution!</Typography>
 
             <Typography variant="body1" sx={{ color: "text.secondary" }}>
-                Your order number is <strong>&nbsp;#140396</strong>. We have
-                emailed your order confirmation and will update you once it{"'"}
-                s shipped.
+                Your post link is <strong>{`/post/${id}`}</strong>.
             </Typography>
 
-            <Button variant="contained" sx={{ alignSelf: "start" }}>
-                Go to my orders
+            <Button
+                variant="contained"
+                sx={{ alignSelf: "start" }}
+                href="/profile/my"
+                LinkComponent={NextLink}
+            >
+                Go to my profile
             </Button>
         </Stack>
     );
