@@ -20,7 +20,7 @@ export default function DesktopStepper({
                 {steps.map((step, index) => {
                     const isActive = index === activeStep;
                     const isCompleted = completedSteps.includes(index);
-                    const tooltip = isActive ? isCompleted ? null : "Mark completed" : "Step";
+                    const tooltip = isActive ? isCompleted ? "Unmark completed" : "Mark completed" : "Step";
 
                     return (
                         <Step

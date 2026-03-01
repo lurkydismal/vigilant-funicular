@@ -20,11 +20,20 @@ export default function MainContent() {
         ]);
     };
 
+    const removeCompletedStep = (value: number) => {
+        const index = completedSteps.indexOf(value);
+
+        if (index !== -1) {
+            completedSteps.splice(index, 1);
+        }
+    };
+
     const handleClick = (index: number, isActive: boolean, isCompleted: boolean) => {
         if (!isActive) {
             setActiveStep(index);
-        } else if (!isCompleted) {
-            addCompletedStep(index);
+        } else {
+            if (!isCompleted) addCompletedStep(index);
+            else removeCompletedStep(index);
         }
     };
 
