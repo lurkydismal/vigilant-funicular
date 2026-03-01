@@ -9,6 +9,48 @@ export default function ImageInput({ acceptedFileTypes = "image/*" }) {
     const [preview, setPreview] = useState<string | null>(null);
     const [isDragging, setIsDragging] = useState(false);
 
+    // Derive displayable formats
+    const formats = acceptedFileTypes
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean).map((p) => {
+            if (p === "*" || p === "*/*") return "*";
+            if (p.startsWith("image/")) return p.slice("image/".length);
+            if (p.startsWith(".")) return p.slice(1);
+            return p;
+        });
+
+    const hideSupported = formats.length === 1 && formats[0] === "*";
+
+    // Handle file selection via hidden input
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files && e.target.files[0];
+        if (file && file.type.startsWith("image/")) {
+            setFile(file);
+            setUrlInput("");
+        }
+    };
+
+    const handleDragOver = (e: DragEvent<HTMLLabelElement>) => {
+        e.preventDefault();
+        setIsDragging(true);
+    };
+
+    const handleDragLeave = (e: DragEvent<HTMLLabelElement>) => {
+        e.preventDefault();
+        setIsDragging(false);
+    };
+
+    const handleDrop = (e: DragEvent<HTMLLabelElement>) => {
+        e.preventDefault();
+        setIsDragging(false);
+        const file = e.dataTransfer.files && e.dataTransfer.files[0];
+        if (file && file.type.startsWith("image/")) {
+            setFile(file);
+            setUrlInput("");
+        }
+    };
+
     // When file changes, read it with FileReader (client-side only)
     useEffect(() => {
         if (!file) return;
@@ -26,38 +68,6 @@ export default function ImageInput({ acceptedFileTypes = "image/*" }) {
             setFile(null);
         }
     }, [urlInput]);
-
-    // Handle file selection via hidden input
-    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files && e.target.files[0];
-        if (file && file.type.startsWith("image/")) {
-            setFile(file);
-            setUrlInput("");
-        }
-    };
-
-    // Handle drag-over event
-    const handleDragOver = (e: DragEvent<HTMLLabelElement>) => {
-        e.preventDefault();
-        setIsDragging(true);
-    };
-
-    // Handle drag-leave event
-    const handleDragLeave = (e: DragEvent<HTMLLabelElement>) => {
-        e.preventDefault();
-        setIsDragging(false);
-    };
-
-    // Handle drop event
-    const handleDrop = (e: DragEvent<HTMLLabelElement>) => {
-        e.preventDefault();
-        setIsDragging(false);
-        const file = e.dataTransfer.files && e.dataTransfer.files[0];
-        if (file && file.type.startsWith("image/")) {
-            setFile(file);
-            setUrlInput("");
-        }
-    };
 
     return (
         <Box>
@@ -102,14 +112,18 @@ export default function ImageInput({ acceptedFileTypes = "image/*" }) {
                     hidden
                     onChange={handleFileChange}
                 />
+
                 <Typography>
                     {isDragging
                         ? "Drop image here..."
                         : "Drag & drop an image here, or click to select one"}
                 </Typography>
-                <Typography variant="caption" color="textSecondary">
-                    (Supported formats: {acceptedFileTypes})
-                </Typography>
+
+                {!hideSupported && (
+                    <Typography variant="caption" color="textSecondary">
+                        (Supported formats: {formats.join(", ")})
+                    </Typography>
+                )}
             </Box>
 
             {/* Image preview */}
