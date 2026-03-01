@@ -11,6 +11,22 @@ import DesktopStepper from "./DesktopStepper";
 
 export default function MainContent() {
     const [activeStep, setActiveStep] = useState(0);
+    const [completedSteps, setCompletedSteps] = useState<number[]>([]);
+
+    const addCompletedStep = (index: number) => {
+        setCompletedSteps((prev) => [
+            ...prev,
+            index,
+        ]);
+    };
+
+    const handleClick = (index: number, isActive: boolean, isCompleted: boolean) => {
+        if (!isActive) {
+            setActiveStep(index);
+        } else if (!isCompleted) {
+            addCompletedStep(index);
+        }
+    };
 
     const steps: StepType[] = [
         {
@@ -36,8 +52,9 @@ export default function MainContent() {
             {/* Header */}
             <DesktopStepper
                 activeStep={activeStep}
+                completedSteps={completedSteps}
                 steps={steps}
-                setActiveStep={setActiveStep}
+                onClick={handleClick}
             />
 
             {/* Main content area - grows and scrolls if necessary */}
