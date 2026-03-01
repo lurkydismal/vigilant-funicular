@@ -16,7 +16,7 @@ export const stepSx = {
 
     borderRadius: 1,
     boxShadow:
-        "0 0 24px 12px hsla(210, 100%, 25%, 0.8)",
+        "0 0 12px 6px hsla(210, 100%, 25%, 0.2)",
     paddingLeft: 1,
     paddingRight: 1,
     paddingBottom: 1,
