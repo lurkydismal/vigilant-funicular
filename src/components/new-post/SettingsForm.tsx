@@ -177,6 +177,7 @@ function CollaborationForm() {
                     requestAllUsers(),
                 );
 
+                log.debug(`User: ${session.user}`);
                 log.debug("Username: ", session.user?.username);
 
                 setCoAuthorss(

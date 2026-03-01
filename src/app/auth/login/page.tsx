@@ -35,11 +35,7 @@ export default function SignInPage() {
         try {
             const user: UsersRowPublic = await login({ ...data });
 
-            logVar(user);
-
             auth.setUser(user);
-
-            log.debug(`User: ${auth.user}`);
 
             router.push("/posts");
         } catch (err) {
