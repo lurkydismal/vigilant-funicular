@@ -21,11 +21,7 @@ export default function MainContent() {
     };
 
     const removeCompletedStep = (value: number) => {
-        const index = completedSteps.indexOf(value);
-
-        if (index !== -1) {
-            completedSteps.splice(index, 1);
-        }
+        setCompletedSteps(completedSteps.filter(n => n !== value));
     };
 
     const handleClick = (index: number, isActive: boolean, isCompleted: boolean) => {
