@@ -7,11 +7,13 @@ export default function DesktopStepper({
     activeStep,
     completedSteps,
     steps,
+    completed,
     onClick,
 }: {
     activeStep: number;
     completedSteps: number[];
     steps: StepType[];
+    completed: boolean;
     onClick: (index: number, isActive: boolean, isCompleted: boolean) => void;
 }) {
     return (
@@ -29,8 +31,8 @@ export default function DesktopStepper({
                         >
                             <Tooltip title={tooltip}>
                                 <StepLabel
-                                    sx={stepSx}
-                                    onClick={() => onClick(index, isActive, isCompleted)}
+                                    sx={completed ? undefined : stepSx}
+                                    onClick={completed ? undefined : () => onClick(index, isActive, isCompleted)}
                                 >
                                     {step.title}
                                 </StepLabel>

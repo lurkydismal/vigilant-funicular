@@ -12,6 +12,7 @@ import DesktopStepper from "./DesktopStepper";
 export default function MainContent() {
     const [activeStep, setActiveStep] = useState(0);
     const [completedSteps, setCompletedSteps] = useState<number[]>([]);
+    const [completed, setCompleted] = useState(false);
 
     const steps: StepType[] = [
         {
@@ -47,7 +48,11 @@ export default function MainContent() {
     useEffect(() => {
         const allCompleted = completedSteps.length === steps.length;
 
-        if (allCompleted) setActiveStep(steps.length);
+        if (allCompleted) {
+            setActiveStep(steps.length);
+
+            setCompleted(true);
+        }
     }, [completedSteps, steps, activeStep, setActiveStep]);
 
     return (
@@ -65,6 +70,7 @@ export default function MainContent() {
                 activeStep={activeStep}
                 completedSteps={completedSteps}
                 steps={steps}
+                isCompleted={completed}
                 onClick={handleClick}
             />
 
