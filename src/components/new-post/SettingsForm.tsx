@@ -25,24 +25,26 @@ function VisibilityForm() {
     const visibilityOptions = ["public", "followers", "unlisted", "private"];
 
     return (
-        <FormGrid size={{ xs: 12, md: 12 }}>
-            <FormLabel id={visibilityId}>Visibility</FormLabel>
+        <>
+            <FormGrid size={{ xs: 12, md: 12 }}>
+                <FormLabel id={visibilityId}>Visibility</FormLabel>
 
-            <RadioGroup
-                row
-                aria-labelledby={visibilityId}
-                defaultValue="public"
-                name="visibility"
-            >
-                {visibilityOptions.map((item) => (
-                    <FormControlLabel
-                        key={item}
-                        value={item}
-                        control={<Radio />}
-                        label={toPascalCase(item)}
-                    />
-                ))}
-            </RadioGroup>
+                <RadioGroup
+                    row
+                    aria-labelledby={visibilityId}
+                    defaultValue="public"
+                    name="visibility"
+                >
+                    {visibilityOptions.map((item) => (
+                        <FormControlLabel
+                            key={item}
+                            value={item}
+                            control={<Radio />}
+                            label={toPascalCase(item)}
+                        />
+                    ))}
+                </RadioGroup>
+            </FormGrid>
 
             <FormGrid size={{ xs: 12 }}>
                 <Divider />
@@ -54,7 +56,7 @@ function VisibilityForm() {
                     label="Content warning"
                 />
             </FormGrid>
-        </FormGrid>
+        </>
     );
 }
 
