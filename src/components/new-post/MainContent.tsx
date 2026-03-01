@@ -70,7 +70,7 @@ export default function MainContent() {
                 activeStep={activeStep}
                 completedSteps={completedSteps}
                 steps={steps}
-                isCompleted={completed}
+                completed={completed}
                 onClick={handleClick}
             />
 
