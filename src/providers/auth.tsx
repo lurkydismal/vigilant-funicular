@@ -17,6 +17,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const _setUser = (u: UsersRowPublic | null) => {
         log.debug(`User before: ${user}`);
 
+        log.debug(`Passed user: ${u}`);
+
         setUser(u);
 
         log.debug(`User now: ${user}`);
