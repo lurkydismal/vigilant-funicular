@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { UsersRowPublic } from "@/db/types";
 import log from "@/utils/stdlog";
+import { isServer, storageKeys } from "@/utils/stdvar";
 
 type AuthContextType = {
     user: UsersRowPublic | null;
@@ -13,9 +14,11 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<UsersRowPublic | null>(() => {
-        if (typeof window === "undefined") return null;
+        if (isServer || !storageKeys.client) return null;
 
-        const stored = localStorage.getItem("user");
+        const storageKey = storageKeys.client.authStorageKey;
+
+        const stored = localStorage.getItem(storageKey);
 
         return stored ? JSON.parse(stored) : null;
     });
@@ -26,10 +29,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         log.debug(`Passed user: ${u}`);
 
+        if (isServer || !storageKeys.client) return;
+
+        const storageKey = storageKeys.client.authStorageKey;
+
         setUser(u);
 
-        if (u) localStorage.setItem("user", JSON.stringify(u));
-        else localStorage.removeItem("user");
+        if (u) localStorage.setItem(storageKey, JSON.stringify(u));
+        else localStorage.removeItem(storageKey);
 
         setVersion(v => v + 1);
     };
