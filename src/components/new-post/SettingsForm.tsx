@@ -34,6 +34,7 @@ export default function SettingsForm() {
     const handleOpen = () => {
         setOpen(true);
 
+        log.debug(`Categories: ${categories}`);
         if (!categories) {
             startTransition(async () => {
                 const _categories = await getAllCategories(
