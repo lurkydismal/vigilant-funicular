@@ -17,9 +17,11 @@ export default function DesktopStepper({
         <Box sx={{ display: { xs: "none", md: "block" }, mb: 2 }}>
             <Stepper nonLinear activeStep={activeStep} sx={{ px: 0 }}>
                 {steps.map((step, index) => {
+                    const isActive = index === activeStep;
+
                     return (
                         <Step key={step.title}>
-                            <Tooltip title="Test">
+                            <Tooltip title={isActive ? "Finish" : "Step"}>
                                 <StepLabel
                                     sx={stepSx}
                                     onClick={() => setActiveStep(index)}
