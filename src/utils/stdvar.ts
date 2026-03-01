@@ -134,13 +134,13 @@ export const maxRetries = 3;
 export const storageKeys = {
     client: isBrowser
         ? {
-              authStorageKey: getEnv("NEXT_PUBLIC_AUTH_NAME"),
-          }
+            authStorageKey: "user", // FIX: Not found
+        }
         : null,
 
     server: isServer
         ? {
-              accessToken: getEnv("COOKIE_NAME"),
-          }
+            accessToken: getEnv("COOKIE_NAME"),
+        }
         : null,
 };
