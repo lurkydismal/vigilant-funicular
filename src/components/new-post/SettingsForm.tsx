@@ -18,6 +18,7 @@ import { FormGrid } from "./types";
 import { getAllCategories, requestAllCategories } from "@/lib/category";
 import AutocompleteWithHighlight from "@/components/Autocomplete";
 import ImageInput from "./ImageInput";
+import log from "@/utils/stdlog";
 
 export default function SettingsForm() {
     // Visibility
@@ -40,6 +41,8 @@ export default function SettingsForm() {
                 );
 
                 setCategories(_categories.map((item) => item.name));
+
+                log.debug(`Categories: ${categories}`);
             });
         }
     };
@@ -53,7 +56,7 @@ export default function SettingsForm() {
     const publishOptions = ["now", "scheduled", "draft"];
 
     // Collaboration
-    const coAuthorsId = useId();
+    const coAuthorId = useId();
     const attributionNoteId = useId();
 
     return (
@@ -171,14 +174,14 @@ export default function SettingsForm() {
 
             {/* Collaboration */}
             <FormGrid size={{ xs: 12, md: 12 }}>
-                <FormLabel id={coAuthorsId}>
-                    Co-authors
+                <FormLabel id={coAuthorId}>
+                    Co-author
                 </FormLabel>
 
                 <OutlinedInput
-                    autoComplete="coAuthors"
-                    name="coAuthors"
-                    placeholder="Co-authors"
+                    autoComplete="coAuthor"
+                    name="coAuthor"
+                    placeholder="Co-author"
                     required
                     size="small"
                 />
