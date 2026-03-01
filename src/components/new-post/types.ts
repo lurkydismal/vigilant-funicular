@@ -9,14 +9,18 @@ export const stepSx = {
 
     px: 1,
     py: 0.75,
+    userSelect: 'none',
+
     "&::after": {
         transformOrigin: "left",
         bottom: 2,
     },
+
     "&:hover": {
         backgroundColor: "action.hover",
         transform: "translateY(-2px)",
     },
+
     "&:active": {
         transform: "translateY(0px)",
     },
