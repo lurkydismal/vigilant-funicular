@@ -133,7 +133,7 @@ export const maxRetries = 3;
  */
 export const storageKeys = {
     client: isBrowser ? {
-        authStorageKey: getEnv("AUTH_NAME"),
+        authStorageKey: getEnv("NEXT_PUBLIC_AUTH_NAME"),
     } : null,
 
     server: isServer
