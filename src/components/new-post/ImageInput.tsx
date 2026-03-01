@@ -2,6 +2,7 @@
 
 import { useState, useEffect, ChangeEvent, DragEvent } from "react";
 import { TextField, Box, Typography } from "@mui/material";
+import Image from "next/image";
 
 export default function ImageInput({ acceptedFileTypes = "image/*" }) {
     const [urlInput, setUrlInput] = useState("");
@@ -113,31 +114,38 @@ export default function ImageInput({ acceptedFileTypes = "image/*" }) {
                     onChange={handleFileChange}
                 />
 
-                <Typography>
-                    {isDragging
-                        ? "Drop image here..."
-                        : "Drag & drop an image here, or click to select one"}
-                </Typography>
-
-                {!hideSupported && (
-                    <Typography variant="caption" color="textSecondary">
-                        (Supported formats: {formats.join(", ")})
-                    </Typography>
-                )}
-            </Box>
-
-            {/* Image preview */}
-            {preview && (
-                <Box mt={2} textAlign="center">
-                    <Typography variant="subtitle1">Preview:</Typography>
+                {preview ? (
                     <Box
-                        component="img"
+                        component={Image}
                         src={preview}
                         alt="Image preview"
-                        sx={{ maxWidth: "100%", maxHeight: 300, mt: 1 }}
+                        onError={() => {
+                            // clear invalid preview (bad URL/CORS/etc)
+                            setPreview(null);
+                        }}
+                        sx={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "contain",
+                            borderRadius: 1,
+                        }}
                     />
-                </Box>
-            )}
+                ) : (
+                    <>
+                        <Typography>
+                            {isDragging
+                                ? "Drop image here..."
+                                : "Drag & drop an image here, or click to select one"}
+                        </Typography>
+
+                        {!hideSupported && (
+                            <Typography variant="caption" color="textSecondary">
+                                (Supported formats: {formats.join(", ")})
+                            </Typography>
+                        )}
+                    </>
+                )}
+            </Box>
         </Box>
     );
 }
