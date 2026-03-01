@@ -20,7 +20,6 @@ export default function DesktopStepper({
                     return (
                         <Step key={step.title}>
                             <StepButton
-                                sx={stepSx}
                                 onClick={() => setActiveStep(index)}
                             >
                                 {step.title}
