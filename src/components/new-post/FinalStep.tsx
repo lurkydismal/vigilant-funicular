@@ -3,7 +3,7 @@
 import { Button, Stack, Typography } from "@mui/material";
 import NextLink from "@/components/Link";
 
-export default function FinalStep({ handleReset }: { handleReset: () => void }) {
+export default function FinalStep() {
     const id = 0;
 
     return (
@@ -21,7 +21,6 @@ export default function FinalStep({ handleReset }: { handleReset: () => void }) 
                 sx={{ alignSelf: "start" }}
                 href="/profile/my"
                 LinkComponent={NextLink}
-                onClick={() => handleReset()}
             >
                 Go to my profile
             </Button>

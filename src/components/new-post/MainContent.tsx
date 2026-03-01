@@ -55,6 +55,8 @@ export default function MainContent() {
             setActiveStep(steps.length);
 
             setCompleted(true);
+
+            handleReset();
         }
     }, [completedSteps, steps, activeStep, setActiveStep]);
 
@@ -106,7 +108,7 @@ export default function MainContent() {
                 <Activity
                     mode={activeStep === steps.length ? "visible" : "hidden"}
                 >
-                    <FinalStep handleReset={handleReset} />
+                    <FinalStep />
                 </Activity>
             </Box>
         </Box>
