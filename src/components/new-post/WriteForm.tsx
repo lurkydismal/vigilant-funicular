@@ -57,7 +57,6 @@ export default function WriteForm() {
                     placeholder="Title"
                     required
                     size="small"
-                    type="title"
                 />
             </FormGrid>
 
@@ -70,7 +69,6 @@ export default function WriteForm() {
                     placeholder="Description"
                     required
                     size="small"
-                    type="description"
                 />
             </FormGrid>
 

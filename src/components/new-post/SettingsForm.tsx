@@ -10,6 +10,7 @@ import {
     Divider,
     TextField,
     CircularProgress,
+    OutlinedInput,
 } from "@mui/material";
 import { useId, useState, useTransition } from "react";
 import { toPascalCase } from "@/utils/stdfunc";
@@ -50,6 +51,10 @@ export default function SettingsForm() {
     // Publish
     const publishId = useId();
     const publishOptions = ["now", "scheduled", "draft"];
+
+    // Collaboration
+    const coAuthorsId = useId();
+    const attributionNoteId = useId();
 
     return (
         <Grid container spacing={2}>
@@ -158,6 +163,39 @@ export default function SettingsForm() {
                         />
                     ))}
                 </RadioGroup>
+            </FormGrid>
+
+            <FormGrid size={{ xs: 12 }}>
+                <Divider />
+            </FormGrid>
+
+            {/* Collaboration */}
+            <FormGrid size={{ xs: 12, md: 12 }}>
+                <FormLabel id={coAuthorsId}>
+                    Co-authors
+                </FormLabel>
+
+                <OutlinedInput
+                    autoComplete="coAuthors"
+                    name="coAuthors"
+                    placeholder="Co-authors"
+                    required
+                    size="small"
+                />
+            </FormGrid>
+
+            <FormGrid size={{ xs: 12, md: 12 }}>
+                <FormLabel id={attributionNoteId}>
+                    Attribution note
+                </FormLabel>
+
+                <OutlinedInput
+                    autoComplete="attributionNote"
+                    name="attributionNote"
+                    placeholder="Originally published on..."
+                    required
+                    size="small"
+                />
             </FormGrid>
         </Grid>
     );
