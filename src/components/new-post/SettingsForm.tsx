@@ -17,14 +17,13 @@ import { toPascalCase } from "@/utils/stdfunc";
 import { FormGrid } from "./types";
 import { getAllCategories, requestAllCategories } from "@/lib/category";
 import AutocompleteWithHighlight from "@/components/Autocomplete";
-import ImageInput from "./ImageInput";
 import { getAllUsers, requestAllUsers } from "@/lib/user";
 import log from "@/utils/stdlog";
 import { getUser } from "@/utils/stduser";
 
 function VisibilityForm() {
     const visibilityId = useId();
-    const visibilityOptions = ["public", "followers", "unlisted", "private"];
+    const visibilityOptions = ["public", "unlisted", "private"];
 
     return (
         <>
