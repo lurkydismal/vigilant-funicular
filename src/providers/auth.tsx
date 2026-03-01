@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState } from "react";
 import type { UsersRowPublic } from "@/db/types";
+import log from "@/utils/stdlog";
 
 type AuthContextType = {
     user: UsersRowPublic | null;
@@ -13,8 +14,16 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<UsersRowPublic | null>(null);
 
+    const _setUser = (u: UsersRowPublic | null) => {
+        log.debug(`User before: ${user}`);
+
+        setUser(u);
+
+        log.debug(`User now: ${user}`);
+    };
+
     return (
-        <AuthContext.Provider value={{ user, setUser }}>
+        <AuthContext.Provider value={{ user, setUser: _setUser }}>
             {children}
         </AuthContext.Provider>
     );
