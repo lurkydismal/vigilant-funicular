@@ -65,9 +65,10 @@ export default function MainContent() {
                 await createPost(fd);
 
                 setCompleted(true);
+                setActiveStep(steps.length);
             });
         }
-    }, [completedSteps, steps, formRef]);
+    }, [completedSteps, steps, formRef, steps, setActiveStep]);
 
     return (
         <Box
