@@ -255,11 +255,13 @@ export default function SettingsForm() {
                 <Divider />
             </FormGrid>
 
+            {/*
             <PreviewForm />
 
             <FormGrid size={{ xs: 12 }}>
                 <Divider />
             </FormGrid>
+            */}
 
             <PublishForm />
 
