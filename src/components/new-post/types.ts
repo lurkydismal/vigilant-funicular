@@ -14,7 +14,7 @@ export const stepSx = {
     border: "1px solid",
     borderColor: "divider",
     backgroundColor: "background.paper",
-    boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
+    boxShadow: "0 1px 2px rgba(0,0,0,0.08)",
 
     "&::after": {
         transformOrigin: "left",
