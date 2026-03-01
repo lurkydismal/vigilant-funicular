@@ -10,7 +10,6 @@ import { Step as StepType } from "./types";
 import DesktopStepper from "./DesktopStepper";
 
 export default function MainContent() {
-    const [remountKey, setRemountKey] = useState(0);
     const [activeStep, setActiveStep] = useState(0);
     const [completedSteps, setCompletedSteps] = useState<number[]>([]);
     const [completed, setCompleted] = useState(false);
@@ -26,7 +25,7 @@ export default function MainContent() {
         },
     ];
 
-    const handleReset = () => setRemountKey(k => k + 1);
+    const handleReset = () => { };
 
     const addCompletedStep = (index: number) => {
         setCompletedSteps((prev) => [
@@ -55,13 +54,13 @@ export default function MainContent() {
             setActiveStep(steps.length);
 
             setCompleted(true);
+
             handleReset();
         }
     }, [completedSteps, steps, activeStep, setActiveStep]);
 
     return (
         <Box
-            key={remountKey}
             sx={{
                 display: "flex",
                 flexDirection: "column",
@@ -103,7 +102,7 @@ export default function MainContent() {
                 {/* Current step content */}
                 {steps.map((item, index) => (
                     <Activity
-                        key={`${item.title}-${index}-${remountKey}`}
+                        key={`${item.title}-${index}`}
                         mode={index === activeStep ? "visible" : "hidden"}
                     >
                         {item.item}
@@ -111,7 +110,6 @@ export default function MainContent() {
                 ))}
 
                 <Activity
-                    key={remountKey}
                     mode={completed ? "visible" : "hidden"}
                 >
                     <FinalStep />
