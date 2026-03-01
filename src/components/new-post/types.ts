@@ -11,6 +11,11 @@ export const stepSx = {
     py: 0.75,
     userSelect: 'none',
 
+    border: "1px solid",
+    borderColor: "divider",
+    backgroundColor: "background.paper",
+    boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
+
     "&::after": {
         transformOrigin: "left",
         bottom: 2,
