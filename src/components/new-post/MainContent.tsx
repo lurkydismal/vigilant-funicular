@@ -2,7 +2,7 @@
 
 import WriteForm from "./WriteForm";
 import SettionsForm from "./SettingsForm";
-import { Activity, useEffect, useState } from "react";
+import { Activity, useEffect, useRef, useState } from "react";
 import { Box } from "@mui/material";
 import FinalStep from "./FinalStep";
 import MobileStepper from "./MobileStepper";
@@ -10,6 +10,7 @@ import { Step as StepType } from "./types";
 import DesktopStepper from "./DesktopStepper";
 
 export default function MainContent() {
+    const formRef = useRef<HTMLFormElement | null>(null);
     const [activeStep, setActiveStep] = useState(0);
     const [completedSteps, setCompletedSteps] = useState<number[]>([]);
     const [completed, setCompleted] = useState(false);
@@ -25,7 +26,8 @@ export default function MainContent() {
         },
     ];
 
-    const handleReset = () => {};
+    // TODO: Implement
+    const handleReset = () => { };
 
     const addCompletedStep = (index: number) => {
         setCompletedSteps((prev) => [...prev, index]);
@@ -50,15 +52,18 @@ export default function MainContent() {
 
     useEffect(() => {
         const allCompleted = completedSteps.length === steps.length;
+        const form = formRef.current;
 
-        if (allCompleted) {
-            setActiveStep(steps.length);
+        if (allCompleted && form) {
+            const fd = new FormData(form);
+
+            // TODO: Add post
 
             setCompleted(true);
 
             handleReset();
         }
-    }, [completedSteps, steps, activeStep, setActiveStep]);
+    }, [completedSteps, steps, formRef]);
 
     return (
         <Box
@@ -100,15 +105,17 @@ export default function MainContent() {
                     onClick={handleClick}
                 />
 
-                {/* Current step content */}
-                {steps.map((item, index) => (
-                    <Activity
-                        key={`${item.title}-${index}`}
-                        mode={index === activeStep ? "visible" : "hidden"}
-                    >
-                        {item.item}
-                    </Activity>
-                ))}
+                <form ref={formRef}>
+                    {/* Current step content */}
+                    {steps.map((item, index) => (
+                        <Activity
+                            key={`${item.title}-${index}`}
+                            mode={index === activeStep ? "visible" : "hidden"}
+                        >
+                            {item.item}
+                        </Activity>
+                    ))}
+                </form>
 
                 <Activity mode={completed ? "visible" : "hidden"}>
                     <FinalStep />

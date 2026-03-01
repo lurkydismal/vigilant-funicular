@@ -52,8 +52,8 @@ export default function WriteForm() {
                 </FormLabel>
 
                 <OutlinedInput
-                    autoComplete="title"
                     name="title"
+                    autoComplete="title"
                     placeholder="Title"
                     required
                     size="small"
@@ -64,8 +64,8 @@ export default function WriteForm() {
                 <FormLabel htmlFor="description">Description</FormLabel>
 
                 <OutlinedInput
-                    autoComplete="description"
                     name="description"
+                    autoComplete="description"
                     placeholder="Description"
                     required
                     size="small"
@@ -92,6 +92,9 @@ export default function WriteForm() {
                             }}
                         >
                             <MarkdownEditor value={text} onChange={setText} />
+
+                            {/* Mirror editor content */}
+                            <input type="hidden" name="content" value={text} required />
                         </Box>
 
                         {/* DRAG HANDLE */}
@@ -128,6 +131,9 @@ export default function WriteForm() {
                             primary="Reading time"
                             secondary={formatReadingTime(readingTime)}
                         />
+
+                        {/* Mirror reading time */}
+                        <input type="hidden" name="reading-time" value={readingTime} required />
 
                         <ListItemText
                             primary="Word count"

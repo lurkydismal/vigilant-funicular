@@ -18,7 +18,6 @@ import { FormGrid } from "./types";
 import { getAllCategories, requestAllCategories } from "@/lib/category";
 import AutocompleteWithHighlight from "@/components/Autocomplete";
 import { getAllUsers, requestAllUsers } from "@/lib/user";
-import log from "@/utils/stdlog";
 import { getUser } from "@/utils/stduser";
 
 function VisibilityForm() {
@@ -55,6 +54,7 @@ function VisibilityForm() {
                 <FormControlLabel
                     control={<Checkbox name="contentWarning" value="off" />}
                     label="Content warning"
+                    name="content-warning"
                 />
             </FormGrid>
         </>
@@ -66,6 +66,7 @@ function OrganizationForm() {
     const [categories, setCategories] = useState<readonly string[]>([]);
     const [open, setOpen] = useState(false);
     const [pending, startTransition] = useTransition();
+    const [categoryValue, setCategoryValue] = useState<string | null>(null);
 
     const handleOpen = () => {
         setOpen(true);
@@ -90,6 +91,8 @@ function OrganizationForm() {
             <FormLabel id={categoryId} required>Category</FormLabel>
 
             <AutocompleteWithHighlight
+                value={categoryValue}
+                onChange={(_, newVal) => setCategoryValue(newVal)}
                 open={open}
                 onOpen={handleOpen}
                 onClose={handleClose}
@@ -99,6 +102,7 @@ function OrganizationForm() {
                     <TextField
                         {...params}
                         placeholder="Category"
+                        required
                         slotProps={{
                             input: {
                                 ...params.InputProps,
@@ -118,6 +122,8 @@ function OrganizationForm() {
                     />
                 )}
             />
+
+            <input type="hidden" name="category" value={categoryValue ?? ""} required />
         </FormGrid>
     );
 }
@@ -130,6 +136,7 @@ function OrganizationForm() {
 //     );
 // }
 
+// TODO: Time selection
 function PublishForm() {
     const publishId = useId();
     const publishOptions = ["now", "scheduled"];
@@ -164,6 +171,7 @@ function CollaborationForm() {
     const [cuAuthors, setCoAuthorss] = useState<readonly string[]>([]);
     const [open, setOpen] = useState(false);
     const [pending, startTransition] = useTransition();
+    const [coAuthorValue, setCoAuthorValue] = useState<string | null>(null);
 
     const handleOpen = () => {
         setOpen(true);
@@ -171,9 +179,6 @@ function CollaborationForm() {
         if (!cuAuthors.length) {
             startTransition(async () => {
                 const _coAuthors = await getAllUsers(requestAllUsers());
-
-                log.debug(`User: ${user}`);
-                log.debug("Username: ", user?.username);
 
                 setCoAuthorss(
                     _coAuthors
@@ -194,6 +199,8 @@ function CollaborationForm() {
                 <FormLabel id={coAuthorId}>Co-author</FormLabel>
 
                 <AutocompleteWithHighlight
+                    value={coAuthorValue}
+                    onChange={(_, newVal) => setCoAuthorValue(newVal)}
                     open={open}
                     onOpen={handleOpen}
                     onClose={handleClose}
@@ -222,6 +229,8 @@ function CollaborationForm() {
                         />
                     )}
                 />
+
+                <input type="hidden" name="category" value={coAuthorValue ?? ""} required />
             </FormGrid>
 
             <FormGrid size={{ xs: 12, md: 12 }}>
@@ -231,7 +240,6 @@ function CollaborationForm() {
                     autoComplete="attributionNote"
                     name="attributionNote"
                     placeholder="Originally published on..."
-                    required
                     size="small"
                 />
             </FormGrid>
