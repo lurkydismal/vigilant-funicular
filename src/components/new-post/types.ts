@@ -14,6 +14,13 @@ export const stepSx = {
     border: "1px solid",
     borderColor: "divider",
 
+    borderRadius: 1,
+    boxShadow:
+        "0 0 24px 12px hsla(210, 100%, 25%, 0.8)",
+    paddingLeft: 1,
+    paddingRight: 1,
+    paddingBottom: 1,
+
     "&::after": {
         transformOrigin: "left",
         bottom: 2,
