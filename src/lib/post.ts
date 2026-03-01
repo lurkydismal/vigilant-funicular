@@ -5,6 +5,7 @@ import { cacheTag } from "next/cache";
 import { posts } from "@/db/schema";
 import { desc } from "drizzle-orm";
 import { postFullSchema } from "@/utils/validate/schemas";
+import log from "@/utils/stdlog";
 
 export async function requestAllPosts() {
     "use cache";
@@ -40,4 +41,8 @@ export async function requestPostFull(
 
 export async function getPostFull(request: ReturnType<typeof requestPostFull>) {
     return postFullSchema.parse(await request);
+}
+
+export async function createPost(fd: FormData) {
+    log.debug(Object.fromEntries(fd.entries()));
 }

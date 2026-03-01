@@ -2,12 +2,13 @@
 
 import WriteForm from "./WriteForm";
 import SettionsForm from "./SettingsForm";
-import { Activity, useEffect, useRef, useState } from "react";
+import { Activity, startTransition, useEffect, useRef, useState } from "react";
 import { Box } from "@mui/material";
 import FinalStep from "./FinalStep";
 import MobileStepper from "./MobileStepper";
 import { Step as StepType } from "./types";
 import DesktopStepper from "./DesktopStepper";
+import { createPost } from "@/lib/post";
 
 export default function MainContent() {
     const formRef = useRef<HTMLFormElement | null>(null);
@@ -26,8 +27,11 @@ export default function MainContent() {
         },
     ];
 
-    // TODO: Implement
-    const handleReset = () => { };
+    const handleReset = () => {
+        setActiveStep(0);
+        setCompletedSteps([]);
+        setCompleted(false);
+    };
 
     const addCompletedStep = (index: number) => {
         setCompletedSteps((prev) => [...prev, index]);
@@ -57,11 +61,11 @@ export default function MainContent() {
         if (allCompleted && form) {
             const fd = new FormData(form);
 
-            // TODO: Add post
+            startTransition(async () => {
+                await createPost(fd);
 
-            setCompleted(true);
-
-            handleReset();
+                setCompleted(true);
+            });
         }
     }, [completedSteps, steps, formRef]);
 
