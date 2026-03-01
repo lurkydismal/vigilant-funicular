@@ -5,7 +5,7 @@ import { getEnv } from "./stdfunc";
  * - `true` forces verbose logging regardless of environment.
  * - `false` disables trace-level logging unless explicitly set elsewhere.
  */
-export const needTrace = false;
+export const needTrace = true;
 
 /**
  * Flag indicating if the current environment is development.
@@ -136,7 +136,7 @@ export const storageKeys = {
 
     server: isServer
         ? {
-              accessToken: getEnv("COOKIE_NAME"),
-          }
+            accessToken: getEnv("COOKIE_NAME"),
+        }
         : null,
 };
