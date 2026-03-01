@@ -20,12 +20,45 @@ import AutocompleteWithHighlight from "@/components/Autocomplete";
 import ImageInput from "./ImageInput";
 import log from "@/utils/stdlog";
 
-export default function SettingsForm() {
-    // Visibility
+function VisibilityForm() {
     const visibilityId = useId();
     const visibilityOptions = ["public", "followers", "unlisted", "private"];
 
-    // Organization
+    return (
+        <FormGrid size={{ xs: 12, md: 12 }}>
+            <FormLabel id={visibilityId}>Visibility</FormLabel>
+
+            <RadioGroup
+                row
+                aria-labelledby={visibilityId}
+                defaultValue="public"
+                name="visibility"
+            >
+                {visibilityOptions.map((item) => (
+                    <FormControlLabel
+                        key={item}
+                        value={item}
+                        control={<Radio />}
+                        label={toPascalCase(item)}
+                    />
+                ))}
+            </RadioGroup>
+
+            <FormGrid size={{ xs: 12 }}>
+                <Divider />
+            </FormGrid>
+
+            <FormGrid size={{ xs: 12 }}>
+                <FormControlLabel
+                    control={<Checkbox name="contentWarning" value="off" />}
+                    label="Content warning"
+                />
+            </FormGrid>
+        </FormGrid>
+    );
+}
+
+function OrganizationForm() {
     const categoryId = useId();
     const [categories, setCategories] = useState<readonly string[]>([]);
     const [open, setOpen] = useState(false);
@@ -41,8 +74,6 @@ export default function SettingsForm() {
                 );
 
                 setCategories(_categories.map((item) => item.name));
-
-                log.debug(`Categories: ${categories}`);
             });
         }
     };
@@ -51,128 +82,86 @@ export default function SettingsForm() {
         setOpen(false);
     };
 
-    // Publish
+    return (
+        <FormGrid size={{ xs: 12, md: 12 }}>
+            <FormLabel id={categoryId}>Category</FormLabel>
+
+            <AutocompleteWithHighlight
+                open={open}
+                onOpen={handleOpen}
+                onClose={handleClose}
+                loading={pending}
+                options={categories}
+                renderInput={(params) => (
+                    <TextField
+                        {...params}
+                        placeholder="Category"
+                        slotProps={{
+                            input: {
+                                ...params.InputProps,
+                                endAdornment: (
+                                    <>
+                                        {pending ? (
+                                            <CircularProgress
+                                                color="inherit"
+                                                size={20}
+                                            />
+                                        ) : null}
+                                        {params.InputProps.endAdornment}
+                                    </>
+                                ),
+                            },
+                        }}
+                    />
+                )}
+            />
+        </FormGrid>
+    );
+}
+
+function PreviewForm() {
+    return (
+        <FormGrid size={{ xs: 12, md: 12 }}>
+            <ImageInput />
+        </FormGrid>
+    );
+}
+
+function PublishForm() {
     const publishId = useId();
     const publishOptions = ["now", "scheduled", "draft"];
 
-    // Collaboration
+    return (
+        <FormGrid size={{ xs: 12, md: 12 }}>
+            <FormLabel id={publishId}>
+                Publish
+            </FormLabel>
+
+            <RadioGroup
+                row
+                aria-labelledby={publishId}
+                defaultValue="now"
+                name="publish"
+            >
+                {publishOptions.map((item) => (
+                    <FormControlLabel
+                        key={item}
+                        value={item}
+                        control={<Radio />}
+                        label={toPascalCase(item)}
+                    />
+                ))}
+            </RadioGroup>
+        </FormGrid>
+    );
+}
+
+function CollaborationForm() {
     const coAuthorId = useId();
     const attributionNoteId = useId();
 
     return (
-        <Grid container spacing={2}>
-            {/* Visibility */}
-            <FormGrid size={{ xs: 12, md: 12 }}>
-                <FormLabel id={visibilityId}>Visibility</FormLabel>
-
-                <RadioGroup
-                    row
-                    aria-labelledby={visibilityId}
-                    defaultValue="public"
-                    name="visibility"
-                >
-                    {visibilityOptions.map((item) => (
-                        <FormControlLabel
-                            key={item}
-                            value={item}
-                            control={<Radio />}
-                            label={toPascalCase(item)}
-                        />
-                    ))}
-                </RadioGroup>
-            </FormGrid>
-
-            <FormGrid size={{ xs: 12 }}>
-                <Divider />
-            </FormGrid>
-
-            <FormGrid size={{ xs: 12 }}>
-                <FormControlLabel
-                    control={<Checkbox name="contentWarning" value="off" />}
-                    label="Content warning"
-                />
-            </FormGrid>
-
-            <FormGrid size={{ xs: 12 }}>
-                <Divider />
-            </FormGrid>
-
-            {/* Organization */}
-            <FormGrid size={{ xs: 12, md: 12 }}>
-                <FormLabel id={categoryId}>Category</FormLabel>
-
-                <AutocompleteWithHighlight
-                    open={open}
-                    onOpen={handleOpen}
-                    onClose={handleClose}
-                    loading={pending}
-                    options={categories}
-                    renderInput={(params) => (
-                        <TextField
-                            {...params}
-                            placeholder="Category"
-                            slotProps={{
-                                input: {
-                                    ...params.InputProps,
-                                    endAdornment: (
-                                        <>
-                                            {pending ? (
-                                                <CircularProgress
-                                                    color="inherit"
-                                                    size={20}
-                                                />
-                                            ) : null}
-                                            {params.InputProps.endAdornment}
-                                        </>
-                                    ),
-                                },
-                            }}
-                        />
-                    )}
-                />
-            </FormGrid>
-
-            <FormGrid size={{ xs: 12 }}>
-                <Divider />
-            </FormGrid>
-
-            {/* Preview */}
-            <FormGrid size={{ xs: 12, md: 12 }}>
-                <ImageInput />
-            </FormGrid>
-
-            <FormGrid size={{ xs: 12 }}>
-                <Divider />
-            </FormGrid>
-
-            {/* Publish */}
-            <FormGrid size={{ xs: 12, md: 12 }}>
-                <FormLabel id={publishId}>
-                    Publish
-                </FormLabel>
-
-                <RadioGroup
-                    row
-                    aria-labelledby={publishId}
-                    defaultValue="now"
-                    name="publish"
-                >
-                    {publishOptions.map((item) => (
-                        <FormControlLabel
-                            key={item}
-                            value={item}
-                            control={<Radio />}
-                            label={toPascalCase(item)}
-                        />
-                    ))}
-                </RadioGroup>
-            </FormGrid>
-
-            <FormGrid size={{ xs: 12 }}>
-                <Divider />
-            </FormGrid>
-
-            {/* Collaboration */}
+        <>
             <FormGrid size={{ xs: 12, md: 12 }}>
                 <FormLabel id={coAuthorId}>
                     Co-author
@@ -200,6 +189,39 @@ export default function SettingsForm() {
                     size="small"
                 />
             </FormGrid>
+        </>
+    );
+}
+
+export default function SettingsForm() {
+
+    return (
+        <Grid container spacing={2}>
+            <VisibilityForm />
+
+            <FormGrid size={{ xs: 12 }}>
+                <Divider />
+            </FormGrid>
+
+            <OrganizationForm />
+
+            <FormGrid size={{ xs: 12 }}>
+                <Divider />
+            </FormGrid>
+
+            <PreviewForm />
+
+            <FormGrid size={{ xs: 12 }}>
+                <Divider />
+            </FormGrid>
+
+            <PublishForm />
+
+            <FormGrid size={{ xs: 12 }}>
+                <Divider />
+            </FormGrid>
+
+            <CollaborationForm />
         </Grid>
     );
 }
