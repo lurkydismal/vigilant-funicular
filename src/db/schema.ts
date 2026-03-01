@@ -79,9 +79,9 @@ export const categories = pgTable(
 );
 
 export const postVisibilityEnum = pgEnum("post_visibility", [
-    "Public",
-    "Unlisted",
-    "Private",
+    "public",
+    "unlisted",
+    "private",
 ]);
 
 export const posts = pgTable(
@@ -101,7 +101,7 @@ export const posts = pgTable(
         description: varchar({ length: 100 }),
         content: text().notNull(),
         content_warning: boolean().default(false).notNull(),
-        visibility: postVisibilityEnum().default("Public").notNull(),
+        visibility: postVisibilityEnum().default("public").notNull(),
         scheduled_at: timestamp({ precision: 0, withTimezone: true }).defaultNow().notNull(),
         published_at: timestamp({ precision: 0, withTimezone: true }).defaultNow().notNull(),
         reading_time: integer().notNull(),
