@@ -139,14 +139,14 @@ export default function SettingsForm() {
 
             {/* Publish */}
             <FormGrid size={{ xs: 12, md: 12 }}>
-                <FormLabel id={publishId} required>
+                <FormLabel id={publishId}>
                     Publish
                 </FormLabel>
 
                 <RadioGroup
                     row
                     aria-labelledby={publishId}
-                    defaultValue="public"
+                    defaultValue="now"
                     name="publish"
                 >
                     {publishOptions.map((item) => (
