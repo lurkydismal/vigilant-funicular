@@ -18,6 +18,7 @@ import { FormGrid } from "./types";
 import { getAllCategories, requestAllCategories } from "@/lib/category";
 import AutocompleteWithHighlight from "@/components/Autocomplete";
 import ImageInput from "./ImageInput";
+import { getAllUsers, requestAllUsers } from "@/lib/user";
 
 function VisibilityForm() {
     const visibilityId = useId();
@@ -160,6 +161,27 @@ function PublishForm() {
 function CollaborationForm() {
     const coAuthorId = useId();
     const attributionNoteId = useId();
+    const [cuAuthors, setCoAuthorss] = useState<readonly string[]>([]);
+    const [open, setOpen] = useState(false);
+    const [pending, startTransition] = useTransition();
+
+    const handleOpen = () => {
+        setOpen(true);
+
+        if (!cuAuthors.length) {
+            startTransition(async () => {
+                const _coAuthors = await getAllUsers(
+                    requestAllUsers(),
+                );
+
+                setCoAuthorss(_coAuthors.map((item) => item.username));
+            });
+        }
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     return (
         <>
@@ -168,12 +190,34 @@ function CollaborationForm() {
                     Co-author
                 </FormLabel>
 
-                <OutlinedInput
-                    autoComplete="coAuthor"
-                    name="coAuthor"
-                    placeholder="Co-author"
-                    required
-                    size="small"
+                <AutocompleteWithHighlight
+                    open={open}
+                    onOpen={handleOpen}
+                    onClose={handleClose}
+                    loading={pending}
+                    options={cuAuthors}
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            placeholder="Co-author"
+                            slotProps={{
+                                input: {
+                                    ...params.InputProps,
+                                    endAdornment: (
+                                        <>
+                                            {pending ? (
+                                                <CircularProgress
+                                                    color="inherit"
+                                                    size={20}
+                                                />
+                                            ) : null}
+                                            {params.InputProps.endAdornment}
+                                        </>
+                                    ),
+                                },
+                            }}
+                        />
+                    )}
                 />
             </FormGrid>
 
