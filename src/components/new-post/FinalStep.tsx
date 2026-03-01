@@ -11,7 +11,7 @@ export default function FinalStep() {
             <Typography variant="h5">Thank you for contribution!</Typography>
 
             <Typography variant="body1" sx={{ color: "text.secondary" }}>
-                Your post link is <strong>{`/post/${id}`}</strong>.
+                Your post link is <strong>{`/post/${id}`}</strong>
             </Typography>
 
             <Button
