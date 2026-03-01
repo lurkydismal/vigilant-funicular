@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { useAuth } from "@/providers/auth";
 import { login } from "@/lib/auth";
 import { useSnackbar } from "@/providers/snackbar";
+import { UsersRowPublic } from "@/db/types";
 
 export default function SignInPage() {
     const router = useRouter();
@@ -32,7 +33,7 @@ export default function SignInPage() {
         log.trace(`onSubmit called: '${JSON.stringify(data)}'`);
 
         try {
-            const user = await login({ ...data });
+            const user: UsersRowPublic = await login({ ...data });
 
             logVar(user);
 
