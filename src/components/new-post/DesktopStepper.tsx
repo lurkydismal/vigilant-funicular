@@ -21,7 +21,7 @@ export default function DesktopStepper({
 
                     return (
                         <Step key={step.title}>
-                            <Tooltip title={isActive ? "Finish" : "Step"}>
+                            <Tooltip title={isActive ? "Mark completed" : "Step"}>
                                 <StepLabel
                                     sx={stepSx}
                                     onClick={() => setActiveStep(index)}
