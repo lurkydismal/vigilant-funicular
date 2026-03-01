@@ -1,7 +1,9 @@
+"use client";
+
 import { Button, Stack, Typography } from "@mui/material";
 import NextLink from "@/components/Link";
 
-export default function FinalStep() {
+export default function FinalStep({ handleReset }: { handleReset: () => void }) {
     const id = 0;
 
     return (
@@ -19,6 +21,7 @@ export default function FinalStep() {
                 sx={{ alignSelf: "start" }}
                 href="/profile/my"
                 LinkComponent={NextLink}
+                onClick={() => handleReset()}
             >
                 Go to my profile
             </Button>
