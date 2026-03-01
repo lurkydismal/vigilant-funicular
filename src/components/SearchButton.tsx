@@ -17,6 +17,9 @@ function Search() {
                 placeholder="Search…"
                 size="small"
                 sx={{ flexGrow: 1 }}
+                inputProps={{
+                    "aria-label": "search",
+                }}
                 startAdornment={
                     <InputAdornment
                         position="start"
@@ -25,9 +28,6 @@ function Search() {
                         <SearchRounded fontSize="small" />
                     </InputAdornment>
                 }
-                inputProps={{
-                    "aria-label": "search",
-                }}
             />
         </FormControl>
     );
@@ -45,6 +45,7 @@ export function SearchButton() {
             }}
         >
             <Search />
+
             <IconButton size="small" aria-label="RSS feed">
                 <RssFeedRounded />
             </IconButton>
@@ -64,6 +65,7 @@ export function SearchButtonMobile() {
             }}
         >
             <Search />
+
             <IconButton size="small" aria-label="RSS feed">
                 <RssFeedRounded />
             </IconButton>
