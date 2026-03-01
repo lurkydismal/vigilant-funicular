@@ -29,14 +29,20 @@ export default function DesktopStepper({
                             key={step.title}
                             completed={isCompleted}
                         >
-                            <Tooltip title={tooltip}>
-                                <StepLabel
-                                    sx={completed ? undefined : stepSx}
-                                    onClick={completed ? undefined : () => onClick(index, isActive, isCompleted)}
-                                >
-                                    {step.title}
-                                </StepLabel>
-                            </Tooltip>
+                            {(() => {
+                                const label = (
+                                    <StepLabel
+                                        sx={completed ? undefined : stepSx}
+                                        onClick={completed ? undefined : () => onClick(index, isActive, isCompleted)}
+                                    >
+                                        {step.title}
+                                    </StepLabel>
+                                );
+
+                                return !completed
+                                    ? <Tooltip title={tooltip}>{label}</Tooltip>
+                                    : label;
+                            })()}
                         </Step>
                     );
                 })}
