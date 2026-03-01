@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import type { UsersRowPublic } from "@/db/types";
 import log from "@/utils/stdlog";
 
@@ -20,9 +20,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         log.debug(`Passed user: ${u}`);
 
         setUser(u);
-
-        log.debug(`User now: ${user}`);
     };
+
+    useEffect(() => {
+        log.debug(`User now: ${user}`);
+    }, [user]);
 
     return (
         <AuthContext.Provider value={{ user, setUser: _setUser }}>
