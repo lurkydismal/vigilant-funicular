@@ -8,6 +8,9 @@ import {
     integer,
     index,
     primaryKey,
+    boolean,
+    pgEnum,
+    timestamp,
 } from "drizzle-orm/pg-core";
 import { timestamps } from "./helpers";
 import { sql } from "drizzle-orm";
@@ -72,8 +75,6 @@ export const categories = pgTable(
     },
     (t) => [
         check("name_not_blank", sql`length(trim(${t.name})) > 0`),
-
-        uniqueIndex().on(t.name),
     ],
 );
 
@@ -90,23 +91,40 @@ export const posts = pgTable(
         category_id: integer().references(() => categories.id, {
             onDelete: "set null",
         }),
-        preview_url: varchar({ length: 255 }),
         title: varchar({ length: 50 }).notNull(),
-        description: varchar({ length: 200 }),
+        description: varchar({ length: 100 }),
         content: text().notNull(),
+        content_warning: boolean().default(false).notNull(),
+        visibility: pgEnum("post_visibility", [
+            "Public",
+            "Unlisted",
+            "Private",
+        ])().default("Public").notNull(),
+        scheduled_at: timestamp({ precision: 0, withTimezone: true }).defaultNow().notNull(),
+        published_at: timestamp({ precision: 0, withTimezone: true }).defaultNow().notNull(),
+        reading_time: integer().notNull(),
         ...timestamps,
     },
     (t) => [
-        check(
-            "preview_url_not_blank",
-            sql`${t.preview_url} IS NULL OR length(trim(${t.preview_url})) > 0`,
-        ),
         check(
             "description_not_blank",
             sql`${t.description} IS NULL OR length(trim(${t.description})) > 0`,
         ),
         check("content_not_blank", sql`length(trim(${t.content})) > 0`),
         check("title_not_blank", sql`length(trim(${t.title})) > 0`),
+        check(
+            "scheduled_at_not_in_past",
+            sql`${t.scheduled_at} >= NOW()`,
+        ),
+        check(
+            "published_at_not_in_past",
+            sql`${t.published_at} >= NOW()`,
+        ),
+        check(
+            "published_after_scheduled",
+            sql`${t.published_at} >= ${t.scheduled_at}`,
+        ),
+        check("reading_time_not_blank", sql`${t.reading_time} > 0`),
 
         index().on(t.author_id),
         index().on(t.co_author_id),
