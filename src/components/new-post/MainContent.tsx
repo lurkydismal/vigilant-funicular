@@ -2,7 +2,7 @@
 
 import WriteForm from "./WriteForm";
 import SettionsForm from "./SettingsForm";
-import { Activity, useState } from "react";
+import { Activity, useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import FinalStep from "./FinalStep";
 import MobileStepper from "./MobileStepper";
@@ -12,6 +12,17 @@ import DesktopStepper from "./DesktopStepper";
 export default function MainContent() {
     const [activeStep, setActiveStep] = useState(0);
     const [completedSteps, setCompletedSteps] = useState<number[]>([]);
+
+    const steps: StepType[] = [
+        {
+            title: "Write",
+            item: <WriteForm />,
+        },
+        {
+            title: "Settings",
+            item: <SettionsForm />,
+        },
+    ];
 
     const addCompletedStep = (index: number) => {
         setCompletedSteps((prev) => [
@@ -33,16 +44,11 @@ export default function MainContent() {
         }
     };
 
-    const steps: StepType[] = [
-        {
-            title: "Write",
-            item: <WriteForm />,
-        },
-        {
-            title: "Settings",
-            item: <SettionsForm />,
-        },
-    ];
+    useEffect(() => {
+        const allCompleted = completedSteps.length === steps.length;
+
+        if (allCompleted) setActiveStep(steps.length);
+    }, [completedSteps, steps, activeStep, setActiveStep]);
 
     return (
         <Box
