@@ -23,14 +23,27 @@ export default function MobileStepper({
             {steps.map((step, index) => {
                 const isActive = index === activeStep;
                 const isCompleted = completedSteps.includes(index);
-                const tooltip = isActive ? isCompleted ? "Unmark completed" : "Mark completed" : "Step";
+                const tooltip = isActive
+                    ? isCompleted
+                        ? "Unmark completed"
+                        : "Mark completed"
+                    : "Step";
 
                 return (
                     <Step key={step.title} completed={isCompleted}>
                         {(() => {
                             const label = (
                                 <StepLabel
-                                    onClick={completed ? undefined : () => onClick(index, isActive, isCompleted)}
+                                    onClick={
+                                        completed
+                                            ? undefined
+                                            : () =>
+                                                  onClick(
+                                                      index,
+                                                      isActive,
+                                                      isCompleted,
+                                                  )
+                                    }
                                     sx={{
                                         ".MuiStepLabel-labelContainer": {
                                             maxWidth: "70px",
@@ -41,9 +54,11 @@ export default function MobileStepper({
                                 </StepLabel>
                             );
 
-                            return !completed
-                                ? <Tooltip title={tooltip}>{label}</Tooltip>
-                                : label;
+                            return !completed ? (
+                                <Tooltip title={tooltip}>{label}</Tooltip>
+                            ) : (
+                                label
+                            );
                         })()}
                     </Step>
                 );

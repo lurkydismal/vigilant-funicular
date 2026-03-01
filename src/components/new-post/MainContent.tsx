@@ -25,20 +25,21 @@ export default function MainContent() {
         },
     ];
 
-    const handleReset = () => { };
+    const handleReset = () => {};
 
     const addCompletedStep = (index: number) => {
-        setCompletedSteps((prev) => [
-            ...prev,
-            index,
-        ]);
+        setCompletedSteps((prev) => [...prev, index]);
     };
 
     const removeCompletedStep = (value: number) => {
-        setCompletedSteps(completedSteps.filter(n => n !== value));
+        setCompletedSteps(completedSteps.filter((n) => n !== value));
     };
 
-    const handleClick = (index: number, isActive: boolean, isCompleted: boolean) => {
+    const handleClick = (
+        index: number,
+        isActive: boolean,
+        isCompleted: boolean,
+    ) => {
         if (!isActive) {
             setActiveStep(index);
         } else {
@@ -109,9 +110,7 @@ export default function MainContent() {
                     </Activity>
                 ))}
 
-                <Activity
-                    mode={completed ? "visible" : "hidden"}
-                >
+                <Activity mode={completed ? "visible" : "hidden"}>
                     <FinalStep />
                 </Activity>
             </Box>

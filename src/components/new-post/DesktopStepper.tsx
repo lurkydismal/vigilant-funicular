@@ -22,26 +22,38 @@ export default function DesktopStepper({
                 {steps.map((step, index) => {
                     const isActive = index === activeStep;
                     const isCompleted = completedSteps.includes(index);
-                    const tooltip = isActive ? isCompleted ? "Unmark completed" : "Mark completed" : "Step";
+                    const tooltip = isActive
+                        ? isCompleted
+                            ? "Unmark completed"
+                            : "Mark completed"
+                        : "Step";
 
                     return (
-                        <Step
-                            key={step.title}
-                            completed={isCompleted}
-                        >
+                        <Step key={step.title} completed={isCompleted}>
                             {(() => {
                                 const label = (
                                     <StepLabel
                                         sx={completed ? undefined : stepSx}
-                                        onClick={completed ? undefined : () => onClick(index, isActive, isCompleted)}
+                                        onClick={
+                                            completed
+                                                ? undefined
+                                                : () =>
+                                                      onClick(
+                                                          index,
+                                                          isActive,
+                                                          isCompleted,
+                                                      )
+                                        }
                                     >
                                         {step.title}
                                     </StepLabel>
                                 );
 
-                                return !completed
-                                    ? <Tooltip title={tooltip}>{label}</Tooltip>
-                                    : label;
+                                return !completed ? (
+                                    <Tooltip title={tooltip}>{label}</Tooltip>
+                                ) : (
+                                    label
+                                );
                             })()}
                         </Step>
                     );

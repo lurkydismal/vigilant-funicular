@@ -4,18 +4,17 @@ import AuthCard from "@/components/auth/AuthCard";
 import AuthForm from "@/components/auth/AuthForm";
 import { Link } from "@/components/Link";
 import { CopyrightAligned as Copyright } from "@/components/Copyright";
-import log, { logVar } from "@/utils/stdlog";
+import log from "@/utils/stdlog";
 import { useRouter } from "next/navigation";
 import { Typography } from "@mui/material";
 import { useEffect } from "react";
-import { useAuth } from "@/providers/auth";
 import { login } from "@/lib/auth";
 import { useSnackbar } from "@/providers/snackbar";
 import { UsersRowPublic } from "@/db/types";
+import { setUser } from "@/utils/stduser";
 
 export default function SignInPage() {
     const router = useRouter();
-    const auth = useAuth();
     const { showError } = useSnackbar();
 
     useEffect(() => {
@@ -35,7 +34,7 @@ export default function SignInPage() {
         try {
             const user: UsersRowPublic = await login({ ...data });
 
-            auth.setUser(user);
+            setUser(user);
 
             router.push("/posts");
         } catch (err) {

@@ -9,7 +9,7 @@ export const stepSx = {
 
     px: 1,
     py: 0.75,
-    userSelect: 'none',
+    userSelect: "none",
 
     border: "1px solid",
     borderColor: "divider",

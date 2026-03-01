@@ -132,13 +132,15 @@ export const maxRetries = 3;
  * - Example: storing auth tokens, theme preferences, etc.
  */
 export const storageKeys = {
-    client: isBrowser ? {
-        authStorageKey: getEnv("NEXT_PUBLIC_AUTH_NAME"),
-    } : null,
+    client: isBrowser
+        ? {
+              authStorageKey: getEnv("NEXT_PUBLIC_AUTH_NAME"),
+          }
+        : null,
 
     server: isServer
         ? {
-            accessToken: getEnv("COOKIE_NAME"),
-        }
+              accessToken: getEnv("COOKIE_NAME"),
+          }
         : null,
 };

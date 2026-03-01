@@ -19,8 +19,8 @@ import { getAllCategories, requestAllCategories } from "@/lib/category";
 import AutocompleteWithHighlight from "@/components/Autocomplete";
 import ImageInput from "./ImageInput";
 import { getAllUsers, requestAllUsers } from "@/lib/user";
-import { useAuth } from "@/providers/auth";
 import log from "@/utils/stdlog";
+import { getUser } from "@/utils/stduser";
 
 function VisibilityForm() {
     const visibilityId = useId();
@@ -137,9 +137,7 @@ function PublishForm() {
 
     return (
         <FormGrid size={{ xs: 12, md: 12 }}>
-            <FormLabel id={publishId}>
-                Publish
-            </FormLabel>
+            <FormLabel id={publishId}>Publish</FormLabel>
 
             <RadioGroup
                 row
@@ -161,7 +159,7 @@ function PublishForm() {
 }
 
 function CollaborationForm() {
-    const { user } = useAuth();
+    const user = getUser();
     const coAuthorId = useId();
     const attributionNoteId = useId();
     const [cuAuthors, setCoAuthorss] = useState<readonly string[]>([]);
@@ -173,18 +171,16 @@ function CollaborationForm() {
 
         if (!cuAuthors.length) {
             startTransition(async () => {
-                const _coAuthors = await getAllUsers(
-                    requestAllUsers(),
-                );
+                const _coAuthors = await getAllUsers(requestAllUsers());
 
                 log.debug(`User: ${user}`);
                 log.debug("Username: ", user?.username);
 
                 setCoAuthorss(
-                    _coAuthors.map(
-                        (item) => item.username
-                    )
-                        .filter(username => username !== user?.username));
+                    _coAuthors
+                        .map((item) => item.username)
+                        .filter((username) => username !== user?.username),
+                );
             });
         }
     };
@@ -196,9 +192,7 @@ function CollaborationForm() {
     return (
         <>
             <FormGrid size={{ xs: 12, md: 12 }}>
-                <FormLabel id={coAuthorId}>
-                    Co-author
-                </FormLabel>
+                <FormLabel id={coAuthorId}>Co-author</FormLabel>
 
                 <AutocompleteWithHighlight
                     open={open}
@@ -232,9 +226,7 @@ function CollaborationForm() {
             </FormGrid>
 
             <FormGrid size={{ xs: 12, md: 12 }}>
-                <FormLabel id={attributionNoteId}>
-                    Attribution note
-                </FormLabel>
+                <FormLabel id={attributionNoteId}>Attribution note</FormLabel>
 
                 <OutlinedInput
                     autoComplete="attributionNote"
@@ -249,7 +241,6 @@ function CollaborationForm() {
 }
 
 export default function SettingsForm() {
-
     return (
         <Grid container spacing={2}>
             <VisibilityForm />

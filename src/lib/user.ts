@@ -40,7 +40,8 @@ export async function getUser(request: ReturnType<typeof requestUser>) {
 export async function requestAllUsers() {
     "use cache";
 
-    return db.select()
+    return db
+        .select()
         .from(users)
         .orderBy(desc(users.username_normalized))
         .execute();

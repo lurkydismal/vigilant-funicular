@@ -10,11 +10,10 @@ import { Typography } from "@mui/material";
 import { useEffect } from "react";
 import { register } from "@/lib/auth";
 import { useSnackbar } from "@/providers/snackbar";
-import { useAuth } from "@/providers/auth";
+import { setUser } from "@/utils/stduser";
 
 export default function SignUpPage() {
     const router = useRouter();
-    const auth = useAuth();
     const { showError } = useSnackbar();
 
     useEffect(() => {
@@ -33,9 +32,7 @@ export default function SignUpPage() {
         try {
             const user = await register({ ...data, avatar_url: null });
 
-            auth.setUser(user);
-
-            log.debug(`User: ${auth.user}`);
+            setUser(user);
 
             router.push("/posts");
         } catch (err) {
