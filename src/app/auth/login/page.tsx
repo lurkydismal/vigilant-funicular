@@ -4,7 +4,7 @@ import AuthCard from "@/components/auth/AuthCard";
 import AuthForm from "@/components/auth/AuthForm";
 import { Link } from "@/components/Link";
 import { CopyrightAligned as Copyright } from "@/components/Copyright";
-import log from "@/utils/stdlog";
+import log, { logVar } from "@/utils/stdlog";
 import { useRouter } from "next/navigation";
 import { Typography } from "@mui/material";
 import { useEffect } from "react";
@@ -33,6 +33,8 @@ export default function SignInPage() {
 
         try {
             const user = await login({ ...data });
+
+            logVar(user);
 
             auth.setUser(user);
 
