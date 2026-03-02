@@ -45,7 +45,7 @@ export function AuthorWithFollow({
             }
             right={
                 <FollowButton
-                    uid={author.username}
+                    uid={author.username_normalized}
                     doesFollow={doesFollow}
                     size="large"
                     needText={needText}
@@ -99,7 +99,7 @@ export function AuthorWithFollowAndLink({
             }
             right={
                 <FollowButton
-                    uid={author.username}
+                    uid={author.username_normalized}
                     doesFollow={doesFollow}
                     size="large"
                     needText={needText}

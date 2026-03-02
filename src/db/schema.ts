@@ -3,8 +3,8 @@ import {
     serial,
     pgTable,
     text,
-    uniqueIndex,
     check,
+    smallint,
     integer,
     index,
     primaryKey,
@@ -103,8 +103,7 @@ export const posts = pgTable(
         content_warning: boolean().default(false).notNull(),
         visibility: postVisibilityEnum().default("public").notNull(),
         scheduled_at: timestamp({ precision: 0, withTimezone: true }).defaultNow().notNull(),
-        published_at: timestamp({ precision: 0, withTimezone: true }).defaultNow().notNull(),
-        reading_time: integer().notNull(),
+        reading_time: smallint().notNull(),
         ...timestamps,
     },
     (t) => [
@@ -117,14 +116,6 @@ export const posts = pgTable(
         check(
             "scheduled_at_not_in_past",
             sql`${t.scheduled_at} >= NOW()`,
-        ),
-        check(
-            "published_at_not_in_past",
-            sql`${t.published_at} >= NOW()`,
-        ),
-        check(
-            "published_after_scheduled",
-            sql`${t.published_at} >= ${t.scheduled_at}`,
         ),
         check("reading_time_not_blank", sql`${t.reading_time} > 0`),
 

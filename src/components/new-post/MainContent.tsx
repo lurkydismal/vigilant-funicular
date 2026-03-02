@@ -125,7 +125,7 @@ export default function MainContent() {
                 </form>
 
                 <Activity mode={completed ? "visible" : "hidden"}>
-                    <FinalStep />
+                    <FinalStep onReset={handleReset} />
                 </Activity>
             </Box>
         </Box>
