@@ -9,9 +9,55 @@ import MobileStepper from "./MobileStepper";
 import { Step as StepType } from "./types";
 import DesktopStepper from "./DesktopStepper";
 import { createPost } from "@/lib/post";
+import { postNewSchema } from "@/utils/validate/schemas";
+import log from "@/utils/stdlog";
+import { useSnackbar } from "@/providers/snackbar";
+import { SubmitHandler, useForm } from "react-hook-form";
+import z from "zod";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { createContext, useContext } from "react";
+import { Control } from "react-hook-form";
+
+type FormValues = z.infer<typeof postNewSchema>;
+
+const FormContext = createContext<{
+    control: Control<FormValues>;
+} | null>(null);
+
+export function _useForm() {
+    const ctx = useContext(FormContext);
+
+    if (!ctx) {
+        throw new Error("_useForm must be used within FormContext");
+    }
+
+    return ctx;
+}
 
 export default function MainContent() {
     const formRef = useRef<HTMLFormElement | null>(null);
+    const { showError } = useSnackbar();
+    const {
+        control,
+        handleSubmit,
+    } = useForm<FormValues>({
+        resolver: zodResolver(postNewSchema),
+        defaultValues: {
+            // Write form
+            title: "",
+            description: "",
+            content: "",
+            "reading-time": 1,
+
+            // Settings form
+            visibility: 'public',
+            "content-warning": false,
+            category: "",
+            publish: 'now',
+            "co-author": "",
+            "attribution-note": "",
+        },
+    });
     const [activeStep, setActiveStep] = useState(0);
     const [completedSteps, setCompletedSteps] = useState<number[]>([]);
     const [completed, setCompleted] = useState(false);
@@ -33,8 +79,14 @@ export default function MainContent() {
         setCompleted(false);
     };
 
-    const addCompletedStep = (index: number) => {
-        setCompletedSteps((prev) => [...prev, index]);
+    const addCompletedStep = async (index: number) => {
+        try {
+            await handleSubmit((data) => data)(); // validate without submitting
+
+            setCompletedSteps((prev) => [...prev, index]);
+        } catch {
+            // validation failed, RHF already shows errors
+        }
     };
 
     const removeCompletedStep = (value: number) => {
@@ -54,23 +106,32 @@ export default function MainContent() {
         }
     };
 
+    const onSubmit: SubmitHandler<FormValues> = async (data) => {
+        try {
+            const parsed = postNewSchema.parse(data);
+
+            log.debug(`Post create: ${JSON.stringify(parsed)}`);
+
+            startTransition(async () => {
+                await createPost(data);
+
+                setCompleted(true);
+                setActiveStep(steps.length);
+            });
+        } catch (err) {
+            showError(err);
+        }
+
+    };
+
     useEffect(() => {
         const allCompleted = completedSteps.length === steps.length;
         const form = formRef.current;
 
         if (allCompleted && form) {
-            startTransition(async () => {
-                const fd = new FormData(form);
-
-                // TODO: Validate before sending
-
-                await createPost(fd);
-
-                setCompleted(true);
-                setActiveStep(steps.length);
-            });
+            form.submit();
         }
-    }, [completedSteps, steps, formRef, steps, setActiveStep]);
+    }, [completedSteps, steps, steps, setActiveStep]);
 
     return (
         <Box
@@ -112,16 +173,22 @@ export default function MainContent() {
                     onClick={handleClick}
                 />
 
-                <form ref={formRef}>
-                    {/* Current step content */}
-                    {steps.map((item, index) => (
-                        <Activity
-                            key={`${item.title}-${index}`}
-                            mode={index === activeStep ? "visible" : "hidden"}
-                        >
-                            {item.item}
-                        </Activity>
-                    ))}
+                <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
+                    <FormContext.Provider
+                        value={{
+                            control,
+                        }}
+                    >
+                        {/* Current step content */}
+                        {steps.map((item, index) => (
+                            <Activity
+                                key={`${item.title}-${index}`}
+                                mode={index === activeStep ? "visible" : "hidden"}
+                            >
+                                {item.item}
+                            </Activity>
+                        ))}
+                    </FormContext.Provider>
                 </form>
 
                 <Activity mode={completed ? "visible" : "hidden"}>

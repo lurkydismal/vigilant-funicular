@@ -19,8 +19,12 @@ import { getAllCategories, requestAllCategories } from "@/lib/category";
 import AutocompleteWithHighlight from "@/components/Autocomplete";
 import { getAllUsers, requestAllUsers } from "@/lib/user";
 import { getUser } from "@/utils/stduser";
+import { Controller } from "react-hook-form";
+import { _useForm } from "./MainContent";
 
 function VisibilityForm() {
+    const { control } = _useForm();
+
     const visibilityId = useId();
     const visibilityOptions = ["public", "unlisted", "private"];
 
@@ -29,21 +33,27 @@ function VisibilityForm() {
             <FormGrid size={{ xs: 12, md: 12 }}>
                 <FormLabel id={visibilityId}>Visibility</FormLabel>
 
-                <RadioGroup
-                    row
-                    aria-labelledby={visibilityId}
-                    defaultValue="public"
+                <Controller
                     name="visibility"
-                >
-                    {visibilityOptions.map((item) => (
-                        <FormControlLabel
-                            key={item}
-                            value={item}
-                            control={<Radio />}
-                            label={toPascalCase(item)}
-                        />
-                    ))}
-                </RadioGroup>
+                    control={control}
+                    rules={{ required: "Visibility is required" }}
+                    render={({ field }) => (
+                        <RadioGroup
+                            {...field}
+                            row
+                            aria-labelledby={visibilityId}
+                        >
+                            {visibilityOptions.map((item) => (
+                                <FormControlLabel
+                                    key={item}
+                                    value={item}
+                                    control={<Radio />}
+                                    label={toPascalCase(item)}
+                                />
+                            ))}
+                        </RadioGroup>
+                    )}
+                />
             </FormGrid>
 
             <FormGrid size={{ xs: 12 }}>
@@ -51,10 +61,16 @@ function VisibilityForm() {
             </FormGrid>
 
             <FormGrid size={{ xs: 12 }}>
-                <FormControlLabel
-                    control={<Checkbox name="contentWarning" value="off" />}
-                    label="Content warning"
+                <Controller
                     name="content-warning"
+                    control={control}
+                    render={({ field }) => (
+                        <FormControlLabel
+                            {...field}
+                            control={<Checkbox value="off" />}
+                            label="Content warning"
+                        />
+                    )}
                 />
             </FormGrid>
         </>
@@ -62,6 +78,8 @@ function VisibilityForm() {
 }
 
 function OrganizationForm() {
+    const { control } = _useForm();
+
     const categoryId = useId();
     const [categories, setCategories] = useState<readonly string[]>([]);
     const [open, setOpen] = useState(false);
@@ -90,40 +108,54 @@ function OrganizationForm() {
         <FormGrid size={{ xs: 12, md: 12 }}>
             <FormLabel id={categoryId} required>Category</FormLabel>
 
-            <AutocompleteWithHighlight
-                value={categoryValue}
-                onChange={(_, newVal) => setCategoryValue(newVal)}
-                open={open}
-                onOpen={handleOpen}
-                onClose={handleClose}
-                loading={pending}
-                options={categories}
-                renderInput={(params) => (
-                    <TextField
-                        {...params}
-                        placeholder="Category"
-                        required
-                        slotProps={{
-                            input: {
-                                ...params.InputProps,
-                                endAdornment: (
-                                    <>
-                                        {pending ? (
-                                            <CircularProgress
-                                                color="inherit"
-                                                size={20}
-                                            />
-                                        ) : null}
-                                        {params.InputProps.endAdornment}
-                                    </>
-                                ),
-                            },
-                        }}
-                    />
+            <Controller
+                name="category"
+                control={control}
+                rules={{ required: "Category is required" }}
+                render={({ field, fieldState }) => (
+                    <>
+                        <AutocompleteWithHighlight
+                            value={categoryValue}
+                            onChange={(_, newVal) => setCategoryValue(newVal)}
+                            open={open}
+                            onOpen={handleOpen}
+                            onClose={handleClose}
+                            loading={pending}
+                            options={categories}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    {...field}
+                                    placeholder="Category"
+                                    slotProps={{
+                                        input: {
+                                            ...params.InputProps,
+                                            endAdornment: (
+                                                <>
+                                                    {pending ? (
+                                                        <CircularProgress
+                                                            color="inherit"
+                                                            size={20}
+                                                        />
+                                                    ) : null}
+                                                    {params.InputProps.endAdornment}
+                                                </>
+                                            ),
+                                        },
+                                    }}
+                                    error={!!fieldState.error}
+                                />
+                            )}
+                        />
+
+                        <input
+                            {...field}
+                            type="hidden"
+                            value={categoryValue ?? ""}
+                        />
+                    </>
                 )}
             />
-
-            <input type="hidden" name="category" value={categoryValue ?? ""} required />
         </FormGrid>
     );
 }
@@ -138,6 +170,8 @@ function OrganizationForm() {
 
 // TODO: Time selection
 function PublishForm() {
+    const { control } = _useForm();
+
     const publishId = useId();
     const publishOptions = ["now", "scheduled"];
 
@@ -165,6 +199,8 @@ function PublishForm() {
 }
 
 function CollaborationForm() {
+    const { control } = _useForm();
+
     const user = getUser();
     const coAuthorId = useId();
     const attributionNoteId = useId();
@@ -230,15 +266,15 @@ function CollaborationForm() {
                     )}
                 />
 
-                <input type="hidden" name="category" value={coAuthorValue ?? ""} required />
+                <input type="hidden" name="co-author" value={coAuthorValue ?? ""} required />
             </FormGrid>
 
             <FormGrid size={{ xs: 12, md: 12 }}>
                 <FormLabel id={attributionNoteId}>Attribution note</FormLabel>
 
                 <OutlinedInput
-                    autoComplete="attributionNote"
-                    name="attributionNote"
+                    autoComplete="attribution-note"
+                    name="attribution-note"
                     placeholder="Originally published on..."
                     size="small"
                 />

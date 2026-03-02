@@ -16,8 +16,11 @@ import Markdown from "../Markdown";
 import { useWordStats } from "@/utils/stdhook";
 import { formatReadingTime } from "@/utils/stdfunc";
 import { FormGrid } from "./types";
+import { Controller } from "react-hook-form";
+import { _useForm } from "./MainContent";
 
 export default function WriteForm() {
+    const { control } = _useForm();
     const [text, setText] = useState("");
     const { wordCount, readingTime } = useWordStats(text);
     const containerRef = useRef<HTMLDivElement | null>(null);
@@ -51,24 +54,38 @@ export default function WriteForm() {
                     Title
                 </FormLabel>
 
-                <OutlinedInput
+                <Controller
                     name="title"
-                    autoComplete="title"
-                    placeholder="Title"
-                    required
-                    size="small"
+                    control={control}
+                    rules={{ required: "Title is required", minLength: 10 }}
+                    render={({ field, fieldState }) => (
+                        <OutlinedInput
+                            {...field}
+                            autoComplete="title"
+                            placeholder="Title"
+                            size="small"
+                            error={!!fieldState.error}
+                        />
+                    )}
                 />
             </FormGrid>
 
             <FormGrid size={{ xs: 12, md: 12 }}>
                 <FormLabel htmlFor="description">Description</FormLabel>
 
-                <OutlinedInput
+                <Controller
                     name="description"
-                    autoComplete="description"
-                    placeholder="Description"
-                    required
-                    size="small"
+                    control={control}
+                    rules={{ minLength: 10 }}
+                    render={({ field, fieldState }) => (
+                        <OutlinedInput
+                            {...field}
+                            autoComplete="description"
+                            placeholder="Description"
+                            size="small"
+                            error={!!fieldState.error}
+                        />
+                    )}
                 />
             </FormGrid>
 

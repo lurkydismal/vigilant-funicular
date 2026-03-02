@@ -107,12 +107,12 @@ export const posts = pgTable(
         ...timestamps,
     },
     (t) => [
+        check("title_longer_than_10", sql`length(trim(${t.title})) > 10`),
         check(
-            "description_not_blank",
-            sql`${t.description} IS NULL OR length(trim(${t.description})) > 0`,
+            "description_longer_than_10",
+            sql`${t.description} IS NULL OR length(trim(${t.description})) > 10`,
         ),
-        check("content_not_blank", sql`length(trim(${t.content})) > 0`),
-        check("title_not_blank", sql`length(trim(${t.title})) > 0`),
+        check("content_longer_than_100", sql`length(trim(${t.content})) > 100`),
         check(
             "scheduled_at_not_in_past",
             sql`${t.scheduled_at} >= NOW()`,

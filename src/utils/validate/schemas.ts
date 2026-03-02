@@ -10,6 +10,9 @@ import { categories, follows, posts, users } from "@/db/schema";
 import dayjs from "@/utils/dayjs";
 import { Dayjs } from "dayjs";
 
+export const emptyToNull = <T extends z.ZodTypeAny>(schema: T) =>
+    z.preprocess((val) => val === "" ? null : val, schema.nullable());
+
 /**
  * Check whether an ArrayBuffer represents a valid JPEG image.
  *
@@ -242,3 +245,21 @@ export const postFullSchema = postSelectSchema
         co_author_id: true,
         category_id: true,
     });
+
+export const postVisibilitySchema = postInsertSchema.shape.visibility;
+
+export const postNewSchema = z.object({
+    // Write form
+    title: z.string().min(10, "Title too short").max(50, "Title too long"),
+    description: z.string().min(10, "Description too short").max(100, "Description too long").optional(),
+    content: z.string().min(100, "Content too short"),
+    "reading-time": z.number().int().min(1),
+
+    // Settings form
+    visibility: postVisibilitySchema,
+    "content-warning": z.boolean().optional(),
+    category: z.string().nonempty(),
+    publish: z.enum(['now', 'scheduled']),
+    "co-author": z.string().nonempty().optional(),
+    "attribution-note": z.string().nonempty().optional(),
+});
