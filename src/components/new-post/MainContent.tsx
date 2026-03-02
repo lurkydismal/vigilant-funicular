@@ -59,9 +59,11 @@ export default function MainContent() {
         const form = formRef.current;
 
         if (allCompleted && form) {
-            const fd = new FormData(form);
-
             startTransition(async () => {
+                const fd = new FormData(form);
+
+                // TODO: Validate before sending
+
                 await createPost(fd);
 
                 setCompleted(true);
