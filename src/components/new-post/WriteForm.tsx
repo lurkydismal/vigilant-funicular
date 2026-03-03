@@ -10,13 +10,14 @@ import {
     ListItem,
     ListItemText,
 } from "@mui/material";
-import { useDeferredValue, useEffect, useRef, useState } from "react";
+import { useCallback, useDeferredValue, useEffect, useRef, useState } from "react";
 import MarkdownEditor from "./MarkdownEditor";
 import Markdown from "../Markdown";
 import { useWordStats } from "@/utils/stdhook";
 import { formatReadingTime } from "@/utils/stdfunc";
 import { FormGrid } from "./types";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
+import { throttle } from "lodash";
 
 function ResizableSplitPane({
     left,
@@ -28,16 +29,24 @@ function ResizableSplitPane({
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [leftWidth, setLeftWidth] = useState(50); // percentage
 
-    const handlePointerDown = () => {
+    const throttledSetLeftWidth = useCallback(
+        throttle((newLeftWidth: number) => {
+            // Set leftWidth, but make sure it's within bounds
+            if (newLeftWidth > 10 && newLeftWidth < 90) {
+                setLeftWidth(newLeftWidth);
+            }
+        }, 100), // Throttling at 100ms interval
+        []
+    );
+
+    const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
         const handlePointerMove = (e: PointerEvent) => {
             if (!containerRef.current) return;
 
             const rect = containerRef.current.getBoundingClientRect();
             const newLeftWidth = ((e.clientX - rect.left) / rect.width) * 100;
 
-            if (newLeftWidth > 10 && newLeftWidth < 90) {
-                setLeftWidth(newLeftWidth);
-            }
+            throttledSetLeftWidth(newLeftWidth);
         };
 
         const handlePointerUp = () => {
@@ -47,6 +56,9 @@ function ResizableSplitPane({
 
         document.addEventListener("pointermove", handlePointerMove);
         document.addEventListener("pointerup", handlePointerUp);
+
+        // Prevent text selection while dragging
+        e.preventDefault();
     };
 
     return (
@@ -172,7 +184,10 @@ export default function WriteForm() {
                 <Controller
                     name="description"
                     control={control}
-                    rules={{ minLength: 10 }}
+                    rules={{
+                        validate: (v) =>
+                            !v || v.length >= 10 || "Description must be at least 10 characters",
+                    }}
                     render={({ field, fieldState }) => (
                         <OutlinedInput
                             {...field}

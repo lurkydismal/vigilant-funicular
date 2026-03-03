@@ -27,6 +27,21 @@ function VisibilityForm() {
     const visibilityId = useId();
     const visibilityOptions = ["public", "unlisted", "private"];
 
+    // <FormLabel>Visibility</FormLabel>
+    // <RHFRadioGroup
+    // name="visibility"
+    // options={["public", "unlisted", "private"]}
+    // row
+    // getLabel={(v) => toPascalCase(v)}
+    // />
+    //
+    // <Divider sx={{ my: 2 }} />
+    //
+    // <RHFCheckbox
+    // name="content-warning"
+    // label="Content warning"
+    // />
+
     return (
         <>
             <FormGrid size={{ xs: 12, md: 12 }}>

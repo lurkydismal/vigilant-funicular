@@ -2,11 +2,11 @@
 
 import WriteForm from "./WriteForm";
 import SettionsForm from "./SettingsForm";
-import { Activity, useEffect, useRef, useState } from "react";
+import { Activity, useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import FinalStep from "./FinalStep";
 import MobileStepper from "./MobileStepper";
-import { Step as StepType } from "./types";
+import { FormValues, Step as StepType } from "./types";
 import DesktopStepper from "./DesktopStepper";
 import { createPost } from "@/lib/post";
 import { postNewSchema } from "@/utils/validate/schemas";
@@ -14,16 +14,11 @@ import log from "@/utils/stdlog";
 import { useSnackbar } from "@/providers/snackbar";
 import {
     FormProvider,
-    Control,
+    Path,
     SubmitHandler,
     useForm,
-    UseFormSetValue,
-    UseFormWatch,
 } from "react-hook-form";
-import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-type FormValues = z.infer<typeof postNewSchema>;
 
 export default function MainContent() {
     const { showError } = useSnackbar();
@@ -60,7 +55,7 @@ export default function MainContent() {
             fields: [
                 "visibility",
                 "content-warning",
-                "cateory",
+                "category",
                 "publish",
                 "co-author",
                 "attribution-note",
@@ -68,6 +63,18 @@ export default function MainContent() {
             item: <SettionsForm />,
         },
     ];
+
+    const validateStep = async (fields: Path<FormValues>[]) => {
+        const valid = await methods.trigger(fields);
+
+        // show visual feedback for all fields in this step
+        fields.forEach((f) => {
+            const error = methods.getFieldState(f).error;
+            if (error) showError(`${error.message}`);
+        });
+
+        return valid;
+    };
 
     const handleReset = () => {
         setActiveStep(0);
@@ -77,10 +84,9 @@ export default function MainContent() {
 
     const addCompletedStep = async (index: number) => {
         try {
-            const isValid = await methods.trigger(steps[index].fields); // validate without submitting
-            if (isValid) addCompletedStep(index);
+            const isValid = await validateStep(steps[index].fields); // validate without submitting
 
-            setCompletedSteps((prev) => [...prev, index]);
+            if (isValid) setCompletedSteps((prev) => [...prev, index]);
         } catch {
             // validation failed, RHF already shows errors
         }

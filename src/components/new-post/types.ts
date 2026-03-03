@@ -1,8 +1,11 @@
 "use client";
 
 import { linkSx } from "@/data/styles";
+import { postNewSchema } from "@/utils/validate/schemas";
 import { Grid, styled } from "@mui/material";
 import { ReactElement } from "react";
+import { Path } from "react-hook-form";
+import z from "zod";
 
 export const stepSx = {
     ...linkSx,
@@ -29,9 +32,11 @@ export const stepSx = {
     },
 };
 
+export type FormValues = z.infer<typeof postNewSchema>;
+
 export interface Step {
     title: string;
-    fields: string[];
+    fields: Path<FormValues>[];
     item: ReactElement;
 }
 
