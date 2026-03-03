@@ -113,8 +113,6 @@ export default function MainContent() {
         try {
             const parsed = postNewSchema.parse(data);
 
-            log.debug(`Post create: ${JSON.stringify(parsed)}`);
-
             await createPost(data);
 
             setCompleted(true);
