@@ -19,11 +19,10 @@ import { getAllCategories, requestAllCategories } from "@/lib/category";
 import AutocompleteWithHighlight from "@/components/Autocomplete";
 import { getAllUsers, requestAllUsers } from "@/lib/user";
 import { getUser } from "@/utils/stduser";
-import { Controller } from "react-hook-form";
-import { _useForm } from "./MainContent";
+import { Controller, useFormContext } from "react-hook-form";
 
 function VisibilityForm() {
-    const { control } = _useForm();
+    const { control } = useFormContext();
 
     const visibilityId = useId();
     const visibilityOptions = ["public", "unlisted", "private"];
@@ -78,13 +77,12 @@ function VisibilityForm() {
 }
 
 function OrganizationForm() {
-    const { control } = _useForm();
+    const { control } = useFormContext();
 
     const categoryId = useId();
     const [categories, setCategories] = useState<readonly string[]>([]);
     const [open, setOpen] = useState(false);
     const [pending, startTransition] = useTransition();
-    const [categoryValue, setCategoryValue] = useState<string | null>(null);
 
     const handleOpen = () => {
         setOpen(true);
@@ -106,54 +104,49 @@ function OrganizationForm() {
 
     return (
         <FormGrid size={{ xs: 12, md: 12 }}>
-            <FormLabel id={categoryId} required>Category</FormLabel>
+            <FormLabel id={categoryId} required>
+                Category
+            </FormLabel>
 
             <Controller
                 name="category"
                 control={control}
                 rules={{ required: "Category is required" }}
                 render={({ field, fieldState }) => (
-                    <>
-                        <AutocompleteWithHighlight
-                            value={categoryValue}
-                            onChange={(_, newVal) => setCategoryValue(newVal)}
-                            open={open}
-                            onOpen={handleOpen}
-                            onClose={handleClose}
-                            loading={pending}
-                            options={categories}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    {...field}
-                                    placeholder="Category"
-                                    slotProps={{
-                                        input: {
-                                            ...params.InputProps,
-                                            endAdornment: (
-                                                <>
-                                                    {pending ? (
-                                                        <CircularProgress
-                                                            color="inherit"
-                                                            size={20}
-                                                        />
-                                                    ) : null}
-                                                    {params.InputProps.endAdornment}
-                                                </>
-                                            ),
-                                        },
-                                    }}
-                                    error={!!fieldState.error}
-                                />
-                            )}
-                        />
-
-                        <input
-                            {...field}
-                            type="hidden"
-                            value={categoryValue ?? ""}
-                        />
-                    </>
+                    <AutocompleteWithHighlight
+                        value={field.value}
+                        onChange={(_, newValue) => field.onChange(newValue)}
+                        open={open}
+                        onOpen={handleOpen}
+                        onClose={handleClose}
+                        loading={pending}
+                        options={categories}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                {...field}
+                                autoComplete="category"
+                                placeholder="Category"
+                                slotProps={{
+                                    input: {
+                                        ...params.InputProps,
+                                        endAdornment: (
+                                            <>
+                                                {pending ? (
+                                                    <CircularProgress
+                                                        color="inherit"
+                                                        size={20}
+                                                    />
+                                                ) : null}
+                                                {params.InputProps.endAdornment}
+                                            </>
+                                        ),
+                                    },
+                                }}
+                                error={!!fieldState.error}
+                            />
+                        )}
+                    />
                 )}
             />
         </FormGrid>
@@ -170,7 +163,7 @@ function OrganizationForm() {
 
 // TODO: Time selection
 function PublishForm() {
-    const { control } = _useForm();
+    const { control } = useFormContext();
 
     const publishId = useId();
     const publishOptions = ["now", "scheduled"];
@@ -179,27 +172,29 @@ function PublishForm() {
         <FormGrid size={{ xs: 12, md: 12 }}>
             <FormLabel id={publishId}>Publish</FormLabel>
 
-            <RadioGroup
-                row
-                aria-labelledby={publishId}
-                defaultValue="now"
+            <Controller
                 name="publish"
-            >
-                {publishOptions.map((item) => (
-                    <FormControlLabel
-                        key={item}
-                        value={item}
-                        control={<Radio />}
-                        label={toPascalCase(item)}
-                    />
-                ))}
-            </RadioGroup>
+                control={control}
+                rules={{ required: "Publish is required" }}
+                render={({ field }) => (
+                    <RadioGroup {...field} row aria-labelledby={publishId}>
+                        {publishOptions.map((item) => (
+                            <FormControlLabel
+                                key={item}
+                                value={item}
+                                control={<Radio />}
+                                label={toPascalCase(item)}
+                            />
+                        ))}
+                    </RadioGroup>
+                )}
+            />
         </FormGrid>
     );
 }
 
 function CollaborationForm() {
-    const { control } = _useForm();
+    const { control } = useFormContext();
 
     const user = getUser();
     const coAuthorId = useId();
@@ -207,7 +202,6 @@ function CollaborationForm() {
     const [cuAuthors, setCoAuthorss] = useState<readonly string[]>([]);
     const [open, setOpen] = useState(false);
     const [pending, startTransition] = useTransition();
-    const [coAuthorValue, setCoAuthorValue] = useState<string | null>(null);
 
     const handleOpen = () => {
         setOpen(true);
@@ -234,49 +228,65 @@ function CollaborationForm() {
             <FormGrid size={{ xs: 12, md: 12 }}>
                 <FormLabel id={coAuthorId}>Co-author</FormLabel>
 
-                <AutocompleteWithHighlight
-                    value={coAuthorValue}
-                    onChange={(_, newVal) => setCoAuthorValue(newVal)}
-                    open={open}
-                    onOpen={handleOpen}
-                    onClose={handleClose}
-                    loading={pending}
-                    options={cuAuthors}
-                    renderInput={(params) => (
-                        <TextField
-                            {...params}
-                            placeholder="Co-author"
-                            slotProps={{
-                                input: {
-                                    ...params.InputProps,
-                                    endAdornment: (
-                                        <>
-                                            {pending ? (
-                                                <CircularProgress
-                                                    color="inherit"
-                                                    size={20}
-                                                />
-                                            ) : null}
-                                            {params.InputProps.endAdornment}
-                                        </>
-                                    ),
-                                },
-                            }}
+                <Controller
+                    name="co-author"
+                    control={control}
+                    render={({ field, fieldState }) => (
+                        <AutocompleteWithHighlight
+                            value={field.value}
+                            onChange={(_, newValue) => field.onChange(newValue)}
+                            open={open}
+                            onOpen={handleOpen}
+                            onClose={handleClose}
+                            loading={pending}
+                            options={cuAuthors}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    {...field}
+                                    placeholder="Co-author"
+                                    slotProps={{
+                                        input: {
+                                            ...params.InputProps,
+                                            endAdornment: (
+                                                <>
+                                                    {pending ? (
+                                                        <CircularProgress
+                                                            color="inherit"
+                                                            size={20}
+                                                        />
+                                                    ) : null}
+                                                    {
+                                                        params.InputProps
+                                                            .endAdornment
+                                                    }
+                                                </>
+                                            ),
+                                        },
+                                    }}
+                                    error={!!fieldState.error}
+                                />
+                            )}
                         />
                     )}
                 />
-
-                <input type="hidden" name="co-author" value={coAuthorValue ?? ""} required />
             </FormGrid>
 
             <FormGrid size={{ xs: 12, md: 12 }}>
                 <FormLabel id={attributionNoteId}>Attribution note</FormLabel>
 
-                <OutlinedInput
-                    autoComplete="attribution-note"
+                <Controller
                     name="attribution-note"
-                    placeholder="Originally published on..."
-                    size="small"
+                    control={control}
+                    render={({ field, fieldState }) => (
+                        <OutlinedInput
+                            {...field}
+                            autoComplete="attribution-note"
+                            placeholder="Originally published on..."
+                            size="small"
+                            error={!!fieldState.error}
+                        />
+                    )}
                 />
             </FormGrid>
         </>

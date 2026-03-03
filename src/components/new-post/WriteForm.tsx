@@ -10,24 +10,26 @@ import {
     ListItem,
     ListItemText,
 } from "@mui/material";
-import { useRef, useState } from "react";
+import { useDeferredValue, useEffect, useRef, useState } from "react";
 import MarkdownEditor from "./MarkdownEditor";
 import Markdown from "../Markdown";
 import { useWordStats } from "@/utils/stdhook";
 import { formatReadingTime } from "@/utils/stdfunc";
 import { FormGrid } from "./types";
-import { Controller } from "react-hook-form";
-import { _useForm } from "./MainContent";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
 
-export default function WriteForm() {
-    const { control } = _useForm();
-    const [text, setText] = useState("");
-    const { wordCount, readingTime } = useWordStats(text);
+function ResizableSplitPane({
+    left,
+    right,
+}: Readonly<{
+    left: React.ReactNode;
+    right: React.ReactNode;
+}>) {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [leftWidth, setLeftWidth] = useState(50); // percentage
 
-    const handleMouseDown = () => {
-        const handleMouseMove = (e: MouseEvent) => {
+    const handlePointerDown = () => {
+        const handlePointerMove = (e: PointerEvent) => {
             if (!containerRef.current) return;
 
             const rect = containerRef.current.getBoundingClientRect();
@@ -38,14 +40,108 @@ export default function WriteForm() {
             }
         };
 
-        const handleMouseUp = () => {
-            document.removeEventListener("mousemove", handleMouseMove);
-            document.removeEventListener("mouseup", handleMouseUp);
+        const handlePointerUp = () => {
+            document.removeEventListener("pointermove", handlePointerMove);
+            document.removeEventListener("pointerup", handlePointerUp);
         };
 
-        document.addEventListener("mousemove", handleMouseMove);
-        document.addEventListener("mouseup", handleMouseUp);
+        document.addEventListener("pointermove", handlePointerMove);
+        document.addEventListener("pointerup", handlePointerUp);
     };
+
+    return (
+        <Box
+            ref={containerRef}
+            sx={{
+                display: "flex",
+                height: "80vh",
+                position: "relative",
+                overflow: "hidden",
+            }}
+        >
+            {/* LEFT SIDE */}
+            <Box
+                sx={{
+                    width: `${leftWidth}%`,
+                    overflow: "auto",
+                    display: "flex",
+                }}
+            >
+                {left}
+            </Box>
+
+            {/* DRAG HANDLE */}
+            <Box
+                onPointerDown={handlePointerDown}
+                sx={{
+                    width: "6px",
+                    cursor: "col-resize",
+                    backgroundColor: "divider",
+                    "&:hover": {
+                        backgroundColor: "primary.main",
+                    },
+                }}
+            />
+
+            {/* RIGHT SIDE */}
+            <Box
+                sx={{
+                    width: `${100 - leftWidth}%`,
+                    overflow: "auto",
+                    p: 2,
+                }}
+            >
+                {right}
+            </Box>
+        </Box>
+    );
+}
+
+function MyMarkdown() {
+    const { control } = useFormContext();
+
+    const content = useWatch({ name: "content" });
+
+    const deferredContent = useDeferredValue(content);
+
+    return (
+        <Grid size={{ xs: 12, md: 12 }}>
+            <Card>
+                <ResizableSplitPane
+                    left={
+                        <Controller
+                            name="content"
+                            control={control}
+                            rules={{
+                                required: "Content is required",
+                                minLength: 100,
+                            }}
+                            render={({ field }) => (
+                                <MarkdownEditor
+                                    value={field.value}
+                                    onChange={field.onChange}
+                                />
+                            )}
+                        />
+                    }
+                    right={<Markdown>{deferredContent}</Markdown>}
+                />
+            </Card>
+        </Grid>
+    );
+}
+
+export default function WriteForm() {
+    const { control, setValue } = useFormContext();
+    const content = useWatch({ name: "content" });
+    const { wordCount, readingTime } = useWordStats(content);
+
+    useEffect(() => {
+        setValue("reading-time", readingTime, {
+            shouldValidate: true,
+            shouldDirty: true,
+        });
+    }, [readingTime, setValue]);
 
     return (
         <Grid container spacing={2}>
@@ -89,57 +185,7 @@ export default function WriteForm() {
                 />
             </FormGrid>
 
-            <Grid size={{ xs: 12, md: 12 }}>
-                <Card>
-                    <Box
-                        ref={containerRef}
-                        sx={{
-                            display: "flex",
-                            height: "80vh",
-                            position: "relative",
-                            overflow: "hidden",
-                        }}
-                    >
-                        {/* LEFT SIDE */}
-                        <Box
-                            sx={{
-                                width: `${leftWidth}%`,
-                                overflow: "auto",
-                                display: "flex",
-                            }}
-                        >
-                            <MarkdownEditor value={text} onChange={setText} />
-
-                            {/* Mirror editor content */}
-                            <input type="hidden" name="content" value={text} required />
-                        </Box>
-
-                        {/* DRAG HANDLE */}
-                        <Box
-                            onMouseDown={handleMouseDown}
-                            sx={{
-                                width: "6px",
-                                cursor: "col-resize",
-                                backgroundColor: "divider",
-                                "&:hover": {
-                                    backgroundColor: "primary.main",
-                                },
-                            }}
-                        />
-
-                        {/* RIGHT SIDE */}
-                        <Box
-                            sx={{
-                                width: `${100 - leftWidth}%`,
-                                overflow: "auto",
-                                p: 2,
-                            }}
-                        >
-                            <Markdown>{text}</Markdown>
-                        </Box>
-                    </Box>
-                </Card>
-            </Grid>
+            <MyMarkdown />
 
             <Grid size={{ xs: 12, md: 12 }}>
                 <List disablePadding>
@@ -148,9 +194,6 @@ export default function WriteForm() {
                             primary="Reading time"
                             secondary={formatReadingTime(readingTime)}
                         />
-
-                        {/* Mirror reading time */}
-                        <input type="hidden" name="reading-time" value={readingTime} required />
 
                         <ListItemText
                             primary="Word count"

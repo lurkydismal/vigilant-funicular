@@ -26,13 +26,13 @@ type Values = SignInValues | SignUpValues;
 
 type Props =
     | {
-        mode: "signin";
-        onSubmit: (data: SignInValues) => Promise<void> | void;
-    }
+          mode: "signin";
+          onSubmit: (data: SignInValues) => Promise<void> | void;
+      }
     | {
-        mode: "signup";
-        onSubmit: (data: SignUpValues) => Promise<void> | void;
-    };
+          mode: "signup";
+          onSubmit: (data: SignUpValues) => Promise<void> | void;
+      };
 
 export default function AuthForm(props: Props) {
     const isSignIn = props.mode === "signin";
@@ -102,7 +102,7 @@ export default function AuthForm(props: Props) {
                         props.mode === "signup"
                             ? { value: 8, message: "Min 8 characters" }
                             : undefined,
-                    maxLength: 32
+                    maxLength: 32,
                 }}
                 render={({ field, fieldState }) => (
                     <FormControl>

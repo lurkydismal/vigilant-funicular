@@ -31,6 +31,7 @@ export const stepSx = {
 
 export interface Step {
     title: string;
+    fields: string[];
     item: ReactElement;
 }
 

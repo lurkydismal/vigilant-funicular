@@ -2,7 +2,7 @@
 
 import WriteForm from "./WriteForm";
 import SettionsForm from "./SettingsForm";
-import { Activity, startTransition, useEffect, useRef, useState } from "react";
+import { Activity, useEffect, useRef, useState } from "react";
 import { Box } from "@mui/material";
 import FinalStep from "./FinalStep";
 import MobileStepper from "./MobileStepper";
@@ -12,48 +12,35 @@ import { createPost } from "@/lib/post";
 import { postNewSchema } from "@/utils/validate/schemas";
 import log from "@/utils/stdlog";
 import { useSnackbar } from "@/providers/snackbar";
-import { SubmitHandler, useForm } from "react-hook-form";
+import {
+    FormProvider,
+    Control,
+    SubmitHandler,
+    useForm,
+    UseFormSetValue,
+    UseFormWatch,
+} from "react-hook-form";
 import z from "zod";
-import { zodResolver } from '@hookform/resolvers/zod';
-import { createContext, useContext } from "react";
-import { Control } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 type FormValues = z.infer<typeof postNewSchema>;
 
-const FormContext = createContext<{
-    control: Control<FormValues>;
-} | null>(null);
-
-export function _useForm() {
-    const ctx = useContext(FormContext);
-
-    if (!ctx) {
-        throw new Error("_useForm must be used within FormContext");
-    }
-
-    return ctx;
-}
-
 export default function MainContent() {
-    const formRef = useRef<HTMLFormElement | null>(null);
     const { showError } = useSnackbar();
-    const {
-        control,
-        handleSubmit,
-    } = useForm<FormValues>({
+    const methods = useForm<FormValues>({
         resolver: zodResolver(postNewSchema),
         defaultValues: {
             // Write form
             title: "",
             description: "",
             content: "",
-            "reading-time": 1,
+            "reading-time": 0,
 
             // Settings form
-            visibility: 'public',
+            visibility: "public",
             "content-warning": false,
             category: "",
-            publish: 'now',
+            publish: "now",
             "co-author": "",
             "attribution-note": "",
         },
@@ -65,10 +52,19 @@ export default function MainContent() {
     const steps: StepType[] = [
         {
             title: "Write",
+            fields: ["title", "description", "content"],
             item: <WriteForm />,
         },
         {
             title: "Settings",
+            fields: [
+                "visibility",
+                "content-warning",
+                "cateory",
+                "publish",
+                "co-author",
+                "attribution-note",
+            ],
             item: <SettionsForm />,
         },
     ];
@@ -81,7 +77,8 @@ export default function MainContent() {
 
     const addCompletedStep = async (index: number) => {
         try {
-            await handleSubmit((data) => data)(); // validate without submitting
+            const isValid = await methods.trigger(steps[index].fields); // validate without submitting
+            if (isValid) addCompletedStep(index);
 
             setCompletedSteps((prev) => [...prev, index]);
         } catch {
@@ -112,26 +109,20 @@ export default function MainContent() {
 
             log.debug(`Post create: ${JSON.stringify(parsed)}`);
 
-            startTransition(async () => {
-                await createPost(data);
+            await createPost(data);
 
-                setCompleted(true);
-                setActiveStep(steps.length);
-            });
+            setCompleted(true);
+            setActiveStep(steps.length);
         } catch (err) {
             showError(err);
         }
-
     };
 
     useEffect(() => {
         const allCompleted = completedSteps.length === steps.length;
-        const form = formRef.current;
 
-        if (allCompleted && form) {
-            form.submit();
-        }
-    }, [completedSteps, steps, steps, setActiveStep]);
+        if (allCompleted) methods.handleSubmit(onSubmit)();
+    }, [completedSteps, steps, methods.handleSubmit, onSubmit]);
 
     return (
         <Box
@@ -173,22 +164,20 @@ export default function MainContent() {
                     onClick={handleClick}
                 />
 
-                <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
-                    <FormContext.Provider
-                        value={{
-                            control,
-                        }}
-                    >
+                <form onSubmit={methods.handleSubmit(onSubmit)}>
+                    <FormProvider {...methods}>
                         {/* Current step content */}
                         {steps.map((item, index) => (
                             <Activity
                                 key={`${item.title}-${index}`}
-                                mode={index === activeStep ? "visible" : "hidden"}
+                                mode={
+                                    index === activeStep ? "visible" : "hidden"
+                                }
                             >
                                 {item.item}
                             </Activity>
                         ))}
-                    </FormContext.Provider>
+                    </FormProvider>
                 </form>
 
                 <Activity mode={completed ? "visible" : "hidden"}>

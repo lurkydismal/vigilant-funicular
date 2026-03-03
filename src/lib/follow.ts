@@ -9,7 +9,10 @@ import { follows, users } from "@/db/schema";
 import { eq, and, inArray } from "drizzle-orm";
 import { cacheTag, revalidateTag } from "next/cache";
 
-async function manageFollow(username_normalized: string, action: 'insert' | 'remove') {
+async function manageFollow(
+    username_normalized: string,
+    action: "insert" | "remove",
+) {
     // parse + validate input; throws on invalid input
     const parsedUser = userSelectPublicSchema
         .pick({
@@ -26,9 +29,17 @@ async function manageFollow(username_normalized: string, action: 'insert' | 'rem
 
     try {
         const _users = await db
-            .select({ id: users.id, username_normalized: users.username_normalized })
+            .select({
+                id: users.id,
+                username_normalized: users.username_normalized,
+            })
             .from(users)
-            .where(inArray(users.username_normalized, [session.username_normalized, normalizedUsername]));
+            .where(
+                inArray(users.username_normalized, [
+                    session.username_normalized,
+                    normalizedUsername,
+                ]),
+            );
 
         const userMap = new Map(
             _users.map((u) => [u.username_normalized, u.id]),
@@ -80,11 +91,11 @@ async function manageFollow(username_normalized: string, action: 'insert' | 'rem
 }
 
 export async function followAction(username_normalized: string) {
-    manageFollow(username_normalized, 'insert');
+    manageFollow(username_normalized, "insert");
 }
 
 export async function unfollowAction(username_normalized: string) {
-    manageFollow(username_normalized, 'remove');
+    manageFollow(username_normalized, "remove");
 }
 
 export async function requestCheckUserFollowAction(

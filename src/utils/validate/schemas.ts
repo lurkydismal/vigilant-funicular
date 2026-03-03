@@ -11,7 +11,7 @@ import dayjs from "@/utils/dayjs";
 import { Dayjs } from "dayjs";
 
 export const emptyToNull = <T extends z.ZodTypeAny>(schema: T) =>
-    z.preprocess((val) => val === "" ? null : val, schema.nullable());
+    z.preprocess((val) => (val === "" ? null : val), schema.nullable());
 
 /**
  * Check whether an ArrayBuffer represents a valid JPEG image.
@@ -251,7 +251,11 @@ export const postVisibilitySchema = postInsertSchema.shape.visibility;
 export const postNewSchema = z.object({
     // Write form
     title: z.string().min(10, "Title too short").max(50, "Title too long"),
-    description: z.string().min(10, "Description too short").max(100, "Description too long").optional(),
+    description: z
+        .string()
+        .min(10, "Description too short")
+        .max(100, "Description too long")
+        .optional(),
     content: z.string().min(100, "Content too short"),
     "reading-time": z.number().int().min(1),
 
@@ -259,7 +263,7 @@ export const postNewSchema = z.object({
     visibility: postVisibilitySchema,
     "content-warning": z.boolean().optional(),
     category: z.string().nonempty(),
-    publish: z.enum(['now', 'scheduled']),
+    publish: z.enum(["now", "scheduled"]),
     "co-author": z.string().nonempty().optional(),
     "attribution-note": z.string().nonempty().optional(),
 });

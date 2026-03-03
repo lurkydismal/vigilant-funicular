@@ -13,7 +13,8 @@ export default function ImageInput({ acceptedFileTypes = "image/*" }) {
     const formats = acceptedFileTypes
         .split(",")
         .map((s) => s.trim())
-        .filter(Boolean).map((p) => {
+        .filter(Boolean)
+        .map((p) => {
             if (p === "*" || p === "*/*") return "*";
             if (p.startsWith("image/")) return p.slice("image/".length);
             if (p.startsWith(".")) return p.slice(1);
