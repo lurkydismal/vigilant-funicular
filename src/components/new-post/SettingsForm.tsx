@@ -50,7 +50,6 @@ function VisibilityForm() {
                 <Controller
                     name="visibility"
                     control={control}
-                    rules={{ required: "Visibility is required" }}
                     render={({ field }) => (
                         <RadioGroup
                             {...field}
@@ -126,7 +125,6 @@ function OrganizationForm() {
             <Controller
                 name="category"
                 control={control}
-                rules={{ required: "Category is required" }}
                 render={({ field, fieldState }) => (
                     <AutocompleteWithHighlight
                         value={field.value}
@@ -190,7 +188,6 @@ function PublishForm() {
             <Controller
                 name="publish"
                 control={control}
-                rules={{ required: "Publish is required" }}
                 render={({ field }) => (
                     <RadioGroup {...field} row aria-labelledby={publishId}>
                         {publishOptions.map((item) => (

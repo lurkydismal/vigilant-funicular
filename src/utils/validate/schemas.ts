@@ -248,6 +248,7 @@ export const postFullSchema = postSelectSchema
 
 export const postVisibilitySchema = postInsertSchema.shape.visibility;
 
+// FIX: Optional not applying to ""
 export const postNewSchema = z.object({
     // Write form
     title: z.string().min(10, "Title too short").max(50, "Title too long"),

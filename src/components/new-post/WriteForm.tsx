@@ -124,10 +124,6 @@ function MyMarkdown() {
                         <Controller
                             name="content"
                             control={control}
-                            rules={{
-                                required: "Content is required",
-                                minLength: 100,
-                            }}
                             render={({ field }) => (
                                 <MarkdownEditor
                                     value={field.value}
@@ -165,7 +161,6 @@ export default function WriteForm() {
                 <Controller
                     name="title"
                     control={control}
-                    rules={{ required: "Title is required", minLength: 10 }}
                     render={({ field, fieldState }) => (
                         <OutlinedInput
                             {...field}
@@ -184,10 +179,6 @@ export default function WriteForm() {
                 <Controller
                     name="description"
                     control={control}
-                    rules={{
-                        validate: (v) =>
-                            !v || v.length >= 10 || "Description must be at least 10 characters",
-                    }}
                     render={({ field, fieldState }) => (
                         <OutlinedInput
                             {...field}
