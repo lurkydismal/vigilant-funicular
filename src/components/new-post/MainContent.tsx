@@ -12,12 +12,7 @@ import { createPost } from "@/lib/post";
 import { postNewSchema } from "@/utils/validate/schemas";
 import log from "@/utils/stdlog";
 import { useSnackbar } from "@/providers/snackbar";
-import {
-    FormProvider,
-    Path,
-    SubmitHandler,
-    useForm,
-} from "react-hook-form";
+import { FormProvider, Path, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function MainContent() {

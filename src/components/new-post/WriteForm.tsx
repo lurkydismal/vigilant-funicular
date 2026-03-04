@@ -10,7 +10,13 @@ import {
     ListItem,
     ListItemText,
 } from "@mui/material";
-import { useCallback, useDeferredValue, useEffect, useRef, useState } from "react";
+import {
+    useCallback,
+    useDeferredValue,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import MarkdownEditor from "./MarkdownEditor";
 import Markdown from "../Markdown";
 import { useWordStats } from "@/utils/stdhook";
@@ -36,7 +42,7 @@ function ResizableSplitPane({
                 setLeftWidth(newLeftWidth);
             }
         }, 100), // Throttling at 100ms interval
-        []
+        [],
     );
 
     const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
