@@ -1,7 +1,5 @@
 packages:
-  - "auth"
-  - "front"
-  - "media"
-  - "posts"
-  - "rt"
-  - "users"
+  - .
+ignoredBuiltDependencies:
+  - sharp
+  - unrs-resolver
