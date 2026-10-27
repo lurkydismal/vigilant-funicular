@@ -1,4 +1,3 @@
-import { Components } from "react-markdown";
 import {
     Typography,
     TableRow,
@@ -16,8 +15,10 @@ import {
     Container,
     CardMedia,
 } from "@mui/material";
-import CodeBlock from "@/components/CodeBlock";
 import { AnchorHTMLAttributes, HTMLAttributes, ImgHTMLAttributes } from "react";
+import { Components } from "react-markdown";
+
+import CodeBlock from "@/components/CodeBlock";
 
 /**
  * Mapping of markdown elements to Material UI components.
@@ -66,8 +67,7 @@ const MarkdownComponents: Components = {
 
     // Link
     a: ({ href, children }: AnchorHTMLAttributes<HTMLAnchorElement>) => {
-        const safeHref =
-            href?.startsWith("http") || href?.startsWith("/") ? href : "#";
+        const safeHref = href?.startsWith("http") || href?.startsWith("/") ? href : "#";
 
         return (
             <Link
@@ -87,12 +87,8 @@ const MarkdownComponents: Components = {
             <ListItemText>{children}</ListItemText>
         </ListItem>
     ),
-    ol: ({ children }: HTMLAttributes<HTMLOListElement>) => (
-        <List component="ol">{children}</List>
-    ),
-    li: ({ children }: HTMLAttributes<HTMLLIElement>) => (
-        <List>{children}</List>
-    ),
+    ol: ({ children }: HTMLAttributes<HTMLOListElement>) => <List component="ol">{children}</List>,
+    li: ({ children }: HTMLAttributes<HTMLLIElement>) => <List>{children}</List>,
 
     // Blockquote
     blockquote: ({ children }: HTMLAttributes<HTMLQuoteElement>) => (
@@ -151,15 +147,9 @@ const MarkdownComponents: Components = {
     tbody: ({ children }: HTMLAttributes<HTMLTableSectionElement>) => (
         <TableBody>{children}</TableBody>
     ),
-    tr: ({ children }: HTMLAttributes<HTMLTableRowElement>) => (
-        <TableRow>{children}</TableRow>
-    ),
-    th: ({ children }: HTMLAttributes<HTMLTableCellElement>) => (
-        <TableCell>{children}</TableCell>
-    ),
-    td: ({ children }: HTMLAttributes<HTMLTableCellElement>) => (
-        <TableCell>{children}</TableCell>
-    ),
+    tr: ({ children }: HTMLAttributes<HTMLTableRowElement>) => <TableRow>{children}</TableRow>,
+    th: ({ children }: HTMLAttributes<HTMLTableCellElement>) => <TableCell>{children}</TableCell>,
+    td: ({ children }: HTMLAttributes<HTMLTableCellElement>) => <TableCell>{children}</TableCell>,
 
     del: ({
         // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -1,7 +1,8 @@
-import uuid from "@/utils/uuid";
 import { useTheme, Container } from "@mui/material";
 import mermaid from "mermaid";
 import { useEffect, useRef } from "react";
+
+import uuid from "@/utils/uuid";
 
 // React component that renders a Mermaid chart
 export default function Mermaid({ chart }: { chart: string }) {

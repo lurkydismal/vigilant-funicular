@@ -1,17 +1,11 @@
 "use client";
 
-import lightImg from "@/../public/static/screenshots/dashboard.png";
-import darkImg from "@/../public/static/screenshots/dashboard-dark.png";
-import NextLink, { Link } from "@/components/Link";
+import { styled, Box, Container, Stack, Typography, Button } from "@mui/material";
 import Image from "next/image";
-import {
-    styled,
-    Box,
-    Container,
-    Stack,
-    Typography,
-    Button,
-} from "@mui/material";
+
+import darkImg from "@/../public/static/screenshots/dashboard-dark.png";
+import lightImg from "@/../public/static/screenshots/dashboard.png";
+import NextLink, { Link } from "@/components/Link";
 
 const ImageWrapper = styled(Box)(({ theme }) => ({
     position: "relative",
@@ -106,9 +100,9 @@ export default function Hero() {
                             width: { sm: "100%", md: "80%" },
                         }}
                     >
-                        Explore our community of developers and creators sharing
-                        in-depth articles, insights, and project stories. Dive
-                        into topics that shape modern tech and innovation.
+                        Explore our community of developers and creators sharing in-depth articles,
+                        insights, and project stories. Dive into topics that shape modern tech and
+                        innovation.
                     </Typography>
 
                     <Stack direction="row" spacing={1} alignItems="center">
@@ -141,11 +135,7 @@ export default function Hero() {
                         variant="caption"
                     >
                         By clicking &quot;Sign up&quot; you agree to our&nbsp;
-                        <Link
-                            color="primary"
-                            href="/terms"
-                            aria-label="Terms and Conditions"
-                        >
+                        <Link color="primary" href="/terms" aria-label="Terms and Conditions">
                             Terms &amp; Conditions
                         </Link>
                         .
@@ -154,10 +144,7 @@ export default function Hero() {
 
                 <ImageWrapper role="img" aria-hidden="true">
                     {/* Use <picture> so the browser only downloads the correct (light/dark) asset */}
-                    <Box
-                        component="picture"
-                        sx={{ position: "absolute", inset: 0 }}
-                    >
+                    <Box component="picture" sx={{ position: "absolute", inset: 0 }}>
                         <Box
                             component="source"
                             srcSet={darkImg.src}

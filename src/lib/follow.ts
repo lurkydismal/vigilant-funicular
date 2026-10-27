@@ -1,18 +1,16 @@
 "use server";
 
-import log from "@/utils/stdlog";
-import { getSessionData } from "@/lib/auth";
-import { forbidden, unauthorized } from "next/navigation";
-import { userSelectPublicSchema } from "@/utils/validate/schemas";
-import db from "@/db";
-import { follows, users } from "@/db/schema";
 import { eq, and, inArray } from "drizzle-orm";
 import { cacheTag, revalidateTag } from "next/cache";
+import { forbidden, unauthorized } from "next/navigation";
 
-async function manageFollow(
-    username_normalized: string,
-    action: "insert" | "remove",
-) {
+import db from "@/db";
+import { follows, users } from "@/db/schema";
+import { getSessionData } from "@/lib/auth";
+import log from "@/utils/stdlog";
+import { userSelectPublicSchema } from "@/utils/validate/schemas";
+
+async function manageFollow(username_normalized: string, action: "insert" | "remove") {
     // parse + validate input; throws on invalid input
     const parsedUser = userSelectPublicSchema
         .pick({
@@ -41,9 +39,7 @@ async function manageFollow(
                 ]),
             );
 
-        const userMap = new Map(
-            _users.map((u) => [u.username_normalized, u.id]),
-        );
+        const userMap = new Map(_users.map((u) => [u.username_normalized, u.id]));
 
         const followerId = userMap.get(session.username_normalized);
         const followingId = userMap.get(normalizedUsername);
@@ -108,12 +104,7 @@ export async function requestCheckUserFollowAction(
     const followRecord = await db
         .select()
         .from(follows)
-        .where(
-            and(
-                eq(follows.follower_id, followerId),
-                eq(follows.following_id, followingId),
-            ),
-        )
+        .where(and(eq(follows.follower_id, followerId), eq(follows.following_id, followingId)))
         .limit(1);
 
     return followRecord.length > 0;

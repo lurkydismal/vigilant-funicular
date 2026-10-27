@@ -14,8 +14,9 @@
  */
 
 import { Client } from "minio";
-import log from "@/utils/stdlog";
+
 import { encodePath, getEnv, parseBool } from "@/utils/stdfunc";
+import log from "@/utils/stdlog";
 import { pathSchema, filenameSchema } from "@/utils/validate/schemas";
 
 /**
@@ -190,19 +191,14 @@ async function ensureBucketExists(retries = 3, baseDelayMs = 500) {
     }
 
     // if missing or different, set policy
-    if (
-        !currentPolicyStr ||
-        !policyEquals(currentPolicyStr, desiredPolicyStr)
-    ) {
+    if (!currentPolicyStr || !policyEquals(currentPolicyStr, desiredPolicyStr)) {
         try {
             // some SDKs expose setBucketPolicy / setBucketAcl names; this is the common call.
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             await client.setBucketPolicy(bucket, desiredPolicyStr);
 
-            log.info(
-                `MinIO: bucket policy applied to "${bucket}" (public-read for objects)`,
-            );
+            log.info(`MinIO: bucket policy applied to "${bucket}" (public-read for objects)`);
         } catch (err) {
             log.error("MinIO: setBucketPolicy failed", err);
 
@@ -266,11 +262,7 @@ export async function assertBucketExists(bucket: string): Promise<void> {
  * Returns:
  * - A string representing the full MinIO object key: either "encodedPath/filename" or just "filename" if path is empty.
  */
-export function getObjectKey(
-    filename: string,
-    path?: string,
-    needEncodeFilename: boolean = false,
-) {
+export function getObjectKey(filename: string, path?: string, needEncodeFilename: boolean = false) {
     const safeName = needEncodeFilename
         ? encodeURIComponent(filenameSchema.parse(filename))
         : filenameSchema.parse(filename);
@@ -308,15 +300,9 @@ export async function uploadToMinio(
 ) {
     await assertBucketExists(bucket);
 
-    await client.putObject(
-        bucket,
-        getObjectKey(filename, path),
-        buffer,
-        buffer.length,
-        {
-            "Content-Type": contentType,
-        },
-    );
+    await client.putObject(bucket, getObjectKey(filename, path), buffer, buffer.length, {
+        "Content-Type": contentType,
+    });
 }
 
 /**
@@ -363,10 +349,6 @@ export async function getFromMinio(
     if (isPublic) {
         return `http://localhost:9000/${bucket}/${getObjectKey(filename, path, true)}`;
     } else {
-        return client.presignedGetObject(
-            bucket,
-            getObjectKey(filename, path),
-            expires,
-        );
+        return client.presignedGetObject(bucket, getObjectKey(filename, path), expires);
     }
 }

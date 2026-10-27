@@ -10,20 +10,16 @@ import {
     ListItem,
     ListItemText,
 } from "@mui/material";
-import {
-    useCallback,
-    useDeferredValue,
-    useEffect,
-    useRef,
-    useState,
-} from "react";
-import MarkdownEditor from "./MarkdownEditor";
-import Markdown from "../Markdown";
-import { useWordStats } from "@/utils/stdhook";
-import { formatReadingTime } from "@/utils/stdfunc";
-import { FormGrid } from "./types";
-import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { throttle } from "lodash";
+import { useCallback, useDeferredValue, useEffect, useRef, useState } from "react";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
+
+import { formatReadingTime } from "@/utils/stdfunc";
+import { useWordStats } from "@/utils/stdhook";
+
+import Markdown from "../Markdown";
+import MarkdownEditor from "./MarkdownEditor";
+import { FormGrid } from "./types";
 
 function ResizableSplitPane({
     left,
@@ -131,10 +127,7 @@ function MyMarkdown() {
                             name="content"
                             control={control}
                             render={({ field }) => (
-                                <MarkdownEditor
-                                    value={field.value}
-                                    onChange={field.onChange}
-                                />
+                                <MarkdownEditor value={field.value} onChange={field.onChange} />
                             )}
                         />
                     }
@@ -207,10 +200,7 @@ export default function WriteForm() {
                             secondary={formatReadingTime(readingTime)}
                         />
 
-                        <ListItemText
-                            primary="Word count"
-                            secondary={wordCount}
-                        />
+                        <ListItemText primary="Word count" secondary={wordCount} />
                     </ListItem>
                 </List>
             </Grid>

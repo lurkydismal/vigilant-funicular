@@ -1,10 +1,11 @@
 "use client";
 
 import { NavigateNextRounded } from "@mui/icons-material";
+import { styled, Typography, Grid, Box } from "@mui/material";
+import { redirect } from "next/navigation";
+
 import { AuthorWithFollowAndLink } from "@/components/Author";
 import MainFallback from "@/components/MainFallback";
-import { redirect } from "next/navigation";
-import { styled, Typography, Grid, Box } from "@mui/material";
 import { PostsRow, PostsRowFull, UsersRowPublic } from "@/db/types";
 
 export interface Follow {
@@ -70,8 +71,7 @@ export function Follows({ follows }: { follows: Follow[] }) {
                             <Box
                                 sx={{
                                     borderRadius: 1,
-                                    boxShadow:
-                                        "0 0 24px 12px hsla(210, 100%, 25%, 0.2)",
+                                    boxShadow: "0 0 24px 12px hsla(210, 100%, 25%, 0.2)",
                                     paddingLeft: 1,
                                     paddingRight: 1,
                                     paddingBottom: 1,

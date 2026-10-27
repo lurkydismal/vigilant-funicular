@@ -1,14 +1,8 @@
 "use client";
 
+import { Box, Card, CSSProperties, Chip as MuiChip, styled, Typography } from "@mui/material";
+
 import { FeatureItem } from "@/data/landing/features";
-import {
-    Box,
-    Card,
-    CSSProperties,
-    Chip as MuiChip,
-    styled,
-    Typography,
-} from "@mui/material";
 
 interface ChipProps {
     selected?: boolean;
@@ -86,27 +80,19 @@ export default function MobileLayout({
                     style={
                         items[selectedItemIndex]
                             ? ({
-                                  "--items-imageDark":
-                                      items[selectedItemIndex].imageDark,
-                                  "--items-imageLight":
-                                      items[selectedItemIndex].imageLight,
+                                  "--items-imageDark": items[selectedItemIndex].imageDark,
+                                  "--items-imageLight": items[selectedItemIndex].imageLight,
                               } as CSSProperties)
                             : {}
                     }
                 />
 
                 <Box sx={{ px: 2, pb: 2 }}>
-                    <Typography
-                        gutterBottom
-                        sx={{ color: "text.primary", fontWeight: "medium" }}
-                    >
+                    <Typography gutterBottom sx={{ color: "text.primary", fontWeight: "medium" }}>
                         {selectedFeature.title}
                     </Typography>
 
-                    <Typography
-                        variant="body2"
-                        sx={{ color: "text.secondary", mb: 1.5 }}
-                    >
+                    <Typography variant="body2" sx={{ color: "text.secondary", mb: 1.5 }}>
                         {selectedFeature.description}
                     </Typography>
                 </Box>

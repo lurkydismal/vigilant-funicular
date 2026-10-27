@@ -1,9 +1,11 @@
+import { TypographyVariant } from "@mui/material";
+
+import FollowButton from "@/components/FollowButton";
 import { Link } from "@/components/Link";
 import { UsersRowPublic } from "@/db/types";
 import log from "@/utils/stdlog";
-import { TypographyVariant } from "@mui/material";
+
 import { AuthorInfo, AuthorRow, nameSx, profileHref } from "./base";
-import FollowButton from "@/components/FollowButton";
 
 /**
  * Author row with a Follow button on the right.

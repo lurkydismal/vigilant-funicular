@@ -1,7 +1,8 @@
-import { AuthorsWithDateAndLink } from "@/components/Author";
-import Markdown from "@/components/Markdown";
 import { Box, Typography, CardMedia } from "@mui/material";
 import { ComponentProps } from "react";
+
+import { AuthorsWithDateAndLink } from "@/components/Author";
+import Markdown from "@/components/Markdown";
 import { linkSx } from "@/data/styles";
 import { PostsRowFull } from "@/db/types";
 import { concatenateAuthors } from "@/utils/stdfunc";
@@ -51,12 +52,7 @@ export default function MainContent({ post }: { post: PostsRowFull }) {
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <AuthorsWithDateAndLink {...properties} />
 
-            <Typography
-                variant="subtitle1"
-                component="div"
-                width="fit-content"
-                sx={tagSx}
-            >
+            <Typography variant="subtitle1" component="div" width="fit-content" sx={tagSx}>
                 {post.category?.name ?? "Unknown"}
             </Typography>
 
@@ -67,10 +63,7 @@ export default function MainContent({ post }: { post: PostsRowFull }) {
             <CardMedia
                 alt="green iguana"
                 component="img"
-                image={
-                    post.preview_url ??
-                    `https://picsum.photos/2400/1800?random=${post.id}`
-                }
+                image={post.preview_url ?? `https://picsum.photos/2400/1800?random=${post.id}`}
                 sx={{
                     aspectRatio: "12 / 6",
                     borderBottom: "1px solid",

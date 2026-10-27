@@ -1,10 +1,11 @@
-import MainContent from "@/components/profile/MainContent";
-import z from "zod";
-import { getSessionData } from "@/lib/auth";
 import { unauthorized } from "next/navigation";
-import { getUser, requestUser } from "@/lib/user";
-import { getAllPosts, requestAllPosts } from "@/lib/post";
+import z from "zod";
+
+import MainContent from "@/components/profile/MainContent";
+import { getSessionData } from "@/lib/auth";
 import { getAllCategories, requestAllCategories } from "@/lib/category";
+import { getAllPosts, requestAllPosts } from "@/lib/post";
+import { getUser, requestUser } from "@/lib/user";
 import { awaitObject } from "@/utils/stdfunc";
 
 export default async function Page() {
@@ -16,11 +17,7 @@ export default async function Page() {
     ) => {
         "use cache";
 
-        const parsedUsername = z
-            .string()
-            .trim()
-            .min(1)
-            .parse(session.username_normalized);
+        const parsedUsername = z.string().trim().min(1).parse(session.username_normalized);
 
         const _user = requestUser(parsedUsername);
         const _posts = requestAllPosts();

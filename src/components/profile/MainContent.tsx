@@ -1,15 +1,16 @@
 "use client";
 
-import MainFallback from "@/components/MainFallback";
+import { Box } from "@mui/material";
+import { useState, ChangeEvent, ComponentProps } from "react";
+
 import { Author, AuthorWithFollow } from "@/components/Author";
+import MainFallback from "@/components/MainFallback";
 import PostsPagination from "@/components/Pagination";
 import { Posts } from "@/components/Posts";
 import { SearchButton } from "@/components/SearchButton";
 import { TagsAndSearchMobile } from "@/components/Tags";
 import { CategoriesRowPublic, PostsRowFull, UsersRowPublic } from "@/db/types";
 import { paginate } from "@/utils/stdfunc";
-import { Box } from "@mui/material";
-import { useState, ChangeEvent, ComponentProps } from "react";
 
 export default function MainContent({
     user,
@@ -52,11 +53,7 @@ export default function MainContent({
             {isMe ? (
                 <Author {...properties} />
             ) : (
-                <AuthorWithFollow
-                    {...properties}
-                    doesFollow={doesFollow}
-                    needText
-                />
+                <AuthorWithFollow {...properties} doesFollow={doesFollow} needText />
             )}
 
             <MainFallback itemsLength={posts.length}>
@@ -66,11 +63,7 @@ export default function MainContent({
 
                 <Posts posts={paginate(posts, currentPage, perPage)} />
 
-                <PostsPagination
-                    total={posts.length}
-                    perPage={perPage}
-                    onChange={onChange}
-                />
+                <PostsPagination total={posts.length} perPage={perPage} onChange={onChange} />
             </MainFallback>
         </Box>
     );

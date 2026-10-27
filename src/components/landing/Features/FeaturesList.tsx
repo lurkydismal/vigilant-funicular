@@ -1,8 +1,10 @@
 "use client";
 
-import { FeatureItem } from "@/data/landing/features";
-import MobileLayout from "./MobileLayout";
 import { Box, Button, Typography } from "@mui/material";
+
+import { FeatureItem } from "@/data/landing/features";
+
+import MobileLayout from "./MobileLayout";
 
 export default function FeatureList({
     items,
@@ -36,8 +38,7 @@ export default function FeatureList({
                                 p: 2,
                                 width: "100%",
                                 "&:hover": {
-                                    backgroundColor: (theme.vars || theme)
-                                        .palette.action.hover,
+                                    backgroundColor: (theme.vars || theme).palette.action.hover,
                                 },
                             }),
                             selectedItemIndex === index && {
@@ -66,9 +67,7 @@ export default function FeatureList({
 
                             <Typography variant="h6">{title}</Typography>
 
-                            <Typography variant="body2">
-                                {description}
-                            </Typography>
+                            <Typography variant="body2">{description}</Typography>
                         </Box>
                     </Box>
                 ))}

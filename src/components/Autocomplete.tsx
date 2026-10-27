@@ -1,6 +1,6 @@
-import parse from "autosuggest-highlight/parse";
-import match from "autosuggest-highlight/match";
 import { Autocomplete, AutocompleteProps, TextField } from "@mui/material";
+import match from "autosuggest-highlight/match";
+import parse from "autosuggest-highlight/parse";
 
 type AnyAutoProps = AutocompleteProps<any, any, any, any>; // "any" makes it accept any option type + flag combos
 type RenderOptionFn = NonNullable<AnyAutoProps["renderOption"]>;
@@ -13,26 +13,17 @@ export default function AutocompleteWithHighlight(props: AnyAutoProps) {
 
     const defaultRenderOption: RenderOptionFn = (liProps, option, state) => {
         const { key, ...optionProps } = liProps as LiProps as any;
-        const label =
-            typeof option === "string"
-                ? option
-                : String((option as any).label ?? option);
+        const label = typeof option === "string" ? option : String((option as any).label ?? option);
         const matches = match(label, (state as State).inputValue ?? "", {
             insideWords: true,
         });
         const parts = parse(label, matches);
 
         return (
-            <li
-                key={key}
-                {...(optionProps as React.HTMLAttributes<HTMLLIElement>)}
-            >
+            <li key={key} {...(optionProps as React.HTMLAttributes<HTMLLIElement>)}>
                 <div>
                     {parts.map((part, i) => (
-                        <span
-                            key={i}
-                            style={{ fontWeight: part.highlight ? 700 : 400 }}
-                        >
+                        <span key={i} style={{ fontWeight: part.highlight ? 700 : 400 }}>
                             {part.text}
                         </span>
                     ))}
@@ -47,9 +38,7 @@ export default function AutocompleteWithHighlight(props: AnyAutoProps) {
             options={options}
             renderInput={
                 renderInput ??
-                ((params) => (
-                    <TextField {...params} label="Highlights" margin="normal" />
-                ))
+                ((params) => <TextField {...params} label="Highlights" margin="normal" />)
             }
             renderOption={renderOption ?? defaultRenderOption}
         />

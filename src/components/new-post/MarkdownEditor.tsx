@@ -1,10 +1,10 @@
 "use client";
 
-import { Box } from "@mui/material";
-import CodeMirror from "@uiw/react-codemirror";
 import { markdown } from "@codemirror/lang-markdown";
 import { oneDark } from "@codemirror/theme-one-dark";
 import { EditorView } from "@codemirror/view";
+import { Box } from "@mui/material";
+import CodeMirror from "@uiw/react-codemirror";
 
 interface Props {
     value: string;

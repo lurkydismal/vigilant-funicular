@@ -1,20 +1,14 @@
 "use client";
 
 import { NavigateNextRounded } from "@mui/icons-material";
-import { AuthorsWithDate } from "@/components/Author";
+import { styled, Card, Box, CardContent, Grid, CardMedia, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { Truncated } from "./styled";
-import {
-    styled,
-    Card,
-    Box,
-    CardContent,
-    Grid,
-    CardMedia,
-    Typography,
-} from "@mui/material";
+
+import { AuthorsWithDate } from "@/components/Author";
 import { PostsRowFull } from "@/db/types";
 import { concatenateAuthors } from "@/utils/stdfunc";
+
+import { Truncated } from "./styled";
 
 /* Card wrapper — lift + subtle shadow on hover/focus */
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -158,10 +152,7 @@ export default function Posts({ posts }: { posts: PostsRowFull[] }) {
                         </MediaWrapper>
 
                         <StyledCardContent>
-                            <Typography
-                                variant="caption"
-                                color="text.secondary"
-                            >
+                            <Typography variant="caption" color="text.secondary">
                                 {post.category?.name ?? "Unknown"}
                             </Typography>
 

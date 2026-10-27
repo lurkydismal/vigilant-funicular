@@ -1,14 +1,12 @@
 "use client";
 
-import { items } from "@/data/landing/features";
 import { useState } from "react";
+
+import { items } from "@/data/landing/features";
+
 import FeaturesSection from "./FeaturesSection";
 
-export default function FeaturesClient({
-    initialIndex,
-}: {
-    initialIndex: number;
-}) {
+export default function FeaturesClient({ initialIndex }: { initialIndex: number }) {
     const [selectedItemIndex, setSelectedItemIndex] = useState(initialIndex);
 
     const handleItemClick = (index: number) => {

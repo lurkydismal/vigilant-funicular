@@ -1,6 +1,7 @@
 "use client";
 
 import { Box, Chip } from "@mui/material";
+
 import { SearchButtonMobile } from "@/components/SearchButton";
 import { CategoriesRowPublic } from "@/db/types";
 import log from "@/utils/stdlog";

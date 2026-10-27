@@ -1,6 +1,7 @@
 import { Container } from "@mui/material";
-import Title from "./Title";
+
 import FeaturesClient from "./FeaturesClient";
+import Title from "./Title";
 
 export default function Features() {
     return (

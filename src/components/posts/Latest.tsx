@@ -1,11 +1,12 @@
 "use client";
 
+import { Typography } from "@mui/material";
+import { useState, ChangeEvent } from "react";
+
 import PostsPagination from "@/components/Pagination";
 import { PostsWithoutImage } from "@/components/Posts";
 import { PostsRowFull } from "@/db/types";
 import { paginate } from "@/utils/stdfunc";
-import { Typography } from "@mui/material";
-import { useState, ChangeEvent } from "react";
 
 export default function Latest({ posts }: { posts: PostsRowFull[] }) {
     const [currentPage, setCurrentPage] = useState(1);
@@ -23,11 +24,7 @@ export default function Latest({ posts }: { posts: PostsRowFull[] }) {
 
             <PostsWithoutImage posts={paginate(posts, currentPage, perPage)} />
 
-            <PostsPagination
-                total={posts.length}
-                perPage={perPage}
-                onChange={onChange}
-            />
+            <PostsPagination total={posts.length} perPage={perPage} onChange={onChange} />
         </div>
     );
 }

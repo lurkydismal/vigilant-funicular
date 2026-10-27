@@ -1,4 +1,5 @@
 import { Step, StepLabel, Stepper, Tooltip } from "@mui/material";
+
 import { Step as StepType } from "./types";
 
 export default function MobileStepper({
@@ -37,12 +38,7 @@ export default function MobileStepper({
                                     onClick={
                                         completed
                                             ? undefined
-                                            : () =>
-                                                  onClick(
-                                                      index,
-                                                      isActive,
-                                                      isCompleted,
-                                                  )
+                                            : () => onClick(index, isActive, isCompleted)
                                     }
                                     sx={{
                                         ".MuiStepLabel-labelContainer": {
@@ -54,11 +50,7 @@ export default function MobileStepper({
                                 </StepLabel>
                             );
 
-                            return !completed ? (
-                                <Tooltip title={tooltip}>{label}</Tooltip>
-                            ) : (
-                                label
-                            );
+                            return !completed ? <Tooltip title={tooltip}>{label}</Tooltip> : label;
                         })()}
                     </Step>
                 );

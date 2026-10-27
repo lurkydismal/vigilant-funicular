@@ -1,21 +1,11 @@
 "use client";
 
-import { followAction, unfollowAction } from "@/lib/follow";
-import {
-    PersonRemove as UnfollowIcon,
-    PersonAdd as FollowIcon,
-} from "@mui/icons-material";
-import {
-    Box,
-    ButtonProps,
-    IconButton,
-    SxProps,
-    Theme,
-    Tooltip,
-} from "@mui/material";
-
+import { PersonRemove as UnfollowIcon, PersonAdd as FollowIcon } from "@mui/icons-material";
+import { Box, ButtonProps, IconButton, SxProps, Theme, Tooltip } from "@mui/material";
 import { Button } from "@mui/material";
 import { useState, useTransition } from "react";
+
+import { followAction, unfollowAction } from "@/lib/follow";
 
 type Props = ButtonProps & {
     uid: string;

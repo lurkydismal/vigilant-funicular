@@ -1,20 +1,18 @@
 "use client";
 
+import { Check as CheckIcon, ContentCopy as ContentCopyIcon } from "@mui/icons-material";
+import { useColorScheme } from "@mui/material";
+import { Box, IconButton, Tooltip, Typography } from "@mui/material";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { PrismAsync as SyntaxHighlighter } from "react-syntax-highlighter";
 import {
     oneDark as darkTheme,
     oneLight as lightTheme,
 } from "react-syntax-highlighter/dist/esm/styles/prism";
-import {
-    Check as CheckIcon,
-    ContentCopy as ContentCopyIcon,
-} from "@mui/icons-material";
-import { useColorScheme } from "@mui/material";
+
 import Mermaid from "@/components/Mermaid";
-import { gray } from "@/theme/themePrimitives";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { Box, IconButton, Tooltip, Typography } from "@mui/material";
 import { useSnackbar } from "@/providers/snackbar";
+import { gray } from "@/theme/themePrimitives";
 
 /**
  * CodeBlock component
@@ -60,9 +58,7 @@ export default function CodeBlock({
 
     // Convert children to string and trim trailing whitespace
     const { trimmed, lineAmount } = useMemo(() => {
-        const text = Array.isArray(children)
-            ? children.join("")
-            : String(children);
+        const text = Array.isArray(children) ? children.join("") : String(children);
         const trimmedText = text.trimEnd();
         return {
             trimmed: trimmedText,

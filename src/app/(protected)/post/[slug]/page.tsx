@@ -1,8 +1,9 @@
+import { unauthorized } from "next/navigation";
+import z from "zod";
+
 import MainContent from "@/components/post/MainContent";
 import { getSessionData } from "@/lib/auth";
 import { getPostFull, requestPostFull } from "@/lib/post";
-import { unauthorized } from "next/navigation";
-import z from "zod";
 
 export default async function Page({
     params,

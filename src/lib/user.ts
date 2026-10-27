@@ -1,10 +1,11 @@
 "use server";
 
+import { eq, desc } from "drizzle-orm";
+
 import db from "@/db";
 import { users } from "@/db/schema";
 import { normalizeArrayOrValue } from "@/utils/stdfunc";
 import { userSelectPublicSchema } from "@/utils/validate/schemas";
-import { eq, desc } from "drizzle-orm";
 
 export async function requestUserId(usernameNormalized: string) {
     "use cache";
@@ -27,8 +28,7 @@ export async function getUserId(request: ReturnType<typeof requestUserId>) {
 export async function requestUser(uid: string | number) {
     "use cache";
 
-    const field =
-        typeof uid === "string" ? users.username_normalized : users.id;
+    const field = typeof uid === "string" ? users.username_normalized : users.id;
 
     return db.select().from(users).where(eq(field, uid)).limit(1).execute();
 }
@@ -40,11 +40,7 @@ export async function getUser(request: ReturnType<typeof requestUser>) {
 export async function requestAllUsers() {
     "use cache";
 
-    return db
-        .select()
-        .from(users)
-        .orderBy(desc(users.username_normalized))
-        .execute();
+    return db.select().from(users).orderBy(desc(users.username_normalized)).execute();
 }
 
 export async function getAllUsers(request: ReturnType<typeof requestAllUsers>) {

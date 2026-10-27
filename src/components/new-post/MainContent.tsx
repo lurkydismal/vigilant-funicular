@@ -1,19 +1,21 @@
 "use client";
 
-import WriteForm from "./WriteForm";
-import SettionsForm from "./SettingsForm";
-import { Activity, useEffect, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Box } from "@mui/material";
+import { Activity, useEffect, useState } from "react";
+import { FormProvider, Path, SubmitHandler, useForm } from "react-hook-form";
+
+import { createPost } from "@/lib/post";
+import { useSnackbar } from "@/providers/snackbar";
+import log from "@/utils/stdlog";
+import { postNewSchema } from "@/utils/validate/schemas";
+
+import DesktopStepper from "./DesktopStepper";
 import FinalStep from "./FinalStep";
 import MobileStepper from "./MobileStepper";
+import SettionsForm from "./SettingsForm";
 import { FormValues, Step as StepType } from "./types";
-import DesktopStepper from "./DesktopStepper";
-import { createPost } from "@/lib/post";
-import { postNewSchema } from "@/utils/validate/schemas";
-import log from "@/utils/stdlog";
-import { useSnackbar } from "@/providers/snackbar";
-import { FormProvider, Path, SubmitHandler, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import WriteForm from "./WriteForm";
 
 export default function MainContent() {
     const { showError } = useSnackbar();
@@ -91,11 +93,7 @@ export default function MainContent() {
         setCompletedSteps(completedSteps.filter((n) => n !== value));
     };
 
-    const handleClick = (
-        index: number,
-        isActive: boolean,
-        isCompleted: boolean,
-    ) => {
+    const handleClick = (index: number, isActive: boolean, isCompleted: boolean) => {
         if (!isActive) {
             setActiveStep(index);
         } else {
@@ -151,8 +149,7 @@ export default function MainContent() {
                     flexGrow: 1,
                     minHeight: 0, // allow proper overflow within flex children
                     overflow: "auto",
-                    maxHeight:
-                        "calc(100dvh - var(--template-frame-height, 0px) - 220px)", // optional safeguard
+                    maxHeight: "calc(100dvh - var(--template-frame-height, 0px) - 220px)", // optional safeguard
                 }}
             >
                 <MobileStepper
@@ -169,9 +166,7 @@ export default function MainContent() {
                         {steps.map((item, index) => (
                             <Activity
                                 key={`${item.title}-${index}`}
-                                mode={
-                                    index === activeStep ? "visible" : "hidden"
-                                }
+                                mode={index === activeStep ? "visible" : "hidden"}
                             >
                                 {item.item}
                             </Activity>

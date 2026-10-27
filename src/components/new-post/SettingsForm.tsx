@@ -13,13 +13,15 @@ import {
     OutlinedInput,
 } from "@mui/material";
 import { useId, useState, useTransition } from "react";
-import { toPascalCase } from "@/utils/stdfunc";
-import { FormGrid } from "./types";
-import { getAllCategories, requestAllCategories } from "@/lib/category";
-import AutocompleteWithHighlight from "@/components/Autocomplete";
-import { getAllUsers, requestAllUsers } from "@/lib/user";
-import { getUser } from "@/utils/stduser";
 import { Controller, useFormContext } from "react-hook-form";
+
+import AutocompleteWithHighlight from "@/components/Autocomplete";
+import { getAllCategories, requestAllCategories } from "@/lib/category";
+import { getAllUsers, requestAllUsers } from "@/lib/user";
+import { toPascalCase } from "@/utils/stdfunc";
+import { getUser } from "@/utils/stduser";
+
+import { FormGrid } from "./types";
 
 function VisibilityForm() {
     const { control } = useFormContext();
@@ -51,11 +53,7 @@ function VisibilityForm() {
                     name="visibility"
                     control={control}
                     render={({ field }) => (
-                        <RadioGroup
-                            {...field}
-                            row
-                            aria-labelledby={visibilityId}
-                        >
+                        <RadioGroup {...field} row aria-labelledby={visibilityId}>
                             {visibilityOptions.map((item) => (
                                 <FormControlLabel
                                     key={item}
@@ -103,9 +101,7 @@ function OrganizationForm() {
 
         if (!categories.length) {
             startTransition(async () => {
-                const _categories = await getAllCategories(
-                    requestAllCategories(),
-                );
+                const _categories = await getAllCategories(requestAllCategories());
 
                 setCategories(_categories.map((item) => item.name));
             });
@@ -146,10 +142,7 @@ function OrganizationForm() {
                                         endAdornment: (
                                             <>
                                                 {pending ? (
-                                                    <CircularProgress
-                                                        color="inherit"
-                                                        size={20}
-                                                    />
+                                                    <CircularProgress color="inherit" size={20} />
                                                 ) : null}
                                                 {params.InputProps.endAdornment}
                                             </>
@@ -268,10 +261,7 @@ function CollaborationForm() {
                                                             size={20}
                                                         />
                                                     ) : null}
-                                                    {
-                                                        params.InputProps
-                                                            .endAdornment
-                                                    }
+                                                    {params.InputProps.endAdornment}
                                                 </>
                                             ),
                                         },

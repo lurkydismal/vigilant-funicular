@@ -9,8 +9,8 @@ import {
     Checkbox,
     TextFieldProps,
 } from "@mui/material";
-import { Controller, useFormContext, FieldValues, Path } from "react-hook-form";
 import { ReactNode } from "react";
+import { Controller, useFormContext, FieldValues, Path } from "react-hook-form";
 
 /* =========================
    RHF TextField
@@ -20,10 +20,7 @@ type RHFTextFieldProps<T extends FieldValues> = TextFieldProps & {
     name: Path<T>;
 };
 
-export function RHFTextField<T extends FieldValues>({
-    name,
-    ...props
-}: RHFTextFieldProps<T>) {
+export function RHFTextField<T extends FieldValues>({ name, ...props }: RHFTextFieldProps<T>) {
     const { control } = useFormContext<T>();
 
     return (
@@ -64,11 +61,7 @@ export function RHFOutlinedInput<T extends FieldValues>({
             name={name}
             control={control}
             render={({ field, fieldState }) => (
-                <OutlinedInput
-                    {...field}
-                    {...props}
-                    error={!!fieldState.error}
-                />
+                <OutlinedInput {...field} {...props} error={!!fieldState.error} />
             )}
         />
     );
@@ -122,10 +115,7 @@ type RHFCheckboxProps<T extends FieldValues> = {
     label: string;
 };
 
-export function RHFCheckbox<T extends FieldValues>({
-    name,
-    label,
-}: RHFCheckboxProps<T>) {
+export function RHFCheckbox<T extends FieldValues>({ name, label }: RHFCheckboxProps<T>) {
     const { control } = useFormContext<T>();
 
     return (

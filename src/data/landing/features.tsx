@@ -1,8 +1,4 @@
-import {
-    AccountCircleRounded,
-    DevicesRounded,
-    LocalOfferRounded,
-} from "@mui/icons-material";
+import { AccountCircleRounded, DevicesRounded, LocalOfferRounded } from "@mui/icons-material";
 import { ReactElement } from "react";
 
 export interface FeatureItem {
@@ -22,8 +18,7 @@ export const items: FeatureItem[] = [
         title: "Tag",
     },
     {
-        description:
-            "User profiles showcasing authors’ expertise and contributions.",
+        description: "User profiles showcasing authors’ expertise and contributions.",
         icon: <AccountCircleRounded />,
         imageDark: `url(/static/images/mobile-dark.png)`,
         imageLight: `url(/static/images/mobile-light.png)`,

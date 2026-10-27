@@ -1,3 +1,7 @@
+import { cacheTag } from "next/cache";
+import { forbidden, redirect, unauthorized } from "next/navigation";
+import z from "zod";
+
 import MainContent from "@/components/profile/MainContent";
 import { getSessionData } from "@/lib/auth";
 import { getAllCategories, requestAllCategories } from "@/lib/category";
@@ -5,9 +9,6 @@ import { requestCheckUserFollowAction } from "@/lib/follow";
 import { getAllPosts, requestAllPosts } from "@/lib/post";
 import { getUser, getUserId, requestUser, requestUserId } from "@/lib/user";
 import { awaitObject } from "@/utils/stdfunc";
-import { cacheTag } from "next/cache";
-import { forbidden, redirect, unauthorized } from "next/navigation";
-import z from "zod";
 
 export default async function Page({
     params,
@@ -25,12 +26,7 @@ export default async function Page({
     const session = await getSessionData();
     if (!session) return unauthorized();
 
-    const parsedUsername = z
-        .string()
-        .trim()
-        .min(1)
-        .lowercase()
-        .parse(decodeURIComponent(slug));
+    const parsedUsername = z.string().trim().min(1).lowercase().parse(decodeURIComponent(slug));
 
     if (session.username_normalized === parsedUsername) redirect("/profile/my");
 
@@ -41,9 +37,7 @@ export default async function Page({
         "use cache";
         cacheTag("follows");
 
-        const userId = await getUserId(
-            requestUserId(session.username_normalized),
-        );
+        const userId = await getUserId(requestUserId(session.username_normalized));
         const profileId = await getUserId(requestUserId(parsedUsername));
 
         if (!userId) return unauthorized();

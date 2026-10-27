@@ -15,12 +15,13 @@
  *  - Custom logging and environment utilities
  */
 
-import log from "@/utils/stdlog";
-import { uploadSchema } from "@/utils/validate/schemas";
+import z from "zod";
+
+import { ActionResult } from "@/lib/types";
 import { uploadToMinio } from "@/utils/minio";
 import { getEnv } from "@/utils/stdfunc";
-import { ActionResult } from "@/lib/types";
-import z from "zod";
+import log from "@/utils/stdlog";
+import { uploadSchema } from "@/utils/validate/schemas";
 
 /**
  * Mapping of logical upload targets to MinIO directory paths.
@@ -32,9 +33,7 @@ const UPLOAD_DIRS = {
 
 type UploadTarget = keyof typeof UPLOAD_DIRS;
 
-const UploadTargetSchema = z.enum(
-    Object.keys(UPLOAD_DIRS) as [UploadTarget, ...UploadTarget[]],
-);
+const UploadTargetSchema = z.enum(Object.keys(UPLOAD_DIRS) as [UploadTarget, ...UploadTarget[]]);
 
 /**
  * Uploads a file to a MinIO bucket under the specified target directory.
@@ -64,13 +63,7 @@ async function upload(
         const arrayBuffer = await parsed.file.arrayBuffer();
         const fullFilename = `${parsed.filename}.jpg`;
 
-        await uploadToMinio(
-            bucket,
-            fullFilename,
-            Buffer.from(arrayBuffer),
-            path,
-            "image/jpeg",
-        );
+        await uploadToMinio(bucket, fullFilename, Buffer.from(arrayBuffer), path, "image/jpeg");
 
         return { ok: true };
     } catch (err) {
@@ -98,9 +91,5 @@ export async function uploadAction(formData: FormData) {
     const file = formData.get("file");
 
     // Cast and delegate to main upload function
-    return await upload(
-        rawTarget as UploadTarget,
-        filename as string,
-        file as unknown,
-    );
+    return await upload(rawTarget as UploadTarget, filename as string, file as unknown);
 }

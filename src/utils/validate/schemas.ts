@@ -1,14 +1,11 @@
+import { Dayjs } from "dayjs";
+import { createInsertSchema, createSelectSchema, createUpdateSchema } from "drizzle-orm/zod";
 import { z } from "zod";
-import {
-    createInsertSchema,
-    createSelectSchema,
-    createUpdateSchema,
-} from "drizzle-orm/zod";
-import { maxImageSize } from "@/utils/stdvar";
-import { sanitizeFilename } from "@/utils/stdfunc";
+
 import { categories, follows, posts, users } from "@/db/schema";
 import dayjs from "@/utils/dayjs";
-import { Dayjs } from "dayjs";
+import { sanitizeFilename } from "@/utils/stdfunc";
+import { maxImageSize } from "@/utils/stdvar";
 
 export const emptyToNull = <T extends z.ZodTypeAny>(schema: T) =>
     z.preprocess((val) => (val === "" ? null : val), schema.nullable());
@@ -30,10 +27,7 @@ function isJpegArrayBuffer(ab: ArrayBuffer): boolean {
     if (u8.length < 4) return false;
 
     return (
-        u8[0] === 0xff &&
-        u8[1] === 0xd8 &&
-        u8[u8.length - 2] === 0xff &&
-        u8[u8.length - 1] === 0xd9
+        u8[0] === 0xff && u8[1] === 0xd8 && u8[u8.length - 2] === 0xff && u8[u8.length - 1] === 0xd9
     );
 }
 
@@ -83,9 +77,7 @@ export const fileSchema = z
     .object({
         arrayBuffer: z.any(),
         size: z.number().max(maxImageSize, "File is too large"),
-        type: z
-            .string()
-            .refine((t) => t.startsWith("image/"), "File is not an image"),
+        type: z.string().refine((t) => t.startsWith("image/"), "File is not an image"),
     })
     .superRefine(async (data, ctx) => {
         if (typeof data.arrayBuffer !== "function") {

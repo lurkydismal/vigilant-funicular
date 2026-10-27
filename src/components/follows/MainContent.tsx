@@ -1,13 +1,15 @@
 "use client";
 
+import { Box, Container, Typography } from "@mui/material";
+import { useState, ChangeEvent } from "react";
+
 import PostsPagination from "@/components/Pagination";
 import { SearchButton } from "@/components/SearchButton";
 import { TagsAndSearchMobile } from "@/components/Tags";
-import { paginate } from "@/utils/stdfunc";
-import { Follow, Follows } from "./Follows";
-import { useState, ChangeEvent } from "react";
-import { Box, Container, Typography } from "@mui/material";
 import { CategoriesRowPublic } from "@/db/types";
+import { paginate } from "@/utils/stdfunc";
+
+import { Follow, Follows } from "./Follows";
 
 export default function MainContent({
     follows,
@@ -48,11 +50,7 @@ export default function MainContent({
                 <Follows follows={paginate(follows, currentPage, perPage)} />
             </Container>
 
-            <PostsPagination
-                total={follows.length}
-                perPage={perPage}
-                onChange={onChange}
-            />
+            <PostsPagination total={follows.length} perPage={perPage} onChange={onChange} />
         </Box>
     );
 }

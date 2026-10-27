@@ -1,5 +1,6 @@
-import MainContent from "@/components/new-post/MainContent";
 import { Container } from "@mui/material";
+
+import MainContent from "@/components/new-post/MainContent";
 
 export default function NewPost() {
     return (

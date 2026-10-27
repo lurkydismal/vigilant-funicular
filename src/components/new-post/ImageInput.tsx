@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, ChangeEvent, DragEvent } from "react";
 import { TextField, Box, Typography } from "@mui/material";
+import { useState, useEffect, ChangeEvent, DragEvent } from "react";
 
 export default function ImageInput({ acceptedFileTypes = "image/*" }) {
     const [urlInput, setUrlInput] = useState("");

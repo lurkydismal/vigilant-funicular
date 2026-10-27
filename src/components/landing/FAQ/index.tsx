@@ -1,21 +1,18 @@
 "use client";
 
-import { SyntheticEvent, useState } from "react";
-import AccordionItem from "./AccordionItem";
-import { items } from "@/data/landing/FAQ";
 import { Container, Typography, Box } from "@mui/material";
+import { SyntheticEvent, useState } from "react";
+
+import { items } from "@/data/landing/FAQ";
+
+import AccordionItem from "./AccordionItem";
 
 export default function FAQ() {
     const [expanded, setExpanded] = useState<string[]>([]);
 
-    const handleChange =
-        (panel: string) => (_: SyntheticEvent, isExpanded: boolean) => {
-            setExpanded(
-                isExpanded
-                    ? [...expanded, panel]
-                    : expanded.filter((item) => item !== panel),
-            );
-        };
+    const handleChange = (panel: string) => (_: SyntheticEvent, isExpanded: boolean) => {
+        setExpanded(isExpanded ? [...expanded, panel] : expanded.filter((item) => item !== panel));
+    };
 
     return (
         <Container

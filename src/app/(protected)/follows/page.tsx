@@ -1,3 +1,7 @@
+import { and, eq, sql, desc } from "drizzle-orm";
+import { cacheTag } from "next/cache";
+import { unauthorized } from "next/navigation";
+
 import { Follow } from "@/components/follows/Follows";
 import MainContent from "@/components/follows/MainContent";
 import MainFallback from "@/components/MainFallback";
@@ -6,9 +10,6 @@ import { categories, follows, posts, users } from "@/db/schema";
 import { CategoriesRowPublic, PostsRow, UsersRowPublic } from "@/db/types";
 import { getSessionData } from "@/lib/auth";
 import { getUserId, requestUserId } from "@/lib/user";
-import { and, eq, sql, desc } from "drizzle-orm";
-import { cacheTag } from "next/cache";
-import { unauthorized } from "next/navigation";
 
 /** Result types */
 type FollowedUserWithLatestPost = {
@@ -90,16 +91,12 @@ async function getFollowedUsersWithLatestPost(
  * Returns the distinct set (array) of category names used by those latest posts
  * (only includes followed users who have at least one post with non-null category).
  */
-async function getCategoriesOfFollowedUsersLatestPosts(
-    userId: number,
-): Promise<string[]> {
+async function getCategoriesOfFollowedUsersLatestPosts(userId: number): Promise<string[]> {
     // same latest-per-author subquery
     const latestPerAuthor = db
         .select({
             author_id: posts.author_id,
-            latest_created_at: sql`max(${posts.created_at})`.as(
-                "latest_created_at",
-            ),
+            latest_created_at: sql`max(${posts.created_at})`.as("latest_created_at"),
         })
         .from(posts)
         .groupBy(posts.author_id)
@@ -110,10 +107,7 @@ async function getCategoriesOfFollowedUsersLatestPosts(
         .from(follows)
         .where(eq(follows.follower_id, userId))
         // match subquery by followed user id
-        .innerJoin(
-            latestPerAuthor,
-            eq(latestPerAuthor.author_id, follows.following_id),
-        )
+        .innerJoin(latestPerAuthor, eq(latestPerAuthor.author_id, follows.following_id))
         .innerJoin(
             posts,
             and(
@@ -152,8 +146,7 @@ export default async function Follows() {
         const userId = await getUserId(_userId);
         if (!userId) return unauthorized();
 
-        const { users: _users, categories } =
-            await getFollowedUsersAndCategories(userId);
+        const { users: _users, categories } = await getFollowedUsersAndCategories(userId);
 
         const feed: Follow[] = _users
             // .filter((u) => u.post_id !== null) // drop users without posts (Follow.post is required)

@@ -1,19 +1,17 @@
 "use server";
 
-import db from "@/db";
-import { cacheTag, revalidateTag } from "next/cache";
-import { posts } from "@/db/schema";
 import { desc } from "drizzle-orm";
-import {
-    postFullSchema,
-    postInsertSchema,
-    postNewSchema,
-} from "@/utils/validate/schemas";
-import log from "@/utils/stdlog";
-import { getSessionData } from "./auth";
+import { cacheTag, revalidateTag } from "next/cache";
 import { unauthorized } from "next/navigation";
-import { getUserId, requestUserId } from "./user";
 import z from "zod";
+
+import db from "@/db";
+import { posts } from "@/db/schema";
+import log from "@/utils/stdlog";
+import { postFullSchema, postInsertSchema, postNewSchema } from "@/utils/validate/schemas";
+
+import { getSessionData } from "./auth";
+import { getUserId, requestUserId } from "./user";
 
 export async function requestAllPosts() {
     "use cache";
@@ -28,9 +26,7 @@ export async function getAllPosts(request: ReturnType<typeof requestAllPosts>) {
 
 type PostsFindFirstConfig = Parameters<typeof db.query.posts.findFirst>[0];
 
-export async function requestPostFull(
-    where?: Omit<PostsFindFirstConfig, "with" | "orderBy">,
-) {
+export async function requestPostFull(where?: Omit<PostsFindFirstConfig, "with" | "orderBy">) {
     "use cache";
     cacheTag("posts", "post");
 

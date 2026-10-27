@@ -1,9 +1,11 @@
 "use client";
 
 import { Box, Card } from "@mui/material";
-import FeatureList from "./FeaturesList";
-import { FeatureItem } from "@/data/landing/features";
 import { CSSProperties } from "react";
+
+import { FeatureItem } from "@/data/landing/features";
+
+import FeatureList from "./FeaturesList";
 
 export default function FeaturesSection({
     items,
@@ -61,10 +63,8 @@ export default function FeaturesSection({
                         style={
                             items[selectedItemIndex]
                                 ? ({
-                                      "--items-imageDark":
-                                          items[selectedItemIndex].imageDark,
-                                      "--items-imageLight":
-                                          items[selectedItemIndex].imageLight,
+                                      "--items-imageDark": items[selectedItemIndex].imageDark,
+                                      "--items-imageLight": items[selectedItemIndex].imageLight,
                                   } as CSSProperties)
                                 : {}
                         }

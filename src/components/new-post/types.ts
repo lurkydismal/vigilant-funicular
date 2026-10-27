@@ -1,11 +1,12 @@
 "use client";
 
-import { linkSx } from "@/data/styles";
-import { postNewSchema } from "@/utils/validate/schemas";
 import { Grid, styled } from "@mui/material";
 import { ReactElement } from "react";
 import { Path } from "react-hook-form";
 import z from "zod";
+
+import { linkSx } from "@/data/styles";
+import { postNewSchema } from "@/utils/validate/schemas";
 
 export const stepSx = {
     ...linkSx,

@@ -1,15 +1,16 @@
+import { desc, eq, inArray, or, aliasedTable } from "drizzle-orm";
+import { unauthorized } from "next/navigation";
+
 import MainFallback from "@/components/MainFallback";
-import { SearchButton } from "@/components/SearchButton";
-import { TagsAndSearchMobile } from "@/components/Tags";
 import Latest from "@/components/posts/Latest";
 import MainContent from "@/components/posts/MainContent";
+import { SearchButton } from "@/components/SearchButton";
+import { TagsAndSearchMobile } from "@/components/Tags";
 import db from "@/db";
 import { categories, posts, follows, users } from "@/db/schema";
 import { getSessionData } from "@/lib/auth";
 import { normalizeArrayOrValue } from "@/utils/stdfunc";
 import { categorySelectSchema, postFullSchema } from "@/utils/validate/schemas";
-import { desc, eq, inArray, or, aliasedTable } from "drizzle-orm";
-import { unauthorized } from "next/navigation";
 
 export default async function Posts() {
     const session = await getSessionData();
@@ -46,9 +47,7 @@ export default async function Posts() {
             .where(eq(follows.follower_id, userId.id))
             .execute();
 
-        const followingIds = (_followingIds || [])
-            .map((r) => r.id)
-            .filter(Boolean);
+        const followingIds = (_followingIds || []).map((r) => r.id).filter(Boolean);
 
         const authors = aliasedTable(users, "authors");
         const coAuthors = aliasedTable(users, "co_authors");
@@ -93,19 +92,11 @@ export default async function Posts() {
                   .execute()
             : [];
 
-        const _categories = db
-            .select()
-            .from(categories)
-            .orderBy(desc(categories.name))
-            .execute();
+        const _categories = db.select().from(categories).orderBy(desc(categories.name)).execute();
 
         const parsedPosts = postFullSchema.array().parse(await _posts);
-        const parsedFeaturedPosts = postFullSchema
-            .array()
-            .parse(_featuredPosts);
-        const parsedCategories = categorySelectSchema
-            .array()
-            .parse(await _categories);
+        const parsedFeaturedPosts = postFullSchema.array().parse(_featuredPosts);
+        const parsedCategories = categorySelectSchema.array().parse(await _categories);
 
         return { parsedPosts, parsedFeaturedPosts, parsedCategories };
     };
@@ -123,9 +114,7 @@ export default async function Posts() {
                 </>
             )}
 
-            {parsedFeaturedPosts.length && (
-                <MainContent posts={parsedFeaturedPosts} />
-            )}
+            {parsedFeaturedPosts.length && <MainContent posts={parsedFeaturedPosts} />}
 
             <Latest posts={parsedPosts} />
         </MainFallback>

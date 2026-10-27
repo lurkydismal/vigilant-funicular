@@ -1,5 +1,6 @@
-import { getSessionData } from "@/lib/auth";
 import { unauthorized } from "next/navigation";
+
+import { getSessionData } from "@/lib/auth";
 
 export default async function Template({
     children,

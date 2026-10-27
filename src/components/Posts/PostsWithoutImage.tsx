@@ -1,13 +1,15 @@
 "use client";
 
 import { NavigateNextRounded } from "@mui/icons-material";
+import { styled, Typography, Grid, Box } from "@mui/material";
+import { useRouter } from "next/navigation";
+
 import { AuthorsWithDate } from "@/components/Author";
 import MainFallback from "@/components/MainFallback";
-import { useRouter } from "next/navigation";
-import { Truncated } from "./styled";
-import { styled, Typography, Grid, Box } from "@mui/material";
 import { PostsRowFull } from "@/db/types";
 import { concatenateAuthors } from "@/utils/stdfunc";
+
+import { Truncated } from "./styled";
 
 const TitleTypography = styled(Typography)(({ theme }) => ({
     "&:hover": { cursor: "pointer" },
@@ -46,11 +48,7 @@ const TitleTypography = styled(Typography)(({ theme }) => ({
     },
 }));
 
-export default function PostsWithoutImage({
-    posts,
-}: {
-    posts: PostsRowFull[];
-}) {
+export default function PostsWithoutImage({ posts }: { posts: PostsRowFull[] }) {
     const router = useRouter();
 
     const handleNavigate = (id: number) => {
@@ -79,11 +77,7 @@ export default function PostsWithoutImage({
                                 justifyContent: "space-between",
                             }}
                         >
-                            <Typography
-                                gutterBottom
-                                variant="caption"
-                                component="div"
-                            >
+                            <Typography gutterBottom variant="caption" component="div">
                                 {post.category?.name ?? "Unknown"}
                             </Typography>
 
@@ -96,17 +90,10 @@ export default function PostsWithoutImage({
                             >
                                 {post.title}
 
-                                <NavigateNextRounded
-                                    className="arrow"
-                                    sx={{ fontSize: "1rem" }}
-                                />
+                                <NavigateNextRounded className="arrow" sx={{ fontSize: "1rem" }} />
                             </TitleTypography>
 
-                            <Truncated
-                                variant="body2"
-                                color="text.secondary"
-                                gutterBottom
-                            >
+                            <Truncated variant="body2" color="text.secondary" gutterBottom>
                                 {post.description}
                             </Truncated>
 

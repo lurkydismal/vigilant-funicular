@@ -1,6 +1,7 @@
 "use client";
 
 import { Box, Step, StepLabel, Stepper, Tooltip } from "@mui/material";
+
 import { stepSx, Step as StepType } from "./types";
 
 export default function DesktopStepper({
@@ -37,12 +38,7 @@ export default function DesktopStepper({
                                         onClick={
                                             completed
                                                 ? undefined
-                                                : () =>
-                                                      onClick(
-                                                          index,
-                                                          isActive,
-                                                          isCompleted,
-                                                      )
+                                                : () => onClick(index, isActive, isCompleted)
                                         }
                                     >
                                         {step.title}

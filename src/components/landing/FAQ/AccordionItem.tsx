@@ -1,10 +1,5 @@
 import { ExpandMore as ExpandMoreIcon } from "@mui/icons-material";
-import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary,
-    Typography,
-} from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Typography } from "@mui/material";
 import { SyntheticEvent } from "react";
 
 export default function AccordionItem({
@@ -18,19 +13,11 @@ export default function AccordionItem({
     question: string;
     answer: string;
     expanded: string[];
-    onChange: (
-        panel: string,
-    ) => (e: SyntheticEvent, isExpanded: boolean) => void;
+    onChange: (panel: string) => (e: SyntheticEvent, isExpanded: boolean) => void;
 }) {
     return (
-        <Accordion
-            expanded={expanded.includes(panel)}
-            onChange={onChange(panel)}
-        >
-            <AccordionSummary
-                aria-controls={`${panel}d-content`}
-                expandIcon={<ExpandMoreIcon />}
-            >
+        <Accordion expanded={expanded.includes(panel)} onChange={onChange(panel)}>
+            <AccordionSummary aria-controls={`${panel}d-content`} expandIcon={<ExpandMoreIcon />}>
                 <Typography component="span" variant="subtitle2">
                     {question}
                 </Typography>
