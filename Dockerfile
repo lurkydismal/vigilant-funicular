@@ -1,4 +1,4 @@
-FROM node:current-alpine
+FROM node:current-alpine@sha256:e71ac5e964b9201072425d59d2e876359efa25dc96bb1768cb73295728d6e4ea
 
 # small runtime deps
 RUN apk add --no-cache ca-certificates
@@ -18,4 +18,4 @@ COPY . .
 # Build the application
 RUN npm run build
 
-CMD ["npm", "run",  "dev"]
+CMD ["npm", "run",  "start"]
