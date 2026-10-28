@@ -52,7 +52,7 @@ type Props = {
 
 export default function AuthCard({ children, footer, variant = "outlined" }: Props) {
     return (
-        <AuthContainer direction="column" justifyContent="space-between">
+        <AuthContainer direction="column" sx={{ justifyContent: "space-between" }}>
             <Card variant={variant}>
                 {children}
                 <Divider sx={{ my: 2 }} />
