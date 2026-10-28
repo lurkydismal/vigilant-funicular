@@ -138,13 +138,13 @@ function OrganizationForm() {
                                 placeholder="Category"
                                 slotProps={{
                                     input: {
-                                        ...params.InputProps,
+                                        ...params.slotProps.input,
                                         endAdornment: (
                                             <>
                                                 {pending ? (
                                                     <CircularProgress color="inherit" size={20} />
                                                 ) : null}
-                                                {params.InputProps.endAdornment}
+                                                {params.slotProps.input.endAdornment}
                                             </>
                                         ),
                                     },
@@ -252,7 +252,7 @@ function CollaborationForm() {
                                     placeholder="Co-author"
                                     slotProps={{
                                         input: {
-                                            ...params.InputProps,
+                                            ...params.slotProps.input,
                                             endAdornment: (
                                                 <>
                                                     {pending ? (
@@ -261,7 +261,7 @@ function CollaborationForm() {
                                                             size={20}
                                                         />
                                                     ) : null}
-                                                    {params.InputProps.endAdornment}
+                                                    {params.slotProps.input.endAdornment}
                                                 </>
                                             ),
                                         },
