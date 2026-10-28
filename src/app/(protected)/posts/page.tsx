@@ -54,42 +54,41 @@ export default async function Posts() {
 
         const _featuredPosts = followingIds.length
             ? await db
-                  .select({
-                      id: posts.id,
-                      title: posts.title,
-                      description: posts.description,
-                      content: posts.content,
-                      preview_url: posts.preview_url,
-                      created_at: posts.created_at,
-                      updated_at: posts.updated_at,
+                .select({
+                    id: posts.id,
+                    title: posts.title,
+                    description: posts.description,
+                    content: posts.content,
+                    created_at: posts.created_at,
+                    updated_at: posts.updated_at,
 
-                      author: {
-                          id: authors.id,
-                          username: authors.username,
-                          avatar_url: authors.avatar_url,
-                      },
-                      coAuthor: {
-                          id: coAuthors.id,
-                          username: coAuthors.username,
-                          avatar_url: coAuthors.avatar_url,
-                      },
-                      category: {
-                          id: categories.id,
-                          name: categories.name,
-                      },
-                  })
-                  .from(posts)
-                  .leftJoin(authors, eq(authors.id, posts.author_id)) // join author
-                  .leftJoin(coAuthors, eq(coAuthors.id, posts.co_author_id)) // join coAuthor
-                  .leftJoin(categories, eq(categories.id, posts.category_id)) // join category
-                  .where(() =>
-                      or(
-                          inArray(posts.author_id, followingIds),
-                          inArray(posts.co_author_id, followingIds),
-                      ),
-                  )
-                  .orderBy(desc(posts.created_at))
-                  .execute()
+                    author: {
+                        id: authors.id,
+                        username: authors.username,
+                        avatar_url: authors.avatar_url,
+                    },
+                    coAuthor: {
+                        id: coAuthors.id,
+                        username: coAuthors.username,
+                        avatar_url: coAuthors.avatar_url,
+                    },
+                    category: {
+                        id: categories.id,
+                        name: categories.name,
+                    },
+                })
+                .from(posts)
+                .leftJoin(authors, eq(authors.id, posts.author_id)) // join author
+                .leftJoin(coAuthors, eq(coAuthors.id, posts.co_author_id)) // join coAuthor
+                .leftJoin(categories, eq(categories.id, posts.category_id)) // join category
+                .where(() =>
+                    or(
+                        inArray(posts.author_id, followingIds),
+                        inArray(posts.co_author_id, followingIds),
+                    ),
+                )
+                .orderBy(desc(posts.created_at))
+                .execute()
             : [];
 
         const _categories = db.select().from(categories).orderBy(desc(categories.name)).execute();
