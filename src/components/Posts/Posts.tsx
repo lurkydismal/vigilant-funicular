@@ -131,10 +131,7 @@ export default function Posts({ posts }: { posts: PostsRowFull[] }) {
                                 className="post-image"
                                 component="img"
                                 alt={post.title}
-                                image={
-                                    post.preview_url ??
-                                    `https://picsum.photos/800/450?random=${post.id ?? index}`
-                                }
+                                image={`https://picsum.photos/800/450?random=${post.id ?? index}`}
                                 sx={{
                                     aspectRatio: "16/9",
                                     width: "100%",
