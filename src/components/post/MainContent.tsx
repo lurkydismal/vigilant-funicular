@@ -63,7 +63,7 @@ export default function MainContent({ post }: { post: PostsRowFull }) {
             <CardMedia
                 alt="green iguana"
                 component="img"
-                image={post.preview_url ?? `https://picsum.photos/2400/1800?random=${post.id}`}
+                image={`https://picsum.photos/2400/1800?random=${post.id}`}
                 sx={{
                     aspectRatio: "12 / 6",
                     borderBottom: "1px solid",
