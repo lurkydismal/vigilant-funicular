@@ -105,7 +105,7 @@ export default function Hero() {
                         innovation.
                     </Typography>
 
-                    <Stack direction="row" spacing={1} alignItems="center">
+                    <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
                         <Button
                             color="primary"
                             size="medium"
