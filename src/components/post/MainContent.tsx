@@ -52,7 +52,7 @@ export default function MainContent({ post }: { post: PostsRowFull }) {
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <AuthorsWithDateAndLink {...properties} />
 
-            <Typography variant="subtitle1" component="div" width="fit-content" sx={tagSx}>
+            <Typography variant="subtitle1" component="div" sx={{ ...tagSx, width: "fit-content" }}>
                 {post.category?.name ?? "Unknown"}
             </Typography>
 
