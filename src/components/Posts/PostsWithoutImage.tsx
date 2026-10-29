@@ -75,6 +75,18 @@ export default function PostsWithoutImage({ posts }: { posts: PostsRowFull[] }) 
                                 gap: 1,
                                 height: "100%",
                                 justifyContent: "space-between",
+
+                                p: 2,
+                                border: 1,
+                                borderColor: "divider",
+                                borderRadius: 2,
+                                boxShadow: 1,
+                                transition: "box-shadow 0.2s ease, border-color 0.2s ease",
+
+                                "&:hover": {
+                                    boxShadow: 3,
+                                    borderColor: "text.disabled",
+                                },
                             }}
                         >
                             <Typography gutterBottom variant="caption" component="div">
