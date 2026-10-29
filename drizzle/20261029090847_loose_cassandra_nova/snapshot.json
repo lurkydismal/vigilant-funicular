@@ -1,58 +1,40 @@
 {
-  "type": "diff",
-  "version": "9",
-  "dialect": "postgres",
-  "id": "c1bed4d6-8955-453e-a9a8-db3779738d48",
-  "prevIds": [
-    "6de3f25e-3d49-43ad-a5ba-ee9f2c56ed98"
-  ],
-  "footprints": [
-    {
-      "statementType": "drop_check",
-      "statementTarget": [
-        "table",
-        "public",
-        "posts"
-      ],
-      "writes": [
-        "s|ck|public.posts.scheduled_at_not_in_past",
-        "n|ck|public.posts.scheduled_at_not_in_past",
-        "e|ck|public.posts.scheduled_at_not_in_past",
-        "n|con|public.posts.scheduled_at_not_in_past"
-      ],
-      "reads": [
-        "n|tbl|public.posts",
-        "n|sch|public",
-        "e|col|public.posts.scheduled_at"
-      ]
-    },
-    {
-      "statementType": "drop_column",
-      "statementTarget": [
-        "column",
-        "public",
-        "posts",
-        "scheduled_at"
-      ],
-      "writes": [
-        "s|col|public.posts.scheduled_at",
-        "n|col|public.posts.scheduled_at",
-        "e|col|public.posts.scheduled_at"
-      ],
-      "reads": [
-        "n|tbl|public.posts",
-        "n|sch|public"
-      ]
-    }
-  ],
-  "deltas": [
-    {
-      "op": "drop",
-      "key": "columns\u0000[\"public\",\"posts\",\"scheduled_at\"]"
-    },
-    {
-      "op": "drop",
-      "key": "checks\u0000[\"public\",\"posts\",\"scheduled_at_not_in_past\"]"
-    }
-  ]
+    "type": "diff",
+    "version": "9",
+    "dialect": "postgres",
+    "id": "c1bed4d6-8955-453e-a9a8-db3779738d48",
+    "prevIds": ["6de3f25e-3d49-43ad-a5ba-ee9f2c56ed98"],
+    "footprints": [
+        {
+            "statementType": "drop_check",
+            "statementTarget": ["table", "public", "posts"],
+            "writes": [
+                "s|ck|public.posts.scheduled_at_not_in_past",
+                "n|ck|public.posts.scheduled_at_not_in_past",
+                "e|ck|public.posts.scheduled_at_not_in_past",
+                "n|con|public.posts.scheduled_at_not_in_past"
+            ],
+            "reads": ["n|tbl|public.posts", "n|sch|public", "e|col|public.posts.scheduled_at"]
+        },
+        {
+            "statementType": "drop_column",
+            "statementTarget": ["column", "public", "posts", "scheduled_at"],
+            "writes": [
+                "s|col|public.posts.scheduled_at",
+                "n|col|public.posts.scheduled_at",
+                "e|col|public.posts.scheduled_at"
+            ],
+            "reads": ["n|tbl|public.posts", "n|sch|public"]
+        }
+    ],
+    "deltas": [
+        {
+            "op": "drop",
+            "key": "columns\u0000[\"public\",\"posts\",\"scheduled_at\"]"
+        },
+        {
+            "op": "drop",
+            "key": "checks\u0000[\"public\",\"posts\",\"scheduled_at_not_in_past\"]"
+        }
+    ]
 }
