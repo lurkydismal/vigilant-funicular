@@ -103,12 +103,7 @@ function stableStringify(x: unknown): string {
 
     return (
         "{" +
-        keys
-            .map(
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                (k) => JSON.stringify(k) + ":" + stableStringify((x as any)[k]),
-            )
-            .join(",") +
+        keys.map((k) => JSON.stringify(k) + ":" + stableStringify((x as any)[k])).join(",") +
         "}"
     );
 }
@@ -175,7 +170,6 @@ async function ensureBucketExists(retries = 3, baseDelayMs = 500) {
         // method name: getBucketPolicy(bucket) -> returns string policy
         // if your minio SDK version uses a different name, adapt this call.
         // (most JS clients expose `getBucketPolicy` / `setBucketPolicy`).
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         currentPolicyStr = await client.getBucketPolicy(bucket);
     } catch (err) {
@@ -194,7 +188,6 @@ async function ensureBucketExists(retries = 3, baseDelayMs = 500) {
     if (!currentPolicyStr || !policyEquals(currentPolicyStr, desiredPolicyStr)) {
         try {
             // some SDKs expose setBucketPolicy / setBucketAcl names; this is the common call.
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             await client.setBucketPolicy(bucket, desiredPolicyStr);
 

@@ -151,12 +151,9 @@ const MarkdownComponents: Components = {
     th: ({ children }: HTMLAttributes<HTMLTableCellElement>) => <TableCell>{children}</TableCell>,
     td: ({ children }: HTMLAttributes<HTMLTableCellElement>) => <TableCell>{children}</TableCell>,
 
-    del: ({
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        node,
-        ...props
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    }: HTMLAttributes<HTMLModElement> & { node?: any }) => <del {...props} />,
+    del: ({ node, ...props }: HTMLAttributes<HTMLModElement> & { node?: any }) => (
+        <del {...props} />
+    ),
 };
 
 export default MarkdownComponents;
