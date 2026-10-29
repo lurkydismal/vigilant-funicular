@@ -62,6 +62,10 @@ packages-upgrade:
 packages-install:
     pnpm i --prefer-offline
 
+# Check for unused dependencies, exports, and files.
+check-unused:
+    pnpm knip
+
 # Pull the current database schema into schema.
 pull-db-schema:
     pnpm pull
