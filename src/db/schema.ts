@@ -91,7 +91,7 @@ export const posts = pgTable(
         content: text().notNull(),
         content_warning: boolean().default(false).notNull(),
         visibility: postVisibilityEnum().default("public").notNull(),
-        scheduled_at: timestamp({ precision: 0, withTimezone: true }).defaultNow().notNull(),
+        // scheduled_at: timestamp({ precision: 0, withTimezone: true }).defaultNow().notNull(),
         reading_time: smallint().notNull(),
         ...timestamps,
     },
@@ -102,7 +102,7 @@ export const posts = pgTable(
             sql`${t.description} IS NULL OR length(trim(${t.description})) > 10`,
         ),
         check("content_longer_than_100", sql`length(trim(${t.content})) > 100`),
-        check("scheduled_at_not_in_past", sql`${t.scheduled_at} >= NOW()`),
+        // check("scheduled_at_not_in_past", sql`${t.scheduled_at} >= NOW()`),
         check("reading_time_not_blank", sql`${t.reading_time} > 0`),
 
         index().on(t.author_id),
