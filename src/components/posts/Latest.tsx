@@ -1,6 +1,6 @@
 "use client";
 
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useState, ChangeEvent } from "react";
 
 import PostsPagination from "@/components/Pagination";
@@ -17,14 +17,23 @@ export default function Latest({ posts }: { posts: PostsRowFull[] }) {
     };
 
     return (
-        <div>
+        <Box
+            sx={{
+                display: "flex",
+                minHeight: 0, // important when used inside flex column with overflow
+                flexGrow: 1,
+                flexDirection: "column",
+            }}
+        >
             <Typography variant="h2" gutterBottom>
                 Latest
             </Typography>
 
             <PostsWithoutImage posts={paginate(posts, currentPage, perPage)} />
 
+            <Box sx={{ my: "auto" }} />
+
             <PostsPagination total={posts.length} perPage={perPage} onChange={onChange} />
-        </div>
+        </Box>
     );
 }
