@@ -43,6 +43,7 @@ export default function Markdown({ children }: { children: string }) {
                 "& math": {
                     fontSize: "1.8rem",
                 },
+                lineBreak: "anywhere",
             }}
         >
             <ReactMarkdown
