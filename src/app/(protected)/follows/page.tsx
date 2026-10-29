@@ -164,20 +164,20 @@ export default async function Follows() {
                     PostsRow,
                     "content_warning" | "visibility" | "scheduled_at" | "reading_time"
                 > | null = u.post_id
-                        ? {
-                            // minimal post shape using fields returned by your query.
-                            // expand/adjust as needed to match PostsRowFull in your project.
-                            id: u.post_id as number,
-                            author_id: u.user_id,
-                            co_author_id: null,
-                            category_id: u.category_id ?? null,
-                            title: u.post_title ?? "",
-                            description: u.post_description ?? null,
-                            content: u.post_content ?? "",
-                            created_at: u.post_created_at ?? new Date(0),
-                            updated_at: u.post_created_at ?? new Date(0),
-                        }
-                        : null;
+                    ? {
+                          // minimal post shape using fields returned by your query.
+                          // expand/adjust as needed to match PostsRowFull in your project.
+                          id: u.post_id as number,
+                          author_id: u.user_id,
+                          co_author_id: null,
+                          category_id: u.category_id ?? null,
+                          title: u.post_title ?? "",
+                          description: u.post_description ?? null,
+                          content: u.post_content ?? "",
+                          created_at: u.post_created_at ?? new Date(0),
+                          updated_at: u.post_created_at ?? new Date(0),
+                      }
+                    : null;
 
                 return { author, post } as Follow;
             });
