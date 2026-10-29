@@ -141,11 +141,16 @@ export default function Posts({ posts }: { posts: PostsRowFull[] }) {
                                 loading="lazy"
                             />
 
-                            <MediaOverlay className="post-overlay">
-                                <Box className="arrowBox" aria-hidden>
-                                    <NavigateNextRounded />
-                                </Box>
-                            </MediaOverlay>
+                            {
+                                /* add when post has multiple images and make arrow functional */
+                                false && (
+                                    <MediaOverlay className="post-overlay">
+                                        <Box className="arrowBox" aria-hidden>
+                                            <NavigateNextRounded />
+                                        </Box>
+                                    </MediaOverlay>
+                                )
+                            }
                         </MediaWrapper>
 
                         <StyledCardContent>
