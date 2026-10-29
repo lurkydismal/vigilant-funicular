@@ -229,8 +229,8 @@ export const postUpdateSchema = createUpdateSchema(posts);
 export const postFullSchema = postSelectSchema
     .extend({
         author: userSelectPublicSchema,
-        coAuthor: userSelectPublicSchema,
-        category: categorySelectSchema,
+        coAuthor: userSelectPublicSchema.nullable(),
+        category: categorySelectSchema.nullable(),
     })
     .omit({
         author_id: true,
