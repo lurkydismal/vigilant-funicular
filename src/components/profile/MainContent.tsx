@@ -61,7 +61,11 @@ export default function MainContent({
 
                 <TagsAndSearchMobile tags={tags} />
 
+                <Box sx={{ my: 1 }} />
+
                 <Posts posts={paginate(posts, currentPage, perPage)} />
+
+                <Box sx={{ my: "auto" }} />
 
                 <PostsPagination total={posts.length} perPage={perPage} onChange={onChange} />
             </MainFallback>
