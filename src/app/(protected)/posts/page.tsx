@@ -105,7 +105,7 @@ export default async function Posts() {
 
     return (
         <MainFallback itemsLength={parsedPosts.length}>
-            {parsedCategories.length && (
+            {parsedCategories.length > 0 && (
                 <>
                     <SearchButton />
 
@@ -113,7 +113,7 @@ export default async function Posts() {
                 </>
             )}
 
-            {parsedFeaturedPosts.length && <MainContent posts={parsedFeaturedPosts} />}
+            {parsedFeaturedPosts.length > 0 && <MainContent posts={parsedFeaturedPosts} />}
 
             <Latest posts={parsedPosts} />
         </MainFallback>
