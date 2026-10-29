@@ -240,7 +240,6 @@ export const postFullSchema = postSelectSchema
 
 export const postVisibilitySchema = postInsertSchema.shape.visibility;
 
-// FIX: Optional not applying to ""
 export const postNewSchema = z.object({
     // Write form
     title: z.string().min(10, "Title too short").max(50, "Title too long"),
@@ -257,6 +256,6 @@ export const postNewSchema = z.object({
     "content-warning": z.boolean().optional(),
     category: z.string().nonempty(),
     publish: z.enum(["now", "scheduled"]),
-    "co-author": z.string().nonempty().optional(),
-    "attribution-note": z.string().nonempty().optional(),
+    "co-author": z.string().optional(),
+    "attribution-note": z.string().optional(),
 });
