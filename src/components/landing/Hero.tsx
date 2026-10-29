@@ -13,7 +13,7 @@ const ImageWrapper = styled(Box)(({ theme }) => ({
     border: "1px solid",
     borderColor: (theme.vars || theme).palette.grey[200],
     borderRadius: (theme.vars || theme).shape.borderRadius,
-    boxShadow: "0 0 12px 8px hsla(220, 25%, 80%, 0.12)",
+    boxShadow: "0 0 12px 8px hsla(220, 25%, 80%, 0.32)",
     height: 400,
     marginTop: theme.spacing(8),
     outline: "3px solid transparent",
@@ -25,7 +25,7 @@ const ImageWrapper = styled(Box)(({ theme }) => ({
     },
     ...theme.applyStyles("dark", {
         borderColor: (theme.vars || theme).palette.grey[700],
-        boxShadow: "0 0 24px 12px hsla(210, 100%, 12%, 0.12)",
+        boxShadow: "0 0 24px 12px hsla(210, 100%, 12%, 0.32)",
         outlineColor: "hsla(220, 20%, 42%, 0.06)",
     }),
 }));
