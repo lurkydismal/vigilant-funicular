@@ -21,7 +21,7 @@ export default async function Page({
     const session = await getSessionData();
     if (!session) return unauthorized();
 
-    const id = z.number().parse(slug);
+    const id = z.coerce.number().parse(slug);
 
     const posts = await getPostFull(requestPostFull({ id }));
 
