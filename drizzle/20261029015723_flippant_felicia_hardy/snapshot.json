@@ -2,11 +2,28 @@
   "type": "base",
   "version": "9",
   "dialect": "postgres",
-  "id": "71145dd4-165f-4546-a571-675ea1b64027",
+  "id": "6de3f25e-3d49-43ad-a5ba-ee9f2c56ed98",
   "prevIds": [
     "00000000-0000-0000-0000-000000000000"
   ],
   "footprints": [
+    {
+      "statementType": "create_enum",
+      "statementTarget": [
+        "enum",
+        "public",
+        "post_visibility"
+      ],
+      "writes": [
+        "s|enum|public.post_visibility",
+        "n|enum|public.post_visibility",
+        "e|enum|public.post_visibility",
+        "n|type|public.post_visibility"
+      ],
+      "reads": [
+        "n|sch|public"
+      ]
+    },
     {
       "statementType": "create_table",
       "statementTarget": [
@@ -62,7 +79,8 @@
         "n|rel|public.posts_pkey"
       ],
       "reads": [
-        "n|sch|public"
+        "n|sch|public",
+        "n|enum|public.post_visibility"
       ]
     },
     {
@@ -79,30 +97,11 @@
         "n|rel|public.users",
         "n|type|public.users",
         "n|rel|public.users_pkey",
-        "n|rel|public.users_username_key"
+        "n|rel|public.users_username_key",
+        "n|rel|public.users_username_normalized_key"
       ],
       "reads": [
         "n|sch|public"
-      ]
-    },
-    {
-      "statementType": "create_index",
-      "statementTarget": [
-        "index",
-        "public",
-        "categories",
-        "categories_name_index"
-      ],
-      "writes": [
-        "s|idx|public.categories_name_index",
-        "n|idx|public.categories_name_index",
-        "e|idx|public.categories_name_index",
-        "n|rel|public.categories_name_index"
-      ],
-      "reads": [
-        "n|tbl|public.categories",
-        "n|sch|public",
-        "n|col|public.categories.name"
       ]
     },
     {
@@ -210,19 +209,20 @@
       "statementTarget": [
         "index",
         "public",
-        "users",
-        "users_username_index"
+        "posts",
+        "posts_author_id_created_at_index"
       ],
       "writes": [
-        "s|idx|public.users_username_index",
-        "n|idx|public.users_username_index",
-        "e|idx|public.users_username_index",
-        "n|rel|public.users_username_index"
+        "s|idx|public.posts_author_id_created_at_index",
+        "n|idx|public.posts_author_id_created_at_index",
+        "e|idx|public.posts_author_id_created_at_index",
+        "n|rel|public.posts_author_id_created_at_index"
       ],
       "reads": [
-        "n|tbl|public.users",
+        "n|tbl|public.posts",
         "n|sch|public",
-        "n|col|public.users.username"
+        "n|col|public.posts.author_id",
+        "n|col|public.posts.created_at"
       ]
     },
     {
@@ -365,6 +365,16 @@
       "name": "users",
       "isRlsEnabled": false,
       "entityType": "tables"
+    },
+    {
+      "schema": "public",
+      "name": "post_visibility",
+      "values": [
+        "public",
+        "unlisted",
+        "private"
+      ],
+      "entityType": "enums"
     },
     {
       "schema": "public",
@@ -512,19 +522,6 @@
     {
       "schema": "public",
       "table": "posts",
-      "name": "preview_url",
-      "type": "varchar(255)",
-      "typeSchema": null,
-      "notNull": false,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "entityType": "columns"
-    },
-    {
-      "schema": "public",
-      "table": "posts",
       "name": "title",
       "type": "varchar(50)",
       "typeSchema": null,
@@ -539,7 +536,7 @@
       "schema": "public",
       "table": "posts",
       "name": "description",
-      "type": "varchar(200)",
+      "type": "varchar(100)",
       "typeSchema": null,
       "notNull": false,
       "dimensions": 0,
@@ -553,6 +550,58 @@
       "table": "posts",
       "name": "content",
       "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "posts",
+      "name": "content_warning",
+      "type": "boolean",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "false",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "posts",
+      "name": "visibility",
+      "type": "post_visibility",
+      "typeSchema": "public",
+      "notNull": true,
+      "dimensions": 0,
+      "default": "'public'",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "posts",
+      "name": "scheduled_at",
+      "type": "timestamp(0) with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "posts",
+      "name": "reading_time",
+      "type": "smallint",
       "typeSchema": null,
       "notNull": true,
       "dimensions": 0,
@@ -616,6 +665,19 @@
     {
       "schema": "public",
       "table": "users",
+      "name": "username_normalized",
+      "type": "varchar(32)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "users",
       "name": "password_hash",
       "type": "text",
       "typeSchema": null,
@@ -664,27 +726,6 @@
       "generated": null,
       "identity": null,
       "entityType": "columns"
-    },
-    {
-      "schema": "public",
-      "table": "categories",
-      "name": "categories_name_index",
-      "nameExplicit": false,
-      "columns": [
-        {
-          "value": "name",
-          "isExpression": false,
-          "asc": true,
-          "nullsFirst": false,
-          "opclass": null
-        }
-      ],
-      "isUnique": true,
-      "where": null,
-      "with": "",
-      "method": "btree",
-      "concurrently": false,
-      "entityType": "indexes"
     },
     {
       "schema": "public",
@@ -793,19 +834,26 @@
     },
     {
       "schema": "public",
-      "table": "users",
-      "name": "users_username_index",
+      "table": "posts",
+      "name": "posts_author_id_created_at_index",
       "nameExplicit": false,
       "columns": [
         {
-          "value": "username",
+          "value": "author_id",
           "isExpression": false,
           "asc": true,
           "nullsFirst": false,
           "opclass": null
+        },
+        {
+          "value": "created_at",
+          "isExpression": false,
+          "asc": false,
+          "nullsFirst": false,
+          "opclass": null
         }
       ],
-      "isUnique": true,
+      "isUnique": false,
       "where": null,
       "with": "",
       "method": "btree",
@@ -962,6 +1010,17 @@
     },
     {
       "schema": "public",
+      "table": "users",
+      "name": "users_username_normalized_key",
+      "nameExplicit": false,
+      "columns": [
+        "username_normalized"
+      ],
+      "nullsNotDistinct": false,
+      "entityType": "uniques"
+    },
+    {
+      "schema": "public",
       "table": "categories",
       "name": "name_not_blank",
       "value": "length(trim(\"name\")) > 0",
@@ -969,30 +1028,44 @@
     },
     {
       "schema": "public",
-      "table": "posts",
-      "name": "preview_url_not_blank",
-      "value": "\"preview_url\" IS NULL OR length(trim(\"preview_url\")) > 0",
+      "table": "follows",
+      "name": "follower_cannot_follow_themselves",
+      "value": "follower_id != following_id",
       "entityType": "checks"
     },
     {
       "schema": "public",
       "table": "posts",
-      "name": "description_not_blank",
-      "value": "\"description\" IS NULL OR length(trim(\"description\")) > 0",
+      "name": "title_longer_than_10",
+      "value": "length(trim(\"title\")) > 10",
       "entityType": "checks"
     },
     {
       "schema": "public",
       "table": "posts",
-      "name": "content_not_blank",
-      "value": "length(trim(\"content\")) > 0",
+      "name": "description_longer_than_10",
+      "value": "\"description\" IS NULL OR length(trim(\"description\")) > 10",
       "entityType": "checks"
     },
     {
       "schema": "public",
       "table": "posts",
-      "name": "title_not_blank",
-      "value": "length(trim(\"title\")) > 0",
+      "name": "content_longer_than_100",
+      "value": "length(trim(\"content\")) > 100",
+      "entityType": "checks"
+    },
+    {
+      "schema": "public",
+      "table": "posts",
+      "name": "scheduled_at_not_in_past",
+      "value": "\"scheduled_at\" >= NOW()",
+      "entityType": "checks"
+    },
+    {
+      "schema": "public",
+      "table": "posts",
+      "name": "reading_time_not_blank",
+      "value": "\"reading_time\" > 0",
       "entityType": "checks"
     },
     {
@@ -1000,6 +1073,20 @@
       "table": "users",
       "name": "username_not_blank",
       "value": "length(trim(\"username\")) > 0",
+      "entityType": "checks"
+    },
+    {
+      "schema": "public",
+      "table": "users",
+      "name": "username_normalized_not_blank",
+      "value": "length(trim(\"username_normalized\")) > 0",
+      "entityType": "checks"
+    },
+    {
+      "schema": "public",
+      "table": "users",
+      "name": "username_normalized_lowercase",
+      "value": "\"username_normalized\" = lower(\"username_normalized\")",
       "entityType": "checks"
     },
     {

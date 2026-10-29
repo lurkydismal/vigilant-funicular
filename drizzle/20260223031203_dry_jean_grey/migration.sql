@@ -1,1 +1,0 @@
-ALTER TABLE "follows" ADD CONSTRAINT "follower_cannot_follow_themselves" CHECK ((follower_id != following_id));
