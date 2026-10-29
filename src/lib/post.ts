@@ -18,7 +18,17 @@ export async function requestAllPosts() {
     "use cache";
     cacheTag("posts", "post");
 
-    return db.select().from(posts).orderBy(desc(posts.created_at)).execute();
+    // return db.select().from(posts).orderBy(desc(posts.created_at)).execute();
+    return db.query.posts.findMany({
+        with: {
+            author: true,
+            coAuthor: true,
+            category: true,
+        },
+        orderBy: {
+            created_at: "desc",
+        },
+    });
 }
 
 export async function getAllPosts(request: ReturnType<typeof requestAllPosts>) {
