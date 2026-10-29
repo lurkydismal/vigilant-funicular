@@ -41,7 +41,7 @@ export default function ErrorPage({
     }, [showError, error]);
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
+        <div className="flex min-h-screen items-center justify-center">
             <main className="w-full max-w-md space-y-6 p-6 text-center">
                 <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30">
                     <ErrorIcon />

@@ -18,7 +18,7 @@ export default function Loading() {
     }, []);
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
+        <div className="flex min-h-screen items-center justify-center">
             <main className="w-full max-w-3xl space-y-6 p-6">
                 {/* header + spinner */}
                 <div className="flex items-center gap-4">
