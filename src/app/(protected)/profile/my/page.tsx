@@ -28,7 +28,8 @@ async function Profile({ searchParams }: FilterSearchParams) {
         "use cache";
         cacheDbRequest(["user", "categories", "posts"]);
 
-        const user = session.user;
+        const _user = session.user;
+        const user = { ...session.user, image: session.user.image ?? null };
 
         const posts = db.query.posts.findMany({
             where: buildPostRelationalWhere(filters),
