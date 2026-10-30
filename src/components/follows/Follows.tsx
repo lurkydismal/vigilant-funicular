@@ -6,10 +6,10 @@ import { redirect } from "next/navigation";
 
 import { AuthorWithFollowAndLink } from "@/components/Author";
 import MainFallback from "@/components/MainFallback";
-import { PostsRow, PostsRowFull, UsersRowPublic } from "@/db/types";
+import { PostsRow, PostsRowFull, UserRowPublic } from "@/db/types";
 
 export interface Follow {
-    author: UsersRowPublic;
+    author: UserRowPublic;
     post: PostsRow | PostsRowFull | null;
 }
 
@@ -67,7 +67,7 @@ export function Follows({ follows }: { follows: Follow[] }) {
                     const user = follow.author;
 
                     return (
-                        <Grid key={user.username} size={{ xs: 12, sm: 6 }}>
+                        <Grid key={user.name} size={{ xs: 12, sm: 6 }}>
                             <Box
                                 sx={{
                                     borderRadius: 1,

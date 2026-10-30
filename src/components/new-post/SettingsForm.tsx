@@ -216,9 +216,7 @@ function CollaborationForm() {
                 const _coAuthors = await getAllUsers(requestAllUsers());
 
                 setCoAuthorss(
-                    _coAuthors
-                        .map((item) => item.username)
-                        .filter((username) => username !== user?.username),
+                    _coAuthors.map((item) => item.name).filter((name) => name !== user?.name),
                 );
             });
         }

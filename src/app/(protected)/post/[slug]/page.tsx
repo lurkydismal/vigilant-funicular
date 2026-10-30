@@ -2,7 +2,7 @@ import { unauthorized } from "next/navigation";
 import z from "zod";
 
 import MainContent from "@/components/post/MainContent";
-import { getSessionData } from "@/lib/auth";
+import { getSession } from "@/lib/dal/auth";
 import { getPostFull, requestPostFull } from "@/lib/post";
 
 export default async function Page({
@@ -18,7 +18,7 @@ export default async function Page({
 }) {
     const { slug } = await params;
 
-    const session = await getSessionData();
+    const session = await getSession();
     if (!session) return unauthorized();
 
     const id = z.coerce.number().parse(slug);

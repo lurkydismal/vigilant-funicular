@@ -1,22 +1,20 @@
 import { and, eq, sql, desc } from "drizzle-orm";
-import { cacheTag } from "next/cache";
 import { unauthorized } from "next/navigation";
 
 import { Follow } from "@/components/follows/Follows";
 import MainContent from "@/components/follows/MainContent";
 import MainFallback from "@/components/MainFallback";
 import db from "@/db";
-import { categories, follows, posts, users } from "@/db/schema";
-import { CategoriesRowPublic, PostsRow, UsersRowPublic } from "@/db/types";
-import { getSessionData } from "@/lib/auth";
+import { categories, follows, posts, user } from "@/db/schema";
+import { CategoriesRowPublic, PostsRow, UserRowPublic } from "@/db/types";
+import { getSession } from "@/lib/dal/auth";
 import { getUserId, requestUserId } from "@/lib/user";
 
 /** Result types */
 type FollowedUserWithLatestPost = {
-    user_id: number;
-    username: string;
-    username_normalized: string;
-    avatar_url: string | null;
+    user_id: string;
+    name: string;
+    image: string | null;
     post_id: number | null;
     post_title: string | null;
     post_description: string | null;
@@ -31,7 +29,7 @@ type FollowedUserWithLatestPost = {
  * Each row contains the user + their latest post (if any) + that post's category.
  */
 async function getFollowedUsersWithLatestPost(
-    userId: number,
+    userId: string,
 ): Promise<FollowedUserWithLatestPost[]> {
     const latestPost = db
         .select({
@@ -43,17 +41,16 @@ async function getFollowedUsersWithLatestPost(
             category_id: posts.category_id,
         })
         .from(posts)
-        .where(eq(posts.author_id, users.id))
+        .where(eq(posts.author_id, user.id))
         .orderBy(desc(posts.created_at))
         .limit(1)
         .as("latest_post");
 
     const rows = await db
         .select({
-            user_id: users.id,
-            username: users.username,
-            username_normalized: users.username_normalized,
-            avatar_url: users.avatar_url,
+            user_id: user.id,
+            name: user.name,
+            image: user.image,
             post_id: latestPost.id,
             post_title: latestPost.title,
             post_description: latestPost.description,
@@ -64,19 +61,18 @@ async function getFollowedUsersWithLatestPost(
         })
         .from(follows)
         .where(eq(follows.follower_id, userId))
-        .innerJoin(users, eq(users.id, follows.following_id))
+        .innerJoin(user, eq(user.id, follows.following_id))
         // join posts to pick the row that matches (author_id, created_at = latest_created_at)
         .leftJoinLateral(latestPost, sql`true`)
         .leftJoin(categories, eq(categories.id, latestPost.category_id))
-        .orderBy(users.username_normalized)
+        .orderBy(user.name)
         .execute();
 
     // Drizzle returns typed rows; map to the lightweight result type
     return rows.map((r) => ({
         user_id: r.user_id,
-        username: r.username,
-        username_normalized: r.username_normalized,
-        avatar_url: r.avatar_url,
+        name: r.name,
+        image: r.image,
         post_id: r.post_id ?? null,
         post_title: r.post_title ?? null,
         post_description: r.post_description ?? null,
@@ -91,7 +87,7 @@ async function getFollowedUsersWithLatestPost(
  * Returns the distinct set (array) of category names used by those latest posts
  * (only includes followed users who have at least one post with non-null category).
  */
-async function getCategoriesOfFollowedUsersLatestPosts(userId: number): Promise<string[]> {
+async function getCategoriesOfFollowedUsersLatestPosts(userId: string): Promise<string[]> {
     // same latest-per-author subquery
     const latestPerAuthor = db
         .select({
@@ -126,7 +122,7 @@ async function getCategoriesOfFollowedUsersLatestPosts(userId: number): Promise<
 /**
  * Convenience function returning both results in one call.
  */
-async function getFollowedUsersAndCategories(userId: number) {
+async function getFollowedUsersAndCategories(userId: string) {
     const [usersList, categoriesList] = await Promise.all([
         getFollowedUsersWithLatestPost(userId),
         getCategoriesOfFollowedUsersLatestPosts(userId),
@@ -135,13 +131,13 @@ async function getFollowedUsersAndCategories(userId: number) {
 }
 
 export default async function Follows() {
-    const session = await getSessionData();
+    const session = await getSession();
     if (!session) return unauthorized();
 
     const getInfoFromSession = async (
-        session: NonNullable<Awaited<ReturnType<typeof getSessionData>>>,
+        session: NonNullable<Awaited<ReturnType<typeof getSession>>>,
     ) => {
-        const _userId = requestUserId(session.username_normalized);
+        const _userId = requestUserId(session.user.name);
 
         const userId = await getUserId(_userId);
         if (!userId) return unauthorized();
@@ -151,33 +147,32 @@ export default async function Follows() {
         const feed: Follow[] = _users
             // .filter((u) => u.post_id !== null) // drop users without posts (Follow.post is required)
             .map((u) => {
-                const author: UsersRowPublic = {
+                const author: UserRowPublic = {
                     // minimal public user shape based on what you selected earlier
                     // add/adjust fields if your UsersRowPublic requires more properties
                     id: u.user_id,
-                    username: u.username,
-                    username_normalized: u.username_normalized,
-                    avatar_url: u.avatar_url ?? null,
-                } as UsersRowPublic;
+                    name: u.name,
+                    image: u.image ?? null,
+                } as UserRowPublic;
 
                 const post: Omit<
                     PostsRow,
-                    "content_warning" | "visibility" | "scheduled_at" | "reading_time"
+                    "content_warning" | "visibility" | "reading_time" | "last_editor_id"
                 > | null = u.post_id
-                    ? {
-                          // minimal post shape using fields returned by your query.
-                          // expand/adjust as needed to match PostsRowFull in your project.
-                          id: u.post_id as number,
-                          author_id: u.user_id,
-                          co_author_id: null,
-                          category_id: u.category_id ?? null,
-                          title: u.post_title ?? "",
-                          description: u.post_description ?? null,
-                          content: u.post_content ?? "",
-                          created_at: u.post_created_at ?? new Date(0),
-                          updated_at: u.post_created_at ?? new Date(0),
-                      }
-                    : null;
+                        ? {
+                            // minimal post shape using fields returned by your query.
+                            // expand/adjust as needed to match PostsRowFull in your project.
+                            id: u.post_id as number,
+                            author_id: u.user_id,
+                            co_author_id: null,
+                            category_id: u.category_id ?? null,
+                            title: u.post_title ?? "",
+                            description: u.post_description ?? null,
+                            content: u.post_content ?? "",
+                            created_at: u.post_created_at ?? new Date(0),
+                            updated_at: u.post_created_at ?? new Date(0),
+                        }
+                        : null;
 
                 return { author, post } as Follow;
             });

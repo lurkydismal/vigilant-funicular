@@ -13,8 +13,8 @@ type Props = ButtonProps & {
     size?: "small" | "medium" | "large";
     needText?: boolean;
     sx?: SxProps<Theme>;
-    followCallback?: (usernameNormalized: string) => void;
-    unfollowCallback?: (usernameNormalized: string) => void;
+    followCallback?: (name: string) => void;
+    unfollowCallback?: (name: string) => void;
 };
 
 function FollowBase({

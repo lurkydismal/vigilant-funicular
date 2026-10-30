@@ -71,9 +71,9 @@ async function manageFollow(name: string, action: "insert" | "remove") {
 
         updateDbCacheTags(["follows"]);
     } catch (err) {
-        // Audit log: capture username and the error message, but do NOT log sensitive data.
+        // Audit log: capture name and the error message, but do NOT log sensitive data.
         log.error(`follow ${action} failed`, {
-            username: session.user.name,
+            name: session.user.name,
             error: err instanceof Error ? err.message : String(err),
         });
         // Re-throw to let caller handle the error (keep message generic at higher level)

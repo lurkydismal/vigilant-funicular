@@ -2,7 +2,7 @@
  * Utility functions for server and client use.
  */
 
-import { PostsRowFull, UsersRowPublic } from "@/db/types";
+import { PostsRowFull, UserRowPublic } from "@/db/types";
 
 /**
  * Get an environment variable or return a default if missing.
@@ -234,12 +234,11 @@ export function paginate<T>(items: T[], currentPage: number, perPage: number): T
  * @param post - Post object
  * @returns Array of authors (primary + co-author)
  */
-export function concatenateAuthors(post: PostsRowFull): UsersRowPublic[] {
+export function concatenateAuthors(post: PostsRowFull): UserRowPublic[] {
     return [
         post.author ?? {
-            username: "Unknown",
-            username_normalized: "Unknown",
-            avatar_url: null,
+            name: "Unknown",
+            image: null,
         },
         ...(post.coAuthor ? [post.coAuthor] : []),
     ];

@@ -2,14 +2,14 @@ import { TypographyVariant } from "@mui/material";
 
 import FollowButton from "@/components/FollowButton";
 import { Link } from "@/components/Link";
-import { UsersRowPublic } from "@/db/types";
+import { UserRowPublic } from "@/db/types";
 import log from "@/utils/stdlog";
 
 import { AuthorInfo, AuthorRow, nameSx, profileHref } from "./base";
 
 /**
  * Author row with a Follow button on the right.
- * `uid` passed to FollowButton is the raw username (not URL-encoded).
+ * `uid` passed to FollowButton is the raw name (not URL-encoded).
  */
 export function AuthorWithFollow({
     author,
@@ -21,17 +21,17 @@ export function AuthorWithFollow({
     followCallback,
     unfollowCallback,
 }: {
-    author: UsersRowPublic;
+    author: UserRowPublic;
     variant?: TypographyVariant;
     avatarWidth?: number;
     avatarHeight?: number;
     doesFollow: boolean;
     needText?: boolean;
-    followCallback?: (usernameNormalized: string) => void;
-    unfollowCallback?: (usernameNormalized: string) => void;
+    followCallback?: (name: string) => void;
+    unfollowCallback?: (name: string) => void;
 }) {
     log.trace("AuthorWithFollow render", {
-        username: author?.username,
+        name: author?.name,
         doesFollow,
     });
 
@@ -47,7 +47,7 @@ export function AuthorWithFollow({
             }
             right={
                 <FollowButton
-                    uid={author.username_normalized}
+                    uid={author.name}
                     doesFollow={doesFollow}
                     size="large"
                     needText={needText}
@@ -61,7 +61,7 @@ export function AuthorWithFollow({
 
 /**
  * Author row with link to profile and a Follow button.
- * Link targets use encoded username; FollowButton receives the raw username.
+ * Link targets use encoded name; FollowButton receives the raw name.
  */
 export function AuthorWithFollowAndLink({
     author,
@@ -73,17 +73,17 @@ export function AuthorWithFollowAndLink({
     followCallback,
     unfollowCallback,
 }: {
-    author: UsersRowPublic;
+    author: UserRowPublic;
     variant?: TypographyVariant;
     avatarWidth?: number;
     avatarHeight?: number;
     doesFollow: boolean;
     needText?: boolean;
-    followCallback?: (usernameNormalized: string) => void;
-    unfollowCallback?: (usernameNormalized: string) => void;
+    followCallback?: (name: string) => void;
+    unfollowCallback?: (name: string) => void;
 }) {
     log.trace("AuthorWithFollowAndLink render", {
-        username: author?.username,
+        name: author?.name,
         doesFollow,
     });
 
@@ -101,7 +101,7 @@ export function AuthorWithFollowAndLink({
             }
             right={
                 <FollowButton
-                    uid={author.username_normalized}
+                    uid={author.name}
                     doesFollow={doesFollow}
                     size="large"
                     needText={needText}

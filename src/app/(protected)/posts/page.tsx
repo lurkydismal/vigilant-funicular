@@ -7,17 +7,17 @@ import MainContent from "@/components/posts/MainContent";
 import { SearchButton } from "@/components/SearchButton";
 import { TagsAndSearchMobile } from "@/components/Tags";
 import db from "@/db";
-import { categories, posts, follows, users } from "@/db/schema";
-import { getSessionData } from "@/lib/auth";
+import { categories, posts, follows, user } from "@/db/schema";
+import { getSession } from "@/lib/dal/auth";
 import { normalizeArrayOrValue } from "@/utils/stdfunc";
 import { categorySelectSchema, postFullSchema } from "@/utils/validate/schemas";
 
 export default async function Posts() {
-    const session = await getSessionData();
+    const session = await getSession();
     if (!session) return unauthorized();
 
     const getInfoFromSession = async (
-        session: NonNullable<Awaited<ReturnType<typeof getSessionData>>>,
+        session: NonNullable<Awaited<ReturnType<typeof getSession>>>,
     ) => {
         "use cache";
 
@@ -33,9 +33,9 @@ export default async function Posts() {
         });
 
         const _userId = await db
-            .select({ id: users.id })
-            .from(users)
-            .where(eq(users.username, session.username))
+            .select({ id: user.id })
+            .from(user)
+            .where(eq(user.name, session.user.name))
             .limit(1)
             .execute();
         const userId = normalizeArrayOrValue(_userId);
@@ -49,46 +49,46 @@ export default async function Posts() {
 
         const followingIds = (_followingIds || []).map((r) => r.id).filter(Boolean);
 
-        const authors = aliasedTable(users, "authors");
-        const coAuthors = aliasedTable(users, "co_authors");
+        const authors = aliasedTable(user, "authors");
+        const coAuthors = aliasedTable(user, "co_authors");
 
         const _featuredPosts = followingIds.length
             ? await db
-                  .select({
-                      id: posts.id,
-                      title: posts.title,
-                      description: posts.description,
-                      content: posts.content,
-                      created_at: posts.created_at,
-                      updated_at: posts.updated_at,
+                .select({
+                    id: posts.id,
+                    title: posts.title,
+                    description: posts.description,
+                    content: posts.content,
+                    created_at: posts.created_at,
+                    updated_at: posts.updated_at,
 
-                      author: {
-                          id: authors.id,
-                          username: authors.username,
-                          avatar_url: authors.avatar_url,
-                      },
-                      coAuthor: {
-                          id: coAuthors.id,
-                          username: coAuthors.username,
-                          avatar_url: coAuthors.avatar_url,
-                      },
-                      category: {
-                          id: categories.id,
-                          name: categories.name,
-                      },
-                  })
-                  .from(posts)
-                  .leftJoin(authors, eq(authors.id, posts.author_id)) // join author
-                  .leftJoin(coAuthors, eq(coAuthors.id, posts.co_author_id)) // join coAuthor
-                  .leftJoin(categories, eq(categories.id, posts.category_id)) // join category
-                  .where(() =>
-                      or(
-                          inArray(posts.author_id, followingIds),
-                          inArray(posts.co_author_id, followingIds),
-                      ),
-                  )
-                  .orderBy(desc(posts.created_at))
-                  .execute()
+                    author: {
+                        id: authors.id,
+                        name: authors.name,
+                        image: authors.image,
+                    },
+                    coAuthor: {
+                        id: coAuthors.id,
+                        name: coAuthors.name,
+                        image: coAuthors.image,
+                    },
+                    category: {
+                        id: categories.id,
+                        name: categories.name,
+                    },
+                })
+                .from(posts)
+                .leftJoin(authors, eq(authors.id, posts.author_id)) // join author
+                .leftJoin(coAuthors, eq(coAuthors.id, posts.co_author_id)) // join coAuthor
+                .leftJoin(categories, eq(categories.id, posts.category_id)) // join category
+                .where(() =>
+                    or(
+                        inArray(posts.author_id, followingIds),
+                        inArray(posts.co_author_id, followingIds),
+                    ),
+                )
+                .orderBy(desc(posts.created_at))
+                .execute()
             : [];
 
         const _categories = db.select().from(categories).orderBy(desc(categories.name)).execute();
