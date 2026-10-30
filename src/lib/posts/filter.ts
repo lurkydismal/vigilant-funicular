@@ -22,6 +22,16 @@ function getParam(value: string | string[] | undefined): string | undefined {
 
 /**
  * Convert URL search parameters into normalized post filters.
+ * Parameter      Type       Meaning
+ * q              string     Search title, description and content
+ * category       number     Category ID
+ * author         string     Match author OR co-author
+ * contentWarning boolean    Match posts with/without warning
+ * visibility      enum      Match visibility
+ * readingTimeMin  number    Minimum reading time
+ * readingTimeMax  number    Maximum reading time
+ * createdAfter    ISO date  Posts created on or after this date
+ * createdBefore   ISO date  Posts created on or before this date
  */
 export function parsePostFilters(params: PostSearchParams): PostFilters {
     const category = getParam(params.category);
