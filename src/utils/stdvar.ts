@@ -4,6 +4,9 @@ import { getEnv } from "./stdfunc";
  * Flag indicating whether detailed trace logging should be enabled.
  * - `true` forces verbose logging regardless of environment.
  * - `false` disables trace-level logging unless explicitly set elsewhere.
+ *
+ * @example
+ * if (needTrace) console.log("trace logging enabled");
  */
 export const needTrace = false;
 
@@ -45,6 +48,10 @@ export const isServer = !isBrowser;
 /**
  * URL for the GitHub repository or project link.
  * - Defaults to `"#"` if the environment variable `GITHUB_LINK` is not set.
+ *
+ * @example
+ * // "https://github.com/org/repo"
+ * console.log(githubUrl);
  */
 export const githubUrl = getEnv("NEXT_PUBLIC_GITHUB_LINK", "#");
 
@@ -109,27 +116,28 @@ export const timeZone = "UTC";
 export const dateTimeFormat = "HH:mm DD.MM.YYYY";
 
 /**
- * Maximum allowed image size for uploads.
- * - Set to 1 megabyte (1 MB) = 1 * 1024 * 1024 bytes.
- * - Used in file validation to prevent oversized uploads.
- */
-export const maxImageSize = 1 * 1024 * 1024; // 1 MB
-
-/**
- * Allowed MIME types for image uploads.
- * - Currently only supports JPEG images.
- * - Used in validation to reject unsupported formats.
- */
-export const allowedImageTypes = ["image/jpeg"];
-
-/**
  * Maximum number of retry attempts for network requests or operations.
  */
 export const maxRetries = 3;
 
 /**
+ * Maximum number of snackbar notifications allowed to be visible at the same time.
+ *
+ * This value is used to cap concurrent on-screen notifications in the UI.
+ * When the limit is reached, additional notifications are either queued,
+ * ignored, or handled according to the snackbar implementation behavior.
+ *
+ * Intended to prevent visual clutter and avoid snackbar overflow/replacement issues.
+ */
+export const maxSnackbarCount = 5;
+
+/**
  * Keys used for localStorage, sessionStorage or cookies.
  * - Example: storing auth tokens, theme preferences, etc.
+ *
+ * @example
+ * // Browser: localStorage key for serialized user session.
+ * storageKeys.client?.authStorageKey;
  */
 export const storageKeys = {
     client: isBrowser
