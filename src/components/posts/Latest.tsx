@@ -25,7 +25,7 @@ export default function Latest({ posts }: { posts: PostsRowFull[] }) {
                 flexDirection: "column",
             }}
         >
-            <Typography variant="h2" gutterBottom>
+            <Typography variant="h2" gutterBottom sx={{ mx: 1 }}>
                 Latest
             </Typography>
 
