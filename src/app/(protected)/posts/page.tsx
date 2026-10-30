@@ -15,17 +15,15 @@ import { cacheDbRequest } from "@/lib/cache";
 import { getSession } from "@/lib/dal/auth";
 import {
     parsePostFilters,
-    PostSearchParams,
     buildPostRelationalWhere,
     PostFilters,
     buildPostSqlWhere,
+    FilterSearchParams,
 } from "@/lib/posts/filter";
 import { normalizeArrayOrValue } from "@/utils/stdfunc";
 import { categorySelectSchema, postFullSchema } from "@/utils/validate/schemas";
 
-type PostsType = { searchParams: Promise<PostSearchParams> };
-
-async function Posts({ searchParams }: PostsType) {
+async function Posts({ searchParams }: FilterSearchParams) {
     const session = await getSession();
     if (!session) return unauthorized();
 
@@ -36,7 +34,7 @@ async function Posts({ searchParams }: PostsType) {
         filters: PostFilters,
     ) => {
         "use cache";
-        cacheDbRequest(["posts", "categories"]);
+        cacheDbRequest(["user", "posts", "categories"]);
 
         const _posts = db.query.posts.findMany({
             where: buildPostRelationalWhere(filters),
@@ -151,7 +149,7 @@ async function Posts({ searchParams }: PostsType) {
     );
 }
 
-export default async function Page({ searchParams }: PostsType) {
+export default async function Page({ searchParams }: FilterSearchParams) {
     // TODO: improve
     return (
         <Suspense fallback={<Loading />}>

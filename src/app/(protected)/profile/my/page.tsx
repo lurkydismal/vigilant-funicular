@@ -3,41 +3,61 @@ import { Suspense } from "react";
 
 import Loading from "@/app/loading";
 import MainContent from "@/components/profile/MainContent";
+import db from "@/db";
+import { cacheDbRequest } from "@/lib/cache";
 import { getAllCategories, requestAllCategories } from "@/lib/category";
 import { getSession } from "@/lib/dal/auth";
-import { getAllPosts, requestAllPosts } from "@/lib/post";
+import {
+    buildPostRelationalWhere,
+    FilterSearchParams,
+    parsePostFilters,
+    PostFilters,
+} from "@/lib/posts/filter";
 import { awaitObject } from "@/utils/stdfunc";
 
-async function Profile() {
+async function Profile({ searchParams }: FilterSearchParams) {
     const session = await getSession();
     if (!session) return unauthorized();
 
+    const filters = parsePostFilters(await searchParams);
+
     const getInfoFromSession = async (
         session: NonNullable<Awaited<ReturnType<typeof getSession>>>,
+        filters: PostFilters,
     ) => {
         "use cache";
+        cacheDbRequest(["user", "categories", "posts"]);
 
         const user = session.user;
 
-        const _posts = requestAllPosts();
+        const posts = db.query.posts.findMany({
+            where: buildPostRelationalWhere(filters),
+            orderBy: {
+                created_at: "desc",
+            },
+            with: {
+                author: true,
+                coAuthor: true,
+                category: true,
+            },
+        });
         const _categories = requestAllCategories();
 
-        const posts = getAllPosts(_posts);
         const categories = getAllCategories(_categories);
 
         return await awaitObject({ user, posts, categories });
     };
 
-    const { user, posts, categories } = await getInfoFromSession(session);
+    const { user, posts, categories } = await getInfoFromSession(session, filters);
 
     return <MainContent user={user} posts={posts} tags={categories} isMe />;
 }
 
-export default async function Page() {
+export default async function Page({ searchParams }: FilterSearchParams) {
     // TODO: improve
     return (
         <Suspense fallback={<Loading />}>
-            <Profile />
+            <Profile searchParams={searchParams} />
         </Suspense>
     );
 }

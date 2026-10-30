@@ -22,6 +22,8 @@ export interface PostFilters {
 
 const visibilityValues = new Set<string>(postVisibilityEnum.enumValues);
 
+export type FilterSearchParams = { searchParams: Promise<PostSearchParams> };
+
 /**
  * Extract a single string from a URL search parameter.
  * For repeated parameters, use the first value.
