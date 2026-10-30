@@ -3,6 +3,9 @@ import { Box, Container } from "@mui/material";
 import Footer from "@/components/Footer";
 import NavBar from "@/components/NavBar";
 
+/**
+ * Renders the protected application layout shell.
+ */
 export default async function Layout({
     children,
 }: Readonly<{
@@ -19,7 +22,7 @@ export default async function Layout({
             <NavBar />
 
             <Container
-                maxWidth="xl"
+                maxWidth={false}
                 sx={{
                     flexGrow: 1,
                     display: "flex",
