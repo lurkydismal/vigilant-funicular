@@ -2,12 +2,11 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box } from "@mui/material";
-import { Activity, useEffect, useState } from "react";
+import { Activity, useCallback, useEffect, useMemo, useState } from "react";
 import { FormProvider, Path, SubmitHandler, useForm } from "react-hook-form";
 
 import { createPost } from "@/lib/post";
 import { useSnackbar } from "@/providers/snackbar";
-import log from "@/utils/stdlog";
 import { postNewSchema } from "@/utils/validate/schemas";
 
 import DesktopStepper from "./DesktopStepper";
@@ -17,49 +16,57 @@ import SettionsForm from "./SettingsForm";
 import { FormValues, Step as StepType } from "./types";
 import WriteForm from "./WriteForm";
 
+const DRAFT_KEY = "post-new-draft";
+
+const DEFAULT_VALUES: FormValues = {
+    // Write form
+    title: "",
+    description: "",
+    content: "",
+    "reading-time": 0,
+
+    // Settings form
+    visibility: "public",
+    "content-warning": false,
+    category: "",
+    publish: "now",
+    "co-author": "",
+    "attribution-note": "",
+};
+
 export default function MainContent() {
     const { showError } = useSnackbar();
     const methods = useForm<FormValues>({
         resolver: zodResolver(postNewSchema),
-        defaultValues: {
-            // Write form
-            title: "",
-            description: "",
-            content: "",
-            "reading-time": 0,
-
-            // Settings form
-            visibility: "public",
-            "content-warning": false,
-            category: "",
-            publish: "now",
-            "co-author": "",
-            "attribution-note": "",
-        },
+        defaultValues: DEFAULT_VALUES,
     });
+    const { reset, subscribe } = methods;
     const [activeStep, setActiveStep] = useState(0);
     const [completedSteps, setCompletedSteps] = useState<number[]>([]);
     const [completed, setCompleted] = useState(false);
 
-    const steps: StepType[] = [
-        {
-            title: "Write",
-            fields: ["title", "description", "content"],
-            item: <WriteForm />,
-        },
-        {
-            title: "Settings",
-            fields: [
-                "visibility",
-                "content-warning",
-                "category",
-                "publish",
-                "co-author",
-                "attribution-note",
-            ],
-            item: <SettionsForm />,
-        },
-    ];
+    const steps: StepType[] = useMemo(
+        () => [
+            {
+                title: "Write",
+                fields: ["title", "description", "content"],
+                item: <WriteForm />,
+            },
+            {
+                title: "Settings",
+                fields: [
+                    "visibility",
+                    "content-warning",
+                    "category",
+                    "publish",
+                    "co-author",
+                    "attribution-note",
+                ],
+                item: <SettionsForm />,
+            },
+        ],
+        [],
+    );
 
     const validateStep = async (fields: Path<FormValues>[]) => {
         const valid = await methods.trigger(fields);
@@ -74,6 +81,9 @@ export default function MainContent() {
     };
 
     const handleReset = () => {
+        reset(DEFAULT_VALUES);
+        localStorage.removeItem(DRAFT_KEY);
+
         setActiveStep(0);
         setCompletedSteps([]);
         setCompleted(false);
@@ -102,24 +112,70 @@ export default function MainContent() {
         }
     };
 
-    const onSubmit: SubmitHandler<FormValues> = async (data) => {
-        try {
-            postNewSchema.parse(data);
+    const onSubmit: SubmitHandler<FormValues> = useCallback<SubmitHandler<FormValues>>(
+        async (data) => {
+            try {
+                postNewSchema.parse(data);
 
-            await createPost(data);
+                await createPost(data);
 
-            setCompleted(true);
-            setActiveStep(steps.length);
-        } catch (err) {
-            showError(err);
-        }
-    };
+                // Reset form and delete saved draft
+                reset(DEFAULT_VALUES);
+                localStorage.removeItem(DRAFT_KEY);
+
+                setCompleted(true);
+                setActiveStep(steps.length);
+            } catch (err) {
+                showError(err);
+            }
+        },
+        [reset, showError, steps.length],
+    );
 
     useEffect(() => {
         const allCompleted = completedSteps.length === steps.length;
 
         if (allCompleted) methods.handleSubmit(onSubmit)();
     }, [completedSteps, steps, methods.handleSubmit, onSubmit]);
+
+    const [draftReady, setDraftReady] = useState(false);
+
+    // Restore draft from localStorage
+    useEffect(() => {
+        try {
+            const savedDraft = localStorage.getItem(DRAFT_KEY);
+
+            if (savedDraft) {
+                const parsed: unknown = JSON.parse(savedDraft);
+
+                if (parsed !== null && typeof parsed === "object" && !Array.isArray(parsed)) {
+                    reset({
+                        ...DEFAULT_VALUES,
+                        ...(parsed as Partial<FormValues>),
+                    });
+                }
+            }
+        } catch (error) {
+            console.error("Failed to restore draft:", error);
+            localStorage.removeItem(DRAFT_KEY);
+        } finally {
+            setDraftReady(true);
+        }
+    }, [reset]);
+
+    // Automatically save form changes
+    useEffect(() => {
+        if (!draftReady) return;
+
+        return subscribe({
+            formState: {
+                values: true,
+            },
+            callback: ({ values }) => {
+                localStorage.setItem(DRAFT_KEY, JSON.stringify(values));
+            },
+        });
+    }, [draftReady, subscribe]);
 
     return (
         <Box
