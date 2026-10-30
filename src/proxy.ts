@@ -9,12 +9,12 @@ export async function proxy(request: NextRequest) {
     });
 
     if (!session) {
-        return NextResponse.redirect(new URL("/auth/register", request.url));
+        return NextResponse.redirect(new URL("/landing", request.url));
     }
 
     return NextResponse.next();
 }
 
 export const config = {
-    matcher: ["/((?!api|_next/static|_next/image|favicon.ico|auth).*)"], // Specify the routes the middleware applies to
+    matcher: ["/((?!api|_next/static|_next/image|favicon.ico|auth|landing).*)"], // Specify the routes the middleware applies to
 };
