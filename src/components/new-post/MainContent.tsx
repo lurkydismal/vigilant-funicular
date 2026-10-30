@@ -104,7 +104,7 @@ export default function MainContent() {
 
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
         try {
-            const parsed = postNewSchema.parse(data);
+            postNewSchema.parse(data);
 
             await createPost(data);
 
