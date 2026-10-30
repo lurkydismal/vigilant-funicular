@@ -65,7 +65,7 @@ export default function PostsWithoutImage({ posts }: { posts: PostsRowFull[] }) 
 
     return (
         <MainFallback itemsLength={posts.length}>
-            <Grid container spacing={8} columns={12} sx={{ my: 4 }}>
+            <Grid container spacing={8} columns={12}>
                 {posts.map((post, index) => (
                     <Grid key={index} size={{ xs: 12, sm: 6 }}>
                         <Box
