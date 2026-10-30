@@ -147,7 +147,7 @@ async function Follows() {
             .map((u) => {
                 const author: UserRowPublic = {
                     // minimal public user shape based on what you selected earlier
-                    // add/adjust fields if your UsersRowPublic requires more properties
+                    // add/adjust fields if your UserRowPublic requires more properties
                     id: u.user_id,
                     name: u.name,
                     image: u.image ?? null,

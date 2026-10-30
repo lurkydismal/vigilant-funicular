@@ -9,7 +9,7 @@ import PostsPagination from "@/components/Pagination";
 import { Posts } from "@/components/Posts";
 import { SearchButton } from "@/components/SearchButton";
 import { TagsAndSearchMobile } from "@/components/Tags";
-import { CategoriesRowPublic, PostsRowFull, UsersRowPublic } from "@/db/types";
+import { CategoriesRowPublic, PostsRowFull, UserRowPublic } from "@/db/types";
 import { paginate } from "@/utils/stdfunc";
 
 export default function MainContent({
@@ -19,7 +19,7 @@ export default function MainContent({
     doesFollow = false,
     isMe = false,
 }: {
-    user: UsersRowPublic;
+    user: UserRowPublic;
     posts: PostsRowFull[];
     tags: CategoriesRowPublic[];
     doesFollow?: boolean;

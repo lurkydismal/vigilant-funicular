@@ -1,8 +1,8 @@
-import { UsersRowPublic } from "@/db/types";
+import { UserRowPublic } from "@/db/types";
 
 import { isServer, storageKeys } from "./stdvar";
 
-export function setUser(user: UsersRowPublic | null) {
+export function setUser(user: UserRowPublic | null) {
     if (isServer || !storageKeys.client) return;
 
     const storageKey = storageKeys.client.authStorageKey;
