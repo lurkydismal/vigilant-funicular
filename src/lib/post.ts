@@ -9,7 +9,7 @@ import log from "@/utils/stdlog";
 import { postFullSchema, postInsertSchema, postNewSchema } from "@/utils/validate/schemas";
 
 import { cacheDbRequest, updateDbCacheTags } from "./cache";
-import { getCategoryId, requestCategoryId } from "./category";
+import { createCategories, getCategoryId, requestCategoryId } from "./category";
 import { getSession } from "./dal/auth";
 import { getUserId, requestUserId } from "./user";
 
@@ -75,7 +75,11 @@ export async function createPost(fv: FormValues) {
         : undefined;
 
     const categoryId = await getCategoryId(requestCategoryId(parsed.category));
-    if (!categoryId) return forbidden();
+    if (!categoryId) {
+        const result = createCategories([parsed.category]);
+
+        if (!result) return forbidden();
+    }
 
     const post = {
         author_id: authorId,
