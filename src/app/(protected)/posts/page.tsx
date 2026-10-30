@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import { desc, eq, inArray, or, aliasedTable } from "drizzle-orm";
 import { unauthorized } from "next/navigation";
 
@@ -115,7 +116,15 @@ export default async function Posts() {
                 </>
             )}
 
-            {parsedFeaturedPosts.length > 0 && <MainContent posts={parsedFeaturedPosts} />}
+            {parsedFeaturedPosts.length > 0 && (
+                <>
+                    <Box sx={{ my: 1 }} />
+
+                    <MainContent posts={parsedFeaturedPosts} />
+                </>
+            )}
+
+            <Box sx={{ my: 1 }} />
 
             <Latest posts={parsedPosts} />
         </MainFallback>
