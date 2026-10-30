@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { desc, eq, inArray, or, aliasedTable } from "drizzle-orm";
+import { desc, eq, inArray, or, aliasedTable, and } from "drizzle-orm";
 import { unauthorized } from "next/navigation";
 import { Suspense } from "react";
 
@@ -13,20 +13,32 @@ import db from "@/db";
 import { categories, posts, follows, user } from "@/db/schema";
 import { cacheDbRequest } from "@/lib/cache";
 import { getSession } from "@/lib/dal/auth";
+import {
+    parsePostFilters,
+    PostSearchParams,
+    buildPostWhere,
+    PostFilters,
+} from "@/lib/posts/filter";
 import { normalizeArrayOrValue } from "@/utils/stdfunc";
 import { categorySelectSchema, postFullSchema } from "@/utils/validate/schemas";
 
-async function Posts() {
+type PostsType = { searchParams: Promise<PostSearchParams> };
+
+async function Posts({ searchParams }: PostsType) {
     const session = await getSession();
     if (!session) return unauthorized();
 
+    const filters = parsePostFilters(await searchParams);
+
     const getInfoFromSession = async (
         session: NonNullable<Awaited<ReturnType<typeof getSession>>>,
+        filters: PostFilters,
     ) => {
         "use cache";
         cacheDbRequest(["posts", "categories"]);
 
         const _posts = db.query.posts.findMany({
+            where: buildPostWhere(filters),
             orderBy: {
                 created_at: "desc",
             },
@@ -86,10 +98,13 @@ async function Posts() {
                 .leftJoin(authors, eq(authors.id, posts.author_id)) // join author
                 .leftJoin(coAuthors, eq(coAuthors.id, posts.co_author_id)) // join coAuthor
                 .leftJoin(categories, eq(categories.id, posts.category_id)) // join category
-                .where(() =>
-                    or(
-                        inArray(posts.author_id, followingIds),
-                        inArray(posts.co_author_id, followingIds),
+                .where(
+                    and(
+                        or(
+                            inArray(posts.author_id, followingIds),
+                            inArray(posts.co_author_id, followingIds),
+                        ),
+                        buildPostWhere(filters),
                     ),
                 )
                 .orderBy(desc(posts.created_at))
@@ -105,8 +120,10 @@ async function Posts() {
         return { parsedPosts, parsedFeaturedPosts, parsedCategories };
     };
 
-    const { parsedPosts, parsedFeaturedPosts, parsedCategories } =
-        await getInfoFromSession(session);
+    const { parsedPosts, parsedFeaturedPosts, parsedCategories } = await getInfoFromSession(
+        session,
+        filters,
+    );
 
     return (
         <MainFallback itemsLength={parsedPosts.length}>
@@ -133,11 +150,11 @@ async function Posts() {
     );
 }
 
-export default async function Page() {
+export default async function Page({ searchParams }: PostsType) {
     // TODO: improve
     return (
         <Suspense fallback={<Loading />}>
-            <Posts />
+            <Posts searchParams={searchParams} />
         </Suspense>
     );
 }
