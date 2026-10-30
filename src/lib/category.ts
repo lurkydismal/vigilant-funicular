@@ -1,12 +1,12 @@
-"use server";
-
+import "server-only";
 import { eq, desc } from "drizzle-orm";
-import { cacheTag } from "next/cache";
 
 import db from "@/db";
 import { categories } from "@/db/schema";
 import { normalizeArrayOrValue } from "@/utils/stdfunc";
 import { categorySelectPublicSchema } from "@/utils/validate/schemas";
+
+import { cacheDbRequest } from "./cache";
 
 export async function requestCategoryId(categoryName: string) {
     "use cache";
@@ -28,7 +28,7 @@ export async function getCategoryId(request: ReturnType<typeof requestCategoryId
 
 export async function requestAllCategories() {
     "use cache";
-    cacheTag("categories", "category");
+    cacheDbRequest(["categories"]);
 
     return db.select().from(categories).orderBy(desc(categories.name)).execute();
 }

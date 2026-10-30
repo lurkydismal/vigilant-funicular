@@ -1,7 +1,4 @@
-"use server";
-
-import { desc } from "drizzle-orm";
-import { cacheTag, revalidateTag } from "next/cache";
+import "server-only";
 import { forbidden, unauthorized } from "next/navigation";
 import z from "zod";
 
@@ -10,13 +7,14 @@ import { posts } from "@/db/schema";
 import log from "@/utils/stdlog";
 import { postFullSchema, postInsertSchema, postNewSchema } from "@/utils/validate/schemas";
 
-import { getSessionData } from "./auth";
+import { cacheDbRequest, updateDbCacheTags } from "./cache";
 import { getCategoryId, requestCategoryId } from "./category";
+import { getSession } from "./dal/auth";
 import { getUserId, requestUserId } from "./user";
 
 export async function requestAllPosts() {
     "use cache";
-    cacheTag("posts", "post");
+    cacheDbRequest(["posts"]);
 
     // return db.select().from(posts).orderBy(desc(posts.created_at)).execute();
     return db.query.posts.findMany({
@@ -39,7 +37,7 @@ type PostsFindFirstConfig = Parameters<typeof db.query.posts.findFirst>[0];
 
 export async function requestPostFull(where?: Omit<PostsFindFirstConfig, "with" | "orderBy">) {
     "use cache";
-    cacheTag("posts", "post");
+    cacheDbRequest(["posts"]);
 
     return db.query.posts.findFirst({
         orderBy: {
@@ -63,38 +61,38 @@ type FormValues = z.infer<typeof postNewSchema>;
 export async function createPost(fv: FormValues) {
     // parse + validate input; throws on invalid input
     const parsed = postNewSchema.parse(fv);
-    log.debug(`Post create: ${JSON.stringify(parsed)}`);
 
-    const session = await getSessionData();
+    const session = await getSession();
     if (!session) return unauthorized();
 
     log.trace(`Post create: ${JSON.stringify(parsed)} as ${session}`);
 
-    const authorId = await getUserId(requestUserId(session.username_normalized));
+    const authorId = await getUserId(requestUserId(session.user.name));
     if (!authorId) return unauthorized();
 
     const coAuthorId = parsed["co-author"]
         ? await getUserId(requestUserId(parsed["co-author"]))
         : undefined;
 
-    const categoryId = await getCategoryId(requestCategoryId(session.username_normalized));
+    const categoryId = await getCategoryId(requestCategoryId(session.user.name));
     if (!authorId) return forbidden();
 
-    await db
-        .insert(posts)
-        .values({
-            author_id: authorId,
-            co_author_id: coAuthorId,
-            category_id: categoryId,
-            title: parsed.title,
-            description: parsed.description,
-            content: parsed.content,
-            content_warning: parsed["content-warning"],
-            visibility: parsed.visibility,
-            // scheduled_at: undefined,
-            reading_time: parsed["reading-time"],
-        })
-        .execute();
+    const post = {
+        author_id: authorId,
+        co_author_id: coAuthorId,
+        category_id: categoryId,
+        title: parsed.title,
+        description: parsed.description,
+        content: parsed.content,
+        content_warning: parsed["content-warning"],
+        visibility: parsed.visibility,
+        // scheduled_at: undefined,
+        reading_time: parsed["reading-time"],
+    };
 
-    revalidateTag("posts", "max");
+    const parsedPost = postInsertSchema.parse(post);
+
+    await db.insert(posts).values(parsedPost).execute();
+
+    updateDbCacheTags(["posts"]);
 }
