@@ -17,6 +17,9 @@ export interface AppThemeProps {
 }
 
 // Main AppTheme component providing theme and localization
+/**
+ * Renders the app theme component.
+ */
 export default function AppTheme(props: AppThemeProps) {
     const { children, themeComponents } = props;
     const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)", {
@@ -25,10 +28,13 @@ export default function AppTheme(props: AppThemeProps) {
 
     // Get user's browser locale (e.g., "en-US") and extract language code ("en")
     const userLocale = navigator.language || "en-US";
-    const lang = userLocale.split("-")[0];
+    const lang = userLocale.split("-")[0]!;
 
     // Function to fetch localized messages for MUI components, DataGrid, and DatePicker
     // with a fallback to enUS
+    /**
+     * Gets locales.
+     */
     const getLocales = (localeName: string) => ({
         mui: (MUI as Record<string, typeof MUI.enUS>)[localeName] || MUI.enUS,
         dg: (DG as unknown as Record<string, typeof DG.enUS>)[localeName] || DG.enUS,
@@ -38,9 +44,17 @@ export default function AppTheme(props: AppThemeProps) {
     // Destructure the selected locales
     const { mui, dg, dp } = getLocales(lang);
 
+    const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+
     // Create MUI theme with custom primitives, dark/light mode, and localization
     const theme = createTheme(
         {
+            ...(prefersReducedMotion && {
+                transitions: {
+                    // So `transition: none;` gets applied everywhere
+                    create: () => "none",
+                },
+            }),
             palette: {
                 mode: prefersDarkMode ? "dark" : "light",
             },
@@ -52,7 +66,7 @@ export default function AppTheme(props: AppThemeProps) {
             shadows,
             shape,
             components: {
-                ...themeComponents, // merge any user-provided component overrides
+                ...themeComponents, // merge user-provided component overrides
             },
         },
         mui, // apply MUI core locale
