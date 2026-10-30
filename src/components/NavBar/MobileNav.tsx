@@ -1,12 +1,15 @@
 "use client";
 
 import { CloseRounded, Menu } from "@mui/icons-material";
-import { Drawer, Box, IconButton, MenuItem, Divider, Button, MenuList } from "@mui/material";
+import { Drawer, Box, IconButton, MenuItem, Divider, MenuList } from "@mui/material";
 import { Fragment, useCallback, useMemo, useState } from "react";
 
 import NextLink from "@/components/Link";
-import { NavItem } from "@/data/navbat";
+import { NavItem } from "@/data/navbar";
 
+/**
+ * Renders the mobile nav component.
+ */
 export default function MobileNav({ items }: { items: NavItem[] }) {
     const [open, setOpen] = useState(false);
 
@@ -83,22 +86,17 @@ export default function MobileNav({ items }: { items: NavItem[] }) {
 
                         <Divider sx={{ my: 3 }} />
 
-                        <MenuItem sx={{ gap: 1 }}>
-                            {right.map((value, index) => (
-                                <Button
-                                    key={value.href ?? `right-${index}`}
-                                    color="primary"
-                                    variant="contained"
-                                    href={value.href}
-                                    component={NextLink}
-                                    fullWidth
-                                    onClick={onLinkClick}
-                                    data-nav-position="right"
-                                >
-                                    {value.name}
-                                </Button>
-                            ))}
-                        </MenuItem>
+                        {right.map((value, index) => (
+                            <MenuItem
+                                key={value.href ?? `right-${index}`}
+                                href={value.href}
+                                component={NextLink}
+                                onClick={onLinkClick}
+                                data-nav-position="right"
+                            >
+                                {value.name}
+                            </MenuItem>
+                        ))}
                     </MenuList>
                 </Box>
             </Drawer>
