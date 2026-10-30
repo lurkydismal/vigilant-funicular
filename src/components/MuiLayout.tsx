@@ -21,6 +21,9 @@ import { Suspense } from "react";
 import SnackbarProvider from "@/providers/snackbar";
 import AppTheme from "@/theme/theme";
 
+/**
+ * Renders the mui layout component.
+ */
 export default function MuiLayout({
     children,
 }: Readonly<{
