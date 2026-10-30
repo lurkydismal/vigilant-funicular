@@ -1,17 +1,14 @@
-import { unauthorized } from "next/navigation";
+import { getSessionDataOrUnauthorized } from "@/lib/dal/auth";
 
-import { getSessionData } from "@/lib/auth";
-
+/**
+ * Renders the protected route template wrapper.
+ */
 export default async function Template({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const user = await getSessionData();
-
-    if (!user) {
-        unauthorized();
-    }
+    await getSessionDataOrUnauthorized();
 
     return children;
 }
