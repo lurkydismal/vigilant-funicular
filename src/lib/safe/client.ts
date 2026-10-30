@@ -1,5 +1,4 @@
-"use server";
-
+import "server-only";
 import { createSafeActionClient } from "next-safe-action";
 
 // Public action client (no auth required)

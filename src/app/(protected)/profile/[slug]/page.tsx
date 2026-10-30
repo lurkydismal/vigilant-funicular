@@ -37,10 +37,9 @@ export default async function Page({
         "use cache";
         cacheTag("follows");
 
-        const userId = await getUserId(requestUserId(session.user.name));
+        const userId = session.user.id;
         const profileId = await getUserId(requestUserId(parsedUsername));
 
-        if (!userId) return unauthorized();
         if (!profileId) return forbidden();
         if (userId === profileId) redirect("/profile/my");
 

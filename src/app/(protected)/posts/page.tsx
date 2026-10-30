@@ -8,6 +8,7 @@ import { SearchButton } from "@/components/SearchButton";
 import { TagsAndSearchMobile } from "@/components/Tags";
 import db from "@/db";
 import { categories, posts, follows, user } from "@/db/schema";
+import { cacheDbRequest } from "@/lib/cache";
 import { getSession } from "@/lib/dal/auth";
 import { normalizeArrayOrValue } from "@/utils/stdfunc";
 import { categorySelectSchema, postFullSchema } from "@/utils/validate/schemas";
@@ -20,6 +21,7 @@ export default async function Posts() {
         session: NonNullable<Awaited<ReturnType<typeof getSession>>>,
     ) => {
         "use cache";
+        cacheDbRequest(["posts", "categories"]);
 
         const _posts = db.query.posts.findMany({
             orderBy: {

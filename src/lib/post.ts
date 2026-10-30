@@ -68,15 +68,14 @@ export async function createPost(fv: FormValues) {
 
     log.trace(`Post create: ${JSON.stringify(parsed)} as ${session}`);
 
-    const authorId = await getUserId(requestUserId(session.user.name));
-    if (!authorId) return unauthorized();
+    const authorId = session.user.id;
 
     const coAuthorId = parsed["co-author"]
         ? await getUserId(requestUserId(parsed["co-author"]))
         : undefined;
 
-    const categoryId = await getCategoryId(requestCategoryId(session.user.name));
-    if (!authorId) return forbidden();
+    const categoryId = await getCategoryId(requestCategoryId(parsed.category));
+    if (!categoryId) return forbidden();
 
     const post = {
         author_id: authorId,

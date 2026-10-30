@@ -8,7 +8,6 @@ import db from "@/db";
 import { categories, follows, posts, user } from "@/db/schema";
 import { CategoriesRowPublic, PostsRow, UserRowPublic } from "@/db/types";
 import { getSession } from "@/lib/dal/auth";
-import { getUserId, requestUserId } from "@/lib/user";
 
 /** Result types */
 type FollowedUserWithLatestPost = {
@@ -137,10 +136,7 @@ export default async function Follows() {
     const getInfoFromSession = async (
         session: NonNullable<Awaited<ReturnType<typeof getSession>>>,
     ) => {
-        const _userId = requestUserId(session.user.name);
-
-        const userId = await getUserId(_userId);
-        if (!userId) return unauthorized();
+        const userId = session.user.id;
 
         const { users: _users, categories } = await getFollowedUsersAndCategories(userId);
 
