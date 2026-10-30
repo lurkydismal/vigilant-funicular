@@ -11,7 +11,7 @@ export const getSession = cache(async () => {
     });
 });
 
-export async function getSessionDataOrUnauthorized() {
+export async function getSessionOrUnauthorized() {
     const session = await getSession();
 
     if (!session) {

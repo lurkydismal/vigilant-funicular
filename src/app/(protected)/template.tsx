@@ -1,4 +1,4 @@
-import { getSessionDataOrUnauthorized } from "@/lib/dal/auth";
+import { getSessionOrUnauthorized } from "@/lib/dal/auth";
 
 /**
  * Renders the protected route template wrapper.
@@ -8,7 +8,7 @@ export default async function Template({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    await getSessionDataOrUnauthorized();
+    await getSessionOrUnauthorized();
 
     return children;
 }
