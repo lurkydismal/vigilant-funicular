@@ -51,7 +51,7 @@ export const categorySelectSchema = createSelectSchema(categories);
 export const categoryInsertSchema = createInsertSchema(categories);
 export const categoryUpdateSchema = createUpdateSchema(categories);
 export const categorySelectPublicSchema = categorySelectSchema
-    .pick({ name: true })
+    .pick({ id: true, name: true })
     .extend({ name: z.string().trim().min(1) });
 
 export const postSelectSchema = createSelectSchema(posts);
