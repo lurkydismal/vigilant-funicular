@@ -37,39 +37,62 @@ export function parsePostFilters(params: PostSearchParams): PostFilters {
     };
 }
 
-/**
- * Build a reusable Drizzle WHERE condition.
- */
-export function buildPostWhere(filters: PostFilters): SQL | undefined {
+export function buildPostRelationalWhere(filters: PostFilters) {
+    const conditions = [];
+
+    if (filters.query) {
+        const pattern = `%${filters.query.replace(/[\\%_]/g, "\\$&")}%`;
+
+        conditions.push({
+            OR: [
+                { title: { ilike: pattern } },
+                { description: { ilike: pattern } },
+                { content: { ilike: pattern } },
+            ],
+        });
+    }
+
+    if (filters.categoryId !== undefined) {
+        conditions.push({
+            category_id: filters.categoryId,
+        });
+    }
+
+    if (filters.authorId) {
+        conditions.push({
+            OR: [{ author_id: filters.authorId }, { co_author_id: filters.authorId }],
+        });
+    }
+
+    return conditions.length ? { AND: conditions } : {};
+}
+
+export function buildPostSqlWhere(filters: PostFilters): SQL | undefined {
     const conditions: SQL[] = [];
 
-    // Search
     if (filters.query) {
-        const query = filters.query.replace(/[\\%_]/g, "\\$&");
-        const pattern = `%${query}%`;
+        const pattern = `%${filters.query.replace(/[\\%_]/g, "\\$&")}%`;
 
-        const searchCondition = or(
+        const condition = or(
             ilike(posts.title, pattern),
             ilike(posts.description, pattern),
             ilike(posts.content, pattern),
         );
 
-        if (searchCondition) conditions.push(searchCondition);
+        if (condition) conditions.push(condition);
     }
 
-    // Category
-    if (filters.categoryId) {
+    if (filters.categoryId !== undefined) {
         conditions.push(eq(posts.category_id, filters.categoryId));
     }
 
-    // Author or co-author
     if (filters.authorId) {
-        const authorCondition = or(
+        const condition = or(
             eq(posts.author_id, filters.authorId),
             eq(posts.co_author_id, filters.authorId),
         );
 
-        if (authorCondition) conditions.push(authorCondition);
+        if (condition) conditions.push(condition);
     }
 
     return and(...conditions);

@@ -16,8 +16,9 @@ import { getSession } from "@/lib/dal/auth";
 import {
     parsePostFilters,
     PostSearchParams,
-    buildPostWhere,
+    buildPostRelationalWhere,
     PostFilters,
+    buildPostSqlWhere,
 } from "@/lib/posts/filter";
 import { normalizeArrayOrValue } from "@/utils/stdfunc";
 import { categorySelectSchema, postFullSchema } from "@/utils/validate/schemas";
@@ -38,7 +39,7 @@ async function Posts({ searchParams }: PostsType) {
         cacheDbRequest(["posts", "categories"]);
 
         const _posts = db.query.posts.findMany({
-            where: buildPostWhere(filters),
+            where: buildPostRelationalWhere(filters),
             orderBy: {
                 created_at: "desc",
             },
@@ -104,7 +105,7 @@ async function Posts({ searchParams }: PostsType) {
                             inArray(posts.author_id, followingIds),
                             inArray(posts.co_author_id, followingIds),
                         ),
-                        buildPostWhere(filters),
+                        buildPostSqlWhere(filters),
                     ),
                 )
                 .orderBy(desc(posts.created_at))
