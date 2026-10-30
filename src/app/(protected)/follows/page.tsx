@@ -1,6 +1,8 @@
 import { and, eq, sql, desc } from "drizzle-orm";
 import { unauthorized } from "next/navigation";
+import { Suspense } from "react";
 
+import Loading from "@/app/loading";
 import { Follow } from "@/components/follows/Follows";
 import MainContent from "@/components/follows/MainContent";
 import MainFallback from "@/components/MainFallback";
@@ -129,7 +131,7 @@ async function getFollowedUsersAndCategories(userId: string) {
     return { users: usersList, categories: categoriesList };
 }
 
-export default async function Follows() {
+async function Follows() {
     const session = await getSession();
     if (!session) return unauthorized();
 
@@ -186,5 +188,14 @@ export default async function Follows() {
         <MainFallback itemsLength={feed.length}>
             <MainContent follows={feed} tags={tags} />
         </MainFallback>
+    );
+}
+
+export default async function Page() {
+    // TODO: improve
+    return (
+        <Suspense fallback={<Loading />}>
+            <Follows />
+        </Suspense>
     );
 }

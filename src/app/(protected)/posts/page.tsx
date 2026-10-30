@@ -1,7 +1,9 @@
 import { Box } from "@mui/material";
 import { desc, eq, inArray, or, aliasedTable } from "drizzle-orm";
 import { unauthorized } from "next/navigation";
+import { Suspense } from "react";
 
+import Loading from "@/app/loading";
 import MainFallback from "@/components/MainFallback";
 import Latest from "@/components/posts/Latest";
 import MainContent from "@/components/posts/MainContent";
@@ -14,7 +16,7 @@ import { getSession } from "@/lib/dal/auth";
 import { normalizeArrayOrValue } from "@/utils/stdfunc";
 import { categorySelectSchema, postFullSchema } from "@/utils/validate/schemas";
 
-export default async function Posts() {
+async function Posts() {
     const session = await getSession();
     if (!session) return unauthorized();
 
@@ -128,5 +130,14 @@ export default async function Posts() {
 
             <Latest posts={parsedPosts} />
         </MainFallback>
+    );
+}
+
+export default async function Page() {
+    // TODO: improve
+    return (
+        <Suspense fallback={<Loading />}>
+            <Posts />
+        </Suspense>
     );
 }

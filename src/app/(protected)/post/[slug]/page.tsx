@@ -1,13 +1,13 @@
 import { unauthorized } from "next/navigation";
+import { Suspense } from "react";
 import z from "zod";
 
+import Loading from "@/app/loading";
 import MainContent from "@/components/post/MainContent";
 import { getSession } from "@/lib/dal/auth";
 import { getPostFull, requestPostFull } from "@/lib/post";
 
-export default async function Page({
-    params,
-}: {
+type ParamsType = {
     /**
      * Route parameters provided by Next.js App Router.
      *
@@ -15,7 +15,9 @@ export default async function Page({
      * should be loaded and rendered.
      */
     params: Promise<{ slug: string }>;
-}) {
+};
+
+async function Post({ params }: ParamsType) {
     const { slug } = await params;
 
     const session = await getSession();
@@ -26,4 +28,13 @@ export default async function Page({
     const posts = await getPostFull(requestPostFull({ id }));
 
     return <MainContent post={posts} />;
+}
+
+export default async function Page({ params }: ParamsType) {
+    // TODO: improve
+    return (
+        <Suspense fallback={<Loading />}>
+            <Post params={params} />
+        </Suspense>
+    );
 }

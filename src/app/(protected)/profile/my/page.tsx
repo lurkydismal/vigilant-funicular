@@ -1,12 +1,14 @@
 import { unauthorized } from "next/navigation";
+import { Suspense } from "react";
 
+import Loading from "@/app/loading";
 import MainContent from "@/components/profile/MainContent";
 import { getAllCategories, requestAllCategories } from "@/lib/category";
 import { getSession } from "@/lib/dal/auth";
 import { getAllPosts, requestAllPosts } from "@/lib/post";
 import { awaitObject } from "@/utils/stdfunc";
 
-export default async function Page() {
+async function Profile() {
     const session = await getSession();
     if (!session) return unauthorized();
 
@@ -29,4 +31,13 @@ export default async function Page() {
     const { user, posts, categories } = await getInfoFromSession(session);
 
     return <MainContent user={user} posts={posts} tags={categories} isMe />;
+}
+
+export default async function Page() {
+    // TODO: improve
+    return (
+        <Suspense fallback={<Loading />}>
+            <Profile />
+        </Suspense>
+    );
 }
