@@ -1,5 +1,4 @@
-"use server";
-
+import "server-only";
 /**
  * Server-only mock action helper.
  *
@@ -13,7 +12,6 @@
  * Intended for testing, prototyping, and UI development where real backend
  * logic is not yet available but timing and response structure matter.
  */
-
 import { ActionResult } from "@/lib/types";
 import { delay } from "@/utils/stdfunc";
 import log from "@/utils/stdlog";
