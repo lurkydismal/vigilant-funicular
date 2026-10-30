@@ -1,4 +1,5 @@
-import "server-only";
+"use server";
+
 import { forbidden, unauthorized } from "next/navigation";
 import z from "zod";
 

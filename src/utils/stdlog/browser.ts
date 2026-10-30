@@ -1,4 +1,5 @@
-import "client-only";
+"use client";
+
 import { isDev, needTrace } from "@/utils/stdvar";
 
 import { CommonLogger, LogFn } from "./types";
@@ -64,8 +65,8 @@ function makeBrowserLogger(): CommonLogger {
     };
 
     return {
-        trace: needTrace ? makeLevel("TRACE") : () => {},
-        debug: isDev ? makeLevel("DEBUG") : () => {},
+        trace: needTrace ? makeLevel("TRACE") : () => { },
+        debug: isDev ? makeLevel("DEBUG") : () => { },
         info: makeLevel("INFO"),
         warn: makeLevel("WARN"),
         error: makeLevel("ERROR"),

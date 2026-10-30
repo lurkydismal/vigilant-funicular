@@ -1,4 +1,5 @@
-import "server-only";
+"use server";
+
 import { eq, and, inArray } from "drizzle-orm";
 import { forbidden, unauthorized } from "next/navigation";
 

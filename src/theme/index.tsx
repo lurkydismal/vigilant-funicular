@@ -1,4 +1,5 @@
-import "client-only";
+"use client";
+
 import { ThemeOptions, createTheme, ThemeProvider, useMediaQuery } from "@mui/material";
 import * as MUI from "@mui/material/locale";
 import * as DG from "@mui/x-data-grid/locales";
