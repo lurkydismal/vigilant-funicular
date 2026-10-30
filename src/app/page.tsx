@@ -1,13 +1,17 @@
-import { permanentRedirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
-import { getSessionData } from "@/lib/auth";
+import { afterLoginRoute } from "@/data/routes";
+import { getSession } from "@/lib/dal/auth";
 
+/**
+ * Root page handler that redirects users to default route.
+ */
 export default async function Page() {
-    const user = await getSessionData();
+    const user = await getSession();
 
     if (!user) {
-        permanentRedirect("/landing");
+        redirect("/landing");
     }
 
-    permanentRedirect("/posts");
+    redirect(afterLoginRoute);
 }
