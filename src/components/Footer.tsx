@@ -6,6 +6,9 @@ import { githubUrl } from "@/utils/stdvar";
 
 import { Copyright } from "./Copyright";
 
+/**
+ * Renders the footer component.
+ */
 export default function Footer() {
     return (
         <>
