@@ -5,6 +5,7 @@ import z from "zod";
 
 import db from "@/db";
 import { posts } from "@/db/schema";
+import { normalizeArrayOrValue } from "@/utils/stdfunc";
 import log from "@/utils/stdlog";
 import { postFullSchema, postInsertSchema, postNewSchema } from "@/utils/validate/schemas";
 
@@ -74,11 +75,14 @@ export async function createPost(fv: FormValues) {
         ? await getUserId(requestUserId(parsed["co-author"]))
         : undefined;
 
-    const categoryId = await getCategoryId(requestCategoryId(parsed.category));
+    let categoryId = await getCategoryId(requestCategoryId(parsed.category));
     if (!categoryId) {
-        const result = createCategories([parsed.category]);
+        const _result = await createCategories([parsed.category]);
+        const result = normalizeArrayOrValue(_result);
 
         if (!result) return forbidden();
+
+        categoryId = result.id;
     }
 
     const post = {
